@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "G5CNxC/nCuaHm4cUdRy1ZAcaE/EHK2yjsD/zb48ftjyx+zS92BvpRanS23p9O00NZE8EKfQPkCx6o/C8WBuM2A==",
+  "dgSpecHash": "Wf1p11CxpA3h0jT9mmwdfSezQCv1vIGnU784CQfDlCf2IDaPGfam9L0gtsrXOCps5Tn8K6PMJYzdZQN4FkPdgA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\OPC DB gate server\\OPC DB gate server.csproj",
+  "projectFilePath": "C:\\Projects\\applications-mesone\\OPC DB gate server\\OPC DB gate server.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

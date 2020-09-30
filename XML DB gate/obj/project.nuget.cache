@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "FpoKzrKwY1JD11sP53IarynVcFDjNI6AD5Is4gnH7gA7Xm1QUmlXXJyLRDGncdfSQo+2wLXff3OunJEmyIg9UQ==",
+  "dgSpecHash": "pdghCW7oKS3aqWVxC2Q9D4ZLHbfsHxRCBw1Jo540f9eYCspev6hi8oTubuFhwjHSL8AiB4l74ZCR9tv+ZPH/Lw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\XML DB gate\\XML DB gate.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Projects\\applications-mesone\\XML DB gate\\XML DB gate.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\c.kassylkassova\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+    "C:\\Users\\c.kassylkassova\\.nuget\\packages\\system.data.odbc\\4.7.0\\system.data.odbc.4.7.0.nupkg.sha512"
+  ],
   "logs": []
 }

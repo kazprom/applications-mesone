@@ -6,4 +6,8 @@
     <RootNamespace>XML_DB_gate</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Data.Odbc" Version="4.7.0" />
+  </ItemGroup>
+
 </Project>

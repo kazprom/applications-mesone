@@ -1,24 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Csharp scripts scheduler\\Csharp scripts scheduler.csproj": {}
+    "C:\\Projects\\applications-mesone\\Csharp scripts scheduler\\Csharp scripts scheduler.csproj": {}
   },
   "projects": {
-    "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Csharp scripts scheduler\\Csharp scripts scheduler.csproj": {
+    "C:\\Projects\\applications-mesone\\Csharp scripts scheduler\\Csharp scripts scheduler.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Csharp scripts scheduler\\Csharp scripts scheduler.csproj",
+        "projectUniqueName": "C:\\Projects\\applications-mesone\\Csharp scripts scheduler\\Csharp scripts scheduler.csproj",
         "projectName": "Csharp scripts scheduler",
-        "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Csharp scripts scheduler\\Csharp scripts scheduler.csproj",
-        "packagesPath": "C:\\Users\\i.korol\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Csharp scripts scheduler\\obj\\",
+        "projectPath": "C:\\Projects\\applications-mesone\\Csharp scripts scheduler\\Csharp scripts scheduler.csproj",
+        "packagesPath": "C:\\Users\\c.kassylkassova\\.nuget\\packages\\",
+        "outputPath": "C:\\Projects\\applications-mesone\\Csharp scripts scheduler\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\i.korol\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\c.kassylkassova\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -55,7 +56,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
