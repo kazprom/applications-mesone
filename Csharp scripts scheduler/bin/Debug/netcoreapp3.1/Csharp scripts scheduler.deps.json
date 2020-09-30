@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "Csharp scripts scheduler/1.0.0": {
+        "runtime": {
+          "Csharp scripts scheduler.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Csharp scripts scheduler/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
