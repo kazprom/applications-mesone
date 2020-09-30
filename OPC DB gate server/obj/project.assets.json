@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    ".NETCoreApp,Version=v3.1": {}
+    ".NETCoreApp,Version=v3.1": {
+      "Lib/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/Lib.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Lib.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Lib/1.0.0": {
+      "type": "project",
+      "path": "../Lib/Lib.csproj",
+      "msbuildProject": "../Lib/Lib.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    ".NETCoreApp,Version=v3.1": []
+    ".NETCoreApp,Version=v3.1": [
+      "Lib >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\i.korol\\.nuget\\packages\\": {},
@@ -15,7 +34,7 @@
     "version": "1.0.0",
     "restore": {
       "projectUniqueName": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\OPC DB gate server\\OPC DB gate server.csproj",
-      "projectName": "OPC DB gate server",
+      "projectName": "App",
       "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\OPC DB gate server\\OPC DB gate server.csproj",
       "packagesPath": "C:\\Users\\i.korol\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\OPC DB gate server\\obj\\",
@@ -36,7 +55,11 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\Lib.csproj": {
+              "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\Lib.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

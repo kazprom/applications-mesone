@@ -6,15 +6,28 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "OPC DB gate server/1.0.0": {
+      "App/1.0.0": {
+        "dependencies": {
+          "Lib": "1.0.0"
+        },
         "runtime": {
-          "OPC DB gate server.dll": {}
+          "App.dll": {}
+        }
+      },
+      "Lib/1.0.0": {
+        "runtime": {
+          "Lib.dll": {}
         }
       }
     }
   },
   "libraries": {
-    "OPC DB gate server/1.0.0": {
+    "App/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Lib/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
