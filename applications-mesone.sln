@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30503.244
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OPC DB gate server", "OPC DB gate server\OPC DB gate server.csproj", "{B23CCAB7-46C8-4841-895D-B1335F558250}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lib", "Lib\Lib.csproj", "{4CCFC338-0118-4300-857D-24FD88E9BB3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OPC DB gate client", "OPC DB gate client\OPC DB gate client.csproj", "{A0B1AB2E-A89A-4FBD-BD6C-9C15CF0CB17E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Csharp scripts scheduler", "Csharp scripts scheduler\Csharp scripts scheduler.csproj", "{AACF060D-BDD0-4819-8395-C91AC7C38B3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XML DB gate", "XML DB gate\XML DB gate.csproj", "{42109593-B771-4E14-B9D5-C19FD4585300}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModBUS DB gate", "ModBUS DB gate\ModBUS DB gate.csproj", "{2C46A19D-063E-44F8-AF0D-554D75060EE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KingPigeonS272 DB gate", "KingPigeonS272 DB gate\KingPigeonS272 DB gate.csproj", "{809A63E0-5A83-4F2F-99D2-2F9C3E58BFE5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B23CCAB7-46C8-4841-895D-B1335F558250}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B23CCAB7-46C8-4841-895D-B1335F558250}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B23CCAB7-46C8-4841-895D-B1335F558250}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B23CCAB7-46C8-4841-895D-B1335F558250}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CCFC338-0118-4300-857D-24FD88E9BB3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CCFC338-0118-4300-857D-24FD88E9BB3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CCFC338-0118-4300-857D-24FD88E9BB3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CCFC338-0118-4300-857D-24FD88E9BB3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0B1AB2E-A89A-4FBD-BD6C-9C15CF0CB17E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0B1AB2E-A89A-4FBD-BD6C-9C15CF0CB17E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0B1AB2E-A89A-4FBD-BD6C-9C15CF0CB17E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0B1AB2E-A89A-4FBD-BD6C-9C15CF0CB17E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AACF060D-BDD0-4819-8395-C91AC7C38B3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AACF060D-BDD0-4819-8395-C91AC7C38B3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AACF060D-BDD0-4819-8395-C91AC7C38B3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AACF060D-BDD0-4819-8395-C91AC7C38B3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42109593-B771-4E14-B9D5-C19FD4585300}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42109593-B771-4E14-B9D5-C19FD4585300}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42109593-B771-4E14-B9D5-C19FD4585300}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42109593-B771-4E14-B9D5-C19FD4585300}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C46A19D-063E-44F8-AF0D-554D75060EE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C46A19D-063E-44F8-AF0D-554D75060EE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C46A19D-063E-44F8-AF0D-554D75060EE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C46A19D-063E-44F8-AF0D-554D75060EE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{809A63E0-5A83-4F2F-99D2-2F9C3E58BFE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{809A63E0-5A83-4F2F-99D2-2F9C3E58BFE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{809A63E0-5A83-4F2F-99D2-2F9C3E58BFE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{809A63E0-5A83-4F2F-99D2-2F9C3E58BFE5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {45E4317A-B5AA-4BFC-B5F5-81627E66EA4A}
+	EndGlobalSection
+EndGlobal
