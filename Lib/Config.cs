@@ -7,7 +7,7 @@ using System.Xml;
 
 namespace Lib
 {
-    public class Config : IDisposable
+    public class Config
     {
 
         #region CONST
@@ -18,20 +18,12 @@ namespace Lib
 
         #region STRUCTURES
 
-        public struct SNode
+        private struct SNode
         {
             public string path;
             public string value;
             public string default_value;
         }
-
-        #endregion
-
-        #region VARIABLES
-
-        private Thread thread;
-        private bool thread_execution_flag = true;
-        private bool disposedValue;
 
         #endregion
 
@@ -42,89 +34,76 @@ namespace Lib
 
 
         private List<SNode> nodes = new List<SNode>();
-        public List<SNode> Nodes { get { return nodes; } set { nodes = value; } }
-
-        #endregion
-
-        #region CONSTRUCTOR
-        public Config()
-        {
-            try
-            {
-                thread = new Thread(new ThreadStart(Handler)) { IsBackground = true, Name = "Config" };
-                thread.Start();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error creation object", ex);
-            }
-        }
 
         #endregion
 
         #region PUBLIC
 
-
-
-        public void Dispose()
+        public void Add(string path, string default_value)
         {
-            // Не изменяйте этот код. Разместите код очистки в методе "Dispose(bool disposing)".
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
+            try
+            {
+                nodes.Add(new SNode() { path = path, default_value = default_value });
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Error add", ex);
+            }
         }
+
+        public string Get(string path)
+        {
+            try
+            {
+                return nodes.Find(x => x.path.Equals(path)).value;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error get", ex);
+            }
+        }
+
+        public void Read()
+        {
+
+            try
+            {
+                XmlDocument doc = new XmlDocument();
+
+                if (!File.Exists(path_file))
+                {
+                    CreateTemplate(doc);
+                    doc.Save(path_file);
+                }
+
+                doc.Load(path_file);
+
+
+                for (int i = 0; i < nodes.Count; i++)
+                {
+                    string result = GetElementOrDefault(doc, $"/{varname_configuration}/{nodes[i].path}/".ToUpper(), nodes[i].default_value);
+                    if (result != nodes[i].value)
+                    {
+                        SNode node = nodes[i];
+                        node.value = result;
+                        nodes[i] = node;
+                        Logger.WriteMessage($"Config {nodes[i].path} = {nodes[i].value}");
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error read nodes", ex);
+            }
+        }
+
 
         #endregion
 
         #region PRIVATE
 
-        private void Handler()
-        {
-            while (thread_execution_flag)
-            {
-#if DEBUG
-                if (DateTime.Now.Second % 5 == 0)
-#else
-                if (DateTime.Now.Second == 0)
-#endif
-                {
-                    try
-                    {
-                        XmlDocument doc = new XmlDocument();
-
-                        if (!File.Exists(path_file))
-                        {
-                            CreateTemplate(doc);
-                            doc.Save(path_file);
-                        }
-
-                        doc.Load(path_file);
-
-
-                        for (int i = 0; i < nodes.Count; i++)
-                        {
-                            string result = GetElementOrDefault(doc, $"/{varname_configuration}/{nodes[i].path}/".ToUpper(), nodes[i].default_value);
-                            if (result != nodes[i].value)
-                            {
-                                SNode node = nodes[i];
-                                node.value = result;
-                                nodes[i] = node;
-                                Logger.WriteMessage($"Config {nodes[i].path} = {nodes[i].value}");
-                            }
-                        }
-
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.WriteMessage("Error read nodes", ex);
-                    }
-                    Thread.Sleep(1000);
-                }
-                else
-                {
-                    Thread.Sleep(100);
-                }
-            }
-        }
 
         private void CreateTemplate(XmlDocument doc)
         {
@@ -206,25 +185,6 @@ namespace Lib
                 throw new Exception("Error make X path", ex);
             }
         }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    thread_execution_flag = false;
-                    thread.Join();
-                    thread = null;
-                }
-
-                // TODO: освободить неуправляемые ресурсы (неуправляемые объекты) и переопределить метод завершения
-                // TODO: установить значение NULL для больших полей
-                disposedValue = true;
-            }
-        }
-
-
 
         #endregion
 

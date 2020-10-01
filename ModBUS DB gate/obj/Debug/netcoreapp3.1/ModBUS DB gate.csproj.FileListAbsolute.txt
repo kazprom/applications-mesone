@@ -10,3 +10,4 @@ C:\Users\i.korol\Desktop\DEV\applications-mesone\ModBUS DB gate\obj\Debug\netcor
 C:\Users\i.korol\Desktop\DEV\applications-mesone\ModBUS DB gate\obj\Debug\netcoreapp3.1\ModBUS DB gate.dll
 C:\Users\i.korol\Desktop\DEV\applications-mesone\ModBUS DB gate\obj\Debug\netcoreapp3.1\ModBUS DB gate.pdb
 C:\Users\i.korol\Desktop\DEV\applications-mesone\ModBUS DB gate\obj\Debug\netcoreapp3.1\ModBUS DB gate.genruntimeconfig.cache
+C:\Users\i.korol\Desktop\DEV\applications-mesone\ModBUS DB gate\obj\Debug\netcoreapp3.1\ModBUS DB gate.csprojAssemblyReference.cache

@@ -4,6 +4,6 @@ C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\bin\Debug\netstandard2.0\Li
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\obj\Debug\netstandard2.0\Lib.csprojAssemblyReference.cache
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\obj\Debug\netstandard2.0\Lib.AssemblyInfoInputs.cache
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\obj\Debug\netstandard2.0\Lib.AssemblyInfo.cs
-C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\obj\Debug\netstandard2.0\Lib.csproj.CoreCompileInputs.cache
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\obj\Debug\netstandard2.0\Lib.dll
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\obj\Debug\netstandard2.0\Lib.pdb
+C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\obj\Debug\netstandard2.0\Lib.csproj.CoreCompileInputs.cache

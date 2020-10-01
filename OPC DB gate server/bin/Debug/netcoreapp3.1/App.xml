@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <CONFIGURATION>
   <DB_TYPE>MySQL</DB_TYPE>
-  <CONNECTION_STRING>Driver={mySQL ODBC 8.0 ANSI Driver}; Server=myServerAddress;Option=131072;Stmt=;Database=myDataBase;User=myUsername;Password=myPassword;</CONNECTION_STRING>
+  <CONNECTION_STRING>Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;</CONNECTION_STRING>
   <DEPTH_LOG_DAY>2</DEPTH_LOG_DAY>
 </CONFIGURATION>

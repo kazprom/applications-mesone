@@ -12,7 +12,7 @@ namespace Lib
         public static string PathExeFolder { get { return System.AppDomain.CurrentDomain.BaseDirectory; } }
         public static string NameExeFile { get { return System.AppDomain.CurrentDomain.FriendlyName; } }
 
-        public static void Wait_Ctrl_C()
+        public static void Subscribe_Ctrl_C()
         {
             try
             {
@@ -29,12 +29,6 @@ namespace Lib
                                     System.Environment.Exit(0);
                                 }
                             };
-
-
-                while (true)
-                {
-                    Thread.Sleep(60000);
-                }
             }
             catch (Exception ex)
             {
@@ -43,7 +37,7 @@ namespace Lib
 
         }
 
-        public static void PrintInfo()
+        public static void PrintAppInfo()
         {
             Assembly assembly = Assembly.GetEntryAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);

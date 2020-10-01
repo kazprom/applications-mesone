@@ -12,3 +12,8 @@ C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\bin\Debug\ne
 C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\bin\Debug\netcoreapp3.1\App.pdb
 C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\obj\Debug\netcoreapp3.1\App.dll
 C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\obj\Debug\netcoreapp3.1\App.pdb
+C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\bin\Debug\netcoreapp3.1\System.Data.Odbc.dll
+C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\bin\Debug\netcoreapp3.1\runtimes\freebsd\lib\netcoreapp2.0\System.Data.Odbc.dll
+C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\bin\Debug\netcoreapp3.1\runtimes\linux\lib\netcoreapp2.0\System.Data.Odbc.dll
+C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\bin\Debug\netcoreapp3.1\runtimes\osx\lib\netcoreapp2.0\System.Data.Odbc.dll
+C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Data.Odbc.dll

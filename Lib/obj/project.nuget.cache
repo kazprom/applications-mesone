@@ -1,11 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "DK1eCZW6emwEipxlOEsPSsp870u6pOb7oCRhzxVOzget1LPjVVXzSpmqpCOGhEHWNZ2g6qCiErLlPAFPNCQo7w==",
+  "dgSpecHash": "edDEwvU3GUvPUbi5m47ArDP43NfcJtG8QSYnP/x8YLS+ZfNXB+BU47JIQtIVNZIJ0T8Wazy1QPwkT0XC3Sp15w==",
   "success": true,
   "projectFilePath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\Lib.csproj",
   "expectedPackageFiles": [
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+    "C:\\Users\\i.korol\\.nuget\\packages\\system.data.odbc\\4.7.0\\system.data.odbc.4.7.0.nupkg.sha512"
   ],
   "logs": []
 }
