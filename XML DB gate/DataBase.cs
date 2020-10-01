@@ -85,35 +85,36 @@ namespace XML_DB_gate
         private void MainActions()
         {
             TestConnection();
+            Write();
         }
 
         private void TestConnection()
         {
             try
             {
-                //lock (connection) lock (command)
-                //{
-                //    if (connection.ConnectionString != config.ConnectionString)
-                //    {
-                //        if (connection.State != ConnectionState.Closed)
-                //            connection.Close();
+                lock (connection) lock (command)
+                    {
+                        if (connection.ConnectionString != config.ConnectionString)
+                        {
+                            if (connection.State != ConnectionState.Closed)
+                                connection.Close();
 
-                //        connection.ConnectionString = config.ConnectionString;
-                //    }
+                            connection.ConnectionString = config.ConnectionString;
+                        }
 
-                //    if (connection.State != ConnectionState.Open)
-                //    {
-                //        connection.Open();
-                //    }
+                        if (connection.State != ConnectionState.Open)
+                        {
+                            connection.Open();
+                        }
 
-                //    if (config.DB_Type == Config.e_DB_Type.Unknown)
-                //        throw new Exception("Unknow type data base. Choise next options (microsoft sql server, mysql or postgresql) in config file parameter DB_TYPE");
+                        if (config.DB_Type == Config.e_DB_Type.Unknown)
+                            throw new Exception("Unknow type data base. Choise next options (microsoft sql server, mysql or postgresql) in config file parameter DB_TYPE");
 
-                //    command.Connection = (OdbcConnection)connection;
-                //    command.CommandText = "select 1";
-                //    command.Parameters.Clear();
-                //    command.ExecuteNonQuery();
-                //}
+                        command.Connection = (OdbcConnection)connection;
+                        command.CommandText = "select 1";
+                        command.Parameters.Clear();
+                        command.ExecuteNonQuery();
+                    }
             }
             catch (Exception ex)
             {
@@ -132,63 +133,131 @@ namespace XML_DB_gate
             return;
         }
 
-        public void WriterDataTable(long id, DateTime timestamp, string db_type, int depth_log_day, string connection_string)
+        public void Write()
         {
             try
             {
-                string sql = String.Empty;
+             
+                if (config.DataTable.Rows.Count > 0)
+                {
 
-                //if (!connected)
-                //    return;
+                    var table = config.DataTable;
 
-                //switch (config.DB_Type)
-                //{
-                //    case Config.e_DB_Type.Microsoft_SQL_Server:
-                //        {
-                //            sql = $@"
-                //    	DECLARE @id bigint,  @timestamp datetime,  @db_type nvarchar(max), @depth_log_day, @connection_string nvarchar(max);
-                //     SET @id = ?;
-                //        SET @timestamp = ?; 
-                //        SET @db_type = ?;
-                //        SET @depth_log_day = ?;
-                //        SET @connection_string = ?;
+                    string sql = String.Empty;
 
-                //       INSERT INTO[1C] (@id,  @timestamp,  @db_type, @depth_log_day, @connection_string)
-                //       VALUES
-                //       (@id,  @timestamp,  @db_type, @depth_log_day, @connection_string)";
+                    if (!connected)
+                        return;
 
-                //            command.CommandText = sql;
+                    switch (config.DB_Type)
+                    {
+                        case Config.e_DB_Type.Microsoft_SQL_Server:
+                        {
 
-                //            command.Parameters.Add("@program_id", OdbcType.BigInt).Value = id;
-                //            command.Parameters.Add("@timestamp", OdbcType.DateTime).Value = timestamp.ToString("yyyy-MM-dd hh:mm:ss");
-                //            command.Parameters.Add("@description", OdbcType.NVarChar).Value = db_type;
-                //            command.Parameters.Add("@description", OdbcType.BigInt).Value = depth_log_day;
-                //            command.Parameters.Add("@description", OdbcType.NVarChar).Value = connection_string;
-
-                //            break;
-                //        }
-                //    case Config.e_DB_Type.MySQL:
-                //        {
+                            //IF NOT EXISTS(SELECT * FROM INFORMATION_SCHEMA.COLUMNS
+                            //WHERE TABLE_NAME = '1C_xml_test' AND COLUMN_NAME = 'name' AND COLUMN_NAME = 'command' AND COLUMN_NAME = 'input'AND COLUMN_NAME = 'output')
+                            //BEGIN
+                            //    -- do something, e.g.
+                            //    -- ALTER TABLE TEST ADD PRICE DECIMAL
+                            //END
 
 
-                //            sql = $@"INSERT 1C (@id,  @timestamp,  @db_type, @depth_log_day, @connection_string) VALUES({id},'{timestamp.ToString("yyyy-MM-dd hh:mm:ss")}', ?, ?,?,?)";
-                //            command.CommandText = sql;
 
-                //            command.Parameters.Add("@program_id", OdbcType.BigInt).Value = id;
-                //            command.Parameters.Add("@timestamp", OdbcType.DateTime).Value = timestamp.ToString("yyyy-MM-dd hh:mm:ss");
-                //            command.Parameters.Add("@description", OdbcType.NVarChar).Value = db_type;
-                //            command.Parameters.Add("@description", OdbcType.BigInt).Value = depth_log_day;
-                //            command.Parameters.Add("@description", OdbcType.NVarChar).Value = connection_string;
 
-                //            break;
-                //        }
-                //    default:
-                //    {
-                //        break;
-                //    }
-                //}
+                            //       sql = $@"
+                            //DECLARE @id bigint,  @timestamp datetime,  @db_type nvarchar(max), @depth_log_day, @connection_string nvarchar(max);
+                            //SET @id = ?;
+                            //   SET @timestamp = ?; 
+                            //   SET @db_type = ?;
+                            //   SET @depth_log_day = ?;
+                            //   SET @connection_string = ?;
 
-                //command.ExecuteNonQuery();
+                                //  INSERT INTO[1C] (@id,  @timestamp,  @db_type, @depth_log_day, @connection_string)
+                                //  VALUES
+                                //  (@id,  @timestamp,  @db_type, @depth_log_day, @connection_string)";
+
+                                //       command.CommandText = sql;
+
+                                //       command.Parameters.Add("@program_id", OdbcType.BigInt).Value = id;
+                                //       command.Parameters.Add("@timestamp", OdbcType.DateTime).Value = timestamp.ToString("yyyy-MM-dd hh:mm:ss");
+                                //       command.Parameters.Add("@description", OdbcType.NVarChar).Value = db_type;
+                                //       command.Parameters.Add("@description", OdbcType.BigInt).Value = depth_log_day;
+                                //       command.Parameters.Add("@description", OdbcType.NVarChar).Value = connection_string;
+
+                                break;
+                        }
+                        case Config.e_DB_Type.MySQL:
+                        {
+
+                            //ALTER TABLE 1C_xml_test ADD COLUMN `name` TEXT,
+                            //ADD COLUMN  command TEXT,
+                            //    ADD COLUMN input TEXT,
+                            //    ADD COLUMN  output text
+
+                            sql = "SELECT `name`, `command`, `input`, `output` from 1C_xml_test limit 1";
+                            command.CommandText = sql;
+                            var count= command.ExecuteScalar();//.ExecuteNonQuery();
+
+                            //if (count > 0)
+                            //{
+                            //    sql = "ALTER TABLE 1C_xml_test SET ADD name text, command text, input text, output text";
+
+
+                            //}
+                            //    sql = "ALTER TABLE 1C_xml_test SET ADD name text, command text, input text, output text";
+
+
+                            sql = $@"CREATE TABLE 1C_xml_test
+                                                (
+                                                    program_id bigint NOT NULL,
+                                                    timestamp datetime NULL,
+                                                    description LONGTEXT NULL
+                                                 ) ";
+
+
+                                foreach (DataRow row in table.Rows)
+                            {
+
+                                string str_columns_values = "";
+                                //string table_name = "[" + row["nameOfTable"].ToString() + "] ";
+                                string str_columns = "[" + table.Columns[1].ColumnName + "],";
+                                string str_values = "'" + Convert.ToDateTime(row["date_time"])
+                                    .ToString("yyyy-MM-dd HH:mm:ss.fff") + "',";
+                                //string str_time_current = "'" + Convert.ToDateTime(row["date_time_pocket"]).ToString("yyyy-MM-dd HH:mm:ss.fff") + "',"; ;
+
+                                for (int i = 2; i < row.ItemArray.Length; i++)
+                                {
+                                    if (!row.IsNull(i))
+                                    {
+                                        str_values += "'" + row[i].ToString().Replace(",", ".") + "',";
+                                        str_columns += "[" + table.Columns[i].ColumnName.ToString() + "],";
+
+                                        str_columns_values += "[" + table.Columns[i].ColumnName.ToString() +
+                                                              "] = '" + row[i].ToString().Replace(",", ".") + "',";
+                                    }
+                                }
+                            }
+
+
+
+                            //sql = $@"INSERT 1C (@id,  @timestamp,  @db_type, @depth_log_day, @connection_string) VALUES({id},'{timestamp.ToString("yyyy-MM-dd hh:mm:ss")}', ?, ?,?,?)";
+                                    //command.CommandText = sql;
+
+                                    //command.Parameters.Add("@program_id", OdbcType.BigInt).Value = id;
+                                    //command.Parameters.Add("@timestamp", OdbcType.DateTime).Value = timestamp.ToString("yyyy-MM-dd hh:mm:ss");
+                                    //command.Parameters.Add("@description", OdbcType.NVarChar).Value = db_type;
+                                    //command.Parameters.Add("@description", OdbcType.BigInt).Value = depth_log_day;
+                                    //command.Parameters.Add("@description", OdbcType.NVarChar).Value = connection_string;
+
+                                    break;
+                        }
+                        default:
+                        {
+                            break;
+                        }
+                    }
+
+                    command.ExecuteNonQuery();
+                }
             }
             catch (Exception ex)
             {

@@ -242,3 +242,66 @@ DB_TYPE DB_TYPE = MySQL
 [01.10.2020 16:05:10]
 Programm ID=0
 DB connected = True
+[01.10.2020 16:27:02]
+Programm ID=0
+DB_TYPE DB_TYPE = MySQL
+[01.10.2020 16:51:12]
+Programm ID=0
+DB_TYPE DB_TYPE = MySQL
+[01.10.2020 16:51:12]
+Programm ID=0
+DB connected = True
+[01.10.2020 16:53:04]
+Programm ID=0
+DB_TYPE DB_TYPE = MySQL
+[01.10.2020 16:53:04]
+Programm ID=0
+DB connected = True
+[01.10.2020 17:06:14]
+Programm ID=0
+DB_TYPE DB_TYPE = MySQL
+[01.10.2020 17:06:15]
+Programm ID=0
+DB connected = True
+[01.10.2020 17:17:36]
+Programm ID=0
+DB_TYPE DB_TYPE = MySQL
+[01.10.2020 17:17:36]
+Programm ID=0
+DB connected = True
+[01.10.2020 17:17:54]
+Programm ID=0
+Error write to db System.ArgumentException: Column 'nameOfTable' does not belong to table .
+   at System.Data.DataRow.GetDataColumn(String columnName)
+   at System.Data.DataRow.get_Item(String columnName)
+   at XML_DB_gate.DataBase.Write() in C:\Projects\applications-mesone\XML DB gate\DataBase.cs:line 185
+[01.10.2020 17:18:08]
+Programm ID=0
+DB_TYPE DB_TYPE = MySQL
+[01.10.2020 17:18:08]
+Programm ID=0
+DB connected = True
+[01.10.2020 17:34:28]
+Programm ID=0
+DB_TYPE DB_TYPE = MySQL
+[01.10.2020 17:34:28]
+Programm ID=0
+DB connected = True
+[01.10.2020 17:38:20]
+Programm ID=0
+DB_TYPE DB_TYPE = MySQL
+[01.10.2020 17:38:21]
+Programm ID=0
+DB connected = True
+[01.10.2020 17:49:16]
+Programm ID=0
+DB_TYPE DB_TYPE = MySQL
+[01.10.2020 17:49:17]
+Programm ID=0
+DB connected = True
+[01.10.2020 17:50:02]
+Programm ID=0
+DB_TYPE DB_TYPE = MySQL
+[01.10.2020 17:50:02]
+Programm ID=0
+DB connected = True

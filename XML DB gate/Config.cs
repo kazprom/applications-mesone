@@ -12,15 +12,13 @@ namespace XML_DB_gate
 {
     class Config
     {
-        private DataTable table = new DataTable();
+
         private Logger logger = Logger.GetInstance();
-        private DataSet ds = new DataSet();
 
         #region VARIABLE
 
         string path_to_file = $@"{Program.PathExeFolder}{Program.NameExeFile.Split('.')[0]}.xml";
-
-        string path_to_file_xml = $@"{Program.PathExeFolder}\\Xml.xml";
+        string path_to_file_xml = $@"{Program.PathExeFolder}{Path.DirectorySeparatorChar}Xml.xml";
         private object xmlName, xmlValue, xmlNameEndElement;
 
         #endregion
@@ -47,8 +45,8 @@ namespace XML_DB_gate
 
         public Config()
         {
-            MainStart();
-
+            MainActions();
+            Console.WriteLine(path_to_file_xml);
             Thread thread = new Thread(new ThreadStart(Handler)) { IsBackground = true, Name = "Config" };
             thread.Start();
         }
@@ -85,6 +83,13 @@ namespace XML_DB_gate
 
         private bool flag = false;
 
+        private DataTable table = new DataTable();
+        public DataTable TableXML
+        {
+            get { return table; }
+            set { table = value; }
+        }
+
         private string connection_string = "Driver={mySQL ODBC 8.0 ANSI Driver};Server=myServerAddress;Option=131072;Stmt=;Database=myDataBase;User=myUsername;Password=myPassword;";
         public string ConnectionString { get { return connection_string; } private set { if (connection_string != value) connection_string = value; logger.WriteMessage(0, $"CONFIG {varname_connection_string} = {connection_string}"); } }
 
@@ -103,11 +108,11 @@ namespace XML_DB_gate
 
         #endregion
 
-        private void MainStart()
+        private void MainActions()
         {
             ReadData();
             ReadOutSideXML();
-           
+
         }
 
         private void Handler()
@@ -120,7 +125,7 @@ namespace XML_DB_gate
                 }
                 else
                 {
-                    MainStart();
+                    MainActions();
                     Thread.Sleep(1000);
                 }
             }
@@ -161,7 +166,7 @@ namespace XML_DB_gate
                                     CreateDataTable(xmlName);
                                 }
 
-                               // Console.WriteLine("<" + xmlName + ">");
+                                // Console.WriteLine("<" + xmlName + ">");
                             }
 
                             break;
@@ -170,7 +175,7 @@ namespace XML_DB_gate
                         var elements = (from nn in doc.Descendants() select nn.Value).Skip(2).ToList();
 
                         EditDT(elements, count);
-                       
+
                         Console.WriteLine(table);
                         Console.WriteLine();
 
