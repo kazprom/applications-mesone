@@ -11,3 +11,16 @@ C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\obj\Debug\ne
 C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\obj\Debug\netcoreapp3.1\OPC DB gate server.dll
 C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\obj\Debug\netcoreapp3.1\OPC DB gate server.pdb
 C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\obj\Debug\netcoreapp3.1\OPC DB gate server.genruntimeconfig.cache
+C:\Projects\applications-mesone\OPC DB gate server\bin\Debug\netcoreapp3.1\OPC DB gate server.exe
+C:\Projects\applications-mesone\OPC DB gate server\bin\Debug\netcoreapp3.1\OPC DB gate server.deps.json
+C:\Projects\applications-mesone\OPC DB gate server\bin\Debug\netcoreapp3.1\OPC DB gate server.runtimeconfig.json
+C:\Projects\applications-mesone\OPC DB gate server\bin\Debug\netcoreapp3.1\OPC DB gate server.runtimeconfig.dev.json
+C:\Projects\applications-mesone\OPC DB gate server\bin\Debug\netcoreapp3.1\OPC DB gate server.dll
+C:\Projects\applications-mesone\OPC DB gate server\bin\Debug\netcoreapp3.1\OPC DB gate server.pdb
+C:\Projects\applications-mesone\OPC DB gate server\obj\Debug\netcoreapp3.1\OPC DB gate server.csprojAssemblyReference.cache
+C:\Projects\applications-mesone\OPC DB gate server\obj\Debug\netcoreapp3.1\OPC DB gate server.AssemblyInfoInputs.cache
+C:\Projects\applications-mesone\OPC DB gate server\obj\Debug\netcoreapp3.1\OPC DB gate server.AssemblyInfo.cs
+C:\Projects\applications-mesone\OPC DB gate server\obj\Debug\netcoreapp3.1\OPC DB gate server.csproj.CoreCompileInputs.cache
+C:\Projects\applications-mesone\OPC DB gate server\obj\Debug\netcoreapp3.1\OPC DB gate server.dll
+C:\Projects\applications-mesone\OPC DB gate server\obj\Debug\netcoreapp3.1\OPC DB gate server.pdb
+C:\Projects\applications-mesone\OPC DB gate server\obj\Debug\netcoreapp3.1\OPC DB gate server.genruntimeconfig.cache

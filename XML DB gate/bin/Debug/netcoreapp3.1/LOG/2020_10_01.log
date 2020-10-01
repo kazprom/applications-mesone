@@ -1,0 +1,244 @@
+[01.10.2020 9:34:09]
+Programm ID=0
+Error! Can`t find xml file from C:\Projects\applications-mesone\XML DB gate\bin\Debug\netcoreapp3.1\XML DB gate.xml
+[01.10.2020 9:34:09]
+Programm ID=0
+DB connected = True
+[01.10.2020 9:36:23]
+Programm ID=0
+Error! Can`t find xml file from C:\Projects\applications-mesone\XML DB gate\bin\Debug\netcoreapp3.1\XML DB gate.xml
+[01.10.2020 9:36:23]
+Programm ID=0
+DB connected = True
+[01.10.2020 9:36:53]
+Programm ID=0
+DB connected = True
+[01.10.2020 9:50:48]
+Programm ID=0
+DB connected = True
+[01.10.2020 9:55:05]
+Programm ID=0
+DB connected = True
+[01.10.2020 9:56:44]
+Programm ID=0
+DB connected = True
+[01.10.2020 10:45:15]
+Programm ID=0
+DB connected = True
+[01.10.2020 10:47:14]
+Programm ID=0
+DB connected = True
+[01.10.2020 10:49:44]
+Programm ID=0
+DB connected = True
+[01.10.2020 11:44:42]
+Programm ID=0
+DB connected = True
+[01.10.2020 11:57:55]
+Programm ID=0
+DB connected = True
+[01.10.2020 11:58:42]
+Programm ID=0
+DB connected = True
+[01.10.2020 12:41:15]
+Programm ID=0
+DB connected = True
+[01.10.2020 12:45:08]
+Programm ID=0
+DB connected = True
+[01.10.2020 12:49:35]
+Programm ID=0
+DB connected = True
+[01.10.2020 13:18:08]
+Programm ID=0
+DB connected = True
+[01.10.2020 13:49:17]
+Programm ID=0
+System.Data.SyntaxErrorException: Syntax error: Missing operand after 'number' operator.
+   at System.Data.ExpressionParser.Parse()
+   at System.Data.DataExpression..ctor(DataTable table, String expression, Type type)
+   at System.Data.Select..ctor(DataTable table, String filterExpression, String sort, DataViewRowState recordStates)
+   at System.Data.DataTable.Select(String filterExpression)
+   at XML_DB_gate.Config.EditDT(List`1 values, Int32 count) in C:\Projects\applications-mesone\XML DB gate\Config.cs:line 282
+   at XML_DB_gate.Config.ReadOutSideXML() in C:\Projects\applications-mesone\XML DB gate\Config.cs:line 182
+[01.10.2020 13:49:28]
+Programm ID=0
+DB connected = True
+[01.10.2020 13:49:45]
+Programm ID=0
+DB connected = True
+[01.10.2020 13:53:43]
+Programm ID=0
+DB connected = True
+[01.10.2020 14:00:20]
+Programm ID=0
+DB connected = True
+[01.10.2020 14:03:50]
+Programm ID=0
+DB connected = True
+[01.10.2020 14:04:00]
+Programm ID=0
+System.InvalidCastException: Unable to cast object of type 'System.Int32' to type 'System.String'.
+   at XML_DB_gate.Config.<>c__DisplayClass32_0.<EditDT>b__1(String x) in C:\Projects\applications-mesone\XML DB gate\Config.cs:line 285
+   at System.Collections.Generic.List`1.Find(Predicate`1 match)
+   at XML_DB_gate.Config.EditDT(List`1 values, Int32 count) in C:\Projects\applications-mesone\XML DB gate\Config.cs:line 285
+   at XML_DB_gate.Config.ReadOutSideXML() in C:\Projects\applications-mesone\XML DB gate\Config.cs:line 182
+[01.10.2020 14:04:43]
+Programm ID=0
+DB connected = True
+[01.10.2020 14:05:04]
+Programm ID=0
+DB connected = True
+[01.10.2020 14:09:35]
+Programm ID=0
+System.InvalidCastException: Unable to cast object of type 'System.Int32' to type 'System.String'.
+   at XML_DB_gate.Config.<>c__DisplayClass32_0.<EditDT>b__1(String x) in C:\Projects\applications-mesone\XML DB gate\Config.cs:line 286
+   at System.Collections.Generic.List`1.Find(Predicate`1 match)
+   at XML_DB_gate.Config.EditDT(List`1 values, Int32 count) in C:\Projects\applications-mesone\XML DB gate\Config.cs:line 286
+   at XML_DB_gate.Config.ReadOutSideXML() in C:\Projects\applications-mesone\XML DB gate\Config.cs:line 182
+[01.10.2020 14:12:12]
+Programm ID=0
+DB connected = True
+[01.10.2020 14:14:30]
+Programm ID=0
+DB connected = True
+[01.10.2020 14:18:41]
+Programm ID=0
+DB connected = True
+[01.10.2020 14:25:22]
+Programm ID=0
+DB connected = True
+[01.10.2020 14:30:04]
+Programm ID=0
+DB connected = True
+[01.10.2020 14:47:21]
+Programm ID=0
+DB connected = True
+[01.10.2020 14:47:39]
+Programm ID=0
+DB connected = True
+[01.10.2020 14:48:38]
+Programm ID=0
+DB connected = True
+[01.10.2020 14:50:26]
+Programm ID=0
+DB connected = True
+[01.10.2020 14:51:31]
+Programm ID=0
+DB connected = True
+[01.10.2020 14:53:07]
+Programm ID=0
+DB connected = True
+[01.10.2020 15:00:47]
+Programm ID=0
+DB connected = True
+[01.10.2020 15:05:13]
+Programm ID=0
+DB connected = True
+[01.10.2020 15:09:11]
+Programm ID=0
+DB connected = True
+[01.10.2020 15:12:13]
+Programm ID=0
+DB connected = True
+[01.10.2020 15:14:50]
+Programm ID=0
+DB connected = True
+[01.10.2020 15:15:00]
+Programm ID=0
+System.ArgumentException: Input string was not in a correct format.Couldn't store <test> in id Column.  Expected type is Int32.
+ ---> System.FormatException: Input string was not in a correct format.
+   at System.Number.ThrowOverflowOrFormatException(ParsingStatus status, TypeCode type)
+   at System.String.System.IConvertible.ToInt32(IFormatProvider provider)
+   at System.Data.Common.Int32Storage.Set(Int32 record, Object value)
+   at System.Data.DataColumn.set_Item(Int32 record, Object value)
+   --- End of inner exception stack trace ---
+   at System.Data.DataColumn.set_Item(Int32 record, Object value)
+   at System.Data.DataRow.set_Item(DataColumn column, Object value)
+   at System.Data.DataRow.set_Item(Int32 columnIndex, Object value)
+   at XML_DB_gate.Config.EditDT(List`1 values, Int32 count) in C:\Projects\applications-mesone\XML DB gate\Config.cs:line 277
+   at XML_DB_gate.Config.ReadOutSideXML() in C:\Projects\applications-mesone\XML DB gate\Config.cs:line 182
+[01.10.2020 15:15:32]
+Programm ID=0
+DB connected = True
+[01.10.2020 15:17:47]
+Programm ID=0
+DB connected = True
+[01.10.2020 15:17:59]
+Programm ID=0
+DB connected = True
+[01.10.2020 15:18:47]
+Programm ID=0
+DB connected = True
+[01.10.2020 15:20:49]
+Programm ID=0
+DB connected = True
+[01.10.2020 15:21:26]
+Programm ID=0
+DB connected = True
+[01.10.2020 15:22:18]
+Programm ID=0
+DB connected = True
+[01.10.2020 15:25:07]
+Programm ID=0
+DB connected = True
+[01.10.2020 15:28:33]
+Programm ID=0
+DB connected = True
+[01.10.2020 15:30:00]
+Programm ID=0
+DB connected = True
+[01.10.2020 15:35:02]
+Programm ID=0
+DB connected = True
+[01.10.2020 15:40:09]
+Programm ID=0
+DB connected = True
+[01.10.2020 15:43:07]
+Programm ID=0
+DB connected = True
+[01.10.2020 15:46:11]
+Programm ID=0
+DB connected = True
+[01.10.2020 15:47:46]
+Programm ID=0
+DB connected = True
+[01.10.2020 16:03:17]
+Programm ID=0
+DB_TYPE DB_TYPE = MySQL
+[01.10.2020 16:03:17]
+Programm ID=0
+System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+   at System.Collections.Generic.List`1.get_Item(Int32 index)
+   at XML_DB_gate.Config.EditDT(List`1 values, Int32 count) in C:\Projects\applications-mesone\XML DB gate\Config.cs:line 287
+   at XML_DB_gate.Config.ReadOutSideXML() in C:\Projects\applications-mesone\XML DB gate\Config.cs:line 172
+[01.10.2020 16:03:17]
+Programm ID=0
+DB connected = True
+[01.10.2020 16:03:49]
+Programm ID=0
+DB_TYPE DB_TYPE = MySQL
+[01.10.2020 16:03:49]
+Programm ID=0
+System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+   at System.Collections.Generic.List`1.get_Item(Int32 index)
+   at XML_DB_gate.Config.EditDT(List`1 values, Int32 count) in C:\Projects\applications-mesone\XML DB gate\Config.cs:line 287
+   at XML_DB_gate.Config.ReadOutSideXML() in C:\Projects\applications-mesone\XML DB gate\Config.cs:line 172
+[01.10.2020 16:03:49]
+Programm ID=0
+DB connected = True
+[01.10.2020 16:03:57]
+Programm ID=0
+DB_TYPE DB_TYPE = MySQL
+[01.10.2020 16:04:43]
+Programm ID=0
+DB_TYPE DB_TYPE = MySQL
+[01.10.2020 16:04:47]
+Programm ID=0
+DB connected = True
+[01.10.2020 16:05:09]
+Programm ID=0
+DB_TYPE DB_TYPE = MySQL
+[01.10.2020 16:05:10]
+Programm ID=0
+DB connected = True

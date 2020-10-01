@@ -11,3 +11,16 @@ C:\Users\i.korol\Desktop\DEV\applications-mesone\Csharp scripts scheduler\obj\De
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Csharp scripts scheduler\obj\Debug\netcoreapp3.1\Csharp scripts scheduler.dll
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Csharp scripts scheduler\obj\Debug\netcoreapp3.1\Csharp scripts scheduler.pdb
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Csharp scripts scheduler\obj\Debug\netcoreapp3.1\Csharp scripts scheduler.genruntimeconfig.cache
+C:\Projects\applications-mesone\Csharp scripts scheduler\bin\Debug\netcoreapp3.1\Csharp scripts scheduler.exe
+C:\Projects\applications-mesone\Csharp scripts scheduler\bin\Debug\netcoreapp3.1\Csharp scripts scheduler.deps.json
+C:\Projects\applications-mesone\Csharp scripts scheduler\bin\Debug\netcoreapp3.1\Csharp scripts scheduler.runtimeconfig.json
+C:\Projects\applications-mesone\Csharp scripts scheduler\bin\Debug\netcoreapp3.1\Csharp scripts scheduler.runtimeconfig.dev.json
+C:\Projects\applications-mesone\Csharp scripts scheduler\bin\Debug\netcoreapp3.1\Csharp scripts scheduler.dll
+C:\Projects\applications-mesone\Csharp scripts scheduler\bin\Debug\netcoreapp3.1\Csharp scripts scheduler.pdb
+C:\Projects\applications-mesone\Csharp scripts scheduler\obj\Debug\netcoreapp3.1\Csharp scripts scheduler.csprojAssemblyReference.cache
+C:\Projects\applications-mesone\Csharp scripts scheduler\obj\Debug\netcoreapp3.1\Csharp scripts scheduler.AssemblyInfoInputs.cache
+C:\Projects\applications-mesone\Csharp scripts scheduler\obj\Debug\netcoreapp3.1\Csharp scripts scheduler.AssemblyInfo.cs
+C:\Projects\applications-mesone\Csharp scripts scheduler\obj\Debug\netcoreapp3.1\Csharp scripts scheduler.csproj.CoreCompileInputs.cache
+C:\Projects\applications-mesone\Csharp scripts scheduler\obj\Debug\netcoreapp3.1\Csharp scripts scheduler.dll
+C:\Projects\applications-mesone\Csharp scripts scheduler\obj\Debug\netcoreapp3.1\Csharp scripts scheduler.pdb
+C:\Projects\applications-mesone\Csharp scripts scheduler\obj\Debug\netcoreapp3.1\Csharp scripts scheduler.genruntimeconfig.cache

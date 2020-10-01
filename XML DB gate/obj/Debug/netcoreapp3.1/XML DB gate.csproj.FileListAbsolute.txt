@@ -10,16 +10,8 @@ C:\Users\i.korol\Desktop\DEV\applications-mesone\XML DB gate\obj\Debug\netcoreap
 C:\Users\i.korol\Desktop\DEV\applications-mesone\XML DB gate\obj\Debug\netcoreapp3.1\XML DB gate.dll
 C:\Users\i.korol\Desktop\DEV\applications-mesone\XML DB gate\obj\Debug\netcoreapp3.1\XML DB gate.pdb
 C:\Users\i.korol\Desktop\DEV\applications-mesone\XML DB gate\obj\Debug\netcoreapp3.1\XML DB gate.genruntimeconfig.cache
-C:\Projects\applications-mesone\XML DB gate\bin\Debug\netcoreapp3.1\XML DB gate.exe
-C:\Projects\applications-mesone\XML DB gate\bin\Debug\netcoreapp3.1\XML DB gate.deps.json
-C:\Projects\applications-mesone\XML DB gate\bin\Debug\netcoreapp3.1\XML DB gate.runtimeconfig.json
-C:\Projects\applications-mesone\XML DB gate\bin\Debug\netcoreapp3.1\XML DB gate.runtimeconfig.dev.json
-C:\Projects\applications-mesone\XML DB gate\bin\Debug\netcoreapp3.1\XML DB gate.dll
-C:\Projects\applications-mesone\XML DB gate\bin\Debug\netcoreapp3.1\XML DB gate.pdb
 C:\Projects\applications-mesone\XML DB gate\obj\Debug\netcoreapp3.1\XML DB gate.AssemblyInfoInputs.cache
 C:\Projects\applications-mesone\XML DB gate\obj\Debug\netcoreapp3.1\XML DB gate.AssemblyInfo.cs
-C:\Projects\applications-mesone\XML DB gate\obj\Debug\netcoreapp3.1\XML DB gate.dll
-C:\Projects\applications-mesone\XML DB gate\obj\Debug\netcoreapp3.1\XML DB gate.pdb
 C:\Projects\applications-mesone\XML DB gate\obj\Debug\netcoreapp3.1\XML DB gate.genruntimeconfig.cache
 C:\Projects\applications-mesone\XML DB gate\bin\Debug\netcoreapp3.1\System.Data.Odbc.dll
 C:\Projects\applications-mesone\XML DB gate\bin\Debug\netcoreapp3.1\runtimes\freebsd\lib\netcoreapp2.0\System.Data.Odbc.dll
@@ -28,3 +20,12 @@ C:\Projects\applications-mesone\XML DB gate\bin\Debug\netcoreapp3.1\runtimes\osx
 C:\Projects\applications-mesone\XML DB gate\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Data.Odbc.dll
 C:\Projects\applications-mesone\XML DB gate\obj\Debug\netcoreapp3.1\XML DB gate.csproj.CoreCompileInputs.cache
 C:\Projects\applications-mesone\XML DB gate\obj\Debug\netcoreapp3.1\XML DB gate.csproj.CopyComplete
+C:\Projects\applications-mesone\XML DB gate\obj\Debug\netcoreapp3.1\XML DB gate.csprojAssemblyReference.cache
+C:\Projects\applications-mesone\XML DB gate\bin\Debug\netcoreapp3.1\App.exe
+C:\Projects\applications-mesone\XML DB gate\bin\Debug\netcoreapp3.1\App.deps.json
+C:\Projects\applications-mesone\XML DB gate\bin\Debug\netcoreapp3.1\App.runtimeconfig.json
+C:\Projects\applications-mesone\XML DB gate\bin\Debug\netcoreapp3.1\App.runtimeconfig.dev.json
+C:\Projects\applications-mesone\XML DB gate\bin\Debug\netcoreapp3.1\App.dll
+C:\Projects\applications-mesone\XML DB gate\bin\Debug\netcoreapp3.1\App.pdb
+C:\Projects\applications-mesone\XML DB gate\obj\Debug\netcoreapp3.1\App.dll
+C:\Projects\applications-mesone\XML DB gate\obj\Debug\netcoreapp3.1\App.pdb

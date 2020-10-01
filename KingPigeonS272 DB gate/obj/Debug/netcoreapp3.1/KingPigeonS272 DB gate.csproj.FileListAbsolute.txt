@@ -11,3 +11,16 @@ C:\Users\i.korol\Desktop\DEV\applications-mesone\KingPigeonS272 DB gate\obj\Debu
 C:\Users\i.korol\Desktop\DEV\applications-mesone\KingPigeonS272 DB gate\obj\Debug\netcoreapp3.1\KingPigeonS272 DB gate.dll
 C:\Users\i.korol\Desktop\DEV\applications-mesone\KingPigeonS272 DB gate\obj\Debug\netcoreapp3.1\KingPigeonS272 DB gate.pdb
 C:\Users\i.korol\Desktop\DEV\applications-mesone\KingPigeonS272 DB gate\obj\Debug\netcoreapp3.1\KingPigeonS272 DB gate.genruntimeconfig.cache
+C:\Projects\applications-mesone\KingPigeonS272 DB gate\bin\Debug\netcoreapp3.1\KingPigeonS272 DB gate.exe
+C:\Projects\applications-mesone\KingPigeonS272 DB gate\bin\Debug\netcoreapp3.1\KingPigeonS272 DB gate.deps.json
+C:\Projects\applications-mesone\KingPigeonS272 DB gate\bin\Debug\netcoreapp3.1\KingPigeonS272 DB gate.runtimeconfig.json
+C:\Projects\applications-mesone\KingPigeonS272 DB gate\bin\Debug\netcoreapp3.1\KingPigeonS272 DB gate.runtimeconfig.dev.json
+C:\Projects\applications-mesone\KingPigeonS272 DB gate\bin\Debug\netcoreapp3.1\KingPigeonS272 DB gate.dll
+C:\Projects\applications-mesone\KingPigeonS272 DB gate\bin\Debug\netcoreapp3.1\KingPigeonS272 DB gate.pdb
+C:\Projects\applications-mesone\KingPigeonS272 DB gate\obj\Debug\netcoreapp3.1\KingPigeonS272 DB gate.csprojAssemblyReference.cache
+C:\Projects\applications-mesone\KingPigeonS272 DB gate\obj\Debug\netcoreapp3.1\KingPigeonS272 DB gate.AssemblyInfoInputs.cache
+C:\Projects\applications-mesone\KingPigeonS272 DB gate\obj\Debug\netcoreapp3.1\KingPigeonS272 DB gate.AssemblyInfo.cs
+C:\Projects\applications-mesone\KingPigeonS272 DB gate\obj\Debug\netcoreapp3.1\KingPigeonS272 DB gate.csproj.CoreCompileInputs.cache
+C:\Projects\applications-mesone\KingPigeonS272 DB gate\obj\Debug\netcoreapp3.1\KingPigeonS272 DB gate.dll
+C:\Projects\applications-mesone\KingPigeonS272 DB gate\obj\Debug\netcoreapp3.1\KingPigeonS272 DB gate.pdb
+C:\Projects\applications-mesone\KingPigeonS272 DB gate\obj\Debug\netcoreapp3.1\KingPigeonS272 DB gate.genruntimeconfig.cache
