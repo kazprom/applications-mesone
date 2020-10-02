@@ -1,0 +1,44 @@
+[02.10.2020 18:51:55]
+Config DB_TYPE = MySQL
+[02.10.2020 18:51:55]
+Config CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[02.10.2020 18:51:55]
+Listener ID<5> 127.0.0.1:1000 opened
+[02.10.2020 18:51:55]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[02.10.2020 18:52:00]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[02.10.2020 18:52:05]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[02.10.2020 18:57:55]
+Config DB_TYPE = MySQL
+[02.10.2020 18:57:55]
+Config CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[02.10.2020 18:57:55]
+Listener ID<5> 127.0.0.1:1000 opened
+[02.10.2020 18:57:55]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[02.10.2020 18:57:56]
+Config DEPTH_LOG_DAY = 2
+[02.10.2020 18:58:00]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[02.10.2020 18:58:05]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[02.10.2020 20:06:06]
+Config DB_TYPE = MySQL
+[02.10.2020 20:06:06]
+Config CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[02.10.2020 20:06:07]
+Listener ID<5> 127.0.0.1:1000 opened
+[02.10.2020 20:06:07]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[02.10.2020 20:06:08]
+Config DEPTH_LOG_DAY = 2
+[02.10.2020 20:06:12]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[02.10.2020 20:06:17]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[02.10.2020 20:06:22]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[02.10.2020 20:06:27]
+Listener ID<5> 127.0.0.1:1000 waiting ...

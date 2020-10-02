@@ -7,7 +7,7 @@ using System.Xml;
 
 namespace Lib
 {
-    public class Config
+    public class XML
     {
 
         #region CONST
@@ -16,80 +16,102 @@ namespace Lib
 
         #endregion
 
-        #region STRUCTURES
 
-        private struct SNode
+        public class Node
         {
-            public string path;
-            public string value;
-            public string default_value;
+
+            private string path;
+            public string Path { get { return path; } set { path = value; } }
+
+            private string value;
+            public string Value { get { return value; } set { if (value != this.value) { this.value = value; Logger.WriteMessage($"Config {path} = {this.value}"); }; } }
+
+            private string default_value;
+            public string DefaultValue { get { return default_value; } set { default_value = value; } }
+
+
         }
 
-        #endregion
 
         #region PROPERTIES
 
-        private string path_file;
-        public string PathFile { get { return path_file; } set { path_file = value; } }
+        private string path;
+        public string Path { get { return path; } set { path = value; } }
 
+        #endregion
 
-        private List<SNode> nodes = new List<SNode>();
+        #region VARIABLES
+
+        private List<Node> nodes = new List<Node>();
 
         #endregion
 
         #region PUBLIC
 
-        public void Add(string path, string default_value)
+        public Node AddNode(string path, string default_value)
         {
             try
             {
-                nodes.Add(new SNode() { path = path, default_value = default_value });
+                Node node = new Node() { Path = path, DefaultValue = default_value };
+                nodes.Add(node);
+                return node;
             }
             catch (Exception ex)
             {
-
                 throw new Exception("Error add", ex);
             }
         }
-
-        public string Get(string path)
+        public Node FindNode(string path)
         {
             try
             {
-                return nodes.Find(x => x.path.Equals(path)).value;
+                return nodes.Find(x => x.Path.Equals(path));
             }
             catch (Exception ex)
             {
-                throw new Exception("Error get", ex);
+                throw new Exception("Error find node", ex);
             }
         }
 
-        public void Read()
+        public bool ExistNode(string path)
+        {
+            try
+            {
+                return FindNode(path) != null;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error check for exist", ex);
+            }
+        }
+
+
+
+
+
+        public string GetValue(string path)
+        {
+            try
+            {
+                return nodes.Find(x => x.Path.Equals(path)).Value;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error get value", ex);
+            }
+        }
+
+        public void ReadAllValues()
         {
 
             try
             {
-                XmlDocument doc = new XmlDocument();
 
-                if (!File.Exists(path_file))
-                {
-                    CreateTemplate(doc);
-                    doc.Save(path_file);
-                }
-
-                doc.Load(path_file);
 
 
                 for (int i = 0; i < nodes.Count; i++)
                 {
-                    string result = GetElementOrDefault(doc, $"/{varname_configuration}/{nodes[i].path}/".ToUpper(), nodes[i].default_value);
-                    if (result != nodes[i].value)
-                    {
-                        SNode node = nodes[i];
-                        node.value = result;
-                        nodes[i] = node;
-                        Logger.WriteMessage($"Config {nodes[i].path} = {nodes[i].value}");
-                    }
+
                 }
 
             }
@@ -99,7 +121,37 @@ namespace Lib
             }
         }
 
+        public string ReadValue(string path, string default_value = null)
+        {
+            try
+            {
+                Node result = FindNode(path);
 
+                if (result == null)
+                {
+                    result = AddNode(path, default_value);
+                }
+
+                XmlDocument doc = new XmlDocument();
+
+                if (!File.Exists(this.path))
+                {
+                    CreateTemplate(doc);
+                    doc.Save(this.path);
+                }
+
+                doc.Load(this.path);
+
+                result.Value = GetElementOrDefault(doc, $"/{varname_configuration}/{path}/".ToUpper(), default_value);
+                return result.Value;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Error read node", ex);
+            }
+        }
         #endregion
 
         #region PRIVATE
@@ -185,6 +237,8 @@ namespace Lib
                 throw new Exception("Error make X path", ex);
             }
         }
+
+
 
         #endregion
 

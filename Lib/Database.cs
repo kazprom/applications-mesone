@@ -41,7 +41,23 @@ namespace Lib
 
         #region PUBLICS
 
-        public void Read(ref DataSet ds)
+
+        public void Read(DataSet ds)
+        {
+            try
+            {
+                foreach (DataTable table in ds.Tables)
+                {
+                    Read(table);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error read data set", ex);
+            }
+        }
+        public void Read(DataTable dt)
         {
             try
             {
@@ -51,81 +67,79 @@ namespace Lib
                 string sql = string.Empty;
 
 
-                foreach (DataTable table in ds.Tables)
+
+                string[] columns_names = dt.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToArray();
+
+                switch (type)
                 {
-                    string[] columns_names = table.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToArray();
+                    case EType.MSSQLServer:
+                        {
+                            sql = $"SELECT [{string.Join("],[", columns_names)}] FROM [{dt.TableName}]";
+                            break;
+                        }
+                    case EType.MySQL:
+                    case EType.PostgreSQL:
+                        {
+                            sql = $"SELECT `{string.Join("`,`", columns_names)}` FROM `{dt.TableName}`";
+                            break;
+                        }
+                }
 
-                    switch (type)
+
+
+                if (dt.PrimaryKey.Length > 0)
+                {
+                    DataTable result = dt.Clone();
+                    lock (connection)
                     {
-                        case EType.MSSQLServer:
-                            {
-                                sql = $"SELECT [{string.Join("],[", columns_names)}] FROM [{table.TableName}]";
-                                break;
-                            }
-                        case EType.MySQL:
-                        case EType.PostgreSQL:
-                            {
-                                sql = $"SELECT `{string.Join("`,`", columns_names)}` FROM `{table.TableName}`";
-                                break;
-                            }
+                        OdbcDataAdapter adapter = new OdbcDataAdapter(sql, connection);
+                        adapter.Fill(result);
                     }
 
-                    
-
-                    if (table.PrimaryKey.Length > 0)
+                    DataTable unnecessary = dt.Copy();
+                    foreach (DataRow row in result.Rows)
                     {
-                        DataTable result = table.Clone();
-                        lock (connection)
+                        List<object> pk = new List<object>();
+                        foreach (DataColumn dc in result.PrimaryKey)
                         {
-                            OdbcDataAdapter adapter = new OdbcDataAdapter(sql, connection);
-                            adapter.Fill(result);
+                            pk.Add(row.Field<object>(dc));
                         }
 
-                        DataTable unnecessary = table.Copy();
-                        foreach (DataRow row in result.Rows)
+                        DataRow fr = dt.Rows.Find(pk.ToArray());
+                        if (fr == null)
                         {
-                            List<object> pk = new List<object>();
-                            foreach (DataColumn dc in result.PrimaryKey)
-                            {
-                                pk.Add(row.Field<object>(dc));
-                            }
-
-                            DataRow fr = table.Rows.Find(pk.ToArray());
-                            if (fr == null)
-                            {
-                                table.Rows.Add(row.ItemArray);
-                            }
-                            else
-                            {
-                                fr.ItemArray = row.ItemArray;
-                                unnecessary.Rows.Remove(unnecessary.Rows.Find(pk.ToArray()));
-                            }
+                            dt.Rows.Add(row.ItemArray);
                         }
-                        foreach (DataRow row in unnecessary.Rows)
+                        else
                         {
-                            List<object> pk = new List<object>();
-                            foreach (DataColumn dc in unnecessary.PrimaryKey)
-                            {
-                                pk.Add(row.Field<object>(dc));
-                            }
-                            DataRow dr = table.Rows.Find(pk.ToArray());
-                            dr.Delete();
+                            fr.ItemArray = row.ItemArray;
+                            unnecessary.Rows.Remove(unnecessary.Rows.Find(pk.ToArray()));
                         }
                     }
-                    else
+                    foreach (DataRow row in unnecessary.Rows)
                     {
-                        lock (connection)
+                        List<object> pk = new List<object>();
+                        foreach (DataColumn dc in unnecessary.PrimaryKey)
                         {
-                            OdbcDataAdapter adapter = new OdbcDataAdapter(sql, connection);
-                            adapter.Fill(table);
+                            pk.Add(row.Field<object>(dc));
                         }
+                        DataRow dr = dt.Rows.Find(pk.ToArray());
+                        dr.Delete();
+                    }
+                }
+                else
+                {
+                    lock (connection)
+                    {
+                        OdbcDataAdapter adapter = new OdbcDataAdapter(sql, connection);
+                        adapter.Fill(dt);
                     }
                 }
 
             }
             catch (Exception ex)
             {
-                throw new Exception("Error read", ex);
+                throw new Exception("Error read data table", ex);
             }
         }
 
@@ -143,6 +157,11 @@ namespace Lib
             }
         }
 
+
+        public void Sync(DataSet ds)
+        {
+
+        }
 
         public void AddTables(DataSet ds)
         {

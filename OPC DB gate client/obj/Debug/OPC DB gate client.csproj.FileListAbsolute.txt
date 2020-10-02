@@ -1,6 +1,5 @@
 C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\bin\Debug\OPC DB gate client.exe
 C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\bin\Debug\OPC DB gate client.pdb
-C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\obj\Debug\OPC DB gate client.csprojAssemblyReference.cache
 C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\obj\Debug\OPC DB gate client.csproj.CoreCompileInputs.cache
 C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\obj\Debug\OPC DB gate client.exe
 C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\obj\Debug\OPC DB gate client.pdb

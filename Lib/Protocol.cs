@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -9,26 +8,32 @@ namespace Lib
 {
     public class Protocol
     {
+        
         private static byte[] start_of_package = { 0, 0, 0, 0, 0, 0 };
 
-        private static byte[] size_package = new byte[sizeof(int)];
-        private static Queue<byte> package = new Queue<byte>();
+        private byte[] size_package = new byte[sizeof(int)];
+        private Queue<byte> package = new Queue<byte>();
 
-        private static int counter_start_of_package = 0;
-        private static int counter_size_of_package = 0;
+        private int counter_start_of_package = 0;
+        private int counter_size_of_package = 0;
 
-        public const string MSG_OK = "OK";
-
-        public enum ePackageTypes : byte
+        [Serializable]
+        public struct SCell
         {
-            UNKNOWN = 0,
-            KEY = 1,
-            INFO = 2,
-            DATA = 3,
-            DIAG = 4
+            public long id;
+            public DateTime timestamp;
+            public object value;
+            public byte quality;
         }
 
-        public static byte[] BuildPackage(byte[] data, ePackageTypes e)
+        public enum EPackageTypes : byte
+        {
+            UNKNOWN = 0,
+            UNENCRYPT = 1,
+            ENCRYPT = 2
+        }
+
+        public static byte[] BuildPackage(byte[] data, EPackageTypes e)
         {
 
             try
@@ -37,7 +42,7 @@ namespace Lib
                     return null;
 
                 byte[] title = start_of_package;
-                byte[] type = /*new byte[] {*/ BitConverter.GetBytes((byte)e) /*}*/;
+                byte[] type = BitConverter.GetBytes((byte)e);
                 byte[] size = BitConverter.GetBytes(type.Length + data.Length);
 
                 byte[] buf = new byte[title.Length + size.Length + type.Length + data.Length];
@@ -56,7 +61,7 @@ namespace Lib
             }
         }
 
-        public static List<byte[]> CatchPackage(byte[] data)
+        public List<byte[]> CatchPackage(byte[] data)
         {
 
             List<byte[]> result = new List<byte[]>();
@@ -110,16 +115,16 @@ namespace Lib
 
         }
 
-        public static ePackageTypes GetTypePackage(ref byte[] data)
+        public static EPackageTypes GetTypePackage(ref byte[] data)
         {
-            ePackageTypes result = ePackageTypes.UNKNOWN;
+            EPackageTypes result = EPackageTypes.UNKNOWN;
 
 
             try
             {
                 if (data.Length > 0)
                 {
-                    result = (ePackageTypes)BitConverter.ToInt16(data,0);
+                    result = (EPackageTypes)BitConverter.ToInt16(data,0);
                     data = data.Skip(sizeof(short)).ToArray();
                 }
 
@@ -164,6 +169,8 @@ namespace Lib
             }
             return null;
         }
+
+        
 
     }
 }
