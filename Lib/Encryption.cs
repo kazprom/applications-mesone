@@ -34,11 +34,12 @@ namespace Lib
 
         #region CONSTRUCTOR
 
-        public Encryption()
+        public Encryption(bool generate)
         {
             try
             {
-                GenerateSecurityKey();
+                if (generate)
+                    GenerateSecurityKey();
             }
             catch (Exception ex)
             {

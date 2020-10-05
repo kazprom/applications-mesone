@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Lib\Lib.csproj" />
+    <ProjectReference Include="..\OPC DB gate Lib\OPC DB gate Lib.csproj" />
   </ItemGroup>
 
 </Project>

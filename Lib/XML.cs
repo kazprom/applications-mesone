@@ -24,7 +24,7 @@ namespace Lib
             public string Path { get { return path; } set { path = value; } }
 
             private string value;
-            public string Value { get { return value; } set { if (value != this.value) { this.value = value; Logger.WriteMessage($"Config {path} = {this.value}"); }; } }
+            public string Value { get { return value; } set { if (value != this.value) { this.value = value; }; } }
 
             private string default_value;
             public string DefaultValue { get { return default_value; } set { default_value = value; } }

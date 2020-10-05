@@ -8,7 +8,9 @@ namespace Lib
     public class Logger
     {
 
-        private static string dir = $@"{Global.PathExeFolder}LOG";
+
+        private static string folder = $@"{Global.PathExeFolder}LOG";
+        public static string Folder { get { return folder; } }
 
 
         #region CONSTRUCTOR
@@ -53,27 +55,22 @@ namespace Lib
 
 
 
-                if (!Directory.Exists(dir))
+                if (!Directory.Exists(folder))
                 {
-                    DirectoryInfo di = Directory.CreateDirectory(dir);
+                    DirectoryInfo di = Directory.CreateDirectory(folder);
                 }
 
-                using (StreamWriter myStream = new StreamWriter(dir + Path.DirectorySeparatorChar + DateTime.Now.ToString("yyyy_MM_dd") + ".log", true))
+                using (StreamWriter myStream = new StreamWriter(folder + Path.DirectorySeparatorChar + DateTime.Now.ToString("yyyy_MM_dd") + ".log", true))
                 {
                     myStream.WriteLine($"[{DateTime.Now}]");
                     myStream.WriteLine(msg);
                 }
 
             }
-            catch (Exception) 
+            catch (Exception)
             {
                 Console.WriteLine($"Logger error write message [{ex.Message}]");
             }
-        }
-
-        public static void DeleteOldFiles(int depth_day)
-        {
-
         }
 
         #endregion

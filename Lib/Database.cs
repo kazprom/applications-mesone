@@ -11,7 +11,7 @@ namespace Lib
 
         #region ENUMS
 
-        enum EType
+        public enum EType
         {
             Unknown = 0,
             MSSQLServer = 1,
@@ -23,10 +23,12 @@ namespace Lib
 
         #region PROPERTIES
 
-        private EType type = EType.MySQL;
-        public string Type { get { return type.ToString(); } set { Enum.TryParse(value, out type); } }
+        public const EType default_type = EType.MySQL;
+        private EType type = default_type;
+        public EType Type { get { return type; } set { type = value; } }
 
-        private string connection_string = "Driver ={mySQL ODBC 8.0 ANSI Driver}; Server=myServerAddress;Option=131072;Stmt=;Database=myDataBase;User=myUsername;Password=myPassword;";
+        public const string default_connection_string = "Driver ={mySQL ODBC 8.0 ANSI Driver}; Server=myServerAddress;Option=131072;Stmt=;Database=myDataBase;User=myUsername;Password=myPassword;";
+        private string connection_string = default_connection_string;
         public string ConnectionString { get { return connection_string; } set { connection_string = value; } }
 
         #endregion
@@ -102,7 +104,8 @@ namespace Lib
                         List<object> pk = new List<object>();
                         foreach (DataColumn dc in result.PrimaryKey)
                         {
-                            pk.Add(row.Field<object>(dc));
+                            //pk.Add(row.Field<object>(dc));
+                            pk.Add(row.ItemArray[dc.Ordinal]);
                         }
 
                         DataRow fr = dt.Rows.Find(pk.ToArray());
@@ -121,7 +124,8 @@ namespace Lib
                         List<object> pk = new List<object>();
                         foreach (DataColumn dc in unnecessary.PrimaryKey)
                         {
-                            pk.Add(row.Field<object>(dc));
+                            //pk.Add(row.Field<object>(dc));
+                            pk.Add(row.ItemArray[dc.Ordinal]);
                         }
                         DataRow dr = dt.Rows.Find(pk.ToArray());
                         dr.Delete();

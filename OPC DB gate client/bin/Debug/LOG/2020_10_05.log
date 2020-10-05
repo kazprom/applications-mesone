@@ -1,0 +1,1625 @@
+[05.10.2020 18:16:31]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 18:16:31]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 18:16:31]
+XML SERVER PORT = 1000
+[05.10.2020 18:17:05]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 18:17:05]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 18:17:05]
+XML SERVER PORT = 1000
+[05.10.2020 18:18:11]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 18:18:11]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 18:18:11]
+XML SERVER PORT = 1000
+[05.10.2020 18:18:20]
+XML SERVER PORT = 1001
+[05.10.2020 18:18:25]
+XML SERVER PORT = 1000
+[05.10.2020 18:50:09]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 18:50:09]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 18:50:09]
+XML SERVER PORT = 1000
+[05.10.2020 18:50:14]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:50:19]
+Connected to server
+[05.10.2020 18:50:20]
+Get new security key
+[05.10.2020 18:51:55]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 18:51:55]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 18:51:55]
+XML SERVER PORT = 1000
+[05.10.2020 18:52:00]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:52:05]
+Connected to server
+[05.10.2020 18:52:10]
+Get new security key
+[05.10.2020 18:52:17]
+Server disconnected
+[05.10.2020 18:52:20]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:52:21]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:52:26]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:52:27]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:52:32]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:52:33]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:52:38]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:52:39]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:52:44]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:52:45]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:52:50]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:52:51]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:52:56]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:53:01]
+Connected to server
+[05.10.2020 18:53:10]
+Get new security key
+[05.10.2020 18:56:08]
+Server disconnected
+[05.10.2020 18:56:11]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:56:12]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:56:17]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:56:18]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:56:23]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:56:24]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:56:29]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:56:31]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:56:36]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:56:37]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:56:42]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:56:43]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:56:48]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:56:53]
+Connected to server
+[05.10.2020 18:57:00]
+Get new security key
+[05.10.2020 18:57:05]
+Error getting package with safety keys object
+[Error decrypt] -> [Error cryptography] -> [Недопустимая длина данных для дешифрования.]
+   в Lib.Encryption.Decrypt(Byte[] data)
+   в OPC_DB_gate_client.TCPconnection.HandlerRead() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 245
+[05.10.2020 18:57:10]
+Error getting package with safety keys object
+[Error decrypt] -> [Error cryptography] -> [Недопустимая длина данных для дешифрования.]
+   в Lib.Encryption.Decrypt(Byte[] data)
+   в OPC_DB_gate_client.TCPconnection.HandlerRead() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 245
+[05.10.2020 18:57:20]
+Error getting package with safety keys object
+[Error decrypt] -> [Error cryptography] -> [Недопустимая длина данных для дешифрования.]
+   в Lib.Encryption.Decrypt(Byte[] data)
+   в OPC_DB_gate_client.TCPconnection.HandlerRead() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 245
+[05.10.2020 18:57:27]
+Server disconnected
+[05.10.2020 18:57:28]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:57:29]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:57:34]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:57:35]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:57:40]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:57:41]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:57:46]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:57:47]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:57:52]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:57:53]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:57:58]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:57:59]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:58:04]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:58:05]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:58:10]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:58:11]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:58:16]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:58:17]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:58:22]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:58:23]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:58:28]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:58:29]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:58:34]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:58:35]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:58:40]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:58:41]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:58:46]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:58:47]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 18:58:52]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 18:58:57]
+Connected to server
+[05.10.2020 18:59:00]
+Get new security key
+[05.10.2020 18:59:24]
+Server disconnected
+[05.10.2020 18:59:27]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:05:48]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:05:48]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 19:05:48]
+XML SERVER PORT = 1000
+[05.10.2020 19:05:53]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:05:58]
+Connected to server
+[05.10.2020 19:06:10]
+Get new security key
+[05.10.2020 19:17:28]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:17:28]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 19:17:28]
+XML SERVER PORT = 1000
+[05.10.2020 19:17:33]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:17:38]
+Connected to server
+[05.10.2020 19:17:50]
+Get new security key
+[05.10.2020 19:18:00]
+Unknown incoming package
+[05.10.2020 19:19:06]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:19:06]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 19:19:06]
+XML SERVER PORT = 1000
+[05.10.2020 19:19:11]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:19:12]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 19:19:17]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:19:22]
+Connected to server
+[05.10.2020 19:19:30]
+Get new security key
+[05.10.2020 19:20:45]
+Server disconnected
+[05.10.2020 19:20:47]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:20:49]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 124
+[05.10.2020 19:23:10]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:23:10]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 19:23:10]
+XML SERVER PORT = 1000
+[05.10.2020 19:23:15]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:23:20]
+Connected to server
+[05.10.2020 19:23:37]
+Get new security key
+[05.10.2020 19:24:09]
+Server disconnected
+[05.10.2020 19:24:10]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:24:11]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:24:16]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:24:17]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:24:22]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:24:23]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:24:28]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:24:29]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:28:36]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:28:36]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 19:28:36]
+XML SERVER PORT = 1000
+[05.10.2020 19:28:41]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:28:47]
+Connected to server
+[05.10.2020 19:28:50]
+Get new security key
+[05.10.2020 19:30:47]
+Server disconnected
+[05.10.2020 19:30:52]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:30:53]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:30:58]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:30:59]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:31:04]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:31:05]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:31:10]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:31:11]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:31:16]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:31:17]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:31:22]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:31:23]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:31:28]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:31:29]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:31:34]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:31:35]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:31:40]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:31:41]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:31:46]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:31:47]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:31:52]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:31:53]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:31:58]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:32:07]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:32:07]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 19:32:07]
+XML SERVER PORT = 1000
+[05.10.2020 19:32:12]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:32:17]
+Connected to server
+[05.10.2020 19:32:20]
+Get new security key
+[05.10.2020 19:32:42]
+Server disconnected
+[05.10.2020 19:32:42]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:32:43]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:34:39]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:34:40]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 19:34:40]
+XML SERVER PORT = 1000
+[05.10.2020 19:34:45]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:34:50]
+Connected to server
+[05.10.2020 19:35:00]
+Get new security key
+[05.10.2020 19:35:15]
+Server disconnected
+[05.10.2020 19:35:20]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:35:21]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:36:28]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:36:28]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 19:36:28]
+XML SERVER PORT = 1000
+[05.10.2020 19:36:33]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:36:38]
+Connected to server
+[05.10.2020 19:36:50]
+Get new security key
+[05.10.2020 19:37:56]
+Server disconnected
+[05.10.2020 19:37:58]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:37:59]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:38:04]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:38:09]
+Connected to server
+[05.10.2020 19:38:20]
+Get new security key
+[05.10.2020 19:38:44]
+Server disconnected
+[05.10.2020 19:38:49]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:38:50]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:38:55]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:38:56]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:39:01]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:39:02]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:39:16]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:39:16]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 19:39:16]
+XML SERVER PORT = 1000
+[05.10.2020 19:39:21]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:39:26]
+Connected to server
+[05.10.2020 19:39:30]
+Get new security key
+[05.10.2020 19:41:14]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:41:14]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 19:41:14]
+XML SERVER PORT = 1000
+[05.10.2020 19:41:19]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:41:24]
+Connected to server
+[05.10.2020 19:41:30]
+Get new security key
+[05.10.2020 19:41:31]
+Server disconnected
+[05.10.2020 19:44:12]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:44:12]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 19:44:12]
+XML SERVER PORT = 1000
+[05.10.2020 19:44:17]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:44:22]
+Connected to server
+[05.10.2020 19:44:30]
+Get new security key
+[05.10.2020 19:44:50]
+Server disconnected
+[05.10.2020 19:44:52]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:44:53]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:44:58]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:44:59]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:45:04]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:45:05]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:45:10]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:45:11]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:45:16]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:45:17]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:45:22]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:45:23]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:45:28]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:45:29]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:45:34]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:45:35]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:45:40]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:45:41]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:45:46]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:45:47]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:45:52]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:45:53]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:45:58]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:45:59]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:46:04]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:46:05]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:46:10]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:46:11]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:46:16]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:46:17]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:46:22]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:46:23]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:46:28]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:46:29]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:46:34]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:46:35]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:46:40]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:46:41]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:46:46]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:46:47]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:46:52]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:46:53]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:46:58]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:46:59]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:47:05]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:47:06]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:47:11]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:47:12]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:47:17]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:47:18]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:47:23]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:47:24]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:47:29]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:47:30]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:47:35]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:47:36]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:47:41]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:47:42]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:47:47]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:47:48]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:47:53]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:47:54]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:47:59]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:48:00]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:48:05]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:48:06]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:48:11]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:48:12]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:48:17]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:48:18]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:48:23]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:48:24]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:48:29]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:48:30]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:48:35]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:48:36]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:48:41]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:48:42]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:48:47]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:48:48]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:48:53]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:48:54]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:48:59]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:49:00]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:49:05]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:49:06]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:49:11]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:49:12]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:49:17]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:49:18]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:49:23]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:49:24]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:49:29]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:49:30]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:49:35]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:49:36]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:49:41]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:49:42]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:49:47]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:49:48]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:49:53]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:49:54]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:49:59]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:50:00]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:50:05]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:50:06]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:50:11]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:50:12]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:50:17]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:50:18]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:50:23]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:50:24]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:50:29]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:50:30]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:50:35]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:50:36]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:50:41]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:50:42]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:50:47]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:50:48]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:50:53]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:50:54]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:50:59]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:51:00]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:51:05]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:51:06]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:51:11]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:51:52]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:51:52]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 19:51:52]
+XML SERVER PORT = 1000
+[05.10.2020 19:51:57]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:52:02]
+Connected to server
+[05.10.2020 19:52:10]
+Get new security key
+[05.10.2020 19:52:41]
+Server disconnected
+[05.10.2020 19:52:42]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:52:43]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:58:01]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:58:01]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 19:58:01]
+XML SERVER PORT = 1000
+[05.10.2020 19:58:06]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:58:11]
+Connected to server
+[05.10.2020 19:58:20]
+Get new security key
+[05.10.2020 19:58:41]
+Server disconnected
+[05.10.2020 19:58:46]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:58:47]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:58:52]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:58:53]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:58:58]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:58:59]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:59:04]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:59:05]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:59:10]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:59:11]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:59:16]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:59:17]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:59:22]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:59:23]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:59:28]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:59:29]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:59:34]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:59:35]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:59:40]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:59:41]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:59:46]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:59:47]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:59:52]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:59:53]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 19:59:58]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 19:59:59]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 20:00:04]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 20:00:06]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 20:00:15]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 20:00:15]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 20:00:15]
+XML SERVER PORT = 1000
+[05.10.2020 20:00:20]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 20:00:25]
+Connected to server
+[05.10.2020 20:00:30]
+Get new security key
+[05.10.2020 20:01:34]
+Server disconnected
+[05.10.2020 20:01:35]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 20:01:36]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 126
+[05.10.2020 20:04:20]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 20:04:20]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 20:04:20]
+XML SERVER PORT = 1000
+[05.10.2020 20:04:25]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 20:04:30]
+Connected to server
+[05.10.2020 20:04:40]
+Get new security key
+[05.10.2020 20:05:04]
+Server disconnected
+[05.10.2020 20:07:32]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 20:07:32]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 20:07:32]
+XML SERVER PORT = 1000
+[05.10.2020 20:07:37]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 20:07:42]
+Connected to server
+[05.10.2020 20:07:50]
+Get new security key
+[05.10.2020 20:08:03]
+Server disconnected
+[05.10.2020 20:08:29]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 20:08:29]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 20:08:29]
+XML SERVER PORT = 1000
+[05.10.2020 20:08:34]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 20:08:39]
+Connected to server
+[05.10.2020 20:08:40]
+Get new security key
+[05.10.2020 20:27:58]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 20:27:58]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 20:27:58]
+XML SERVER PORT = 1000
+[05.10.2020 20:28:03]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 20:28:08]
+Connected to server
+[05.10.2020 20:28:20]
+Get new security key

@@ -1,0 +1,1376 @@
+[05.10.2020 12:29:10]
+Config DB_TYPE = MySQL
+[05.10.2020 12:29:10]
+Config CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 12:29:10]
+Config DEPTH_LOG_DAY = 2
+[05.10.2020 12:33:35]
+XML DB_TYPE = MySQL
+[05.10.2020 12:33:35]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 12:33:35]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 12:53:50]
+XML DB_TYPE = MySQL
+[05.10.2020 12:53:50]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 12:53:50]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 12:53:50]
+Error database
+[Error read data table] -> [Error connection] -> [ERROR [IM002] [Microsoft][Диспетчер драйверов ODBC] Источник данных не найден и не указан драйвер, используемый по умолчанию]
+   at Lib.Database.Read(DataTable dt) in C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\Database.cs:line 144
+   at OPC_DB_gate_server.Database.Handler() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\Database.cs:line 91
+[05.10.2020 12:53:50]
+Error database
+[Error read data table] -> [Error connection] -> [ERROR [IM002] [Microsoft][Диспетчер драйверов ODBC] Источник данных не найден и не указан драйвер, используемый по умолчанию]
+   at Lib.Database.Read(DataTable dt) in C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\Database.cs:line 144
+   at OPC_DB_gate_server.Database.Handler() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\Database.cs:line 91
+[05.10.2020 12:53:50]
+Error database
+[Error read data table] -> [Error connection] -> [ERROR [IM002] [Microsoft][Диспетчер драйверов ODBC] Источник данных не найден и не указан драйвер, используемый по умолчанию]
+   at Lib.Database.Read(DataTable dt) in C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\Database.cs:line 144
+   at OPC_DB_gate_server.Database.Handler() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\Database.cs:line 91
+[05.10.2020 12:53:50]
+Error database
+[Error read data table] -> [Error connection] -> [ERROR [IM002] [Microsoft][Диспетчер драйверов ODBC] Источник данных не найден и не указан драйвер, используемый по умолчанию]
+   at Lib.Database.Read(DataTable dt) in C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\Database.cs:line 144
+   at OPC_DB_gate_server.Database.Handler() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\Database.cs:line 91
+[05.10.2020 12:53:50]
+Error database
+[Error read data table] -> [Error connection] -> [ERROR [IM002] [Microsoft][Диспетчер драйверов ODBC] Источник данных не найден и не указан драйвер, используемый по умолчанию]
+   at Lib.Database.Read(DataTable dt) in C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\Database.cs:line 144
+   at OPC_DB_gate_server.Database.Handler() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\Database.cs:line 91
+[05.10.2020 12:53:51]
+Error database
+[Error read data table] -> [Error connection] -> [ERROR [IM002] [Microsoft][Диспетчер драйверов ODBC] Источник данных не найден и не указан драйвер, используемый по умолчанию]
+   at Lib.Database.Read(DataTable dt) in C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\Database.cs:line 144
+   at OPC_DB_gate_server.Database.Handler() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\Database.cs:line 91
+[05.10.2020 12:53:55]
+Error database
+[Error read data table] -> [Error connection] -> [ERROR [IM002] [Microsoft][Диспетчер драйверов ODBC] Источник данных не найден и не указан драйвер, используемый по умолчанию]
+   at Lib.Database.Read(DataTable dt) in C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\Database.cs:line 144
+   at OPC_DB_gate_server.Database.Handler() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\Database.cs:line 91
+[05.10.2020 12:53:55]
+Error database
+[Error read data table] -> [Error connection] -> [ERROR [IM002] [Microsoft][Диспетчер драйверов ODBC] Источник данных не найден и не указан драйвер, используемый по умолчанию]
+   at Lib.Database.Read(DataTable dt) in C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\Database.cs:line 144
+   at OPC_DB_gate_server.Database.Handler() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\Database.cs:line 91
+[05.10.2020 12:53:55]
+Error database
+[Error read data table] -> [Error connection] -> [ERROR [IM002] [Microsoft][Диспетчер драйверов ODBC] Источник данных не найден и не указан драйвер, используемый по умолчанию]
+   at Lib.Database.Read(DataTable dt) in C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\Database.cs:line 144
+   at OPC_DB_gate_server.Database.Handler() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\Database.cs:line 91
+[05.10.2020 12:53:55]
+Error database
+[Error read data table] -> [Error connection] -> [ERROR [IM002] [Microsoft][Диспетчер драйверов ODBC] Источник данных не найден и не указан драйвер, используемый по умолчанию]
+   at Lib.Database.Read(DataTable dt) in C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\Database.cs:line 144
+   at OPC_DB_gate_server.Database.Handler() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\Database.cs:line 91
+[05.10.2020 12:53:55]
+Error database
+[Error read data table] -> [Error connection] -> [ERROR [IM002] [Microsoft][Диспетчер драйверов ODBC] Источник данных не найден и не указан драйвер, используемый по умолчанию]
+   at Lib.Database.Read(DataTable dt) in C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\Database.cs:line 144
+   at OPC_DB_gate_server.Database.Handler() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\Database.cs:line 91
+[05.10.2020 12:53:55]
+Error database
+[Error read data table] -> [Error connection] -> [ERROR [IM002] [Microsoft][Диспетчер драйверов ODBC] Источник данных не найден и не указан драйвер, используемый по умолчанию]
+   at Lib.Database.Read(DataTable dt) in C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\Database.cs:line 144
+   at OPC_DB_gate_server.Database.Handler() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\Database.cs:line 91
+[05.10.2020 12:53:55]
+Error database
+[Error read data table] -> [Error connection] -> [ERROR [IM002] [Microsoft][Диспетчер драйверов ODBC] Источник данных не найден и не указан драйвер, используемый по умолчанию]
+   at Lib.Database.Read(DataTable dt) in C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\Database.cs:line 144
+   at OPC_DB_gate_server.Database.Handler() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\Database.cs:line 91
+[05.10.2020 12:54:00]
+Error database
+[Error read data table] -> [Error connection] -> [ERROR [IM002] [Microsoft][Диспетчер драйверов ODBC] Источник данных не найден и не указан драйвер, используемый по умолчанию]
+   at Lib.Database.Read(DataTable dt) in C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\Database.cs:line 144
+   at OPC_DB_gate_server.Database.Handler() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\Database.cs:line 91
+[05.10.2020 12:54:00]
+Error database
+[Error read data table] -> [Error connection] -> [ERROR [IM002] [Microsoft][Диспетчер драйверов ODBC] Источник данных не найден и не указан драйвер, используемый по умолчанию]
+   at Lib.Database.Read(DataTable dt) in C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\Database.cs:line 144
+   at OPC_DB_gate_server.Database.Handler() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\Database.cs:line 91
+[05.10.2020 12:54:00]
+Error database
+[Error read data table] -> [Error connection] -> [ERROR [IM002] [Microsoft][Диспетчер драйверов ODBC] Источник данных не найден и не указан драйвер, используемый по умолчанию]
+   at Lib.Database.Read(DataTable dt) in C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\Database.cs:line 144
+   at OPC_DB_gate_server.Database.Handler() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\Database.cs:line 91
+[05.10.2020 12:54:00]
+Error database
+[Error read data table] -> [Error connection] -> [ERROR [IM002] [Microsoft][Диспетчер драйверов ODBC] Источник данных не найден и не указан драйвер, используемый по умолчанию]
+   at Lib.Database.Read(DataTable dt) in C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\Database.cs:line 144
+   at OPC_DB_gate_server.Database.Handler() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\Database.cs:line 91
+[05.10.2020 12:54:00]
+Error database
+[Error read data table] -> [Error connection] -> [ERROR [IM002] [Microsoft][Диспетчер драйверов ODBC] Источник данных не найден и не указан драйвер, используемый по умолчанию]
+   at Lib.Database.Read(DataTable dt) in C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\Database.cs:line 144
+   at OPC_DB_gate_server.Database.Handler() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\Database.cs:line 91
+[05.10.2020 12:54:00]
+Error database
+[Error read data table] -> [Error connection] -> [ERROR [IM002] [Microsoft][Диспетчер драйверов ODBC] Источник данных не найден и не указан драйвер, используемый по умолчанию]
+   at Lib.Database.Read(DataTable dt) in C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\Database.cs:line 144
+   at OPC_DB_gate_server.Database.Handler() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\Database.cs:line 91
+[05.10.2020 12:54:00]
+Error database
+[Error read data table] -> [Error connection] -> [ERROR [IM002] [Microsoft][Диспетчер драйверов ODBC] Источник данных не найден и не указан драйвер, используемый по умолчанию]
+   at Lib.Database.Read(DataTable dt) in C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\Database.cs:line 144
+   at OPC_DB_gate_server.Database.Handler() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\Database.cs:line 91
+[05.10.2020 13:09:25]
+XML DB_TYPE = MySQL
+[05.10.2020 13:09:25]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 13:09:25]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 13:09:25]
+Error database
+[Error read data table] -> [Error connection] -> [The ConnectionString property has not been initialized.]
+   at Lib.Database.Read(DataTable dt) in C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\Database.cs:line 144
+   at OPC_DB_gate_server.Database.Handler() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\Database.cs:line 98
+[05.10.2020 13:09:51]
+XML DB_TYPE = MySQL
+[05.10.2020 13:09:51]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 13:09:51]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 13:39:41]
+XML DB_TYPE = MySQL
+[05.10.2020 13:39:41]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 13:39:41]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 14:14:55]
+XML DB_TYPE = MySQL
+[05.10.2020 14:14:55]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 14:14:55]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 14:19:37]
+XML DB_TYPE = MySQL
+[05.10.2020 14:19:37]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 14:19:37]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 14:23:08]
+XML DB_TYPE = MySQL
+[05.10.2020 14:23:08]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 14:23:08]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 14:24:14]
+XML DB_TYPE = MySQL
+[05.10.2020 14:24:14]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 14:24:15]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 14:37:48]
+XML DB_TYPE = MySQL
+[05.10.2020 14:37:48]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 14:37:48]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 14:37:48]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 14:37:48]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 14:37:53]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 14:37:58]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 14:38:03]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 14:58:17]
+XML DB_TYPE = MySQL
+[05.10.2020 14:58:17]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 14:58:17]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 14:58:18]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 14:58:18]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 15:04:53]
+XML DB_TYPE = MySQL
+[05.10.2020 15:04:53]
+XML DB_TYPE = MySQL
+[05.10.2020 15:04:53]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 15:06:02]
+XML DB_TYPE = MySQL
+[05.10.2020 15:06:02]
+XML DB_TYPE = MySQL
+[05.10.2020 15:06:02]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 15:06:02]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 15:06:02]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 15:06:02]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 15:06:02]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 15:06:02]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 15:06:02]
+DB RT_VALUES = True
+[05.10.2020 15:06:02]
+DB HISTORY_WRITE = True
+[05.10.2020 15:06:02]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 15:06:02]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 15:06:07]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 15:06:12]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 15:06:17]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 15:07:08]
+XML DB_TYPE = MySQL
+[05.10.2020 15:07:08]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 15:07:08]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 15:07:08]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 15:07:08]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 15:07:08]
+DB RT_VALUES = True
+[05.10.2020 15:07:08]
+DB HISTORY_WRITE = True
+[05.10.2020 15:07:08]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 15:07:08]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 15:07:13]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 15:07:18]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 15:07:23]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 15:07:28]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 15:07:30]
+DB DEPTH_LOG_DAY = 31
+[05.10.2020 15:07:33]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 15:07:35]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 16:55:56]
+XML DB_TYPE = MySQL
+[05.10.2020 16:55:56]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 16:55:56]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 16:55:57]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 16:55:57]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 16:55:57]
+DB RT_VALUES = True
+[05.10.2020 16:55:57]
+DB HISTORY_WRITE = True
+[05.10.2020 16:55:57]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 16:56:34]
+XML DB_TYPE = MySQL
+[05.10.2020 16:56:34]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 16:56:35]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 16:56:35]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 16:56:35]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 16:56:35]
+DB RT_VALUES = True
+[05.10.2020 16:56:35]
+DB HISTORY_WRITE = True
+[05.10.2020 16:56:39]
+XML DB_TYPE = MySQL
+[05.10.2020 16:56:39]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 16:56:39]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 16:56:40]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 16:56:40]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 16:56:40]
+DB RT_VALUES = True
+[05.10.2020 16:56:40]
+DB HISTORY_WRITE = True
+[05.10.2020 16:56:54]
+XML DB_TYPE = MySQL
+[05.10.2020 16:56:54]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 16:56:54]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 16:56:54]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 16:56:54]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 16:56:54]
+DB RT_VALUES = True
+[05.10.2020 16:56:54]
+DB HISTORY_WRITE = True
+[05.10.2020 16:58:17]
+XML DB_TYPE = MySQL
+[05.10.2020 16:58:17]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 16:58:17]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 16:58:18]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 16:58:18]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 16:58:18]
+DB RT_VALUES = True
+[05.10.2020 16:58:18]
+DB HISTORY_WRITE = True
+[05.10.2020 16:58:18]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 16:58:18]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 16:58:23]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 16:58:28]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 16:58:33]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 16:59:16]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 16:59:21]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 16:59:26]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 17:02:45]
+XML DB_TYPE = MySQL
+[05.10.2020 17:02:45]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 17:02:45]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 17:02:45]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 17:02:45]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 17:02:46]
+DB RT_VALUES = True
+[05.10.2020 17:02:46]
+DB HISTORY_WRITE = True
+[05.10.2020 17:02:46]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 17:02:46]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 17:02:51]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 17:02:56]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 17:03:01]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 17:05:20]
+XML DB_TYPE = MySQL
+[05.10.2020 17:05:20]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 17:05:20]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 17:05:20]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 17:05:20]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 17:05:20]
+DB RT_VALUES = True
+[05.10.2020 17:05:20]
+DB HISTORY_WRITE = True
+[05.10.2020 17:05:20]
+Listener 127.0.0.1:1000 opened
+[05.10.2020 17:05:20]
+Listener 127.0.0.1:1000 waiting ...
+[05.10.2020 17:25:02]
+XML DB_TYPE = MySQL
+[05.10.2020 17:25:02]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 17:25:02]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 17:25:03]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 17:25:03]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 17:25:03]
+DB RT_VALUES = True
+[05.10.2020 17:25:03]
+DB HISTORY_WRITE = True
+[05.10.2020 17:25:03]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 17:25:03]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 17:25:08]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 17:37:50]
+XML DB_TYPE = MySQL
+[05.10.2020 17:37:50]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 17:37:50]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 17:38:28]
+XML DB_TYPE = MySQL
+[05.10.2020 17:38:28]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 17:38:28]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 17:38:39]
+XML DB_TYPE = MySQL
+[05.10.2020 17:38:39]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 17:38:39]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 17:39:21]
+XML DB_TYPE = MySQL
+[05.10.2020 17:39:21]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 17:39:21]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 17:39:43]
+XML DB_TYPE = MySQL
+[05.10.2020 17:39:43]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 17:39:43]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 17:40:06]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 17:40:06]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 17:40:06]
+DB RT_VALUES = True
+[05.10.2020 17:40:06]
+DB HISTORY_WRITE = True
+[05.10.2020 17:40:06]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 17:40:06]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 17:40:11]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 17:40:16]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 17:40:21]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 17:40:26]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 17:40:31]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 17:40:36]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 17:40:41]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 17:40:56]
+XML DB_TYPE = MySQL
+[05.10.2020 17:40:56]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 17:40:56]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 17:40:57]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 17:40:57]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 17:40:57]
+DB RT_VALUES = True
+[05.10.2020 17:40:57]
+DB HISTORY_WRITE = True
+[05.10.2020 17:40:58]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 17:40:58]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 17:41:03]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 17:41:25]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 18:50:04]
+XML DB_TYPE = MySQL
+[05.10.2020 18:50:04]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 18:50:04]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 18:50:04]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 18:50:04]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 18:50:04]
+DB RT_VALUES = True
+[05.10.2020 18:50:04]
+DB HISTORY_WRITE = True
+[05.10.2020 18:50:04]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 18:50:04]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 18:50:09]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 18:50:14]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 18:50:20]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:52101
+[05.10.2020 18:50:20]
+Listener ID<5> 127.0.0.1:1000 error write data
+[Value cannot be null.]
+   at System.Threading.Monitor.ReliableEnter(Object obj, Boolean& lockTaken)
+   at OPC_DB_gate_server.TCPconnection.HandlerWrite() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\TCPconnection.cs:line 335
+[05.10.2020 18:50:25]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:52101
+[05.10.2020 18:50:30]
+Listener ID<5> 127.0.0.1:1000 error write data
+[Value cannot be null.]
+   at System.Threading.Monitor.ReliableEnter(Object obj, Boolean& lockTaken)
+   at OPC_DB_gate_server.TCPconnection.HandlerWrite() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\TCPconnection.cs:line 335
+[05.10.2020 18:50:35]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:52101
+[05.10.2020 18:50:40]
+Listener ID<5> 127.0.0.1:1000 error write data
+[Value cannot be null.]
+   at System.Threading.Monitor.ReliableEnter(Object obj, Boolean& lockTaken)
+   at OPC_DB_gate_server.TCPconnection.HandlerWrite() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\TCPconnection.cs:line 335
+[05.10.2020 18:50:45]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:52101
+[05.10.2020 18:50:50]
+Listener ID<5> 127.0.0.1:1000 error write data
+[Value cannot be null.]
+   at System.Threading.Monitor.ReliableEnter(Object obj, Boolean& lockTaken)
+   at OPC_DB_gate_server.TCPconnection.HandlerWrite() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\TCPconnection.cs:line 335
+[05.10.2020 18:50:55]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:52101
+[05.10.2020 18:51:00]
+Listener ID<5> 127.0.0.1:1000 remote client disconnected
+[05.10.2020 18:51:13]
+XML DB_TYPE = MySQL
+[05.10.2020 18:51:13]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 18:51:13]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 18:51:13]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 18:51:13]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 18:51:13]
+DB RT_VALUES = True
+[05.10.2020 18:51:13]
+DB HISTORY_WRITE = True
+[05.10.2020 18:51:13]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 18:51:13]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 18:51:18]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 18:51:23]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 18:51:28]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 18:51:33]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 18:51:38]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 18:51:43]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 18:51:48]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 18:51:53]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 18:51:58]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 18:52:03]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 18:52:08]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:52175
+[05.10.2020 18:52:10]
+Listener ID<5> 127.0.0.1:1000 error write data
+[Value cannot be null.]
+   at System.Threading.Monitor.ReliableEnter(Object obj, Boolean& lockTaken)
+   at OPC_DB_gate_server.TCPconnection.HandlerWrite() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\TCPconnection.cs:line 335
+[05.10.2020 18:52:13]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:52175
+[05.10.2020 18:52:53]
+XML DB_TYPE = MySQL
+[05.10.2020 18:52:53]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 18:52:53]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 18:52:53]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 18:52:53]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 18:52:53]
+DB RT_VALUES = True
+[05.10.2020 18:52:53]
+DB HISTORY_WRITE = True
+[05.10.2020 18:52:53]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 18:52:53]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 18:52:58]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 18:53:03]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:52199
+[05.10.2020 18:53:10]
+Listener ID<5> 127.0.0.1:1000 error write data
+[Value cannot be null.]
+   at System.Threading.Monitor.ReliableEnter(Object obj, Boolean& lockTaken)
+   at OPC_DB_gate_server.TCPconnection.HandlerWrite() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\TCPconnection.cs:line 335
+[05.10.2020 18:53:13]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:52199
+[05.10.2020 18:55:11]
+Listener ID<5> 127.0.0.1:1000 error write data
+[Value cannot be null.]
+   at System.Threading.Monitor.ReliableEnter(Object obj, Boolean& lockTaken)
+   at OPC_DB_gate_server.TCPconnection.HandlerWrite() in C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\TCPconnection.cs:line 335
+[05.10.2020 18:56:48]
+XML DB_TYPE = MySQL
+[05.10.2020 18:56:48]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 18:56:48]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 18:56:48]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 18:56:48]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 18:56:48]
+DB RT_VALUES = True
+[05.10.2020 18:56:48]
+DB HISTORY_WRITE = True
+[05.10.2020 18:56:48]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 18:56:48]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 18:56:53]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 18:56:58]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:52235
+[05.10.2020 18:58:47]
+XML DB_TYPE = MySQL
+[05.10.2020 18:58:47]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 18:58:47]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 18:58:48]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 18:58:48]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 18:58:48]
+DB RT_VALUES = True
+[05.10.2020 18:58:48]
+DB HISTORY_WRITE = True
+[05.10.2020 18:58:48]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 18:58:48]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 18:58:53]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 18:58:58]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:52285
+[05.10.2020 18:59:46]
+XML DB_TYPE = MySQL
+[05.10.2020 18:59:46]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 18:59:46]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 18:59:46]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 18:59:46]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 18:59:46]
+DB RT_VALUES = True
+[05.10.2020 18:59:46]
+DB HISTORY_WRITE = True
+[05.10.2020 18:59:46]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 18:59:46]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 18:59:51]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 18:59:57]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:00:02]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:00:07]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:00:12]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:00:17]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:00:22]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:00:27]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:00:32]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:00:37]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:00:42]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:00:47]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:00:52]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:00:57]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:01:02]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:01:07]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:01:12]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:01:17]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:01:22]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:01:27]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:01:32]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:01:37]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:01:42]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:01:47]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:01:52]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:01:57]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:02:02]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:02:07]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:02:12]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:02:17]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:02:22]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:02:27]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:02:32]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:02:37]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:02:42]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:02:47]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:02:52]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:02:57]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:03:02]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:03:07]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:03:12]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:03:17]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:03:22]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:03:27]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:03:32]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:03:37]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:03:42]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:03:47]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:03:52]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:03:57]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:04:02]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:04:07]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:04:12]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:04:17]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:04:22]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:04:27]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:04:32]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:04:37]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:04:42]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:04:47]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:04:52]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:04:57]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:05:02]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:05:07]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:05:12]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:05:17]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:05:22]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:05:27]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:05:32]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:05:37]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:05:42]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:05:47]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:05:52]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:05:57]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:06:02]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:52554
+[05.10.2020 19:06:50]
+Listener ID<5> 127.0.0.1:1000 remote client disconnected
+[05.10.2020 19:06:52]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:06:57]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:07:02]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:07:07]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:07:12]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:07:17]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:07:22]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:07:27]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:07:32]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:07:37]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:07:42]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:07:47]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:07:52]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:07:57]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:08:02]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:17:26]
+XML DB_TYPE = MySQL
+[05.10.2020 19:17:26]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 19:17:26]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:17:26]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 19:17:26]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 19:17:26]
+DB RT_VALUES = True
+[05.10.2020 19:17:26]
+DB HISTORY_WRITE = True
+[05.10.2020 19:17:26]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 19:17:26]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:17:31]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:17:36]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:17:41]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:52690
+[05.10.2020 19:18:20]
+Listener ID<5> 127.0.0.1:1000 remote client disconnected
+[05.10.2020 19:19:13]
+XML DB_TYPE = MySQL
+[05.10.2020 19:19:13]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 19:19:13]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:19:13]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 19:19:13]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 19:19:13]
+DB RT_VALUES = True
+[05.10.2020 19:19:13]
+DB HISTORY_WRITE = True
+[05.10.2020 19:19:14]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 19:19:14]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:19:19]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:19:24]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:52734
+[05.10.2020 19:23:05]
+XML DB_TYPE = MySQL
+[05.10.2020 19:23:05]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 19:23:05]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:23:06]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 19:23:06]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 19:23:06]
+DB RT_VALUES = True
+[05.10.2020 19:23:06]
+DB HISTORY_WRITE = True
+[05.10.2020 19:23:06]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 19:23:06]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:23:11]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:23:16]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:23:21]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:52776
+[05.10.2020 19:28:39]
+XML DB_TYPE = MySQL
+[05.10.2020 19:28:39]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 19:28:39]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:28:39]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 19:28:39]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 19:28:39]
+DB RT_VALUES = True
+[05.10.2020 19:28:39]
+DB HISTORY_WRITE = True
+[05.10.2020 19:28:39]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 19:28:39]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:28:44]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:28:49]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:52837
+[05.10.2020 19:32:09]
+XML DB_TYPE = MySQL
+[05.10.2020 19:32:09]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 19:32:09]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:32:10]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 19:32:10]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 19:32:10]
+DB RT_VALUES = True
+[05.10.2020 19:32:10]
+DB HISTORY_WRITE = True
+[05.10.2020 19:32:10]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 19:32:10]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:32:15]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:32:20]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:52879
+[05.10.2020 19:34:42]
+XML DB_TYPE = MySQL
+[05.10.2020 19:34:42]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 19:34:42]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:34:43]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 19:34:43]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 19:34:43]
+DB RT_VALUES = True
+[05.10.2020 19:34:43]
+DB HISTORY_WRITE = True
+[05.10.2020 19:34:43]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 19:34:43]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:34:48]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:34:53]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:52912
+[05.10.2020 19:36:30]
+XML DB_TYPE = MySQL
+[05.10.2020 19:36:30]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 19:36:30]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:36:31]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 19:36:31]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 19:36:31]
+DB RT_VALUES = True
+[05.10.2020 19:36:31]
+DB HISTORY_WRITE = True
+[05.10.2020 19:36:31]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 19:36:31]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:36:36]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:36:41]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:52948
+[05.10.2020 19:38:03]
+XML DB_TYPE = MySQL
+[05.10.2020 19:38:03]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 19:38:03]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:38:03]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 19:38:03]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 19:38:03]
+DB RT_VALUES = True
+[05.10.2020 19:38:03]
+DB HISTORY_WRITE = True
+[05.10.2020 19:38:03]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 19:38:03]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:38:08]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:38:13]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:53009
+[05.10.2020 19:39:18]
+XML DB_TYPE = MySQL
+[05.10.2020 19:39:18]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 19:39:18]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:39:19]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 19:39:19]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 19:39:19]
+DB RT_VALUES = True
+[05.10.2020 19:39:19]
+DB HISTORY_WRITE = True
+[05.10.2020 19:39:19]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 19:39:19]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:39:24]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:39:29]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:53057
+[05.10.2020 19:41:10]
+Listener ID<5> 127.0.0.1:1000 remote client disconnected
+[05.10.2020 19:41:14]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:41:19]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:41:24]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:41:29]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:53127
+[05.10.2020 19:44:14]
+XML DB_TYPE = MySQL
+[05.10.2020 19:44:14]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 19:44:14]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:44:14]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 19:44:14]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 19:44:14]
+DB RT_VALUES = True
+[05.10.2020 19:44:14]
+DB HISTORY_WRITE = True
+[05.10.2020 19:44:15]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 19:44:15]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:44:20]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:44:25]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:53158
+[05.10.2020 19:51:54]
+XML DB_TYPE = MySQL
+[05.10.2020 19:51:54]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 19:51:54]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:51:55]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 19:51:55]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 19:51:55]
+DB RT_VALUES = True
+[05.10.2020 19:51:55]
+DB HISTORY_WRITE = True
+[05.10.2020 19:51:55]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 19:51:55]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:52:00]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:52:05]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:53284
+[05.10.2020 19:58:04]
+XML DB_TYPE = MySQL
+[05.10.2020 19:58:04]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 19:58:04]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 19:58:05]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 19:58:05]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 19:58:05]
+DB RT_VALUES = True
+[05.10.2020 19:58:05]
+DB HISTORY_WRITE = True
+[05.10.2020 19:58:05]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 19:58:05]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:58:10]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 19:58:15]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:53352
+[05.10.2020 20:00:06]
+XML DB_TYPE = MySQL
+[05.10.2020 20:00:06]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 20:00:06]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 20:00:06]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 20:00:06]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 20:00:06]
+DB RT_VALUES = True
+[05.10.2020 20:00:06]
+DB HISTORY_WRITE = True
+[05.10.2020 20:00:07]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 20:00:07]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:00:17]
+XML DB_TYPE = MySQL
+[05.10.2020 20:00:17]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 20:00:17]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 20:00:18]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 20:00:18]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 20:00:18]
+DB RT_VALUES = True
+[05.10.2020 20:00:18]
+DB HISTORY_WRITE = True
+[05.10.2020 20:00:18]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 20:00:18]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:00:23]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:00:28]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:53402
+[05.10.2020 20:04:23]
+XML DB_TYPE = MySQL
+[05.10.2020 20:04:23]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 20:04:23]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 20:04:24]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 20:04:24]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 20:04:24]
+DB RT_VALUES = True
+[05.10.2020 20:04:24]
+DB HISTORY_WRITE = True
+[05.10.2020 20:04:24]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 20:04:24]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:04:29]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:04:34]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:56577
+[05.10.2020 20:07:34]
+XML DB_TYPE = MySQL
+[05.10.2020 20:07:34]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 20:07:34]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 20:07:34]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 20:07:34]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 20:07:34]
+DB RT_VALUES = True
+[05.10.2020 20:07:34]
+DB HISTORY_WRITE = True
+[05.10.2020 20:07:35]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 20:07:35]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:07:40]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:07:45]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:56621
+[05.10.2020 20:08:10]
+XML DB_TYPE = MySQL
+[05.10.2020 20:08:10]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 20:08:10]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 20:08:10]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 20:08:10]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 20:08:10]
+DB RT_VALUES = True
+[05.10.2020 20:08:10]
+DB HISTORY_WRITE = True
+[05.10.2020 20:08:10]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 20:08:10]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:08:15]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:08:20]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:08:25]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:08:30]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:08:35]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:08:40]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:56656
+[05.10.2020 20:08:55]
+Listener ID<5> 127.0.0.1:1000 remote client disconnected
+[05.10.2020 20:09:00]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:09:05]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:09:10]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:09:15]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:27:52]
+XML DB_TYPE = MySQL
+[05.10.2020 20:27:52]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 20:27:52]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 20:27:52]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 20:27:52]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 20:27:52]
+DB RT_VALUES = True
+[05.10.2020 20:27:52]
+DB HISTORY_WRITE = True
+[05.10.2020 20:27:52]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 20:27:52]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:27:57]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:28:02]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:28:08]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:28:13]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:56823
+[05.10.2020 20:29:13]
+Listener ID<5> 127.0.0.1:1000 remote client disconnected
+[05.10.2020 20:29:18]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:29:23]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:29:28]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:29:33]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:29:38]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:29:43]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:29:48]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:29:53]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:29:58]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:30:03]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:30:08]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:30:13]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:30:18]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:30:23]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:30:28]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:30:33]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:30:38]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:30:43]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:30:48]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:30:53]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:30:58]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:31:03]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:31:08]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:31:13]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:31:18]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:31:23]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:31:28]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:31:33]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:31:38]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:31:43]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:31:48]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:31:53]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:31:58]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:32:03]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:32:08]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:32:13]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:32:18]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:32:23]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:32:28]
+Listener ID<5> 127.0.0.1:1000 waiting ...

@@ -43,7 +43,7 @@
       },
       "Lib/1.0.0": {
         "type": "project",
-        "framework": ".NETStandard,Version=v2.1",
+        "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
           "System.Data.Odbc": "4.7.0"
         },
@@ -52,6 +52,16 @@
         },
         "runtime": {
           "bin/placeholder/Lib.dll": {}
+        }
+      },
+      "OPC DB gate Lib/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/OPC DB gate Lib.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/OPC DB gate Lib.dll": {}
         }
       }
     }
@@ -113,11 +123,17 @@
       "type": "project",
       "path": "../Lib/Lib.csproj",
       "msbuildProject": "../Lib/Lib.csproj"
+    },
+    "OPC DB gate Lib/1.0.0": {
+      "type": "project",
+      "path": "../OPC DB gate Lib/OPC DB gate Lib.csproj",
+      "msbuildProject": "../OPC DB gate Lib/OPC DB gate Lib.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "Lib >= 1.0.0"
+      "Lib >= 1.0.0",
+      "OPC DB gate Lib >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -152,6 +168,9 @@
           "projectReferences": {
             "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\Lib.csproj": {
               "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\Lib.csproj"
+            },
+            "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\OPC DB gate Lib\\OPC DB gate Lib.csproj": {
+              "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\OPC DB gate Lib\\OPC DB gate Lib.csproj"
             }
           }
         }

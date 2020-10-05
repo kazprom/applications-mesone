@@ -9,86 +9,93 @@ using System.Threading;
 
 namespace OPC_DB_gate_server
 {
-    static class Clients
+    public class Clients
     {
 
-        public static class Database
-        {
-            public static DBTable table = new DBTable("clients");
 
-            public enum EColumns
-            {
-                ip,
-                port
-            }
+        #region CONSTANTS
 
-            static Database()
-            {
-                table.AddColumn(EColumns.ip.ToString(), typeof(string));
-                table.AddColumn(EColumns.port.ToString(), typeof(int));
-            }
+        public const string col_name_ip = "ip";
+        public const string col_name_port = "port";
 
-        }
-
+        #endregion
 
         #region VARIABLES
 
-        public static List<TCPconnection> connections = new List<TCPconnection>();
+
+
+        #endregion
+
+
+        #region PROPERTIES
+
+        private DBTable source = new DBTable("clients");
+        public DBTable Source { get { return source; } }
+
+
+        private Dictionary<int, TCPconnection> tcp_connections = new Dictionary<int, TCPconnection>();
+        public Dictionary<int, TCPconnection> TCPconnections { get { return tcp_connections; } }
+
+        private Dictionary<int, Dictionary<int, OPC_DB_gate_Lib.TagSettings>> tag_groups;
+        public Dictionary<int, Dictionary<int, OPC_DB_gate_Lib.TagSettings>> TagGroups { get; set; }
 
         #endregion
 
 
 
-
-        public static void Subcribe()
+        public Clients(Dictionary<int, Dictionary<int, OPC_DB_gate_Lib.TagSettings>> tag_groups)
         {
 
-            Database.table.Table.RowChanged += Change_Connections;
-            Database.table.Table.RowDeleting += Change_Connections;
+            this.tag_groups = tag_groups;
 
+            source.AddColumn(col_name_ip, typeof(string));
+            source.AddColumn(col_name_port, typeof(int));
+
+            source.Table.RowChanged += TCPconnectionHandler;
+            source.Table.RowDeleting += TCPconnectionHandler;
 
         }
 
 
         #region PRIVATES
 
-        private static void Change_Connections(object sender, DataRowChangeEventArgs e)
+        private void TCPconnectionHandler(object sender, DataRowChangeEventArgs e)
         {
             try
             {
-
                 int id = (int)e.Row.ItemArray[e.Row.Table.Columns.IndexOf(DBTable.EColumns.id.ToString())];
-                IPAddress ip = IPAddress.Parse((string)e.Row.ItemArray[e.Row.Table.Columns.IndexOf(Database.EColumns.ip.ToString())]);
-                int port = (int)e.Row.ItemArray[e.Row.Table.Columns.IndexOf(Database.EColumns.port.ToString())];
+                IPAddress ip = IPAddress.Parse((string)e.Row.ItemArray[e.Row.Table.Columns.IndexOf(col_name_ip)]);
+                int port = (int)e.Row.ItemArray[e.Row.Table.Columns.IndexOf(col_name_port)];
 
-
-                switch (e.Action)
+                lock (tcp_connections)
                 {
-                    case DataRowAction.Add:
-                        {
-                            connections.Add(new TCPconnection(id, ip, port));
-                            break;
-                        }
-                    case DataRowAction.Change:
-                        {
-                            connections.Find(x => x.ID == id).Settings(ip, port);
-                            break;
-                        }
-                    case DataRowAction.Delete:
-                        {
-                            int index = connections.FindIndex(x => x.ID == id);
-                            connections[index].Dispose();
-                            connections.RemoveAt(index);
-                            break;
-                        }
+                    switch (e.Action)
+                    {
+                        case DataRowAction.Add:
+                            {
+                                tcp_connections.Add(id, new TCPconnection(id, ip, port, tag_groups));
+                                break;
+                            }
+                        case DataRowAction.Change:
+                            {
+                                tcp_connections[id].Settings(ip, port);
+                                break;
+                            }
+                        case DataRowAction.Delete:
+                            {
+                                tcp_connections[id].Dispose();
+                                tcp_connections.Remove(id);
+                                break;
+                            }
+                    }
                 }
+
             }
             catch (Exception ex)
             {
-                throw new Exception("Error change TCP connection", ex);
+
+                throw new Exception("Error handling of TCP connection", ex);
             }
-
-
         }
 
         #endregion

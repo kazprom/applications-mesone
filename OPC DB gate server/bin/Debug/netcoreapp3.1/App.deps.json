@@ -59,6 +59,11 @@
         "runtime": {
           "Lib.dll": {}
         }
+      },
+      "OPC DB gate Lib/1.0.0": {
+        "runtime": {
+          "OPC DB gate Lib.dll": {}
+        }
       }
     }
   },
@@ -83,6 +88,11 @@
       "hashPath": "system.data.odbc.4.7.0.nupkg.sha512"
     },
     "Lib/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "OPC DB gate Lib/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

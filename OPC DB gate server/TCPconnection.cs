@@ -15,17 +15,18 @@ namespace OPC_DB_gate_server
 
         private string title;
         private bool disposedValue;
-        private bool thread_execution_flag = true;
+        private bool execution = true;
         private Thread thread_connect;
         private Thread thread_read;
         private Thread thread_write;
+        private Thread thread_ping;
         private TcpListener listener;
         private TcpClient client;
         private NetworkStream nwStream = null;
-        private Encryption encryption = new Encryption();
+        private Encryption encryption = new Encryption(true);
         private Protocol protocol = new Protocol();
-        private byte[] buf = new byte[1024];
-
+        byte[] buf = new byte[Protocol.SIZE_BUFFER];
+        private Dictionary<int, Dictionary<int, OPC_DB_gate_Lib.TagSettings>> tag_groups;
 
         #endregion
 
@@ -47,9 +48,10 @@ namespace OPC_DB_gate_server
 
         #region CONSTRUCTOR
 
-        public TCPconnection(int id, IPAddress ip, int port)
+        public TCPconnection(int id, IPAddress ip, int port, Dictionary<int, Dictionary<int, OPC_DB_gate_Lib.TagSettings>> tag_groups)
         {
             this.id = id;
+            this.tag_groups = tag_groups;
             Settings(ip, port);
         }
 
@@ -64,7 +66,7 @@ namespace OPC_DB_gate_server
                 if (disposing)
                 {
                     listener.Stop();
-                    thread_execution_flag = false;
+                    execution = false;
 
                     thread_connect.Join();
                     thread_connect = null;
@@ -90,7 +92,7 @@ namespace OPC_DB_gate_server
             if (!ip.Equals(this.ip) || port != this.port)
             {
 
-                thread_execution_flag = false;
+                execution = false;
 
                 if (thread_connect != null)
                 {
@@ -108,7 +110,7 @@ namespace OPC_DB_gate_server
                 title = $"Listener ID<{id}> {ip}:{port}";
 
 
-                thread_execution_flag = true;
+                execution = true;
 
                 thread_connect = new Thread(new ThreadStart(HadlerConnect)) { IsBackground = true, Name = $"Connect ID - {id} Ip - {this.ip}:{this.port}" };
                 thread_connect.Start();
@@ -122,9 +124,7 @@ namespace OPC_DB_gate_server
             {
                 if (nwStream != null)
                 {
-                    nwStream.Write(Protocol.BuildPackage
-                                             (encryption.Encrypt
-                                                 (Protocol.ConvertObjToByteArr(obj)), Protocol.EPackageTypes.ENCRYPT));
+
                 }
             }
             catch (Exception ex)
@@ -141,7 +141,7 @@ namespace OPC_DB_gate_server
         {
             try
             {
-                while (thread_execution_flag)
+                while (execution)
                 {
                     try
                     {
@@ -151,7 +151,7 @@ namespace OPC_DB_gate_server
 
                         using (client = new TcpClient())
                         {
-                            while (thread_execution_flag)
+                            while (execution)
                             {
                                 try
                                 {
@@ -174,6 +174,9 @@ namespace OPC_DB_gate_server
 
                                             thread_write = new Thread(new ThreadStart(HandlerWrite)) { IsBackground = true, Name = $"Write ID - {id} Ip - {this.ip}:{this.port}" };
                                             thread_write.Start();
+
+                                            thread_ping = new Thread(new ThreadStart(HandlerPing)) { IsBackground = true, Name = $"Ping ID - {id} Ip - {this.ip}:{this.port}" };
+                                            thread_ping.Start();
                                         }
                                     }
                                 }
@@ -204,6 +207,12 @@ namespace OPC_DB_gate_server
                 {
                     thread_write.Join();
                     thread_write = null;
+                }
+
+                if (thread_ping != null)
+                {
+                    thread_ping.Join();
+                    thread_ping = null;
                 }
 
 
@@ -242,7 +251,7 @@ namespace OPC_DB_gate_server
 
             try
             {
-                while (thread_execution_flag)
+                while (execution)
                 {
                     int size_package = 0;
 
@@ -292,7 +301,7 @@ namespace OPC_DB_gate_server
                     }
                 }
 
-                Thread.Sleep(100);
+                Thread.Sleep(Protocol.DATA_TIMEOUT / 2);
             }
             catch (Exception ex)
             {
@@ -308,7 +317,7 @@ namespace OPC_DB_gate_server
 
             try
             {
-                while (thread_execution_flag)
+                while (execution)
                 {
                     if (DateTime.Now.Second % 10 == 0)
                     {
@@ -316,29 +325,28 @@ namespace OPC_DB_gate_server
                         if (nwStream != null)
                         {
                             //ping
-                            try
-                            {
-                                byte[] msg = { 7, 7, 7 };
-                                nwStream.Write(msg, 0, msg.Length);
-                            }
-                            catch (Exception)
-                            {
-                                Logger.WriteMessage($"{title} remote client disconnected");
-                                nwStream = null;
-                                return;
-                            }
+                            
 
                             //send keys
                             nwStream.Write(Protocol.BuildPackage
                                             (Protocol.ConvertObjToByteArr
                                                 (encryption.SafetyKeys), Protocol.EPackageTypes.UNENCRYPT));
 
+                            lock (tag_groups)
+                            {
+
+                                if (tag_groups.ContainsKey(id))
+                                    //send tags
+                                    nwStream.Write(Protocol.BuildPackage(encryption.Encrypt(Protocol.ConvertObjToByteArr(tag_groups[id])), Protocol.EPackageTypes.ENCRYPT));
+                            }
+
+
                         }
 
                         Thread.Sleep(1000);
                     }
 
-                    Thread.Sleep(100);
+                    Thread.Sleep(Protocol.DATA_TIMEOUT / 2);
 
                 }
             }
@@ -349,7 +357,28 @@ namespace OPC_DB_gate_server
             }
         }
 
-        #endregion
 
+        private void HandlerPing()
+        {
+            while (execution)
+            {
+                //ping
+                try
+                {
+                    byte[] msg = { 7, 7, 7 };
+                    nwStream.Write(msg, 0, msg.Length);
+                }
+                catch (Exception)
+                {
+                    Logger.WriteMessage($"{title} remote client disconnected");
+                    nwStream = null;
+                    return;
+                }
+                Thread.Sleep(1000);
+            }
+
+            #endregion
+
+        }
     }
 }

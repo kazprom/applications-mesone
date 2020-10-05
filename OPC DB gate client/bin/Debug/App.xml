@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CONFIGURATION>
+  <DEPTH_LOG_DAY>2</DEPTH_LOG_DAY>
+  <SERVER>
+    <IP>127.0.0.1</IP>
+    <PORT>1000</PORT>
+  </SERVER>
+</CONFIGURATION>
