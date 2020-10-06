@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace OPC_DB_gate_client
 {
-    class TCPconnection
+    public class TCPconnection
     {
 
         #region VARIABLES
@@ -25,8 +25,8 @@ namespace OPC_DB_gate_client
         private Thread thread_ping;
         private Encryption encryption = new Encryption(false);
         private Protocol protocol = new Protocol();
-        byte[] buf = new byte[Protocol.SIZE_BUFFER];
-
+        private byte[] buf = new byte[Protocol.SIZE_BUFFER];
+        private Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer;
 
         #endregion
 
@@ -41,15 +41,26 @@ namespace OPC_DB_gate_client
         private Lib.Parameter<int> port;
         public Lib.Parameter<int> Port { get { return port; } }
 
+        #endregion
 
-        private Dictionary<int, OPC_DB_gate_Lib.TagSettings> tags = new Dictionary<int, OPC_DB_gate_Lib.TagSettings>();
-        public Dictionary<int, OPC_DB_gate_Lib.TagSettings> Tags { get { return tags; } }
+
+        #region EVENTS
+
+        public delegate void GetTagsNotify(Dictionary<int, OPC_DB_gate_Lib.TagSettings> value);  // delegate
+        public event GetTagsNotify GetTags; // event
+
 
         #endregion
 
 
-        public TCPconnection(Lib.Parameter<IPAddress> ip_address, Lib.Parameter<int> port)
+
+        #region CONSTRUCTOR
+
+
+        public TCPconnection(Lib.Parameter<IPAddress> ip_address, Lib.Parameter<int> port, Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer)
         {
+
+            this.buffer = buffer;
 
             this.ip_address = ip_address;
             this.ip_address.ValueChanged += Ip_address_ValueChanged;
@@ -63,8 +74,7 @@ namespace OPC_DB_gate_client
 
 
 
-
-
+        #endregion
 
         #region PRIVATES
 
@@ -260,38 +270,10 @@ namespace OPC_DB_gate_client
                                                 object obj = Protocol.ConvertByteArrToObj(encryption.Decrypt(data));
 
                                                 //tags
-                                                if (obj.GetType().Equals(tags.GetType()))
+                                                if (obj.GetType().Equals(typeof(Dictionary<int, OPC_DB_gate_Lib.TagSettings>)))
                                                 {
-                                                    lock (tags)
-                                                    {
-                                                        Dictionary<int, OPC_DB_gate_Lib.TagSettings> fresh = (Dictionary<int, OPC_DB_gate_Lib.TagSettings>)obj;
-                                                        Dictionary<int, OPC_DB_gate_Lib.TagSettings> unnecessary = new Dictionary<int, OPC_DB_gate_Lib.TagSettings>(tags);
-
-                                                        foreach (var item in fresh)
-                                                        {
-                                                            if(!tags.ContainsKey(item.Key))
-                                                            {
-                                                                tags.Add(item.Key, item.Value);
-                                                                Console.WriteLine($"Add {item.Key}");
-                                                            }
-                                                            else
-                                                            {
-                                                                tags[item.Key] = item.Value;
-                                                                unnecessary.Remove(item.Key);
-                                                                Console.WriteLine($"Change {item.Key}");
-                                                            }
-                                                        }
-
-                                                        foreach (var item in unnecessary)
-                                                        {
-                                                            tags.Remove(item.Key);
-                                                            Console.WriteLine($"Delete {item.Key}");
-                                                        }
-
-                                                    }
+                                                    GetTags?.Invoke((Dictionary<int, OPC_DB_gate_Lib.TagSettings>)obj);
                                                 }
-
-
                                             }
                                         }
                                         catch (Exception ex)
@@ -325,17 +307,14 @@ namespace OPC_DB_gate_client
                 {
                     if (nwStream != null)
                     {
-
-
-                        /*
                         // data
-                        while (Lib.Buffer.Count > 0)
+                        while (buffer.Count > 0)
                         {
-                            byte[] pack = Protocol.BuildPackage(Encryption.Encrypt(Protocol.ConvertObjToByteArr(Lib.Buffer.Dequeue())), Protocol.ePackageTypes.DATA);
+                            byte[] pack = Protocol.BuildPackage(encryption.Encrypt(Protocol.ConvertObjToByteArr(buffer.Dequeue())), Protocol.EPackageTypes.ENCRYPT);
                             if (pack != null)
                                 nwStream.Write(pack, 0, pack.Length);
+                            //Thread.Sleep(Protocol.DATA_TIMEOUT * 2);
                         }
-                        */
 
                     }
                     Thread.Sleep(Protocol.DATA_TIMEOUT / 2);

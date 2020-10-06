@@ -34,20 +34,25 @@ namespace OPC_DB_gate_server
                 config_file = new ConfigFile(Lib.Global.NameExeFile.Split('.')[0] + ".xml");
             }
 
-            Settings settings = new Settings();
-            Tags tags = new Tags();
-            Clients clients = new Clients(tags.Groups);
+            Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer = new Lib.Buffer<OPC_DB_gate_Lib.TagData>(10000);
 
+            Settings settings = new Settings();
+            Clients clients = new Clients();
+            Tags tags = new Tags();
+            RT_values rt_values = new RT_values();
+            History history = new History();
+
+            BufferHandler buffer_handler = new BufferHandler(buffer, rt_values, history);
 
             Database database = new Database(config_file.DB_TYPE,
                                              config_file.CONNECTION_STRING,
-                                             settings.Source,
-                                             clients.Source,
-                                             tags.Source);
+                                             settings,
+                                             clients,
+                                             tags,
+                                             rt_values,
+                                             history);
 
-
-
-
+            Connections connections = new Connections(clients, tags, buffer);
 
             while (true)
             {

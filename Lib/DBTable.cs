@@ -9,10 +9,7 @@ namespace Lib
     public class DBTable
     {
 
-        public enum EColumns
-        {
-            id
-        }
+        public const string col_name_id = "id";
 
 
         private DataTable table;
@@ -23,7 +20,7 @@ namespace Lib
             try
             {
                 table = new DataTable(name);
-                table.PrimaryKey = new DataColumn[] { table.Columns.Add(EColumns.id.ToString(), typeof(int)) };
+                table.PrimaryKey = new DataColumn[] { table.Columns.Add(col_name_id, typeof(int)) };
             }
             catch (Exception ex)
             {

@@ -1623,3 +1623,27 @@ Try connect to server 127.0.0.1:1000 ...
 Connected to server
 [05.10.2020 20:28:20]
 Get new security key
+[05.10.2020 20:34:28]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 20:34:28]
+XML SERVER IP = 127.0.0.1
+[05.10.2020 20:34:28]
+XML SERVER PORT = 1000
+[05.10.2020 20:34:33]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 20:34:39]
+Connected to server
+[05.10.2020 20:34:50]
+Get new security key
+[05.10.2020 20:36:28]
+Server disconnected
+[05.10.2020 20:36:29]
+Try connect to server 127.0.0.1:1000 ... 
+[05.10.2020 20:36:30]
+Can't connect to server
+[Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение 127.0.0.1:1000]
+   в System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   в System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   в System.Net.Sockets.TcpClient.Connect(IPAddress address, Int32 port)
+   в OPC_DB_gate_client.TCPconnection.HadlerConnect() в C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\TCPconnection.cs:строка 130

@@ -1374,3 +1374,25 @@ Listener ID<5> 127.0.0.1:1000 waiting ...
 Listener ID<5> 127.0.0.1:1000 waiting ...
 [05.10.2020 20:32:28]
 Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:34:30]
+XML DB_TYPE = MySQL
+[05.10.2020 20:34:30]
+XML CONNECTION_STRING = Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=GRAVEYARD_OF_TAGS;User=mesone;Password=Mesone1_p@$$word;
+[05.10.2020 20:34:30]
+XML DEPTH_LOG_DAY = 2
+[05.10.2020 20:34:30]
+DB DEPTH_HISTORY_HOUR = 240
+[05.10.2020 20:34:30]
+DB DEPTH_LOG_DAY = 3
+[05.10.2020 20:34:30]
+DB RT_VALUES = True
+[05.10.2020 20:34:30]
+DB HISTORY_WRITE = True
+[05.10.2020 20:34:31]
+Listener ID<5> 127.0.0.1:1000 opened
+[05.10.2020 20:34:31]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:34:36]
+Listener ID<5> 127.0.0.1:1000 waiting ...
+[05.10.2020 20:34:41]
+Listener ID<5> 127.0.0.1:1000 connected with client 127.0.0.1:57088

@@ -35,8 +35,8 @@ namespace Lib
 
         #region VARIABLE
 
-        private OdbcConnection connection = new OdbcConnection();
-        private OdbcCommand command = new OdbcCommand();
+        private OdbcConnection connection = new OdbcConnection() ;
+        private OdbcCommand command = new OdbcCommand() ;
 
         #endregion
 
@@ -161,6 +161,186 @@ namespace Lib
             }
         }
 
+        public void Write(DataTable dt, bool create_table, bool rewrite_row)
+        {
+            try
+            {
+                if (dt != null)
+                {
+                    TestConnection();
+
+
+
+                    foreach (DataRow row in dt.Rows)
+                    {
+
+                        bool row_exist = false;
+
+                        if (rewrite_row)
+                        {
+
+                            string sql = string.Empty;
+                            string[] column_names = dt.PrimaryKey.Cast<DataColumn>().Select(x => x.ColumnName).ToArray();
+                            char[] q = new char[column_names.Length];
+                            for (int i = 0; i < q.Length; i++) { q[i] = '?'; }
+
+                            string[] conditions = new string[column_names.Length];
+
+
+                            switch (type)
+                            {
+                                case EType.MSSQLServer:
+                                    {
+                                        for (int i = 0; i < column_names.Length; i++)
+                                        {
+                                            conditions[i] = $"[{column_names[i]}] = {q[i]}";
+                                        }
+
+                                        sql = $@"SELECT [{string.Join("],[", column_names)}] FROM [{dt.TableName}] WHERE {string.Join(" AND ", conditions)}";
+                                        break;
+                                    }
+                                case EType.MySQL:
+                                case EType.PostgreSQL:
+                                    {
+
+                                        for (int i = 0; i < column_names.Length; i++)
+                                        {
+                                            conditions[i] = $"`{column_names[i]}` = {q[i]}";
+                                        }
+
+                                        sql = $@"SELECT `{string.Join("`,`", column_names)}` FROM `{dt.TableName}` WHERE {string.Join(" AND ", conditions)}";
+                                        break;
+
+                                    }
+                            }
+
+                            command.Parameters.Clear();
+                            command.CommandText = sql;
+
+                            foreach (string col in column_names)
+                            {
+                                command.Parameters.Add("", ConvertType(row[col])).Value = row[col];
+                            }
+
+                            var reader = command.ExecuteReader();
+                            row_exist = reader.HasRows;
+                            reader.Close();
+                        }
+
+
+                        if (!rewrite_row || !row_exist)
+                        {
+                            string sql = string.Empty;
+                            string[] column_names = dt.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToArray();
+                            char[] q = new char[column_names.Length];
+                            for (int i = 0; i < q.Length; i++) { q[i] = '?'; }
+
+                            switch (type)
+                            {
+                                case EType.MSSQLServer:
+                                    {
+                                        sql = $@"INSERT INTO [{dt.TableName}] ([{string.Join("],[", column_names)}]) VALUES ({string.Join(" , ", q)})";
+                                        break;
+                                    }
+                                case EType.MySQL:
+                                case EType.PostgreSQL:
+                                    {
+                                        sql = $@"INSERT `{dt.TableName}` (`{string.Join("`,`", column_names)}`) VALUES ({string.Join(" , ", q)})";
+                                        break;
+
+                                    }
+                            }
+
+                            command.Parameters.Clear();
+                            command.CommandText = sql;
+
+                            foreach (string col in column_names)
+                            {
+                                command.Parameters.Add("", ConvertType(row[col])).Value = row[col];
+                            }
+
+                            command.ExecuteNonQuery();
+
+                        }
+
+                        if (rewrite_row)
+                        {
+                            string sql = string.Empty;
+                            string[] pk_column_names = dt.PrimaryKey.Cast<DataColumn>().Select(x => x.ColumnName).ToArray();
+                            string[] column_names = dt.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToArray();
+                            char[] pk_q = new char[pk_column_names.Length];
+                            char[] q = new char[column_names.Length];
+                            string[] conditions = new string[pk_column_names.Length];
+                            string[] sets = new string[column_names.Length];
+
+                            for (int i = 0; i < pk_q.Length; i++) { pk_q[i] = '?'; }
+                            for (int i = 0; i < q.Length; i++) { q[i] = '?'; }
+
+
+                            switch (type)
+                            {
+                                case EType.MSSQLServer:
+                                    {
+
+                                        for (int i = 0; i < sets.Length; i++)
+                                        {
+                                            sets[i] = $"[{column_names[i]}] = {q[i]}";
+                                        }
+
+                                        for (int i = 0; i < conditions.Length; i++)
+                                        {
+                                            conditions[i] = $"[{pk_column_names[i]}] = {pk_q[i]}";
+                                        }
+
+                                        sql = $@"UPDATE [{dt.TableName}] SET {string.Join(" , ", sets)} WHERE {string.Join(" AND ", conditions)}";
+                                        break;
+                                    }
+                                case EType.MySQL:
+                                case EType.PostgreSQL:
+                                    {
+                                        for (int i = 0; i < sets.Length; i++)
+                                        {
+                                            sets[i] = $"`{column_names[i]}` = {q[i]}";
+                                        }
+
+                                        for (int i = 0; i < conditions.Length; i++)
+                                        {
+                                            conditions[i] = $"`{pk_column_names[i]}` = {pk_q[i]}";
+                                        }
+
+                                        sql = $@"UPDATE `{dt.TableName}` SET {string.Join(" , ", sets)} WHERE {string.Join(" AND ", conditions)}";
+                                        break;
+
+                                    }
+                            }
+
+                            command.Parameters.Clear();
+                            command.CommandText = sql;
+
+                            foreach (string col in column_names)
+                            {
+                                command.Parameters.Add("", ConvertType(row[col])).Value = row[col];
+                            }
+
+                            foreach (string col in pk_column_names)
+                            {
+                                command.Parameters.Add("", ConvertType(row[col])).Value = row[col];
+                            }
+
+                            command.ExecuteNonQuery();
+
+                        }
+
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error write data table", ex);
+            }
+
+        }
 
         public void Sync(DataSet ds)
         {
@@ -235,6 +415,31 @@ namespace Lib
             }
 
         }
+
+        private static OdbcType ConvertType(object obj)
+        {
+            if (obj is bool)
+            {
+                return OdbcType.TinyInt;
+            }
+            else if (obj is byte[])
+            {
+                return OdbcType.Binary;
+            }
+            else if (obj is int)
+            {
+                return OdbcType.Int;
+            }
+            else if (obj is DateTime)
+            {
+                return OdbcType.DateTime;
+            }
+            else
+            {
+                return OdbcType.Text;
+            }
+        }
+
 
         #endregion
 

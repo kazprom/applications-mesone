@@ -13,8 +13,24 @@ namespace Lib
         #endregion
 
 
+        #region EVENTS
 
-        
+        #region EVENTS
+
+        public delegate void EnqueueNotify(T obj);  // delegate
+        public event EnqueueNotify EnqueueEvent; // event
+
+        public delegate void DequeueNotify(T obj);  // delegate
+        public event DequeueNotify DequeueEvent; // event
+
+        public delegate void HalfNotify();  // delegate
+        public event HalfNotify HalfEvent; // event
+
+
+        #endregion
+
+        #endregion
+
 
 
         public int Count { get { return q.Count; } }
@@ -30,6 +46,11 @@ namespace Lib
         {
 
             q.Enqueue(obj);
+            EnqueueEvent?.Invoke(obj);
+
+            if (q.Count > limit / 2)
+                HalfEvent?.Invoke();
+
             while (q.Count > limit)
             {
                 q.Dequeue();
@@ -38,7 +59,9 @@ namespace Lib
 
         public T Dequeue()
         {
-            return q.Dequeue();
+            T obj = q.Dequeue();
+            DequeueEvent?.Invoke(obj);
+            return obj;
         }
 
 

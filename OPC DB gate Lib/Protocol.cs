@@ -23,16 +23,6 @@ namespace Lib
         private DateTime timestamp_lastdata = DateTime.Now;
 
 
-
-        [Serializable]
-        public struct SCell
-        {
-            public long id;
-            public DateTime timestamp;
-            public object value;
-            public byte quality;
-        }
-
         public enum EPackageTypes : byte
         {
             UNKNOWN = 0,

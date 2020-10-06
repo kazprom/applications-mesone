@@ -27,7 +27,51 @@ namespace OPC_DB_gate_Lib
         public int rate;
         public EDataType data_type;
 
+
+        public static object ObjToDataType(object obj, EDataType type)
+        {
+            try
+            {
+                if (obj == null)
+                    return null;
+
+                switch (type)
+                {
+                    case EDataType.dt_boolean:
+                        return Convert.ToBoolean(obj);
+                    case EDataType.dt_byte:
+                        return Convert.ToByte(obj);
+                    case EDataType.dt_char:
+                        return Convert.ToChar(obj);
+                    case EDataType.dt_double:
+                        return Convert.ToDouble(obj);
+                    case EDataType.dt_int16:
+                        return Convert.ToInt16(obj);
+                    case EDataType.dt_int32:
+                        return Convert.ToInt32(obj);
+                    case EDataType.dt_int64:
+                        return Convert.ToInt64(obj);
+                    case EDataType.dt_uint16:
+                        return Convert.ToUInt16(obj);
+                    case EDataType.dt_uint32:
+                        return Convert.ToUInt32(obj);
+                    case EDataType.dt_uint64:
+                        return Convert.ToUInt64(obj);
+                    default:
+                        throw new Exception("Don't know data type.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error convert object to data type", ex);
+            }
+
+        }
+
+
     }
+
+
 
 
 

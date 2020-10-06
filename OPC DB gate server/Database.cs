@@ -27,16 +27,11 @@ namespace OPC_DB_gate_server
         public Lib.Parameter<string> CONNECTION_STRING { get { return connection_string; } }
 
 
-        private DBTable settings;
-        public DBTable Settings { get { return settings; } }
-
-        private DBTable clients;
-        public DBTable Clients { get { return clients; } }
-
-
-        private DBTable tags;
-        public DBTable Tags { get { return tags; } }
-
+        private Settings settings;
+        private Clients clients;
+        private Tags tags;
+        private RT_values rt_values;
+        private History history;
 
 
         #endregion
@@ -47,9 +42,11 @@ namespace OPC_DB_gate_server
 
         public Database(Lib.Parameter<Lib.Database.EType> type,
                         Lib.Parameter<string> connection_string,
-                        DBTable settings,
-                        DBTable client,
-                        DBTable tags)
+                        Settings settings,
+                        Clients client,
+                        Tags tags,
+                        RT_values rt_values,
+                        History history)
         {
 
             this.type = type;
@@ -63,9 +60,11 @@ namespace OPC_DB_gate_server
             this.settings = settings;
             this.clients = client;
             this.tags = tags;
+            this.rt_values = rt_values;
+            this.history = history;
             
 
-            MainAction();
+            ReadAction();
             thread = new Thread(new ThreadStart(Handler)) { IsBackground = true, Name = "Database" };
             thread.Start();
 
@@ -92,10 +91,18 @@ namespace OPC_DB_gate_server
 #endif
                     {
 
-                        MainAction();
+                        ReadAction();
                         Thread.Sleep(1000);
 
                     }
+
+                    if (DateTime.Now.Second % 3 == 0)
+                    {
+
+                        WriteAction();
+                        Thread.Sleep(1000);
+                    }
+
 
 
                 }
@@ -108,7 +115,7 @@ namespace OPC_DB_gate_server
             }
         }
 
-        private void MainAction()
+        private void ReadAction()
         {
             try
             {
@@ -116,22 +123,45 @@ namespace OPC_DB_gate_server
                 if (database != null)
                 {
                     if (settings != null)
-                        database.Read(settings.Table);
+                        database.Read(settings.Source.Table);
 
                     if (clients != null)
-                        database.Read(clients.Table);
+                        database.Read(clients.Source.Table);
 
                     if (tags != null)
-                        database.Read(tags.Table);
+                        database.Read(tags.Source.Table);
 
                 }
             }
             catch (Exception ex)
             {
 
-                throw new Exception("Error action", ex);
+                throw new Exception("Error read", ex);
             }
         }
+
+        private void WriteAction()
+        {
+
+            try
+            {
+
+                if (database != null)
+                {
+                    if (rt_values != null)
+                        database.Write(rt_values.Source.Table, false, true);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Error write", ex);
+            }
+
+        }
+
 
         private void Connection_string_ValueChanged(string value)
         {

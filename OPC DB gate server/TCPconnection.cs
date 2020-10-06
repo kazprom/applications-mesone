@@ -26,14 +26,11 @@ namespace OPC_DB_gate_server
         private Encryption encryption = new Encryption(true);
         private Protocol protocol = new Protocol();
         byte[] buf = new byte[Protocol.SIZE_BUFFER];
-        private Dictionary<int, Dictionary<int, OPC_DB_gate_Lib.TagSettings>> tag_groups;
-
+        private Dictionary<int, OPC_DB_gate_Lib.TagSettings> tags = new Dictionary<int, OPC_DB_gate_Lib.TagSettings>();
+        private Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer;
         #endregion
 
         #region PROPERTIES
-
-        private int id;
-        public int ID { get { return id; } }
 
         private IPAddress ip;
         public IPAddress IP { get { return ip; } }
@@ -41,18 +38,13 @@ namespace OPC_DB_gate_server
         private int port;
         public int Port { get { return port; } }
 
-        private Buffer<Protocol.SCell> buffer = new Buffer<Protocol.SCell>(1024);
-        public Buffer<Protocol.SCell> Buffer { get { return buffer; } }
-
         #endregion
 
         #region CONSTRUCTOR
 
-        public TCPconnection(int id, IPAddress ip, int port, Dictionary<int, Dictionary<int, OPC_DB_gate_Lib.TagSettings>> tag_groups)
+        public TCPconnection(Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer)
         {
-            this.id = id;
-            this.tag_groups = tag_groups;
-            Settings(ip, port);
+            this.buffer = buffer;
         }
 
         #endregion
@@ -107,29 +99,47 @@ namespace OPC_DB_gate_server
                 this.port = port;
                 this.ip = ip;
 
-                title = $"Listener ID<{id}> {ip}:{port}";
+                title = $"Listener {ip}:{port}";
 
 
                 execution = true;
 
-                thread_connect = new Thread(new ThreadStart(HadlerConnect)) { IsBackground = true, Name = $"Connect ID - {id} Ip - {this.ip}:{this.port}" };
+                thread_connect = new Thread(new ThreadStart(HadlerConnect)) { IsBackground = true, Name = $"Connect Ip - {this.ip}:{this.port}" };
                 thread_connect.Start();
 
             }
         }
 
-        public void SendEncrypt(object obj)
+        public void PutTag(int id, OPC_DB_gate_Lib.TagSettings tag)
         {
             try
             {
-                if (nwStream != null)
+                lock (tags)
                 {
-
+                    if (!tags.ContainsKey(id))
+                        tags.Add(id, new OPC_DB_gate_Lib.TagSettings());
+                    tags[id] = tag;
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception("Error send table", ex);
+                throw new Exception("Error put tag", ex);
+            }
+        }
+
+        public void RemoveTag(int id)
+        {
+            try
+            {
+                lock (tags)
+                {
+                    if (tags.ContainsKey(id))
+                        tags.Remove(id);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error remove tag", ex);
             }
         }
 
@@ -169,13 +179,13 @@ namespace OPC_DB_gate_server
                                             nwStream = client.GetStream();
                                             Logger.WriteMessage($"{title} connected with client {((IPEndPoint)client.Client.RemoteEndPoint).Address}:{((IPEndPoint)client.Client.RemoteEndPoint).Port}");
 
-                                            thread_read = new Thread(new ThreadStart(HandlerRead)) { IsBackground = true, Name = $"Read ID - {id} Ip - {this.ip}:{this.port}" };
+                                            thread_read = new Thread(new ThreadStart(HandlerRead)) { IsBackground = true, Name = $"Read Ip - {this.ip}:{this.port}" };
                                             thread_read.Start();
 
-                                            thread_write = new Thread(new ThreadStart(HandlerWrite)) { IsBackground = true, Name = $"Write ID - {id} Ip - {this.ip}:{this.port}" };
+                                            thread_write = new Thread(new ThreadStart(HandlerWrite)) { IsBackground = true, Name = $"Write Ip - {this.ip}:{this.port}" };
                                             thread_write.Start();
 
-                                            thread_ping = new Thread(new ThreadStart(HandlerPing)) { IsBackground = true, Name = $"Ping ID - {id} Ip - {this.ip}:{this.port}" };
+                                            thread_ping = new Thread(new ThreadStart(HandlerPing)) { IsBackground = true, Name = $"Ping Ip - {this.ip}:{this.port}" };
                                             thread_ping.Start();
                                         }
                                     }
@@ -281,9 +291,9 @@ namespace OPC_DB_gate_server
                                             {
                                                 object obj = Protocol.ConvertByteArrToObj(encryption.Decrypt(data));
 
-                                                if (obj.GetType().Equals(typeof(Protocol.SCell)))
+                                                if (obj.GetType().Equals(typeof(OPC_DB_gate_Lib.TagData)))
                                                 {
-                                                    buffer.Enqueue((Protocol.SCell)obj);
+                                                    buffer.Enqueue((OPC_DB_gate_Lib.TagData)obj);
                                                 }
 
 
@@ -325,19 +335,17 @@ namespace OPC_DB_gate_server
                         if (nwStream != null)
                         {
                             //ping
-                            
+
 
                             //send keys
                             nwStream.Write(Protocol.BuildPackage
                                             (Protocol.ConvertObjToByteArr
                                                 (encryption.SafetyKeys), Protocol.EPackageTypes.UNENCRYPT));
 
-                            lock (tag_groups)
+                            lock (tags)
                             {
-
-                                if (tag_groups.ContainsKey(id))
-                                    //send tags
-                                    nwStream.Write(Protocol.BuildPackage(encryption.Encrypt(Protocol.ConvertObjToByteArr(tag_groups[id])), Protocol.EPackageTypes.ENCRYPT));
+                                //send tags
+                                nwStream.Write(Protocol.BuildPackage(encryption.Encrypt(Protocol.ConvertObjToByteArr(tags)), Protocol.EPackageTypes.ENCRYPT));
                             }
 
 
