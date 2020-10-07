@@ -123,13 +123,13 @@ namespace OPC_DB_gate_server
                 if (database != null)
                 {
                     if (settings != null)
-                        database.Read(settings.Source.Table);
+                        database.Read(settings.Source);
 
                     if (clients != null)
-                        database.Read(clients.Source.Table);
+                        database.Read(clients.Source);
 
                     if (tags != null)
-                        database.Read(tags.Source.Table);
+                        database.Read(tags.Source);
 
                 }
             }
@@ -149,8 +149,13 @@ namespace OPC_DB_gate_server
                 if (database != null)
                 {
                     if (rt_values != null)
-                        database.Write(rt_values.Source.Table, false, true);
+                        database.Write(rt_values.Source, false, true);
 
+                    if (history != null)
+                    {
+                        database.Write(history.Source);
+                        history.Clear();
+                    }
 
                 }
             }

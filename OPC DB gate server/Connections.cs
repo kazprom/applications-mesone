@@ -23,12 +23,12 @@ namespace OPC_DB_gate_server
         public Connections(Clients clients, Tags tags, Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer)
         {
             this.clients = clients;
-            this.clients.Source.Table.RowChanged += ClientsHandler;
-            this.clients.Source.Table.RowDeleting += ClientsHandler;
+            this.clients.Source.RowChanged += ClientsHandler;
+            this.clients.Source.RowDeleting += ClientsHandler;
 
             this.tags = tags;
-            this.tags.Source.Table.RowChanged += TagsHandler;
-            this.tags.Source.Table.RowDeleting += TagsHandler;
+            this.tags.Source.RowChanged += TagsHandler;
+            this.tags.Source.RowDeleting += TagsHandler;
 
             this.buffer = buffer;
 
@@ -39,7 +39,7 @@ namespace OPC_DB_gate_server
         {
             try
             {
-                int id = (int)e.Row.ItemArray[e.Row.Table.Columns.IndexOf(Lib.DBTable.col_name_id)];
+                int id = (int)e.Row.ItemArray[e.Row.Table.Columns.IndexOf(Clients.col_name_id)];
                 IPAddress ip = IPAddress.Parse((string)e.Row.ItemArray[e.Row.Table.Columns.IndexOf(Clients.col_name_ip)]);
                 int port = (int)e.Row.ItemArray[e.Row.Table.Columns.IndexOf(Clients.col_name_port)];
 
@@ -77,7 +77,7 @@ namespace OPC_DB_gate_server
             try
             {
 
-                int id = (int)e.Row.ItemArray[e.Row.Table.Columns.IndexOf(Lib.DBTable.col_name_id)];
+                int id = (int)e.Row.ItemArray[e.Row.Table.Columns.IndexOf(Tags.col_name_id)];
                 int clients_id = (int)e.Row.ItemArray[e.Row.Table.Columns.IndexOf(Tags.col_name_clients_id)];
 
                 OPC_DB_gate_Lib.TagSettings tag = new OPC_DB_gate_Lib.TagSettings()

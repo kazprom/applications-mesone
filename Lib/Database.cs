@@ -9,6 +9,26 @@ namespace Lib
     public class Database
     {
 
+
+        #region CONSTANTS
+
+
+        #endregion
+
+        #region STRUCTURES
+
+        public struct SExtProp
+        {
+            public OdbcType data_type;
+            public uint size;
+            public bool primary_key;
+            public bool not_null;
+            public bool auto_increment;
+            public bool ignore;
+        }
+
+        #endregion
+
         #region ENUMS
 
         public enum EType
@@ -35,8 +55,8 @@ namespace Lib
 
         #region VARIABLE
 
-        private OdbcConnection connection = new OdbcConnection() ;
-        private OdbcCommand command = new OdbcCommand() ;
+        private OdbcConnection connection = new OdbcConnection();
+        private OdbcCommand command = new OdbcCommand();
 
         #endregion
 
@@ -154,6 +174,11 @@ namespace Lib
             {
                 TestConnection();
 
+                foreach (DataTable table in ds.Tables)
+                {
+                    Write(table, true, false);
+                }
+
             }
             catch (Exception ex)
             {
@@ -169,166 +194,22 @@ namespace Lib
                 {
                     TestConnection();
 
-
+                    if (create_table && !TableExists(dt))
+                    {
+                        TableAdd(dt);
+                    }
 
                     foreach (DataRow row in dt.Rows)
                     {
 
-                        bool row_exist = false;
-
-                        if (rewrite_row)
+                        if (!rewrite_row || !RowExists(row))
                         {
-
-                            string sql = string.Empty;
-                            string[] column_names = dt.PrimaryKey.Cast<DataColumn>().Select(x => x.ColumnName).ToArray();
-                            char[] q = new char[column_names.Length];
-                            for (int i = 0; i < q.Length; i++) { q[i] = '?'; }
-
-                            string[] conditions = new string[column_names.Length];
-
-
-                            switch (type)
-                            {
-                                case EType.MSSQLServer:
-                                    {
-                                        for (int i = 0; i < column_names.Length; i++)
-                                        {
-                                            conditions[i] = $"[{column_names[i]}] = {q[i]}";
-                                        }
-
-                                        sql = $@"SELECT [{string.Join("],[", column_names)}] FROM [{dt.TableName}] WHERE {string.Join(" AND ", conditions)}";
-                                        break;
-                                    }
-                                case EType.MySQL:
-                                case EType.PostgreSQL:
-                                    {
-
-                                        for (int i = 0; i < column_names.Length; i++)
-                                        {
-                                            conditions[i] = $"`{column_names[i]}` = {q[i]}";
-                                        }
-
-                                        sql = $@"SELECT `{string.Join("`,`", column_names)}` FROM `{dt.TableName}` WHERE {string.Join(" AND ", conditions)}";
-                                        break;
-
-                                    }
-                            }
-
-                            command.Parameters.Clear();
-                            command.CommandText = sql;
-
-                            foreach (string col in column_names)
-                            {
-                                command.Parameters.Add("", ConvertType(row[col])).Value = row[col];
-                            }
-
-                            var reader = command.ExecuteReader();
-                            row_exist = reader.HasRows;
-                            reader.Close();
-                        }
-
-
-                        if (!rewrite_row || !row_exist)
-                        {
-                            string sql = string.Empty;
-                            string[] column_names = dt.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToArray();
-                            char[] q = new char[column_names.Length];
-                            for (int i = 0; i < q.Length; i++) { q[i] = '?'; }
-
-                            switch (type)
-                            {
-                                case EType.MSSQLServer:
-                                    {
-                                        sql = $@"INSERT INTO [{dt.TableName}] ([{string.Join("],[", column_names)}]) VALUES ({string.Join(" , ", q)})";
-                                        break;
-                                    }
-                                case EType.MySQL:
-                                case EType.PostgreSQL:
-                                    {
-                                        sql = $@"INSERT `{dt.TableName}` (`{string.Join("`,`", column_names)}`) VALUES ({string.Join(" , ", q)})";
-                                        break;
-
-                                    }
-                            }
-
-                            command.Parameters.Clear();
-                            command.CommandText = sql;
-
-                            foreach (string col in column_names)
-                            {
-                                command.Parameters.Add("", ConvertType(row[col])).Value = row[col];
-                            }
-
-                            command.ExecuteNonQuery();
+                            RowInsert(row);
 
                         }
-
-                        if (rewrite_row)
+                        else
                         {
-                            string sql = string.Empty;
-                            string[] pk_column_names = dt.PrimaryKey.Cast<DataColumn>().Select(x => x.ColumnName).ToArray();
-                            string[] column_names = dt.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToArray();
-                            char[] pk_q = new char[pk_column_names.Length];
-                            char[] q = new char[column_names.Length];
-                            string[] conditions = new string[pk_column_names.Length];
-                            string[] sets = new string[column_names.Length];
-
-                            for (int i = 0; i < pk_q.Length; i++) { pk_q[i] = '?'; }
-                            for (int i = 0; i < q.Length; i++) { q[i] = '?'; }
-
-
-                            switch (type)
-                            {
-                                case EType.MSSQLServer:
-                                    {
-
-                                        for (int i = 0; i < sets.Length; i++)
-                                        {
-                                            sets[i] = $"[{column_names[i]}] = {q[i]}";
-                                        }
-
-                                        for (int i = 0; i < conditions.Length; i++)
-                                        {
-                                            conditions[i] = $"[{pk_column_names[i]}] = {pk_q[i]}";
-                                        }
-
-                                        sql = $@"UPDATE [{dt.TableName}] SET {string.Join(" , ", sets)} WHERE {string.Join(" AND ", conditions)}";
-                                        break;
-                                    }
-                                case EType.MySQL:
-                                case EType.PostgreSQL:
-                                    {
-                                        for (int i = 0; i < sets.Length; i++)
-                                        {
-                                            sets[i] = $"`{column_names[i]}` = {q[i]}";
-                                        }
-
-                                        for (int i = 0; i < conditions.Length; i++)
-                                        {
-                                            conditions[i] = $"`{pk_column_names[i]}` = {pk_q[i]}";
-                                        }
-
-                                        sql = $@"UPDATE `{dt.TableName}` SET {string.Join(" , ", sets)} WHERE {string.Join(" AND ", conditions)}";
-                                        break;
-
-                                    }
-                            }
-
-                            command.Parameters.Clear();
-                            command.CommandText = sql;
-
-                            foreach (string col in column_names)
-                            {
-                                command.Parameters.Add("", ConvertType(row[col])).Value = row[col];
-                            }
-
-                            foreach (string col in pk_column_names)
-                            {
-                                command.Parameters.Add("", ConvertType(row[col])).Value = row[col];
-                            }
-
-                            command.ExecuteNonQuery();
-
+                            RowUpdate(row);
                         }
 
                     }
@@ -347,19 +228,7 @@ namespace Lib
 
         }
 
-        public void AddTables(DataSet ds)
-        {
-            try
-            {
-                TestConnection();
 
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error add table", ex);
-            }
-
-        }
 
         public void DeleteTables(string[] names)
         {
@@ -416,30 +285,336 @@ namespace Lib
 
         }
 
-        private static OdbcType ConvertType(object obj)
+        private bool TableExists(DataTable dt)
         {
-            if (obj is bool)
+            bool result = false;
+
+            try
             {
-                return OdbcType.TinyInt;
+                string sql = String.Empty;
+
+                switch (type)
+                {
+                    case EType.MSSQLServer:
+                    case EType.MySQL:
+                    case EType.PostgreSQL:
+                        {
+                            sql = $@"SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '{connection.Database}' AND  TABLE_NAME = '{dt.TableName}'";
+                            break;
+                        }
+                }
+
+                lock (command)
+                {
+                    command.Parameters.Clear();
+                    command.CommandText = sql;
+                    var reader = command.ExecuteReader();
+                    result = reader.HasRows;
+                    reader.Close();
+                }
             }
-            else if (obj is byte[])
+            catch (Exception ex)
             {
-                return OdbcType.Binary;
+                throw new Exception("Error to check table exists", ex);
             }
-            else if (obj is int)
+
+            return result;
+        }
+
+        private void TableAdd(DataSet ds)
+        {
+            try
             {
-                return OdbcType.Int;
+
+
+
+
+
             }
-            else if (obj is DateTime)
+            catch (Exception ex)
             {
-                return OdbcType.DateTime;
+                throw new Exception("Error add table", ex);
             }
-            else
+
+        }
+
+        private void TableAdd(DataTable dt)
+        {
+            try
             {
-                return OdbcType.Text;
+
+                string sql = string.Empty;
+                List<string> props = new List<string>();
+
+                switch (type)
+                {
+                    case EType.MSSQLServer:
+                        {
+                            foreach (DataColumn col in dt.Columns)
+                            {
+                                List<string> result = new List<string>();
+                                if (col.ExtendedProperties.ContainsKey(typeof(SExtProp)))
+                                {
+                                    SExtProp ext_prop = (SExtProp)col.ExtendedProperties[typeof(SExtProp)];
+                                    result.Add(ext_prop.data_type.ToString());
+                                    if (ext_prop.size > 0) result.Add($"({ext_prop.size})");
+                                    if (ext_prop.auto_increment) result.Add("IDENTITY(1,1)");
+                                    if (ext_prop.primary_key) result.Add("PRIMARY KEY");
+                                    if (ext_prop.not_null) result.Add("NOT NULL"); else result.Add("NULL");
+                                }
+                                props.Add($"[{col}] { string.Join(" ", result.ToArray())} ");
+                            }
+
+                            sql = $@"CREATE TABLE [{dt.TableName}] ({string.Join(" , ", props)})";
+                            break;
+                        }
+                    case EType.MySQL:
+                    case EType.PostgreSQL:
+                        {
+                            foreach (DataColumn col in dt.Columns)
+                            {
+                                List<string> result = new List<string>();
+                                if (col.ExtendedProperties.ContainsKey(typeof(SExtProp)))
+                                {
+                                    SExtProp ext_prop = (SExtProp)col.ExtendedProperties[typeof(SExtProp)];
+                                    result.Add(ext_prop.data_type.ToString());
+                                    if (ext_prop.size > 0) result.Add($"({ext_prop.size})");
+                                    if (ext_prop.auto_increment) result.Add("AUTO_INCREMENT");
+                                    if (ext_prop.primary_key) result.Add("PRIMARY KEY");
+                                    if (ext_prop.not_null) result.Add("NOT NULL"); else result.Add("NULL");
+                                }
+                                props.Add($"`{col}` { string.Join(" ", result.ToArray())} ");
+                            }
+                            sql = $@"CREATE TABLE `{dt.TableName}` ({string.Join(" , ", props)})";
+                            break;
+
+                        }
+                }
+
+                command.Parameters.Clear();
+                command.CommandText = sql;
+                command.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error add table", ex);
             }
         }
 
+        private bool RowExists(DataRow dr)
+        {
+            bool result = false;
+
+            try
+            {
+
+                string sql = String.Empty;
+                DataColumn[] columns = dr.Table.Columns.Cast<DataColumn>()
+                                            .Where(x => x.ExtendedProperties.ContainsKey(typeof(SExtProp)))
+                                            .Where(x =>
+                                                        {
+                                                            SExtProp prop = (SExtProp)x.ExtendedProperties[typeof(SExtProp)];
+                                                            return prop.primary_key;
+                                                        }).ToArray();
+
+
+                List<string> conditions = new List<string>();
+
+
+                switch (type)
+                {
+                    case EType.MSSQLServer:
+                        {
+
+                            foreach (DataColumn col in columns)
+                            {
+                                conditions.Add($"[{col.ColumnName}] = ?");
+                            }
+
+                            sql = $@"SELECT [{string.Join("],[", columns.Select(x => x.ColumnName))}] FROM [{dr.Table.TableName}] WHERE {string.Join(" AND ", conditions)}";
+                            break;
+                        }
+                    case EType.MySQL:
+                    case EType.PostgreSQL:
+                        {
+
+                            foreach (DataColumn col in columns)
+                            {
+                                conditions.Add($"`{col.ColumnName}` = ?");
+                            }
+
+                            sql = $@"SELECT `{string.Join("`,`", columns.Select(x => x.ColumnName))}` FROM `{dr.Table.TableName}` WHERE {string.Join(" AND ", conditions)}";
+                            break;
+
+                        }
+                }
+
+                command.Parameters.Clear();
+                command.CommandText = sql;
+
+                foreach (DataColumn col in columns)
+                {
+                        SExtProp ext_prop = (SExtProp)col.ExtendedProperties[typeof(SExtProp)];
+                        command.Parameters.Add("", ext_prop.data_type).Value = dr[col];
+                }
+
+                var reader = command.ExecuteReader();
+                result = reader.HasRows;
+                reader.Close();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Error to check row exists", ex);
+            }
+
+            return result;
+        }
+
+        private void RowInsert(DataRow dr)
+        {
+            try
+            {
+
+                string sql = string.Empty;
+                DataColumn[] columns = dr.Table.Columns.Cast<DataColumn>()
+                                            .Where(x => x.ExtendedProperties.ContainsKey(typeof(SExtProp)))
+                                            .Where(x =>
+                                            {
+                                                SExtProp prop = (SExtProp)x.ExtendedProperties[typeof(SExtProp)];
+                                                return !prop.ignore;
+                                            }).ToArray();
+
+
+                char[] q = new char[columns.Length];
+                for (int i = 0; i < q.Length; i++) { q[i] = '?'; }
+
+                switch (type)
+                {
+                    case EType.MSSQLServer:
+                        {
+                            sql = $@"INSERT INTO [{dr.Table.TableName}] ([{string.Join("],[", columns.Select(x => x.ColumnName))}]) VALUES ({string.Join(" , ", q)})";
+                            break;
+                        }
+                    case EType.MySQL:
+                    case EType.PostgreSQL:
+                        {
+                            sql = $@"INSERT `{dr.Table.TableName}` (`{string.Join("`,`", columns.Select(x => x.ColumnName))}`) VALUES ({string.Join(" , ", q)})";
+                            break;
+
+                        }
+                }
+
+                command.Parameters.Clear();
+                command.CommandText = sql;
+
+                foreach (DataColumn col in columns)
+                {
+                    SExtProp ext_prop = (SExtProp)col.ExtendedProperties[typeof(SExtProp)];
+                    command.Parameters.Add("", ext_prop.data_type).Value = dr[col];
+                }
+
+                command.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Error insert row", ex);
+            }
+        }
+
+        private void RowUpdate(DataRow dr)
+        {
+
+            try
+            {
+
+                string sql = string.Empty;
+                
+                DataColumn[] pk_columns = dr.Table.Columns.Cast<DataColumn>()
+                                        .Where(x => x.ExtendedProperties.ContainsKey(typeof(SExtProp)))
+                                        .Where(x =>
+                                        {
+                                            SExtProp prop = (SExtProp)x.ExtendedProperties[typeof(SExtProp)];
+                                            return prop.primary_key;
+                                        }).ToArray();
+
+                DataColumn[] columns = dr.Table.Columns.Cast<DataColumn>()
+                                        .Where(x => x.ExtendedProperties.ContainsKey(typeof(SExtProp)))
+                                        .Where(x =>
+                                        {
+                                            SExtProp prop = (SExtProp)x.ExtendedProperties[typeof(SExtProp)];
+                                            return !prop.primary_key && !prop.ignore;
+                                        }).ToArray();
+
+                List<string> conditions = new List<string>();
+                List<string> sets = new  List<string>();
+
+                switch (type)
+                {
+                    case EType.MSSQLServer:
+                        {
+
+                            foreach (DataColumn col in columns)
+                            {
+                                sets.Add($"[{col.ColumnName}] = ?");
+                            }
+
+                            foreach (DataColumn col in pk_columns)
+                            {
+                                conditions.Add($"[{col.ColumnName}] = ?");
+                            }
+
+                            sql = $@"UPDATE [{dr.Table.TableName}] SET {string.Join(" , ", sets)} WHERE {string.Join(" AND ", conditions)}";
+                            break;
+                        }
+                    case EType.MySQL:
+                    case EType.PostgreSQL:
+                        {
+                            foreach (DataColumn col in columns)
+                            {
+                                sets.Add($"`{col.ColumnName}` = ?");
+                            }
+
+                            foreach (DataColumn col in pk_columns)
+                            {
+                                conditions.Add($"`{col.ColumnName}` = ?");
+                            }
+
+                            sql = $@"UPDATE `{dr.Table.TableName}` SET {string.Join(" , ", sets)} WHERE {string.Join(" AND ", conditions)}";
+                            break;
+
+                        }
+                }
+
+                command.Parameters.Clear();
+                command.CommandText = sql;
+
+                foreach (DataColumn col in columns)
+                {
+                    SExtProp ext_prop = (SExtProp)col.ExtendedProperties[typeof(SExtProp)];
+                    command.Parameters.Add("", ext_prop.data_type).Value = dr[col];
+                }
+
+                foreach (DataColumn col in pk_columns)
+                {
+                    SExtProp ext_prop = (SExtProp)col.ExtendedProperties[typeof(SExtProp)];
+                    command.Parameters.Add("", ext_prop.data_type).Value = dr[col];
+                }
+
+                command.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Error update row", ex);
+            }
+
+        }
 
         #endregion
 

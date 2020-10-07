@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Text;
 
 namespace OPC_DB_gate_server
@@ -11,6 +12,7 @@ namespace OPC_DB_gate_server
 
         #region CONSTANTS
 
+        public const string col_name_id = "id";
         public const string col_name_tags_id = "tags_id";
         public const string col_name_timestamp = "timestamp";
         public const string col_name_value_raw = "value_raw";
@@ -28,8 +30,8 @@ namespace OPC_DB_gate_server
 
         #region PROPERTIES
 
-        private DBTable source = new DBTable("rt_values");
-        public DBTable Source { get { return source; } }
+        private DataTable source = new DataTable("rt_values");
+        public DataTable Source { get { return source; } }
 
         #endregion
 
@@ -37,11 +39,38 @@ namespace OPC_DB_gate_server
         public RT_values()
         {
 
-            source.AddColumn(col_name_tags_id, typeof(int));
-            source.AddColumn(col_name_timestamp, typeof(DateTime));
-            source.AddColumn(col_name_value_raw, typeof(byte[]));
-            source.AddColumn(col_name_value_str, typeof(string));
-            source.AddColumn(col_name_quality, typeof(byte));
+            source.Columns.Add(col_name_id, typeof(int)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp),
+                                                                                new Lib.Database.SExtProp()
+                                                                                {
+                                                                                    data_type = System.Data.Odbc.OdbcType.BigInt,
+                                                                                    ignore = true
+                                                                                });
+            source.Columns.Add(col_name_tags_id, typeof(int)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp),
+                                                                                     new Lib.Database.SExtProp()
+                                                                                     {
+                                                                                         data_type = System.Data.Odbc.OdbcType.BigInt,
+                                                                                         primary_key = true
+                                                                                     });
+            source.Columns.Add(col_name_timestamp, typeof(DateTime)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp),
+                                                                                     new Lib.Database.SExtProp()
+                                                                                     {
+                                                                                         data_type = System.Data.Odbc.OdbcType.DateTime,
+                                                                                     });
+            source.Columns.Add(col_name_value_raw, typeof(byte[])).ExtendedProperties.Add(typeof(Lib.Database.SExtProp),
+                                                                                     new Lib.Database.SExtProp()
+                                                                                     {
+                                                                                         data_type = System.Data.Odbc.OdbcType.Binary,
+                                                                                     });
+            source.Columns.Add(col_name_value_str, typeof(string)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp),
+                                                                                     new Lib.Database.SExtProp()
+                                                                                     {
+                                                                                         data_type = System.Data.Odbc.OdbcType.VarChar,
+                                                                                     });
+            source.Columns.Add(col_name_quality, typeof(byte)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp),
+                                                                                     new Lib.Database.SExtProp()
+                                                                                     {
+                                                                                         data_type = System.Data.Odbc.OdbcType.SmallInt,
+                                                                                     });
 
         }
 
@@ -51,37 +80,20 @@ namespace OPC_DB_gate_server
             try
             {
 
-                DataRow row = source.Table.Rows.Find(tag.id);
+                DataRow row = source.Select($"{col_name_id} = {tag.id}").FirstOrDefault();
 
                 if (row == null)
                 {
-                    row = source.Table.NewRow();
-                    row[DBTable.col_name_id] = tag.id;
-                    source.Table.Rows.Add(row);
+                    row = source.NewRow();
+                    row[col_name_tags_id] = tag.id;
+                    source.Rows.Add(row);
                 }
 
-                row[col_name_tags_id] = tag.id;
                 row[col_name_timestamp] = tag.timestamp;
                 row[col_name_value_raw] = OPC_DB_gate_Lib.TagData.ObjToBin(tag.value);
                 row[col_name_value_str] = tag.value.ToString();
                 row[col_name_quality] = tag.id;
-                /*
-                Console.WriteLine(source.Table.TableName);
-                for (int i = 0; i < source.Table.Columns.Count; i++)
-                {
-                    Console.Write($"{source.Table.Columns[i].ColumnName}|");
-                }
-                    Console.WriteLine();
 
-                foreach (DataRow item in source.Table.Rows)
-                {
-                    for (int i = 0; i < item.ItemArray.Length; i++)
-                    {
-                        Console.Write($"{item.ItemArray[i]} ");
-                    }
-                        Console.WriteLine();
-                }
-                */
             }
             catch (Exception ex)
             {

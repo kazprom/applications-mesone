@@ -15,6 +15,7 @@ namespace OPC_DB_gate_server
 
         #region CONSTANTS
 
+        public const string col_name_id = "id";
         public const string col_name_ip = "ip";
         public const string col_name_port = "port";
 
@@ -29,8 +30,8 @@ namespace OPC_DB_gate_server
 
         #region PROPERTIES
 
-        private DBTable source = new DBTable("clients");
-        public DBTable Source { get { return source; } }
+        private DataTable source = new DataTable("clients");
+        public DataTable Source { get { return source; } }
 
         #endregion
 
@@ -38,8 +39,10 @@ namespace OPC_DB_gate_server
         public Clients()
         {
 
-            source.AddColumn(col_name_ip, typeof(string));
-            source.AddColumn(col_name_port, typeof(int));
+            source.Columns.Add(col_name_id, typeof(int)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp() { primary_key = true });
+            source.Columns.Add(col_name_ip, typeof(string));
+            source.Columns.Add(col_name_port, typeof(int));
+
 
         }
 

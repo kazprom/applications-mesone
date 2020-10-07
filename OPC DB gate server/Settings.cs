@@ -1,6 +1,7 @@
 ﻿using Lib;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 
 namespace OPC_DB_gate_server
@@ -10,6 +11,7 @@ namespace OPC_DB_gate_server
 
         #region CONSTANTS
 
+        public const string col_name_id = "id";
         public const string col_name_key = "key";
         public const string col_name_value = "value";
 
@@ -18,8 +20,8 @@ namespace OPC_DB_gate_server
 
         #region PROPERTIES
 
-        private DBTable source = new DBTable("settings");
-        public DBTable Source { get { return source; } }
+        private DataTable source = new DataTable("settings");
+        public DataTable Source { get { return source; } }
 
 
         private Lib.Parameter<int> depth_history_hour = new Parameter<int>("DB DEPTH_HISTORY_HOUR");
@@ -40,10 +42,12 @@ namespace OPC_DB_gate_server
         public Settings()
         {
 
-            this.source.AddColumn(col_name_key, typeof(string));
-            this.source.AddColumn(col_name_value, typeof(string));
+            source.Columns.Add(col_name_id, typeof(int));
+            source.Columns.Add(col_name_key, typeof(string)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp() { primary_key = true });
+            source.Columns.Add(col_name_value, typeof(string));
 
-            source.Table.RowChanged += ValueHandler;
+
+            source.RowChanged += ValueHandler;
         }
 
         #region PRIVATES

@@ -16,6 +16,7 @@ namespace OPC_DB_gate_server
 
         #region CONSTANTS
 
+        public const string col_name_id = "id";
         public const string col_name_clients_id = "clients_id";
         public const string col_name_path = "path";
         public const string col_name_rate = "rate";
@@ -26,8 +27,8 @@ namespace OPC_DB_gate_server
 
         #region PROPERTIES
 
-        private DBTable source = new DBTable("tags");
-        public DBTable Source { get { return source; } }
+        private DataTable source = new DataTable("tags");
+        public DataTable Source { get { return source; } }
 
 
         private Dictionary<int, List<OPC_DB_gate_Lib.TagSettings>> dictionary = new Dictionary<int, List<OPC_DB_gate_Lib.TagSettings>>();
@@ -38,11 +39,13 @@ namespace OPC_DB_gate_server
 
         public Tags()
         {
+            
+            source.Columns.Add(col_name_id, typeof(int)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp() { primary_key = true });
+            source.Columns.Add(col_name_clients_id, typeof(int));
+            source.Columns.Add(col_name_path, typeof(string));
+            source.Columns.Add(col_name_rate, typeof(int));
+            source.Columns.Add(col_name_data_type, typeof(byte));
 
-            source.AddColumn(col_name_clients_id, typeof(int));
-            source.AddColumn(col_name_path, typeof(string));
-            source.AddColumn(col_name_rate, typeof(int));
-            source.AddColumn(col_name_data_type, typeof(byte));
         }
     }
 }
