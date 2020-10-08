@@ -82,7 +82,7 @@ namespace OPC_DB_gate_client
                 catch (Exception ex)
                 {
 
-                    Logger.WriteMessage("Error config file", ex);
+                    Lib.Message.Make("Error config file", ex);
                 }
 
                 Thread.Sleep(100);

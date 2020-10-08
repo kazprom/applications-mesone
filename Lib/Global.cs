@@ -16,7 +16,7 @@ namespace Lib
         {
             try
             {
-                Console.CancelKeyPress += (object sender, ConsoleCancelEventArgs e) =>
+                System.Console.CancelKeyPress += (object sender, ConsoleCancelEventArgs e) =>
                             {
                                 var isCtrlC = e.SpecialKey == ConsoleSpecialKey.ControlC;
                                 var isCtrlBreak = e.SpecialKey == ConsoleSpecialKey.ControlBreak;
@@ -25,7 +25,7 @@ namespace Lib
                 if (isCtrlC)
                                 {
                                     e.Cancel = true;
-                                    Console.WriteLine("Program stopped!");
+                                    System.Console.WriteLine("Program stopped!");
                                     System.Environment.Exit(0);
                                 }
                             };
@@ -43,7 +43,7 @@ namespace Lib
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             var productName = fvi.ProductName;
             var productVersion = fvi.ProductVersion;
-            Console.WriteLine(productName + $" (v{productVersion})");
+            System.Console.WriteLine(productName + $" (v{productVersion})");
         }
 
         #endregion

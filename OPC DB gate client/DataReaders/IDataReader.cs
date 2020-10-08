@@ -50,6 +50,9 @@ namespace OPC_DB_gate_client
         {
             this.name = name;
             this.buffer = buffer;
+
+            Lib.Message.Make($"Run {name}");
+
         }
 
         #endregion
@@ -65,6 +68,8 @@ namespace OPC_DB_gate_client
                 if (disposing)
                 {
                     // TODO: освободить управляемое состояние (управляемые объекты)
+
+                    Lib.Message.Make($"Stopped {name}");
                 }
 
                 // TODO: освободить неуправляемые ресурсы (неуправляемые объекты) и переопределить метод завершения

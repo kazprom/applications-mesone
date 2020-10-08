@@ -7,14 +7,19 @@ using System.Threading;
 
 namespace OPC_DB_gate_server
 {
-    class Database
+    class HandlerDatabase
     {
 
         #region VARIABLES
 
-        private Lib.Database database = new Lib.Database();
         private Thread thread;
         private bool execution = true;
+
+        private Settings settings;
+        private Clients clients;
+        private Tags tags;
+        private RT_values rt_values;
+        private History history;
 
         #endregion
 
@@ -27,11 +32,8 @@ namespace OPC_DB_gate_server
         public Lib.Parameter<string> CONNECTION_STRING { get { return connection_string; } }
 
 
-        private Settings settings;
-        private Clients clients;
-        private Tags tags;
-        private RT_values rt_values;
-        private History history;
+        private Lib.Database database = new Lib.Database();
+        public Lib.Database Database { get { return database; }}
 
 
         #endregion
@@ -40,7 +42,7 @@ namespace OPC_DB_gate_server
 
         #region CONSTRUCTOR
 
-        public Database(Lib.Parameter<Lib.Database.EType> type,
+        public HandlerDatabase(Lib.Parameter<Lib.Database.EType> type,
                         Lib.Parameter<string> connection_string,
                         Settings settings,
                         Clients client,
@@ -108,7 +110,7 @@ namespace OPC_DB_gate_server
                 }
                 catch (Exception ex)
                 {
-                    Logger.WriteMessage("Error database", ex);
+                    Lib.Message.Make("Error database", ex);
                 }
 
                 Thread.Sleep(100);

@@ -13,7 +13,9 @@ namespace OPC_DB_gate_server
 
         #region CONSTANTS
 
-        public const string table_prefix = "t_";
+        public const char separator = '_';
+
+        public const string table_prefix = "t";
 
         public const string col_name_id = "id";
         public const string col_name_tags_id = "tags_id";
@@ -40,7 +42,7 @@ namespace OPC_DB_gate_server
             {
                 lock (source)
                 {
-                    string table_name = $"t_{tag.timestamp:yyyy_MM_dd_HH}";
+                    string table_name = GetTableName(tag.timestamp);
 
                     DataTable table = source.Tables[table_name];
                     if (table == null)
@@ -108,6 +110,11 @@ namespace OPC_DB_gate_server
             {
                 throw new Exception("Error clear", ex);
             }
+        }
+
+        public static string GetTableName(DateTime timestamp)
+        {
+            return table_prefix + separator + timestamp.ToString("yyyy" + separator + "MM" + separator + "dd" + separator + "HH");
         }
 
     }

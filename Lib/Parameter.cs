@@ -21,7 +21,7 @@ namespace Lib
                 if (this.value == null || !this.value.Equals(value))
                 {
                     this.value = value;
-                    Lib.Logger.WriteMessage($"{name} = {this.value}");
+                    Lib.Message.Make($"{name} = {this.value}");
                     ValueChanged?.Invoke(this.value);
                 }
             }

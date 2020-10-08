@@ -9,12 +9,6 @@ namespace Lib
     public class Database
     {
 
-
-        #region CONSTANTS
-
-
-        #endregion
-
         #region STRUCTURES
 
         public struct SExtProp
@@ -59,7 +53,6 @@ namespace Lib
         private OdbcCommand command = new OdbcCommand();
 
         #endregion
-
 
         #region PUBLICS
 
@@ -223,29 +216,94 @@ namespace Lib
 
         }
 
-        public void Sync(DataSet ds)
-        {
-
-        }
 
 
-
-        public void DeleteTables(string[] names)
+        public string[] GetListTables(string condition = "")
         {
             try
             {
                 TestConnection();
 
+                string sql = String.Empty;
+
+                switch (type)
+                {
+                    case EType.MSSQLServer:
+                    case EType.MySQL:
+                    case EType.PostgreSQL:
+                        {
+                            sql = $@"SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '{connection.Database}' ";
+                            if (condition != "")
+                                sql += $"AND ({condition})";
+                            break;
+                        }
+                }
+
+                lock (command)
+                {
+                    OdbcDataAdapter adapter = new OdbcDataAdapter(sql, connection);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    return dt.Rows.Cast<DataRow>().Select(x => x["TABLE_NAME"].ToString()).ToArray();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error get list tables", ex);
+            }
+        }
+        public void DeleteTables(string[] table_names)
+        {
+            try
+            {
+                TestConnection();
+
+                foreach (string table_name in table_names)
+                {
+                    DeleteTable(table_name);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error delete tables", ex);
+            }
+        }
+
+        public void DeleteTable(string table_name)
+        {
+
+            try
+            {
+                TestConnection();
+
+                string sql = String.Empty;
+
+                switch (type)
+                {
+                    case EType.MSSQLServer:
+                    case EType.MySQL:
+                    case EType.PostgreSQL:
+                        {
+                            sql = $@"DROP TABLE '{table_name}' ";
+                            break;
+                        }
+                }
+
+                lock (command)
+                {
+                    command.Parameters.Clear();
+                    command.CommandText = sql;
+                    command.ExecuteNonQuery();
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Error delete table", ex);
             }
+
         }
 
-
         #endregion
-
 
         #region PRIVATES
 
@@ -272,7 +330,7 @@ namespace Lib
                             throw new Exception($"Unknow type data base. Choise next options {string.Join(" , ", Enum.GetValues(typeof(EType)).Cast<EType>().Where(x => x != EType.Unknown).Select(x => x.ToString()).ToArray())}");
 
                         command.Connection = connection;
-                        command.CommandText = "select 1";
+                        command.CommandText = "SELECT 1";
                         command.Parameters.Clear();
                         command.ExecuteNonQuery();
                     }
@@ -319,23 +377,6 @@ namespace Lib
             }
 
             return result;
-        }
-
-        private void TableAdd(DataSet ds)
-        {
-            try
-            {
-
-
-
-
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error add table", ex);
-            }
-
         }
 
         private void TableAdd(DataTable dt)
@@ -455,8 +496,8 @@ namespace Lib
 
                 foreach (DataColumn col in columns)
                 {
-                        SExtProp ext_prop = (SExtProp)col.ExtendedProperties[typeof(SExtProp)];
-                        command.Parameters.Add("", ext_prop.data_type).Value = dr[col];
+                    SExtProp ext_prop = (SExtProp)col.ExtendedProperties[typeof(SExtProp)];
+                    command.Parameters.Add("", ext_prop.data_type).Value = dr[col];
                 }
 
                 var reader = command.ExecuteReader();
@@ -533,7 +574,7 @@ namespace Lib
             {
 
                 string sql = string.Empty;
-                
+
                 DataColumn[] pk_columns = dr.Table.Columns.Cast<DataColumn>()
                                         .Where(x => x.ExtendedProperties.ContainsKey(typeof(SExtProp)))
                                         .Where(x =>
@@ -551,7 +592,7 @@ namespace Lib
                                         }).ToArray();
 
                 List<string> conditions = new List<string>();
-                List<string> sets = new  List<string>();
+                List<string> sets = new List<string>();
 
                 switch (type)
                 {

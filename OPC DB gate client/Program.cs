@@ -22,6 +22,8 @@ namespace OPC_DB_gate_client
             Lib.Global.PrintAppInfo();
             Lib.Global.Subscribe_Ctrl_C();
 
+            Lib.Console console = new Lib.Console();
+
             ConfigFile config_file;
 
             if (args.Length == 1)

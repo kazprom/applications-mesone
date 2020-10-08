@@ -23,15 +23,18 @@ namespace OPC_DB_gate_server
             Lib.Global.PrintAppInfo();
             Lib.Global.Subscribe_Ctrl_C();
 
-            ConfigFile config_file;
+            Lib.Console console = new Lib.Console();
+            Lib.TextLogger text_logger = new Lib.TextLogger($@"{Lib.Global.PathExeFolder}LOG");
+
+            HandlerConfigFile config_file;
 
             if (args.Length == 1)
             {
-                config_file = new ConfigFile(args[0]);
+                config_file = new HandlerConfigFile(args[0]);
             }
             else
             {
-                config_file = new ConfigFile(Lib.Global.NameExeFile.Split('.')[0] + ".xml");
+                config_file = new HandlerConfigFile(Lib.Global.NameExeFile.Split('.')[0] + ".xml");
             }
 
             Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer = new Lib.Buffer<OPC_DB_gate_Lib.TagData>(10000);
@@ -42,17 +45,26 @@ namespace OPC_DB_gate_server
             RT_values rt_values = new RT_values();
             History history = new History();
 
-            BufferHandler buffer_handler = new BufferHandler(buffer, rt_values, history);
+            HandlerDatabase database = new HandlerDatabase(config_file.DB_TYPE,
+                                                           config_file.CONNECTION_STRING,
+                                                           settings, clients, tags,
+                                                           rt_values, history);
 
-            Database database = new Database(config_file.DB_TYPE,
-                                             config_file.CONNECTION_STRING,
-                                             settings,
-                                             clients,
-                                             tags,
-                                             rt_values,
-                                             history);
+            Lib.DBLogger db_logger = new Lib.DBLogger(database.Database);
+
+            HandlerData data = new HandlerData(buffer, 
+                                               rt_values, settings.RT_VALUES_ENABLE,
+                                               history, settings.HISTORY_ENABLE);
+
 
             Connections connections = new Connections(clients, tags, buffer);
+
+
+
+            HistoryCleaner history_cleaner = new HistoryCleaner(database.Database, settings.DEPTH_HISTORY_HOUR);
+            Lib.TextLogCleaner text_log_cleaner = new Lib.TextLogCleaner(text_logger, config_file.DEPTH_LOG_DAY);
+            Lib.DBLogCleaner db_log_cleaner = new Lib.DBLogCleaner(db_logger, settings.DEPTH_LOG_DAY);
+
 
             while (true)
             {

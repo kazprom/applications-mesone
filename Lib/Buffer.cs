@@ -15,7 +15,6 @@ namespace Lib
 
         #region EVENTS
 
-        #region EVENTS
 
         public delegate void EnqueueNotify(T obj);  // delegate
         public event EnqueueNotify EnqueueEvent; // event
@@ -27,7 +26,6 @@ namespace Lib
         public event HalfNotify HalfEvent; // event
 
 
-        #endregion
 
         #endregion
 

@@ -30,11 +30,11 @@ namespace OPC_DB_gate_server
         private Lib.Parameter<int> depth_log_day = new Parameter<int>("DB DEPTH_LOG_DAY");
         public Lib.Parameter<int> DEPTH_LOG_DAY { get { return depth_log_day; } }
 
-        private Lib.Parameter<bool> rt_value = new Parameter<bool>("DB RT_VALUES");
-        public Lib.Parameter<bool> RT_VALUES { get { return rt_value; } }
+        private Lib.Parameter<bool> rt_value_enable = new Parameter<bool>("DB RT_VALUES_ENABLE");
+        public Lib.Parameter<bool> RT_VALUES_ENABLE { get { return rt_value_enable; } }
 
-        private Lib.Parameter<bool> history_write = new Parameter<bool>("DB HISTORY_WRITE");
-        public Lib.Parameter<bool> HISTORY_WRITE { get { return history_write; } }
+        private Lib.Parameter<bool> history_enable = new Parameter<bool>("DB HISTORY_ENABLE");
+        public Lib.Parameter<bool> HISTORY_ENABLE { get { return history_enable; } }
 
         #endregion
 
@@ -75,18 +75,18 @@ namespace OPC_DB_gate_server
                                 depth_log_day.Value = result;
                             break;
                         }
-                    case "RT_VALUES":
+                    case "RT_VALUES_ENABLE":
                         {
                             bool result;
                             if (bool.TryParse(value, out result))
-                                rt_value.Value = result;
+                                rt_value_enable.Value = result;
                             break;
                         }
-                    case "HISTORY_WRITE":
+                    case "HISTORY_ENABLE":
                         {
                             bool result;
                             if (bool.TryParse(value, out result))
-                                history_write.Value = result;
+                                history_enable.Value = result;
                             break;
                         }
                 }

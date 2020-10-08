@@ -103,7 +103,7 @@ namespace OPC_DB_gate_client
                     thread_connect.Join();
                     thread_connect = null;
 
-                    Logger.WriteMessage($"Connection settings was changed from {this.ip_address.Value}:{this.port.Value} to {ip_address}:{port}. Reconnecting ...");
+                    Lib.Message.Make($"Connection settings was changed from {this.ip_address.Value}:{this.port.Value} to {ip_address}:{port}. Reconnecting ...");
                 }
 
                 GC.Collect();
@@ -136,14 +136,14 @@ namespace OPC_DB_gate_client
                             client = new TcpClient();
                             Lib.Encryption.SSafetyKeys sk = new Encryption.SSafetyKeys();
                             encryption.SafetyKeys = sk;
-                            Logger.WriteMessage($"Try connect to server {ip_address.Value}:{port.Value} ... ");
+                            Lib.Message.Make($"Try connect to server {ip_address.Value}:{port.Value} ... ");
                             client.Connect(ip_address.Value, port.Value);
                         }
                         else
                         {
                             if (nwStream == null)
                             {
-                                Logger.WriteMessage($"Connected to server");
+                                Lib.Message.Make($"Connected to server");
                                 nwStream = client.GetStream();
 
                                 thread_read = new Thread(new ThreadStart(HandlerRead)) { IsBackground = true, Name = $"Reader" };
@@ -159,11 +159,11 @@ namespace OPC_DB_gate_client
                     }
                     catch (SocketException ex)
                     {
-                        Logger.WriteMessage($"Can't connect to server", ex);
+                        Lib.Message.Make($"Can't connect to server", ex);
                     }
                     catch (Exception ex)
                     {
-                        Logger.WriteMessage($"Error connect to server", ex);
+                        Lib.Message.Make($"Error connect to server", ex);
                     }
 
                     Thread.Sleep(5000);
@@ -203,11 +203,11 @@ namespace OPC_DB_gate_client
 
                 GC.Collect();
 
-                Logger.WriteMessage($"Disconnected from server");
+                Lib.Message.Make($"Disconnected from server");
             }
             catch (Exception ex)
             {
-                Logger.WriteMessage($"Error closing connection", ex);
+                Lib.Message.Make($"Error closing connection", ex);
             }
         }
 
@@ -252,13 +252,13 @@ namespace OPC_DB_gate_client
                                             {
 
                                                 encryption.SafetyKeys = safety_keys;
-                                                Logger.WriteMessage("Get new security key");
+                                                Lib.Message.Make("Get new security key");
                                             }
 
                                         }
                                         catch (Exception ex)
                                         {
-                                            Logger.WriteMessage("Error getting package with safety keys object", ex);
+                                            Lib.Message.Make("Error getting package with safety keys object", ex);
                                         }
                                         break;
 
@@ -278,12 +278,12 @@ namespace OPC_DB_gate_client
                                         }
                                         catch (Exception ex)
                                         {
-                                            Logger.WriteMessage("Error getting package with safety keys object", ex);
+                                            Lib.Message.Make("Error getting package with safety keys object", ex);
                                         }
                                         break;
 
                                     default:
-                                        Logger.WriteMessage("Unknown incoming package");
+                                        Lib.Message.Make("Unknown incoming package");
                                         break;
                                 }
                             }
@@ -294,7 +294,7 @@ namespace OPC_DB_gate_client
             }
             catch (Exception ex)
             {
-                Logger.WriteMessage($"Connection error read data", ex);
+                Lib.Message.Make($"Connection error read data", ex);
                 nwStream = null;
             }
         }
@@ -322,7 +322,7 @@ namespace OPC_DB_gate_client
             }
             catch (Exception ex)
             {
-                Logger.WriteMessage($"Connection error write data", ex);
+                Lib.Message.Make($"Connection error write data", ex);
                 nwStream = null;
             }
 
@@ -343,7 +343,7 @@ namespace OPC_DB_gate_client
                 }
                 catch (Exception)
                 {
-                    Logger.WriteMessage($"Server disconnected");
+                    Lib.Message.Make($"Server disconnected");
                     nwStream = null;
                     return;
                 }

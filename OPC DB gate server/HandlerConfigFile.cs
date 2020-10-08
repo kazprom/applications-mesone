@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace OPC_DB_gate_server
 {
-    public class ConfigFile
+    public class HandlerConfigFile
     {
 
         #region VARIABLES
@@ -37,7 +37,7 @@ namespace OPC_DB_gate_server
 
         #region CONSTRUCTOR
 
-        public ConfigFile(string path)
+        public HandlerConfigFile(string path)
         {
             this.path = path;
 
@@ -81,7 +81,7 @@ namespace OPC_DB_gate_server
                 catch (Exception ex)
                 {
 
-                    Logger.WriteMessage("Error config file", ex);
+                    Lib.Message.Make("Error config file", ex);
                 }
 
                 Thread.Sleep(100);

@@ -1,27 +1,39 @@
-﻿using Lib;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
 namespace OPC_DB_gate_server
 {
-    class BufferHandler
+    class HandlerData
     {
 
+        #region VARIABLES
+
         private Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer;
+
         private RT_values rt_values;
         private History history;
+
+        Lib.Parameter<bool> rt_values_enable;
+        Lib.Parameter<bool> history_enable;
+
         private Thread thread;
         private bool execution = true;
 
+        #endregion
 
-        public BufferHandler(Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer,
-                             RT_values rt_values,
-                             History history)
+
+
+        public HandlerData(Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer,
+                           RT_values rt_values, Lib.Parameter<bool> rt_values_enable,
+                           History history, Lib.Parameter<bool> history_enable)
         {
             this.rt_values = rt_values;
+            this.rt_values_enable = rt_values_enable;
+
             this.history = history;
+            this.history_enable = history_enable;
 
             this.buffer = buffer;
             this.buffer.HalfEvent += BufferEmptier;
@@ -33,7 +45,7 @@ namespace OPC_DB_gate_server
 
         private void Handler()
         {
-            while(execution)
+            while (execution)
             {
                 try
                 {
@@ -41,7 +53,7 @@ namespace OPC_DB_gate_server
                 }
                 catch (Exception ex)
                 {
-                    Logger.WriteMessage("Error buffer handler",ex);
+                    Lib.Message.Make("Error buffer handler", ex);
                 }
                 Thread.Sleep(2000);
             }
@@ -58,8 +70,11 @@ namespace OPC_DB_gate_server
                     {
                         OPC_DB_gate_Lib.TagData tag = buffer.Dequeue();
 
-                        rt_values.Put(tag);
-                        history.Put(tag);
+                        if (rt_values_enable.Value)
+                            rt_values.Put(tag);
+
+                        if (history_enable.Value)
+                            history.Put(tag);
 
                     }
                 }
