@@ -14,7 +14,9 @@ namespace OPC_DB_gate_client
 
         private string name;
 
-        private Dictionary<int, Opc.Da.SubscriptionState> group_states = new Dictionary<int, Opc.Da.SubscriptionState>();
+        Opc.Da.Server opc_server = null;
+        private Dictionary<int, Opc.Da.SubscriptionState> subscription_states = new Dictionary<int, Opc.Da.SubscriptionState>();
+        private Dictionary<int, Opc.Da.ISubscription> subscriptions = new Dictionary<int, Opc.Da.ISubscription>();
 
         #endregion
 
@@ -26,12 +28,11 @@ namespace OPC_DB_gate_client
                 this.name = name;
 
                 Opc.URL url = new Opc.URL($"opcda://localhost/{name}");
-                Opc.Da.Server server = null;
                 OpcCom.Factory fact = new OpcCom.Factory();
-                server = new Opc.Da.Server(fact, null);
-                server.Connect(url, new Opc.ConnectData(new System.Net.NetworkCredential()));
+                opc_server = new Opc.Da.Server(fact, null);
+                opc_server.Connect(url, new Opc.ConnectData(new System.Net.NetworkCredential()));
 
-                PutEvent += GroupHandlerRunner;
+                PutEvent += TagHandler;
 
             }
             catch (Exception ex)
@@ -42,67 +43,89 @@ namespace OPC_DB_gate_client
         }
 
 
-        private void GroupHandlerRunner(Dictionary<int, Group> groups)
+        private void TagHandler(Dictionary<int, Group> groups)
         {
 
             try
             {
 
-                foreach (var item in groups)
+                foreach (var group in groups)
                 {
-                    if (!group_states.ContainsKey(item.Key))
+                    Opc.Da.SubscriptionState subscription_state;
+                    Opc.Da.ISubscription isubscription;
+                    Opc.Da.Subscription subscription;
+
+                    if (!subscription_states.ContainsKey(group.Key))
                     {
-                        group_states.Add(item.Key, new Opc.Da.SubscriptionState());
-                        Lib.Message.Make($"OPC server {name} add group {item.Key}");
+
+                        subscription_state = new Opc.Da.SubscriptionState();
+                        subscription_state.Name = group.Key.ToString();
+                        subscription_state.ServerHandle = null;
+                        subscription_state.ClientHandle = Guid.NewGuid().ToString();
+                        subscription_state.Active = true;
+                        subscription_state.UpdateRate = group.Value.Rate;
+                        subscription_state.Deadband = 0;
+                        subscription_state.Locale = null;
+                        subscription_states.Add(group.Key, subscription_state);
+                        isubscription = opc_server.CreateSubscription(subscription_state);
+                        subscriptions.Add(group.Key, isubscription);
+                        isubscription.DataChanged += DataChangeHandler;
+                        Lib.Message.Make($"OPC server [{opc_server.Name}] added group [{subscription_state.Name}]");
                     }
 
-                    Opc.Da.SubscriptionState groupState = group_states[item.Key];
-                    groupState.Name = item.Value.Rate.ToString();
-                    groupState.UpdateRate = item.Value.Rate;
-                    groupState.Active = true;
+                    subscription_state = subscription_states[group.Key];
+                    subscription = (Opc.Da.Subscription)subscriptions[group.Key];
 
-                    /*
-                    Opc.Da.Subscription group = (Opc.Da.Subscription)server.CreateSubscription(groupList[i]);
-                    Opc.Da.Item[] items = new Opc.Da.Item[1];
-
-                    for (int j = 0; j < devices.Count; j++)
+                    List<Opc.Da.Item> items = new List<Opc.Da.Item>();
+                    foreach (var tag in group.Value.tags)
                     {
-                        items[0] = new Opc.Da.Item();
-                        items[0].ItemName = groupList[i].Name;
+                        Opc.Da.Item opc_item = subscription.Items.Where(x => x.ItemName == tag.path).FirstOrDefault();
+                        if (opc_item == null)
+                        {
+                            Opc.Da.Item item = new Opc.Da.Item();
+                            item.ClientHandle = tag.id;
+                            item.ReqType = OPC_DB_gate_Lib.TagSettings.DataTypeToType(tag.data_type);
+                            item.ItemName = tag.path;
+                            items.Add(item);
+                            Lib.Message.Make($"OPC server [{opc_server.Name}] group [{subscription_state.Name}] added tag [{tag.path}]");
+                        }
                     }
-                    items = group.AddItems(items);
-
-                    group.DataChanged += Group_DataChanged;
-
-
-                    if (!times.ContainsKey(item.Key))
-                    {
-                        times.Add(item.Key, new Timer(TimerCallback, item.Value, 0, item.Key));
-                    }
-                    /**/
+                    subscription.AddItems(items.ToArray());
                 }
-
-                /*
-                                foreach (var item in times)
-                                {
-                                    if (!groups.ContainsKey(item.Key))
-                                        item.Value.Dispose();
-                                }
-
-                                var itemsToRemove = times.Where(f => f.Value == null).ToArray();
-                                foreach (var item in itemsToRemove)
-                                    times.Remove(item.Key);
-                /**/
             }
             catch (Exception ex)
             {
                 throw new Exception("Error group handler runner", ex);
             }
+        }
 
+        #region PRIVATES
 
+        private void DataChangeHandler(object subscriptionHandle, object requestHandle, Opc.Da.ItemValueResult[] values)
+        {
+            try
+            {
+                foreach (var item in values)
+                {
+                    buffer.Enqueue(new OPC_DB_gate_Lib.TagData()
+                    {
+                        id = (long)item.ClientHandle,
+                        timestamp = DateTime.Now,
+                        value = item.Value,
+                        quality = (OPC_DB_gate_Lib.TagData.EQuality)item.Quality.GetCode()
+
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Lib.Message.Make("Error data change handler", ex);
+            }
 
         }
 
+
+        #endregion
 
 
     }

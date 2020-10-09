@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using Lib;
+using System;
+using System.Reflection;
 using System.Threading;
 
 
@@ -19,6 +21,7 @@ namespace OPC_DB_gate_client
     {
         static void Main(string[] args)
         {
+
             Lib.Global.PrintAppInfo();
             Lib.Global.Subscribe_Ctrl_C();
 
@@ -35,11 +38,13 @@ namespace OPC_DB_gate_client
                 config_file = new ConfigFile(Lib.Global.NameExeFile.Split('.')[0] + ".xml");
             }
 
+            OPC_DB_gate_Lib.ClientInfo info = new OPC_DB_gate_Lib.ClientInfo() { appinfo = Lib.Global.AppInfo() };
             Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer = new Lib.Buffer<OPC_DB_gate_Lib.TagData>(10000);
 
             TCPconnection connection = new TCPconnection(config_file.SERVER_IP,
                                                          config_file.SERVER_PORT,
-                                                         buffer);
+                                                         buffer,
+                                                         info);
 
 
 
@@ -48,7 +53,10 @@ namespace OPC_DB_gate_client
 
             while (true)
             {
-                Thread.Sleep(100);
+
+                info.clock = DateTime.Now;
+
+                Thread.Sleep(1000);
             }
 
 

@@ -20,6 +20,8 @@ namespace OPC_DB_gate_server
         private Tags tags;
         private RT_values rt_values;
         private History history;
+        private Application application;
+        private Diagnostics diagnostics;
 
         #endregion
 
@@ -33,7 +35,7 @@ namespace OPC_DB_gate_server
 
 
         private Lib.Database database = new Lib.Database();
-        public Lib.Database Database { get { return database; }}
+        public Lib.Database Database { get { return database; } }
 
 
         #endregion
@@ -48,27 +50,39 @@ namespace OPC_DB_gate_server
                         Clients client,
                         Tags tags,
                         RT_values rt_values,
-                        History history)
+                        History history,
+                        Application application,
+                        Diagnostics diagnostics)
         {
 
-            this.type = type;
-            Type_ValueChanged(this.type.Value);
-            this.type.ValueChanged += Type_ValueChanged;
+            try
+            {
+                this.type = type;
+                Type_ValueChanged(this.type.Value);
+                this.type.ValueChanged += Type_ValueChanged;
 
-            this.connection_string = connection_string;
-            Connection_string_ValueChanged(this.connection_string.Value);
-            this.connection_string.ValueChanged += Connection_string_ValueChanged;
+                this.connection_string = connection_string;
+                Connection_string_ValueChanged(this.connection_string.Value);
+                this.connection_string.ValueChanged += Connection_string_ValueChanged;
 
-            this.settings = settings;
-            this.clients = client;
-            this.tags = tags;
-            this.rt_values = rt_values;
-            this.history = history;
+                this.settings = settings;
+                this.clients = client;
+                this.tags = tags;
+                this.rt_values = rt_values;
+                this.history = history;
+                this.application = application;
+                this.diagnostics = diagnostics;
+
+                ReadAction();
+                thread = new Thread(new ThreadStart(Handler)) { IsBackground = true, Name = "Database" };
+                thread.Start();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error constructor", ex);
+            }
+
             
-
-            ReadAction();
-            thread = new Thread(new ThreadStart(Handler)) { IsBackground = true, Name = "Database" };
-            thread.Start();
 
         }
 
@@ -144,19 +158,41 @@ namespace OPC_DB_gate_server
 
         private void WriteAction()
         {
-
             try
             {
-
                 if (database != null)
                 {
                     if (rt_values != null)
-                        database.Write(rt_values.Source, false, true);
+                    {
+                        lock (database) lock (rt_values)
+                            {
+                                database.Write(rt_values.Source, false, true);
+                            }
+                    }
 
                     if (history != null)
                     {
-                        database.Write(history.Source);
-                        history.Clear();
+                        lock (database) lock (history)
+                            {
+                                database.Write(history.Source);
+                                history.Clear();
+                            }
+                    }
+
+                    if(application != null)
+                    {
+                        lock (database) lock (application)
+                            {
+                                database.Write(application.Source, false, true);
+                            }
+                    }
+
+                    if (diagnostics != null)
+                    {
+                        lock (database) lock (diagnostics)
+                            {
+                                database.Write(diagnostics.Source, false, true);
+                            }
                     }
 
                 }

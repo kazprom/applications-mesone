@@ -15,22 +15,34 @@ namespace OPC_DB_gate_server
         private Clients clients;
         private Tags tags;
         private Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer;
+        private Diagnostics diagnostics;
 
         private Dictionary<int, TCPconnection> connections = new Dictionary<int, TCPconnection>();
 
         #endregion
 
-        public Connections(Clients clients, Tags tags, Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer)
+        public Connections(Clients clients, Tags tags, Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer, Diagnostics diagnostics)
         {
-            this.clients = clients;
-            this.clients.Source.RowChanged += ClientsHandler;
-            this.clients.Source.RowDeleting += ClientsHandler;
+            try
+            {
+                this.clients = clients;
+                this.clients.Source.RowChanged += ClientsHandler;
+                this.clients.Source.RowDeleting += ClientsHandler;
 
-            this.tags = tags;
-            this.tags.Source.RowChanged += TagsHandler;
-            this.tags.Source.RowDeleting += TagsHandler;
+                this.tags = tags;
+                this.tags.Source.RowChanged += TagsHandler;
+                this.tags.Source.RowDeleting += TagsHandler;
 
-            this.buffer = buffer;
+                this.buffer = buffer;
+                this.diagnostics = diagnostics;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error constructor", ex);
+            }
+
+
 
         }
 
@@ -51,7 +63,7 @@ namespace OPC_DB_gate_server
                         case DataRowAction.Change:
                             {
                                 if (!connections.ContainsKey(id))
-                                    connections.Add(id, new TCPconnection(buffer));
+                                    connections.Add(id, new TCPconnection(id, buffer, diagnostics));
                                 connections[id].Settings(ip, port);
                                 break;
                             }
@@ -68,7 +80,7 @@ namespace OPC_DB_gate_server
             catch (Exception ex)
             {
 
-                throw new Exception("Error handling clients", ex);
+                throw new Exception("Error clients handler", ex);
             }
         }
 
@@ -109,7 +121,7 @@ namespace OPC_DB_gate_server
             }
             catch (Exception ex)
             {
-                throw new Exception("Error handling tags", ex);
+                throw new Exception("Error tags handler", ex);
             }
         }
 

@@ -41,8 +41,9 @@ namespace Lib
 
                 using (StreamWriter myStream = new StreamWriter(path + System.IO.Path.DirectorySeparatorChar + GetFileName(DateTime.Now), true))
                 {
-                    myStream.WriteLine($"{DateTime.Now}");
+                    myStream.WriteLine($"[{DateTime.Now}]");
                     myStream.WriteLine(str);
+                    myStream.WriteLine();
                 }
             }
             catch (Exception ex)

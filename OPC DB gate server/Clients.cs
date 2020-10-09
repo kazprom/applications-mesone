@@ -21,13 +21,6 @@ namespace OPC_DB_gate_server
 
         #endregion
 
-        #region VARIABLES
-
-
-
-        #endregion
-
-
         #region PROPERTIES
 
         private DataTable source = new DataTable("clients");
@@ -38,12 +31,16 @@ namespace OPC_DB_gate_server
 
         public Clients()
         {
-
-            source.Columns.Add(col_name_id, typeof(int)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp() { primary_key = true });
-            source.Columns.Add(col_name_ip, typeof(string));
-            source.Columns.Add(col_name_port, typeof(int));
-
-
+            try
+            {
+                source.Columns.Add(col_name_id, typeof(int)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp() { primary_key = true });
+                source.Columns.Add(col_name_ip, typeof(string));
+                source.Columns.Add(col_name_port, typeof(int));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error constructor", ex);
+            }
         }
 
     }

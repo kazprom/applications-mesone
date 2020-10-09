@@ -61,11 +61,13 @@ namespace Lib
         {
             try
             {
-                foreach (DataTable table in ds.Tables)
+                lock (ds)
                 {
-                    Read(table);
+                    foreach (DataTable table in ds.Tables)
+                    {
+                        Read(table);
+                    }
                 }
-
             }
             catch (Exception ex)
             {
@@ -81,78 +83,79 @@ namespace Lib
 
                 string sql = string.Empty;
 
-
-
-                string[] columns_names = dt.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToArray();
-
-                switch (type)
+                lock (dt)
                 {
-                    case EType.MSSQLServer:
+                    string[] columns_names = dt.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToArray();
+
+                    switch (type)
+                    {
+                        case EType.MSSQLServer:
+                            {
+                                sql = $"SELECT [{string.Join("],[", columns_names)}] FROM [{dt.TableName}]";
+                                break;
+                            }
+                        case EType.MySQL:
+                        case EType.PostgreSQL:
+                            {
+                                sql = $"SELECT `{string.Join("`,`", columns_names)}` FROM `{dt.TableName}`";
+                                break;
+                            }
+                    }
+
+
+
+                    if (dt.PrimaryKey.Length > 0)
+                    {
+                        DataTable result = dt.Clone();
+                        lock (connection)
                         {
-                            sql = $"SELECT [{string.Join("],[", columns_names)}] FROM [{dt.TableName}]";
-                            break;
+                            OdbcDataAdapter adapter = new OdbcDataAdapter(sql, connection);
+                            adapter.Fill(result);
                         }
-                    case EType.MySQL:
-                    case EType.PostgreSQL:
+
+                        DataTable unnecessary = dt.Copy();
+                        foreach (DataRow row in result.Rows)
                         {
-                            sql = $"SELECT `{string.Join("`,`", columns_names)}` FROM `{dt.TableName}`";
-                            break;
+                            List<object> pk = new List<object>();
+                            foreach (DataColumn dc in result.PrimaryKey)
+                            {
+                                //pk.Add(row.Field<object>(dc));
+                                pk.Add(row.ItemArray[dc.Ordinal]);
+                            }
+
+                            DataRow fr = dt.Rows.Find(pk.ToArray());
+                            if (fr == null)
+                            {
+                                dt.Rows.Add(row.ItemArray);
+                            }
+                            else
+                            {
+                                fr.ItemArray = row.ItemArray;
+                                unnecessary.Rows.Remove(unnecessary.Rows.Find(pk.ToArray()));
+                            }
                         }
+                        foreach (DataRow row in unnecessary.Rows)
+                        {
+                            List<object> pk = new List<object>();
+                            foreach (DataColumn dc in unnecessary.PrimaryKey)
+                            {
+                                //pk.Add(row.Field<object>(dc));
+                                pk.Add(row.ItemArray[dc.Ordinal]);
+                            }
+                            DataRow dr = dt.Rows.Find(pk.ToArray());
+                            dr.Delete();
+                        }
+                    }
+                    else
+                    {
+                        lock (connection)
+                        {
+                            OdbcDataAdapter adapter = new OdbcDataAdapter(sql, connection);
+                            adapter.Fill(dt);
+                        }
+                    }
+
                 }
-
-
-
-                if (dt.PrimaryKey.Length > 0)
-                {
-                    DataTable result = dt.Clone();
-                    lock (connection)
-                    {
-                        OdbcDataAdapter adapter = new OdbcDataAdapter(sql, connection);
-                        adapter.Fill(result);
-                    }
-
-                    DataTable unnecessary = dt.Copy();
-                    foreach (DataRow row in result.Rows)
-                    {
-                        List<object> pk = new List<object>();
-                        foreach (DataColumn dc in result.PrimaryKey)
-                        {
-                            //pk.Add(row.Field<object>(dc));
-                            pk.Add(row.ItemArray[dc.Ordinal]);
-                        }
-
-                        DataRow fr = dt.Rows.Find(pk.ToArray());
-                        if (fr == null)
-                        {
-                            dt.Rows.Add(row.ItemArray);
-                        }
-                        else
-                        {
-                            fr.ItemArray = row.ItemArray;
-                            unnecessary.Rows.Remove(unnecessary.Rows.Find(pk.ToArray()));
-                        }
-                    }
-                    foreach (DataRow row in unnecessary.Rows)
-                    {
-                        List<object> pk = new List<object>();
-                        foreach (DataColumn dc in unnecessary.PrimaryKey)
-                        {
-                            //pk.Add(row.Field<object>(dc));
-                            pk.Add(row.ItemArray[dc.Ordinal]);
-                        }
-                        DataRow dr = dt.Rows.Find(pk.ToArray());
-                        dr.Delete();
-                    }
-                }
-                else
-                {
-                    lock (connection)
-                    {
-                        OdbcDataAdapter adapter = new OdbcDataAdapter(sql, connection);
-                        adapter.Fill(dt);
-                    }
-                }
-
             }
             catch (Exception ex)
             {
@@ -167,15 +170,18 @@ namespace Lib
             {
                 TestConnection();
 
-                foreach (DataTable table in ds.Tables)
+                lock (ds)
                 {
-                    Write(table, true, false);
+                    foreach (DataTable table in ds.Tables)
+                    {
+                        Write(table, true, false);
+                    }
                 }
 
             }
             catch (Exception ex)
             {
-                throw new Exception("Error write", ex);
+                throw new Exception("Error write data set", ex);
             }
         }
 
@@ -185,26 +191,29 @@ namespace Lib
             {
                 if (dt != null)
                 {
+
                     TestConnection();
 
-                    if (create_table && !TableExists(dt))
+                    lock (dt)
                     {
-                        TableAdd(dt);
-                    }
-
-                    foreach (DataRow row in dt.Rows)
-                    {
-
-                        if (!rewrite_row || !RowExists(row))
+                        if (create_table && !TableExists(dt))
                         {
-                            RowInsert(row);
-
-                        }
-                        else
-                        {
-                            RowUpdate(row);
+                            TableAdd(dt);
                         }
 
+
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            if (!rewrite_row || !RowExists(row))
+                            {
+                                RowInsert(row);
+                            }
+                            else
+                            {
+                                RowUpdate(row);
+                            }
+
+                        }
                     }
 
                 }
@@ -491,18 +500,21 @@ namespace Lib
                         }
                 }
 
-                command.Parameters.Clear();
-                command.CommandText = sql;
-
-                foreach (DataColumn col in columns)
+                lock (command)
                 {
-                    SExtProp ext_prop = (SExtProp)col.ExtendedProperties[typeof(SExtProp)];
-                    command.Parameters.Add("", ext_prop.data_type).Value = dr[col];
-                }
+                    command.Parameters.Clear();
+                    command.CommandText = sql;
 
-                var reader = command.ExecuteReader();
-                result = reader.HasRows;
-                reader.Close();
+                    foreach (DataColumn col in columns)
+                    {
+                        SExtProp ext_prop = (SExtProp)col.ExtendedProperties[typeof(SExtProp)];
+                        command.Parameters.Add("", ext_prop.data_type).Value = dr[col];
+                    }
+
+                    var reader = command.ExecuteReader();
+                    result = reader.HasRows;
+                    reader.Close();
+                }
 
             }
             catch (Exception ex)
@@ -655,30 +667,6 @@ namespace Lib
                 throw new Exception("Error update row", ex);
             }
 
-        }
-
-        #endregion
-
-        #region CLASEES
-
-        class RowsComparer : IEqualityComparer<DataRow>
-        {
-            public bool Equals(DataRow x, DataRow y)
-            {
-                int id1 = (int)x[0];
-                int id2 = (int)y[0];
-                return id1 == id2;
-            }
-
-            public int GetHashCode(DataRow obj)
-            {
-                int hash = 0;
-                foreach (var item in obj.ItemArray)
-                {
-                    hash += item.GetHashCode();
-                }
-                return hash;
-            }
         }
 
         #endregion

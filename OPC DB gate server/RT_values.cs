@@ -79,20 +79,25 @@ namespace OPC_DB_gate_server
         {
             try
             {
+                DataRow row;
 
-                DataRow row = source.Select($"{col_name_id} = {tag.id}").FirstOrDefault();
-
-                if (row == null)
+                lock (source)
                 {
-                    row = source.NewRow();
-                    row[col_name_tags_id] = tag.id;
-                    source.Rows.Add(row);
+                    row = source.Select($"{col_name_id} = {tag.id}").FirstOrDefault();
+
+                    if (row == null)
+                    {
+                        row = source.NewRow();
+                        row[col_name_tags_id] = tag.id;
+                        source.Rows.Add(row);
+                    }
                 }
+
 
                 row[col_name_timestamp] = tag.timestamp;
                 row[col_name_value_raw] = OPC_DB_gate_Lib.TagData.ObjToBin(tag.value);
                 row[col_name_value_str] = tag.value.ToString();
-                row[col_name_quality] = tag.id;
+                row[col_name_quality] = tag.quality;
 
             }
             catch (Exception ex)

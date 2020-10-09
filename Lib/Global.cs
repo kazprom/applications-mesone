@@ -37,13 +37,18 @@ namespace Lib
 
         }
 
-        public static void PrintAppInfo()
+        public static string AppInfo()
         {
             Assembly assembly = Assembly.GetEntryAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             var productName = fvi.ProductName;
             var productVersion = fvi.ProductVersion;
-            System.Console.WriteLine(productName + $" (v{productVersion})");
+            return(productName + $" (v{productVersion})");
+        }
+
+        public static void PrintAppInfo()
+        {
+            System.Console.WriteLine(AppInfo());
         }
 
         #endregion

@@ -11,7 +11,7 @@ namespace OPC_DB_gate_client
         #region STRUCTURES
         public struct STag
         {
-            public int id;
+            public long id;
             public string path;
             public OPC_DB_gate_Lib.TagSettings.EDataType data_type;
         }
@@ -77,29 +77,7 @@ namespace OPC_DB_gate_client
         }
         #endregion
 
-        #region PUBLICS
-
-        /*
-        public void Put(List<STag> tags)
-        {
-            this.tags = tags.ToList();
-        }
-
-
-        public List<STag> Get()
-        {
-            if (DateTime.Now.Subtract(timestamp).Milliseconds >= rate)
-            {
-                timestamp = DateTime.Now;
-                return tags;
-            }
-
-            return null;
-        }
-
-
-        */
-        #endregion
+        
 
 
 

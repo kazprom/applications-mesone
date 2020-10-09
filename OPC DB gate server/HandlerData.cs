@@ -14,6 +14,7 @@ namespace OPC_DB_gate_server
 
         private RT_values rt_values;
         private History history;
+        private Application application;
 
         Lib.Parameter<bool> rt_values_enable;
         Lib.Parameter<bool> history_enable;
@@ -27,13 +28,16 @@ namespace OPC_DB_gate_server
 
         public HandlerData(Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer,
                            RT_values rt_values, Lib.Parameter<bool> rt_values_enable,
-                           History history, Lib.Parameter<bool> history_enable)
+                           History history, Lib.Parameter<bool> history_enable,
+                           Application application)
         {
             this.rt_values = rt_values;
             this.rt_values_enable = rt_values_enable;
 
             this.history = history;
             this.history_enable = history_enable;
+
+            this.application = application;
 
             this.buffer = buffer;
             this.buffer.HalfEvent += BufferEmptier;
@@ -50,6 +54,8 @@ namespace OPC_DB_gate_server
                 try
                 {
                     BufferEmptier();
+                    application.Put(Application.EKeys.CLOCK, DateTime.Now.ToString());
+
                 }
                 catch (Exception ex)
                 {

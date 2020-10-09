@@ -27,9 +27,13 @@ namespace OPC_DB_gate_server
         byte[] buf = new byte[Lib.Protocol.SIZE_BUFFER];
         private Dictionary<int, OPC_DB_gate_Lib.TagSettings> tags = new Dictionary<int, OPC_DB_gate_Lib.TagSettings>();
         private Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer;
+        private Diagnostics diagnostics;
         #endregion
 
         #region PROPERTIES
+
+        private long id;
+        public long ID { get { return id; } }
 
         private IPAddress ip;
         public IPAddress IP { get { return ip; } }
@@ -37,13 +41,26 @@ namespace OPC_DB_gate_server
         private int port;
         public int Port { get { return port; } }
 
+        private string state;
+        public string State
+        {
+            get { return state; }
+            private set
+            {
+                state = value;
+                diagnostics.PutState(id, state);
+            }
+        }
+
         #endregion
 
         #region CONSTRUCTOR
 
-        public TCPconnection(Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer)
+        public TCPconnection(long id, Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer, Diagnostics diagnostics)
         {
+            this.id = id;
             this.buffer = buffer;
+            this.diagnostics = diagnostics;
         }
 
         #endregion
@@ -156,6 +173,7 @@ namespace OPC_DB_gate_server
                     {
                         listener = new TcpListener(ip, port);
                         listener.Start();
+                        State = "Opened";
                         Lib.Message.Make($"{title} opened");
 
                         using (client = new TcpClient())
@@ -167,6 +185,7 @@ namespace OPC_DB_gate_server
 
                                     if (!client.Connected)
                                     {
+                                        State = "Waiting...";
                                         Lib.Message.Make($"{title} waiting ...");
                                         if (listener.Pending())
                                             client = listener.AcceptTcpClient();
@@ -176,6 +195,7 @@ namespace OPC_DB_gate_server
                                         if (nwStream == null)
                                         {
                                             nwStream = client.GetStream();
+                                            State = $"Connected with client {((IPEndPoint)client.Client.RemoteEndPoint).Address}:{((IPEndPoint)client.Client.RemoteEndPoint).Port}";
                                             Lib.Message.Make($"{title} connected with client {((IPEndPoint)client.Client.RemoteEndPoint).Address}:{((IPEndPoint)client.Client.RemoteEndPoint).Port}");
 
                                             thread_read = new Thread(new ThreadStart(HandlerRead)) { IsBackground = true, Name = $"Read Ip - {this.ip}:{this.port}" };
@@ -191,6 +211,7 @@ namespace OPC_DB_gate_server
                                 }
                                 catch (Exception ex)
                                 {
+                                    State = "Error connection";
                                     Lib.Message.Make($"{title} error connection", ex);
                                 }
 
@@ -200,6 +221,7 @@ namespace OPC_DB_gate_server
                     }
                     catch (Exception ex)
                     {
+                        State = "Error openning";
                         Lib.Message.Make($"{title} error opening", ex);
                     }
 
@@ -247,10 +269,12 @@ namespace OPC_DB_gate_server
 
                 GC.Collect();
 
+                State = "Closed";
                 Lib.Message.Make($"{title} closed");
             }
             catch (Exception ex)
             {
+                State = "Error closing connection";
                 Lib.Message.Make($"{title} error closing", ex);
             }
         }
@@ -283,30 +307,40 @@ namespace OPC_DB_gate_server
                                 {
                                     byte[] data = package;
 
-                                    switch (Lib.Protocol.GetTypePackage(ref data))
+                                    try
                                     {
-                                        case Lib.Protocol.EPackageTypes.ENCRYPT:
-                                            try
-                                            {
-                                                object obj = Lib.Protocol.ConvertByteArrToObj(encryption.Decrypt(data));
+                                        object obj;
+                                        switch (Lib.Protocol.GetTypePackage(ref data))
+                                        {
+                                            case Lib.Protocol.EPackageTypes.ENCRYPT:
+                                                obj = Lib.Protocol.ConvertByteArrToObj(encryption.Decrypt(data));
 
                                                 if (obj.GetType().Equals(typeof(OPC_DB_gate_Lib.TagData)))
                                                 {
-                                                    buffer.Enqueue((OPC_DB_gate_Lib.TagData)obj);
+                                                    lock (buffer)
+                                                    {
+                                                        buffer.Enqueue((OPC_DB_gate_Lib.TagData)obj);
+                                                    }
                                                 }
+                                                break;
+                                            case Lib.Protocol.EPackageTypes.UNENCRYPT:
+                                                obj = Lib.Protocol.ConvertByteArrToObj(data);
+                                                if (obj.GetType().Equals(typeof(OPC_DB_gate_Lib.ClientInfo)))
+                                                {
+                                                    diagnostics.Put(id, (OPC_DB_gate_Lib.ClientInfo)obj);
+                                                }
+                                                break;
 
-
-                                            }
-                                            catch (Exception ex)
-                                            {
-                                                Lib.Message.Make($"{title} error getting package with data object", ex);
-                                            }
-                                            break;
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Lib.Message.Make($"{title} error getting package with data object", ex);
                                     }
                                 }
                             }
-
                         }
+
                     }
                 }
 
@@ -314,7 +348,7 @@ namespace OPC_DB_gate_server
             }
             catch (Exception ex)
             {
-
+                State = "Error read";
                 Lib.Message.Make($"{title} error read data", ex);
                 nwStream = null;
 
@@ -333,8 +367,6 @@ namespace OPC_DB_gate_server
 
                         if (nwStream != null)
                         {
-                            //ping
-
 
                             //send keys
                             nwStream.Write(Lib.Protocol.BuildPackage
@@ -345,6 +377,7 @@ namespace OPC_DB_gate_server
                             {
                                 //send tags
                                 nwStream.Write(Lib.Protocol.BuildPackage(encryption.Encrypt(Lib.Protocol.ConvertObjToByteArr(tags)), Lib.Protocol.EPackageTypes.ENCRYPT));
+
                             }
 
 
@@ -359,6 +392,7 @@ namespace OPC_DB_gate_server
             }
             catch (Exception ex)
             {
+                State = "Error write";
                 Lib.Message.Make($"{title} error write data", ex);
                 nwStream = null;
             }
@@ -373,10 +407,12 @@ namespace OPC_DB_gate_server
                 try
                 {
                     byte[] msg = { 7, 7, 7 };
-                    nwStream.Write(msg, 0, msg.Length);
+                    if (nwStream != null)
+                        nwStream.Write(msg, 0, msg.Length);
                 }
                 catch (Exception)
                 {
+                    State = "Disconnected";
                     Lib.Message.Make($"{title} remote client disconnected");
                     nwStream = null;
                     return;

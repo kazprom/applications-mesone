@@ -41,13 +41,24 @@ namespace OPC_DB_gate_server
 
         public Settings()
         {
+            try
+            {
 
-            source.Columns.Add(col_name_id, typeof(int));
-            source.Columns.Add(col_name_key, typeof(string)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp() { primary_key = true });
-            source.Columns.Add(col_name_value, typeof(string));
+                source.Columns.Add(col_name_id, typeof(int));
+                source.Columns.Add(col_name_key, typeof(string)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp() { primary_key = true });
+                source.Columns.Add(col_name_value, typeof(string));
 
 
-            source.RowChanged += ValueHandler;
+                source.RowChanged += ValueHandler;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Error constructor", ex);
+            }
+
+
         }
 
         #region PRIVATES

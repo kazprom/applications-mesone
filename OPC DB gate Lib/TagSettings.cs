@@ -33,7 +33,7 @@ namespace OPC_DB_gate_Lib
             try
             {
                 if (obj == null)
-                    return null;
+                    throw new Exception("Can't convert null object");
 
                 switch (type)
                 {
@@ -68,6 +68,34 @@ namespace OPC_DB_gate_Lib
 
         }
 
+        public static Type DataTypeToType(EDataType type)
+        {
+            switch (type)
+            {
+                case EDataType.dt_boolean:
+                    return typeof(bool);
+                case EDataType.dt_byte:
+                    return typeof(byte);
+                case EDataType.dt_char:
+                    return typeof(char);
+                case EDataType.dt_double:
+                    return typeof(double);
+                case EDataType.dt_int16:
+                    return typeof(Int16);
+                case EDataType.dt_int32:
+                    return typeof(Int32);
+                case EDataType.dt_int64:
+                    return typeof(Int64);
+                case EDataType.dt_uint16:
+                    return typeof(UInt16);
+                case EDataType.dt_uint32:
+                    return typeof(UInt32);
+                case EDataType.dt_uint64:
+                    return typeof(UInt64);
+                default:
+                    throw new Exception("Don't know data type");
+            }
+        }
 
     }
 

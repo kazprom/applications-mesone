@@ -1,0 +1,13 @@
+C:\Users\i.korol\Desktop\DEV\applications-mesone\ModBUS DB gate\bin\x86\Debug\netcoreapp3.1\ModBUS DB gate.exe
+C:\Users\i.korol\Desktop\DEV\applications-mesone\ModBUS DB gate\bin\x86\Debug\netcoreapp3.1\ModBUS DB gate.deps.json
+C:\Users\i.korol\Desktop\DEV\applications-mesone\ModBUS DB gate\bin\x86\Debug\netcoreapp3.1\ModBUS DB gate.runtimeconfig.json
+C:\Users\i.korol\Desktop\DEV\applications-mesone\ModBUS DB gate\bin\x86\Debug\netcoreapp3.1\ModBUS DB gate.runtimeconfig.dev.json
+C:\Users\i.korol\Desktop\DEV\applications-mesone\ModBUS DB gate\bin\x86\Debug\netcoreapp3.1\ModBUS DB gate.dll
+C:\Users\i.korol\Desktop\DEV\applications-mesone\ModBUS DB gate\bin\x86\Debug\netcoreapp3.1\ModBUS DB gate.pdb
+C:\Users\i.korol\Desktop\DEV\applications-mesone\ModBUS DB gate\obj\x86\Debug\netcoreapp3.1\ModBUS DB gate.AssemblyInfoInputs.cache
+C:\Users\i.korol\Desktop\DEV\applications-mesone\ModBUS DB gate\obj\x86\Debug\netcoreapp3.1\ModBUS DB gate.AssemblyInfo.cs
+C:\Users\i.korol\Desktop\DEV\applications-mesone\ModBUS DB gate\obj\x86\Debug\netcoreapp3.1\ModBUS DB gate.csproj.CoreCompileInputs.cache
+C:\Users\i.korol\Desktop\DEV\applications-mesone\ModBUS DB gate\obj\x86\Debug\netcoreapp3.1\ModBUS DB gate.dll
+C:\Users\i.korol\Desktop\DEV\applications-mesone\ModBUS DB gate\obj\x86\Debug\netcoreapp3.1\ModBUS DB gate.pdb
+C:\Users\i.korol\Desktop\DEV\applications-mesone\ModBUS DB gate\obj\x86\Debug\netcoreapp3.1\ModBUS DB gate.genruntimeconfig.cache
+C:\Users\i.korol\Desktop\DEV\applications-mesone\ModBUS DB gate\obj\x86\Debug\netcoreapp3.1\ModBUS DB gate.csprojAssemblyReference.cache

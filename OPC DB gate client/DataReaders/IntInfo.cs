@@ -23,17 +23,11 @@ namespace OPC_DB_gate_client
         #endregion
 
 
-        //private Thread thread;
-        //private bool execution = true;
-
         private Dictionary<int, Timer> times = new Dictionary<int, Timer>();
 
 
         public IntInfo(Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer) : base(default_name, buffer)
         {
-
-            //thread = new Thread(new ThreadStart(Handler)) { IsBackground = true, Name = Name };
-            //thread.Start();
 
             PutEvent += GroupHandlerRunner;
 
@@ -48,6 +42,7 @@ namespace OPC_DB_gate_client
                     if (!times.ContainsKey(item.Key))
                     {
                         times.Add(item.Key, new Timer(TimerCallback, item.Value, 0, item.Key));
+                        Lib.Message.Make($"Data source [{default_name}] added group [{item.Key}]");
                     }
 
                 }
@@ -61,7 +56,10 @@ namespace OPC_DB_gate_client
 
                 var itemsToRemove = times.Where(f => f.Value == null).ToArray();
                 foreach (var item in itemsToRemove)
+                {
                     times.Remove(item.Key);
+                    Lib.Message.Make($"Data source [{default_name}] removed group [{item.Key}]");
+                }
 
             }
             catch (Exception ex)

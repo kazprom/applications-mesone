@@ -27,6 +27,7 @@ namespace OPC_DB_gate_client
         private Protocol protocol = new Protocol();
         private byte[] buf = new byte[Protocol.SIZE_BUFFER];
         private Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer;
+        private OPC_DB_gate_Lib.ClientInfo info;
 
         #endregion
 
@@ -57,10 +58,14 @@ namespace OPC_DB_gate_client
         #region CONSTRUCTOR
 
 
-        public TCPconnection(Lib.Parameter<IPAddress> ip_address, Lib.Parameter<int> port, Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer)
+        public TCPconnection(Lib.Parameter<IPAddress> ip_address,
+                             Lib.Parameter<int> port,
+                             Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer,
+                             OPC_DB_gate_Lib.ClientInfo info)
         {
 
             this.buffer = buffer;
+            this.info = info;
 
             this.ip_address = ip_address;
             this.ip_address.ValueChanged += Ip_address_ValueChanged;
@@ -307,14 +312,23 @@ namespace OPC_DB_gate_client
                 {
                     if (nwStream != null)
                     {
+                        byte[] pack;
+
+
+
+
                         // data
                         while (buffer.Count > 0)
                         {
-                            byte[] pack = Protocol.BuildPackage(encryption.Encrypt(Protocol.ConvertObjToByteArr(buffer.Dequeue())), Protocol.EPackageTypes.ENCRYPT);
+                            pack = Protocol.BuildPackage(encryption.Encrypt(Protocol.ConvertObjToByteArr(buffer.Dequeue())), Protocol.EPackageTypes.ENCRYPT);
                             if (pack != null)
                                 nwStream.Write(pack, 0, pack.Length);
                             //Thread.Sleep(Protocol.DATA_TIMEOUT * 2);
                         }
+
+
+
+
 
                     }
                     Thread.Sleep(Protocol.DATA_TIMEOUT / 2);
@@ -337,8 +351,12 @@ namespace OPC_DB_gate_client
                 {
                     if (nwStream != null)
                     {
-                        byte[] msg = { 7, 7, 7 };
-                        nwStream.Write(msg, 0, msg.Length);
+                        byte[] pack;
+
+                        //info
+                        pack = Protocol.BuildPackage(Protocol.ConvertObjToByteArr(info), Protocol.EPackageTypes.UNENCRYPT);
+                        if (pack != null)
+                            nwStream.Write(pack, 0, pack.Length);
                     }
                 }
                 catch (Exception)
