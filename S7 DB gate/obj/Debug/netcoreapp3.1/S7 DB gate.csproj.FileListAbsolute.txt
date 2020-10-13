@@ -1,0 +1,20 @@
+C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\obj\Debug\netcoreapp3.1\S7 DB gate.csprojAssemblyReference.cache
+C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\bin\Debug\netcoreapp3.1\App.exe
+C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\bin\Debug\netcoreapp3.1\App.deps.json
+C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\bin\Debug\netcoreapp3.1\App.runtimeconfig.json
+C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\bin\Debug\netcoreapp3.1\App.runtimeconfig.dev.json
+C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\bin\Debug\netcoreapp3.1\App.dll
+C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\bin\Debug\netcoreapp3.1\App.pdb
+C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\bin\Debug\netcoreapp3.1\S7.Net.dll
+C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\bin\Debug\netcoreapp3.1\System.Data.Odbc.dll
+C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\bin\Debug\netcoreapp3.1\runtimes\freebsd\lib\netcoreapp2.0\System.Data.Odbc.dll
+C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\bin\Debug\netcoreapp3.1\runtimes\linux\lib\netcoreapp2.0\System.Data.Odbc.dll
+C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\bin\Debug\netcoreapp3.1\runtimes\osx\lib\netcoreapp2.0\System.Data.Odbc.dll
+C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Data.Odbc.dll
+C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\bin\Debug\netcoreapp3.1\Lib.dll
+C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\bin\Debug\netcoreapp3.1\Lib.pdb
+C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\obj\Debug\netcoreapp3.1\S7 DB gate.csproj.CoreCompileInputs.cache
+C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\obj\Debug\netcoreapp3.1\S7 DB gate.csproj.CopyComplete
+C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\obj\Debug\netcoreapp3.1\App.dll
+C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\obj\Debug\netcoreapp3.1\App.pdb
+C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\obj\Debug\netcoreapp3.1\S7 DB gate.genruntimeconfig.cache

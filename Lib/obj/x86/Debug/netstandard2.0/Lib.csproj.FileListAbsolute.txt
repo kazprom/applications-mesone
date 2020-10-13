@@ -1,9 +1,9 @@
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\bin\x86\Debug\netstandard2.0\Lib.deps.json
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\bin\x86\Debug\netstandard2.0\Lib.dll
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\bin\x86\Debug\netstandard2.0\Lib.pdb
-C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\obj\x86\Debug\netstandard2.0\Lib.AssemblyInfoInputs.cache
-C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\obj\x86\Debug\netstandard2.0\Lib.AssemblyInfo.cs
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\obj\x86\Debug\netstandard2.0\Lib.csproj.CoreCompileInputs.cache
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\obj\x86\Debug\netstandard2.0\Lib.dll
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\obj\x86\Debug\netstandard2.0\Lib.pdb
+C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\obj\x86\Debug\netstandard2.0\Lib.AssemblyInfoInputs.cache
+C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\obj\x86\Debug\netstandard2.0\Lib.AssemblyInfo.cs
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\obj\x86\Debug\netstandard2.0\Lib.csprojAssemblyReference.cache

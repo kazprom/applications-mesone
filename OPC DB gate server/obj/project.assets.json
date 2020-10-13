@@ -41,6 +41,19 @@
           }
         }
       },
+      "DB gate Lib/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Lib": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/DB gate Lib.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DB gate Lib.dll": {}
+        }
+      },
       "Lib/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
@@ -57,6 +70,9 @@
       "OPC DB gate Lib/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "DB gate Lib": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/OPC DB gate Lib.dll": {}
         },
@@ -118,6 +134,11 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "DB gate Lib/1.0.0": {
+      "type": "project",
+      "path": "../DB gate Lib/DB gate Lib.csproj",
+      "msbuildProject": "../DB gate Lib/DB gate Lib.csproj"
     },
     "Lib/1.0.0": {
       "type": "project",

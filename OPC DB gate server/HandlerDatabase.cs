@@ -47,7 +47,7 @@ namespace OPC_DB_gate_server
         public HandlerDatabase(Lib.Parameter<Lib.Database.EType> type,
                         Lib.Parameter<string> connection_string,
                         Settings settings,
-                        Clients client,
+                        Clients clients,
                         Tags tags,
                         RT_values rt_values,
                         History history,
@@ -66,7 +66,7 @@ namespace OPC_DB_gate_server
                 this.connection_string.ValueChanged += Connection_string_ValueChanged;
 
                 this.settings = settings;
-                this.clients = client;
+                this.clients = clients;
                 this.tags = tags;
                 this.rt_values = rt_values;
                 this.history = history;

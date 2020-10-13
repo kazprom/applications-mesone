@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "IVoVNUYzwNP8SdZkkdajWux/ObLSx0I4lXYiJ5cATzTBBcxjgHQs0aXStcW8z35h888/sSMH6uEtxZv6wytkgg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\S7 DB gate\\S7 DB gate.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\i.korol\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+    "C:\\Users\\i.korol\\.nuget\\packages\\s7netplus\\0.7.0\\s7netplus.0.7.0.nupkg.sha512",
+    "C:\\Users\\i.korol\\.nuget\\packages\\system.data.odbc\\4.7.0\\system.data.odbc.4.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}
