@@ -23,10 +23,10 @@ namespace OPC_DB_gate_server
         private TcpClient client;
         private NetworkStream nwStream = null;
         private Lib.Encryption encryption = new Lib.Encryption(true);
-        private Lib.Protocol protocol = new Lib.Protocol();
-        byte[] buf = new byte[Lib.Protocol.SIZE_BUFFER];
-        private Dictionary<int, OPC_DB_gate_Lib.TagSettings> tags = new Dictionary<int, OPC_DB_gate_Lib.TagSettings>();
-        private Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer;
+        private LibOPCDBgate.Protocol protocol = new LibOPCDBgate.Protocol();
+        byte[] buf = new byte[LibOPCDBgate.Protocol.SIZE_BUFFER];
+        private Dictionary<int, LibOPCDBgate.TagSettings> tags = new Dictionary<int, LibOPCDBgate.TagSettings>();
+        private Lib.Buffer<LibDBgate.TagData> buffer;
         private Diagnostics diagnostics;
         #endregion
 
@@ -56,7 +56,7 @@ namespace OPC_DB_gate_server
 
         #region CONSTRUCTOR
 
-        public TCPconnection(long id, Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer, Diagnostics diagnostics)
+        public TCPconnection(long id, Lib.Buffer<LibDBgate.TagData> buffer, Diagnostics diagnostics)
         {
             this.id = id;
             this.buffer = buffer;
@@ -126,14 +126,14 @@ namespace OPC_DB_gate_server
             }
         }
 
-        public void PutTag(int id, OPC_DB_gate_Lib.TagSettings tag)
+        public void PutTag(int id, LibOPCDBgate.TagSettings tag)
         {
             try
             {
                 lock (tags)
                 {
                     if (!tags.ContainsKey(id))
-                        tags.Add(id, new OPC_DB_gate_Lib.TagSettings());
+                        tags.Add(id, new LibOPCDBgate.TagSettings());
                     tags[id] = tag;
                 }
             }
@@ -310,24 +310,24 @@ namespace OPC_DB_gate_server
                                     try
                                     {
                                         object obj;
-                                        switch (Lib.Protocol.GetTypePackage(ref data))
+                                        switch (LibOPCDBgate.Protocol.GetTypePackage(ref data))
                                         {
-                                            case Lib.Protocol.EPackageTypes.ENCRYPT:
-                                                obj = Lib.Protocol.ConvertByteArrToObj(encryption.Decrypt(data));
+                                            case LibOPCDBgate.Protocol.EPackageTypes.ENCRYPT:
+                                                obj = LibOPCDBgate.Protocol.ConvertByteArrToObj(encryption.Decrypt(data));
 
-                                                if (obj.GetType().Equals(typeof(OPC_DB_gate_Lib.TagData)))
+                                                if (obj.GetType().Equals(typeof(LibDBgate.TagData)))
                                                 {
                                                     lock (buffer)
                                                     {
-                                                        buffer.Enqueue((OPC_DB_gate_Lib.TagData)obj);
+                                                        buffer.Enqueue((LibDBgate.TagData)obj);
                                                     }
                                                 }
                                                 break;
-                                            case Lib.Protocol.EPackageTypes.UNENCRYPT:
-                                                obj = Lib.Protocol.ConvertByteArrToObj(data);
-                                                if (obj.GetType().Equals(typeof(OPC_DB_gate_Lib.ClientInfo)))
+                                            case LibOPCDBgate.Protocol.EPackageTypes.UNENCRYPT:
+                                                obj = LibOPCDBgate.Protocol.ConvertByteArrToObj(data);
+                                                if (obj.GetType().Equals(typeof(LibOPCDBgate.ClientInfo)))
                                                 {
-                                                    diagnostics.Put(id, (OPC_DB_gate_Lib.ClientInfo)obj);
+                                                    diagnostics.Put(id, (LibOPCDBgate.ClientInfo)obj);
                                                 }
                                                 break;
 
@@ -344,7 +344,7 @@ namespace OPC_DB_gate_server
                     }
                 }
 
-                Thread.Sleep(Lib.Protocol.DATA_TIMEOUT / 2);
+                Thread.Sleep(LibOPCDBgate.Protocol.DATA_TIMEOUT / 2);
             }
             catch (Exception ex)
             {
@@ -369,14 +369,14 @@ namespace OPC_DB_gate_server
                         {
 
                             //send keys
-                            nwStream.Write(Lib.Protocol.BuildPackage
-                                            (Lib.Protocol.ConvertObjToByteArr
-                                                (encryption.SafetyKeys), Lib.Protocol.EPackageTypes.UNENCRYPT));
+                            nwStream.Write(LibOPCDBgate.Protocol.BuildPackage
+                                            (LibOPCDBgate.Protocol.ConvertObjToByteArr
+                                                (encryption.SafetyKeys), LibOPCDBgate.Protocol.EPackageTypes.UNENCRYPT));
 
                             lock (tags)
                             {
                                 //send tags
-                                nwStream.Write(Lib.Protocol.BuildPackage(encryption.Encrypt(Lib.Protocol.ConvertObjToByteArr(tags)), Lib.Protocol.EPackageTypes.ENCRYPT));
+                                nwStream.Write(LibOPCDBgate.Protocol.BuildPackage(encryption.Encrypt(LibOPCDBgate.Protocol.ConvertObjToByteArr(tags)), LibOPCDBgate.Protocol.EPackageTypes.ENCRYPT));
 
                             }
 
@@ -386,7 +386,7 @@ namespace OPC_DB_gate_server
                         Thread.Sleep(1000);
                     }
 
-                    Thread.Sleep(Lib.Protocol.DATA_TIMEOUT / 2);
+                    Thread.Sleep(LibOPCDBgate.Protocol.DATA_TIMEOUT / 2);
 
                 }
             }

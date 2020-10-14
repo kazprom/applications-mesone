@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 
-namespace DB_gate_Lib
+namespace LibDBgate
 {
     public class RT_values
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
-namespace DB_gate_Lib
+namespace LibDBgate
 {
     public class HistoryCleaner
     {

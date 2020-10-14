@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OPC_DB_gate_Lib
+namespace LibOPCDBgate
 {
     [Serializable]
     public class TagSettings
@@ -10,7 +10,7 @@ namespace OPC_DB_gate_Lib
 
         public string path;
         public int rate;
-        public DB_gate_Lib.TagData.EDataType data_type;
+        public LibDBgate.TagData.EDataType data_type;
 
     }
 

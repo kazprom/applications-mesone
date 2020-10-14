@@ -8,11 +8,12 @@
 	<Deterministic>false</Deterministic>
 	<AssemblyName>App</AssemblyName>
 	<Platforms>AnyCPU;x86;x64</Platforms>
+	<Configurations>Debug;Release;Public</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Lib\Lib.csproj" />
-    <ProjectReference Include="..\OPC DB gate Lib\OPC DB gate Lib.csproj" />
+    <ProjectReference Include="..\OPC DB gate Lib\LibOPCDBgate.csproj" />
   </ItemGroup>
 
 </Project>

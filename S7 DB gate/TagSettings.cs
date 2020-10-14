@@ -12,7 +12,7 @@ namespace S7_DB_gate
         public int db_offset;
         public int rate;
         public S7.Net.VarType req_type;
-        public DB_gate_Lib.TagData.EDataType data_type;
+        public LibDBgate.TagData.EDataType data_type;
         public bool rt_value_enabled;
         public bool history_enabled;
 

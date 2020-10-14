@@ -12,7 +12,9 @@ namespace OPC_DB_gate_client
 
         #region VARIABLES
 
+#pragma warning disable CS0108 // '"OPCclient.name" скрывает наследуемый член "IDataReader.name". Если скрытие было намеренным, используйте ключевое слово new.
         private string name;
+#pragma warning restore CS0108 // '"OPCclient.name" скрывает наследуемый член "IDataReader.name". Если скрытие было намеренным, используйте ключевое слово new.
 
         Opc.Da.Server opc_server = null;
         private Dictionary<int, Opc.Da.SubscriptionState> subscription_states = new Dictionary<int, Opc.Da.SubscriptionState>();
@@ -21,7 +23,7 @@ namespace OPC_DB_gate_client
         #endregion
 
 
-        public OPCclient(string name, Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer) : base(name, buffer)
+        public OPCclient(string name, Lib.Buffer<LibDBgate.TagData> buffer) : base(name, buffer)
         {
             try
             {
@@ -84,7 +86,7 @@ namespace OPC_DB_gate_client
                         {
                             Opc.Da.Item item = new Opc.Da.Item();
                             item.ClientHandle = tag.id;
-                            item.ReqType = OPC_DB_gate_Lib.TagSettings.DataTypeToType(tag.data_type);
+                            item.ReqType = LibDBgate.TagData.DataTypeToType(tag.data_type);
                             item.ItemName = tag.path;
                             items.Add(item);
                             Lib.Message.Make($"OPC server [{opc_server.Name}] group [{subscription_state.Name}] added tag [{tag.path}]");
@@ -107,12 +109,12 @@ namespace OPC_DB_gate_client
             {
                 foreach (var item in values)
                 {
-                    buffer.Enqueue(new OPC_DB_gate_Lib.TagData()
+                    buffer.Enqueue(new LibDBgate.TagData()
                     {
                         id = (long)item.ClientHandle,
                         timestamp = DateTime.Now,
                         value = item.Value,
-                        quality = (OPC_DB_gate_Lib.TagData.EQuality)item.Quality.GetCode()
+                        quality = (LibDBgate.TagData.EQuality)item.Quality.GetCode()
 
                     });
                 }

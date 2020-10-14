@@ -10,7 +10,7 @@ namespace OPC_DB_gate_server
 
         #region VARIABLES
 
-        private Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer;
+        private Lib.Buffer<LibDBgate.TagData> buffer;
 
         private RT_values rt_values;
         private History history;
@@ -26,7 +26,7 @@ namespace OPC_DB_gate_server
 
 
 
-        public HandlerData(Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer,
+        public HandlerData(Lib.Buffer<LibDBgate.TagData> buffer,
                            RT_values rt_values, Lib.Parameter<bool> rt_values_enable,
                            History history, Lib.Parameter<bool> history_enable,
                            Application application)
@@ -74,7 +74,7 @@ namespace OPC_DB_gate_server
                 {
                     while (buffer.Count > 0)
                     {
-                        OPC_DB_gate_Lib.TagData tag = buffer.Dequeue();
+                        LibDBgate.TagData tag = buffer.Dequeue();
 
                         if (rt_values_enable.Value)
                             rt_values.Put(tag);

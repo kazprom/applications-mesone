@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UVnewRhOApWhscJCGjdVzjnBN+/lGd7nfbjGCeuTwtNwgDJYyFKxdo+rR0erKrGqJzKYp124C2oxgNFOG8TZHQ==",
+  "dgSpecHash": "2bxqlSLKOTyNwQDlAEZmLp7HCk0CL2ztlq+uebo6Sls85hZBgiFBEoAe9lSddgh2U0qcZ+mDv9P1M1HkKduong==",
   "success": true,
-  "projectFilePath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\DB gate Lib\\DB gate Lib.csproj",
+  "projectFilePath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\DB gate Lib\\LibDBgate.csproj",
   "expectedPackageFiles": [
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",

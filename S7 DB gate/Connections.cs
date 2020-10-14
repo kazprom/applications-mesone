@@ -9,12 +9,12 @@ namespace S7_DB_gate
     {
         private Clients clients;
         private Tags tags;
-        private Lib.Buffer<DB_gate_Lib.TagData> buffer;
+        private Lib.Buffer<LibDBgate.TagData> buffer;
         private Diagnostics diagnostics;
 
         private Dictionary<int, S7connection> connections = new Dictionary<int, S7connection>();
 
-        public Connections(Clients clients, Tags tags, Lib.Buffer<DB_gate_Lib.TagData> buffer, Diagnostics diagnostics)
+        public Connections(Clients clients, Tags tags, Lib.Buffer<LibDBgate.TagData> buffer, Diagnostics diagnostics)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace S7_DB_gate
                     db_offset = (int)e.Row[Tags.col_name_db_offset],
                     rate = (int)e.Row[Tags.col_name_rate],
                     req_type = (S7.Net.VarType)Enum.Parse(typeof(S7.Net.VarType), (string)e.Row[Tags.col_name_req_type]),
-                    data_type = (DB_gate_Lib.TagData.EDataType)e.Row[Tags.col_name_data_type],
+                    data_type = (LibDBgate.TagData.EDataType)e.Row[Tags.col_name_data_type],
                     rt_value_enabled = (bool)e.Row[Tags.col_name_rt_values_enabled],
                     history_enabled = (bool)e.Row[Tags.col_name_history_enabled]
                 };
@@ -105,7 +105,7 @@ namespace S7_DB_gate
                             {
                                 if (!connections.ContainsKey(id))
                                     connections.Add(id, new S7connection(id, buffer, diagnostics));
-                                connections[id].Settings(ip, port, rack, slot);
+                                connections[id].Settings(cpu_type, ip, port, rack, slot);
                                 break;
                             }
                         case DataRowAction.Delete:

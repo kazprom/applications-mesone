@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "nJsHh3ST80oMCLeQADSL3xg+4TzjtarpkBzVUkVqluFOnGU4CzMe9JdLgCoHDM5CSURR4mRz5Xti5d58Bvnzgg==",
+  "dgSpecHash": "R/vNBC1Y566LK/RxcADXHfGy1x9qKx2KPbvJj/UOh7DREpaHWvWShc4m43eUG6Qx3orbMnVjp0sI3y1CLnQwfQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\OPC DB gate Lib\\OPC DB gate Lib.csproj",
+  "projectFilePath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\OPC DB gate Lib\\LibOPCDBgate.csproj",
   "expectedPackageFiles": [
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",

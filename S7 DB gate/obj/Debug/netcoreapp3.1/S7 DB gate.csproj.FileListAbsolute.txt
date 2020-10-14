@@ -18,3 +18,5 @@ C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\obj\Debug\netcoreapp
 C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\obj\Debug\netcoreapp3.1\App.dll
 C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\obj\Debug\netcoreapp3.1\App.pdb
 C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\obj\Debug\netcoreapp3.1\S7 DB gate.genruntimeconfig.cache
+C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\bin\Debug\netcoreapp3.1\DB gate Lib.dll
+C:\Users\i.korol\Desktop\DEV\applications-mesone\S7 DB gate\bin\Debug\netcoreapp3.1\DB gate Lib.pdb

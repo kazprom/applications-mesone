@@ -108,3 +108,6 @@ C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\obj\x86\Debu
 C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\obj\x86\Debug\OPC DB gate client.csproj.CopyComplete
 C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\obj\x86\Debug\App.exe
 C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\obj\x86\Debug\App.pdb
+C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\bin\x86\Debug\DB gate Lib.dll
+C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\bin\x86\Debug\DB gate Lib.pdb
+C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\obj\x86\Debug\App.exe.config

@@ -50,19 +50,6 @@
           }
         }
       },
-      "DB gate Lib/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "dependencies": {
-          "Lib": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/DB gate Lib.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/DB gate Lib.dll": {}
-        }
-      },
       "Lib/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
@@ -74,6 +61,19 @@
         },
         "runtime": {
           "bin/placeholder/Lib.dll": {}
+        }
+      },
+      "LibDBgate/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Lib": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/LibDBgate.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/LibDBgate.dll": {}
         }
       }
     }
@@ -145,21 +145,21 @@
         "version.txt"
       ]
     },
-    "DB gate Lib/1.0.0": {
-      "type": "project",
-      "path": "../DB gate Lib/DB gate Lib.csproj",
-      "msbuildProject": "../DB gate Lib/DB gate Lib.csproj"
-    },
     "Lib/1.0.0": {
       "type": "project",
       "path": "../Lib/Lib.csproj",
       "msbuildProject": "../Lib/Lib.csproj"
+    },
+    "LibDBgate/1.0.0": {
+      "type": "project",
+      "path": "../DB gate Lib/LibDBgate.csproj",
+      "msbuildProject": "../DB gate Lib/LibDBgate.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "DB gate Lib >= 1.0.0",
       "Lib >= 1.0.0",
+      "LibDBgate >= 1.0.0",
       "S7netplus >= 0.7.0"
     ]
   },
@@ -193,8 +193,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\DB gate Lib\\DB gate Lib.csproj": {
-              "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\DB gate Lib\\DB gate Lib.csproj"
+            "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\DB gate Lib\\LibDBgate.csproj": {
+              "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\DB gate Lib\\LibDBgate.csproj"
             },
             "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\Lib.csproj": {
               "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\Lib.csproj"
@@ -231,7 +231,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
       }
     }
   }

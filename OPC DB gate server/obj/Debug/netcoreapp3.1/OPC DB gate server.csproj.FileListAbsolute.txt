@@ -19,3 +19,5 @@ C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\obj\Debug\ne
 C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\obj\Debug\netcoreapp3.1\App.dll
 C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\obj\Debug\netcoreapp3.1\App.pdb
 C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\obj\Debug\netcoreapp3.1\OPC DB gate server.genruntimeconfig.cache
+C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\bin\Debug\netcoreapp3.1\DB gate Lib.dll
+C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate server\bin\Debug\netcoreapp3.1\DB gate Lib.pdb

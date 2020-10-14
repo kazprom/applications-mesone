@@ -14,14 +14,14 @@ namespace OPC_DB_gate_server
 
         private Clients clients;
         private Tags tags;
-        private Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer;
+        private Lib.Buffer<LibDBgate.TagData> buffer;
         private Diagnostics diagnostics;
 
         private Dictionary<int, TCPconnection> connections = new Dictionary<int, TCPconnection>();
 
         #endregion
 
-        public Connections(Clients clients, Tags tags, Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer, Diagnostics diagnostics)
+        public Connections(Clients clients, Tags tags, Lib.Buffer<LibDBgate.TagData> buffer, Diagnostics diagnostics)
         {
             try
             {
@@ -92,11 +92,11 @@ namespace OPC_DB_gate_server
                 int id = (int)e.Row.ItemArray[e.Row.Table.Columns.IndexOf(Tags.col_name_id)];
                 int clients_id = (int)e.Row.ItemArray[e.Row.Table.Columns.IndexOf(Tags.col_name_clients_id)];
 
-                OPC_DB_gate_Lib.TagSettings tag = new OPC_DB_gate_Lib.TagSettings()
+                LibOPCDBgate.TagSettings tag = new LibOPCDBgate.TagSettings()
                 {
                     path = (string)e.Row.ItemArray[e.Row.Table.Columns.IndexOf(Tags.col_name_path)],
                     rate = (int)e.Row.ItemArray[e.Row.Table.Columns.IndexOf(Tags.col_name_rate)],
-                    data_type = (OPC_DB_gate_Lib.TagSettings.EDataType)e.Row.ItemArray[e.Row.Table.Columns.IndexOf(Tags.col_name_data_type)]
+                    data_type = (LibDBgate.TagData.EDataType)e.Row.ItemArray[e.Row.Table.Columns.IndexOf(Tags.col_name_data_type)]
                 };
 
                 lock (connections)

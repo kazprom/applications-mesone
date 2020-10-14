@@ -10,3 +10,4 @@ C:\Users\i.korol\Desktop\DEV\applications-mesone\Csharp scripts scheduler\obj\x8
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Csharp scripts scheduler\obj\x86\Debug\netcoreapp3.1\Csharp scripts scheduler.dll
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Csharp scripts scheduler\obj\x86\Debug\netcoreapp3.1\Csharp scripts scheduler.pdb
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Csharp scripts scheduler\obj\x86\Debug\netcoreapp3.1\Csharp scripts scheduler.genruntimeconfig.cache
+C:\Users\i.korol\Desktop\DEV\applications-mesone\Csharp scripts scheduler\obj\x86\Debug\netcoreapp3.1\Csharp scripts scheduler.csprojAssemblyReference.cache

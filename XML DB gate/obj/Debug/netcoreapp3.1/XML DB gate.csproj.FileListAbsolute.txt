@@ -10,4 +10,3 @@ C:\Users\i.korol\Desktop\DEV\applications-mesone\XML DB gate\obj\Debug\netcoreap
 C:\Users\i.korol\Desktop\DEV\applications-mesone\XML DB gate\obj\Debug\netcoreapp3.1\XML DB gate.dll
 C:\Users\i.korol\Desktop\DEV\applications-mesone\XML DB gate\obj\Debug\netcoreapp3.1\XML DB gate.pdb
 C:\Users\i.korol\Desktop\DEV\applications-mesone\XML DB gate\obj\Debug\netcoreapp3.1\XML DB gate.genruntimeconfig.cache
-C:\Users\i.korol\Desktop\DEV\applications-mesone\XML DB gate\obj\Debug\netcoreapp3.1\XML DB gate.csprojAssemblyReference.cache

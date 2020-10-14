@@ -10,3 +10,4 @@ C:\Users\i.korol\Desktop\DEV\applications-mesone\KingPigeonS272 DB gate\obj\x86\
 C:\Users\i.korol\Desktop\DEV\applications-mesone\KingPigeonS272 DB gate\obj\x86\Debug\netcoreapp3.1\KingPigeonS272 DB gate.dll
 C:\Users\i.korol\Desktop\DEV\applications-mesone\KingPigeonS272 DB gate\obj\x86\Debug\netcoreapp3.1\KingPigeonS272 DB gate.pdb
 C:\Users\i.korol\Desktop\DEV\applications-mesone\KingPigeonS272 DB gate\obj\x86\Debug\netcoreapp3.1\KingPigeonS272 DB gate.genruntimeconfig.cache
+C:\Users\i.korol\Desktop\DEV\applications-mesone\KingPigeonS272 DB gate\obj\x86\Debug\netcoreapp3.1\KingPigeonS272 DB gate.csprojAssemblyReference.cache

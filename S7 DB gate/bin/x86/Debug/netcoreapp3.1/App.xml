@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<CONFIGURATION>
-  <DB_TYPE>MySQL</DB_TYPE>
-  <CONNECTION_STRING>Driver={mySQL ODBC 8.0 ANSI Driver}; Server=192.168.0.69;Option=131072;Stmt=;Database=S7_DB_gate;User=mesone;Password=Mesone1_p@$$word;</CONNECTION_STRING>
-  <DEPTH_LOG_DAY>2</DEPTH_LOG_DAY>
-</CONFIGURATION>

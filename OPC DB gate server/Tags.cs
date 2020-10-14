@@ -31,8 +31,8 @@ namespace OPC_DB_gate_server
         public DataTable Source { get { return source; } }
 
 
-        private Dictionary<int, List<OPC_DB_gate_Lib.TagSettings>> dictionary = new Dictionary<int, List<OPC_DB_gate_Lib.TagSettings>>();
-        public Dictionary<int, List<OPC_DB_gate_Lib.TagSettings>> Dictionary { get { return dictionary; } }
+        private Dictionary<int, List<LibOPCDBgate.TagSettings>> dictionary = new Dictionary<int, List<LibOPCDBgate.TagSettings>>();
+        public Dictionary<int, List<LibOPCDBgate.TagSettings>> Dictionary { get { return dictionary; } }
 
         #endregion
 

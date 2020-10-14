@@ -49,7 +49,7 @@ namespace OPC_DB_gate_server
 
         #region PUBLICS
 
-        public void Put(long id, OPC_DB_gate_Lib.ClientInfo info)
+        public void Put(long id, LibOPCDBgate.ClientInfo info)
         {
             try
             {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DB_gate_Lib
+namespace LibDBgate
 {
     [Serializable]
     public class TagData

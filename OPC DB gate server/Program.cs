@@ -42,7 +42,7 @@ namespace OPC_DB_gate_server
                     config_file = new HandlerConfigFile(Lib.Global.NameExeFile.Split('.')[0] + ".xml");
                 }
 
-                Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer = new Lib.Buffer<OPC_DB_gate_Lib.TagData>(10000);
+                Lib.Buffer<LibDBgate.TagData> buffer = new Lib.Buffer<LibDBgate.TagData>(10000);
 
                 Settings settings = new Settings();
                 Clients clients = new Clients();

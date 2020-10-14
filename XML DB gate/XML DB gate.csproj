@@ -5,6 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>XML_DB_gate</RootNamespace>
     <Platforms>AnyCPU;x86;x64</Platforms>
+    <Configurations>Debug;Release;Public</Configurations>
   </PropertyGroup>
 
 </Project>

@@ -52,6 +52,14 @@
           }
         }
       },
+      "DB gate Lib/1.0.0": {
+        "dependencies": {
+          "Lib": "1.0.0"
+        },
+        "runtime": {
+          "DB gate Lib.dll": {}
+        }
+      },
       "Lib/1.0.0": {
         "dependencies": {
           "System.Data.Odbc": "4.7.0"
@@ -61,6 +69,9 @@
         }
       },
       "OPC DB gate Lib/1.0.0": {
+        "dependencies": {
+          "DB gate Lib": "1.0.0"
+        },
         "runtime": {
           "OPC DB gate Lib.dll": {}
         }
@@ -86,6 +97,11 @@
       "sha512": "sha512-unlxM2E513eogjihvQ4cGuI+wa5QGH/C4u5Rf34A8alDArtmNwvY1FrnoHaLDdR/pOIlj+mxxpOfI1zTuQ4erA==",
       "path": "system.data.odbc/4.7.0",
       "hashPath": "system.data.odbc.4.7.0.nupkg.sha512"
+    },
+    "DB gate Lib/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "Lib/1.0.0": {
       "type": "project",

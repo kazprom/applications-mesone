@@ -5,7 +5,7 @@ using System.Data;
 using System.Text;
 using System.Threading;
 
-namespace DB_gate_Lib
+namespace LibDBgate
 {
     public class History
     {

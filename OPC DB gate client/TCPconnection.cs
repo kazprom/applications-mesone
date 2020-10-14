@@ -24,10 +24,10 @@ namespace OPC_DB_gate_client
         private Thread thread_write;
         private Thread thread_ping;
         private Encryption encryption = new Encryption(false);
-        private Protocol protocol = new Protocol();
-        private byte[] buf = new byte[Protocol.SIZE_BUFFER];
-        private Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer;
-        private OPC_DB_gate_Lib.ClientInfo info;
+        private LibOPCDBgate.Protocol protocol = new LibOPCDBgate.Protocol();
+        private byte[] buf = new byte[LibOPCDBgate.Protocol.SIZE_BUFFER];
+        private Lib.Buffer<LibDBgate.TagData> buffer;
+        private LibOPCDBgate.ClientInfo info;
 
         #endregion
 
@@ -47,7 +47,7 @@ namespace OPC_DB_gate_client
 
         #region EVENTS
 
-        public delegate void GetTagsNotify(Dictionary<int, OPC_DB_gate_Lib.TagSettings> value);  // delegate
+        public delegate void GetTagsNotify(Dictionary<int, LibOPCDBgate.TagSettings> value);  // delegate
         public event GetTagsNotify GetTags; // event
 
 
@@ -60,8 +60,8 @@ namespace OPC_DB_gate_client
 
         public TCPconnection(Lib.Parameter<IPAddress> ip_address,
                              Lib.Parameter<int> port,
-                             Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer,
-                             OPC_DB_gate_Lib.ClientInfo info)
+                             Lib.Buffer<LibDBgate.TagData> buffer,
+                             LibOPCDBgate.ClientInfo info)
         {
 
             this.buffer = buffer;
@@ -243,13 +243,13 @@ namespace OPC_DB_gate_client
                                 byte[] data = package;
 
 
-                                switch (Lib.Protocol.GetTypePackage(ref data))
+                                switch (LibOPCDBgate.Protocol.GetTypePackage(ref data))
                                 {
-                                    case Protocol.EPackageTypes.UNENCRYPT:
+                                    case LibOPCDBgate.Protocol.EPackageTypes.UNENCRYPT:
                                         try
                                         {
 
-                                            Encryption.SSafetyKeys safety_keys = (Encryption.SSafetyKeys)Protocol.ConvertByteArrToObj(data);
+                                            Encryption.SSafetyKeys safety_keys = (Encryption.SSafetyKeys)LibOPCDBgate.Protocol.ConvertByteArrToObj(data);
                                             if ((encryption.SafetyKeys.key == null ||
                                                 !encryption.SafetyKeys.key.SequenceEqual(safety_keys.key)) &
                                                 (encryption.SafetyKeys.iv == null ||
@@ -267,17 +267,17 @@ namespace OPC_DB_gate_client
                                         }
                                         break;
 
-                                    case Protocol.EPackageTypes.ENCRYPT:
+                                    case LibOPCDBgate.Protocol.EPackageTypes.ENCRYPT:
                                         try
                                         {
                                             if (client.Connected && encryption.SafetyKeys.key != null && encryption.SafetyKeys.iv != null)
                                             {
-                                                object obj = Protocol.ConvertByteArrToObj(encryption.Decrypt(data));
+                                                object obj = LibOPCDBgate.Protocol.ConvertByteArrToObj(encryption.Decrypt(data));
 
                                                 //tags
-                                                if (obj.GetType().Equals(typeof(Dictionary<int, OPC_DB_gate_Lib.TagSettings>)))
+                                                if (obj.GetType().Equals(typeof(Dictionary<int, LibOPCDBgate.TagSettings>)))
                                                 {
-                                                    GetTags?.Invoke((Dictionary<int, OPC_DB_gate_Lib.TagSettings>)obj);
+                                                    GetTags?.Invoke((Dictionary<int, LibOPCDBgate.TagSettings>)obj);
                                                 }
                                             }
                                         }
@@ -294,7 +294,7 @@ namespace OPC_DB_gate_client
                             }
                         }
                     }
-                    Thread.Sleep(Protocol.DATA_TIMEOUT / 2);
+                    Thread.Sleep(LibOPCDBgate.Protocol.DATA_TIMEOUT / 2);
                 }
             }
             catch (Exception ex)
@@ -320,7 +320,7 @@ namespace OPC_DB_gate_client
                         // data
                         while (buffer.Count > 0)
                         {
-                            pack = Protocol.BuildPackage(encryption.Encrypt(Protocol.ConvertObjToByteArr(buffer.Dequeue())), Protocol.EPackageTypes.ENCRYPT);
+                            pack = LibOPCDBgate.Protocol.BuildPackage(encryption.Encrypt(LibOPCDBgate.Protocol.ConvertObjToByteArr(buffer.Dequeue())), LibOPCDBgate.Protocol.EPackageTypes.ENCRYPT);
                             if (pack != null)
                                 nwStream.Write(pack, 0, pack.Length);
                             //Thread.Sleep(Protocol.DATA_TIMEOUT * 2);
@@ -331,7 +331,7 @@ namespace OPC_DB_gate_client
 
 
                     }
-                    Thread.Sleep(Protocol.DATA_TIMEOUT / 2);
+                    Thread.Sleep(LibOPCDBgate.Protocol.DATA_TIMEOUT / 2);
                 }
             }
             catch (Exception ex)
@@ -354,7 +354,7 @@ namespace OPC_DB_gate_client
                         byte[] pack;
 
                         //info
-                        pack = Protocol.BuildPackage(Protocol.ConvertObjToByteArr(info), Protocol.EPackageTypes.UNENCRYPT);
+                        pack = LibOPCDBgate.Protocol.BuildPackage(LibOPCDBgate.Protocol.ConvertObjToByteArr(info), LibOPCDBgate.Protocol.EPackageTypes.UNENCRYPT);
                         if (pack != null)
                             nwStream.Write(pack, 0, pack.Length);
                     }

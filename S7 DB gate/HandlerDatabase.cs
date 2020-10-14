@@ -17,8 +17,8 @@ namespace S7_DB_gate
         private Settings settings;
         private Clients clients;
         private Tags tags;
-        private DB_gate_Lib.RT_values rt_values;
-        private DB_gate_Lib.History history;
+        private LibDBgate.RT_values rt_values;
+        private LibDBgate.History history;
         private Lib.Application application;
         private Diagnostics diagnostics;
 
@@ -49,8 +49,8 @@ namespace S7_DB_gate
                         Settings settings,
                         Clients clients,
                         Tags tags,
-                        DB_gate_Lib.RT_values rt_values,
-                        DB_gate_Lib.History history,
+                        LibDBgate.RT_values rt_values,
+                        LibDBgate.History history,
                         Lib.Application application,
                         Diagnostics diagnostics)
         {

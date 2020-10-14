@@ -26,7 +26,7 @@ namespace OPC_DB_gate_client
         private Dictionary<int, Timer> times = new Dictionary<int, Timer>();
 
 
-        public IntInfo(Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer) : base(default_name, buffer)
+        public IntInfo(Lib.Buffer<LibDBgate.TagData> buffer) : base(default_name, buffer)
         {
 
             PutEvent += GroupHandlerRunner;
@@ -88,12 +88,12 @@ namespace OPC_DB_gate_client
                     if (path == $"{Folder_clock}.{Tag_hours}".ToLower())
                         result = DateTime.Now.Hour;
 
-                    buffer.Enqueue(new OPC_DB_gate_Lib.TagData()
+                    buffer.Enqueue(new LibDBgate.TagData()
                     {
                         id = tag.id,
-                        quality = result != null ? OPC_DB_gate_Lib.TagData.EQuality.Good : OPC_DB_gate_Lib.TagData.EQuality.Bad,
+                        quality = result != null ? LibDBgate.TagData.EQuality.Good : LibDBgate.TagData.EQuality.Bad,
                         timestamp = DateTime.Now,
-                        value = OPC_DB_gate_Lib.TagSettings.ObjToDataType(result, tag.data_type)
+                        value = LibDBgate.TagData.ObjToDataType(result, tag.data_type)
                     });
 
 

@@ -7,3 +7,8 @@ C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate Lib\obj\x86\Debug\n
 C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate Lib\obj\x86\Debug\netstandard2.0\OPC DB gate Lib.dll
 C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate Lib\obj\x86\Debug\netstandard2.0\OPC DB gate Lib.pdb
 C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate Lib\obj\x86\Debug\netstandard2.0\OPC DB gate Lib.csprojAssemblyReference.cache
+C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate Lib\bin\x86\Debug\netstandard2.0\DB gate Lib.dll
+C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate Lib\bin\x86\Debug\netstandard2.0\Lib.dll
+C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate Lib\bin\x86\Debug\netstandard2.0\DB gate Lib.pdb
+C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate Lib\bin\x86\Debug\netstandard2.0\Lib.pdb
+C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate Lib\obj\x86\Debug\netstandard2.0\OPC DB gate Lib.csproj.CopyComplete

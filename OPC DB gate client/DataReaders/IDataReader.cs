@@ -16,7 +16,7 @@ namespace OPC_DB_gate_client
             public int id;
             public string path;
             public int rate;
-            public OPC_DB_gate_Lib.TagSettings.EDataType data_type;
+            public LibDBgate.TagData.EDataType data_type;
         }
 
         #endregion
@@ -24,7 +24,7 @@ namespace OPC_DB_gate_client
         #region VARIABLES
 
         protected Dictionary<int, Group> groups = new Dictionary<int, Group>();
-        protected Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer;
+        protected Lib.Buffer<LibDBgate.TagData> buffer;
 
         #endregion
 
@@ -46,7 +46,7 @@ namespace OPC_DB_gate_client
 
         #region CONSTRUCTOR
 
-        public IDataReader(string name, Lib.Buffer<OPC_DB_gate_Lib.TagData> buffer)
+        public IDataReader(string name, Lib.Buffer<LibDBgate.TagData> buffer)
         {
             this.name = name;
             this.buffer = buffer;

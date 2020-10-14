@@ -12,6 +12,7 @@
     <FileAlignment>512</FileAlignment>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <Deterministic>false</Deterministic>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -75,6 +76,15 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Public|AnyCPU'">
+    <OutputPath>bin\Public\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Public|x86'">
+    <OutputPath>bin\x86\Public\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Public|x64'">
+    <OutputPath>bin\x64\Public\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpcNetApi, Version=2.0.2.0, Culture=neutral, PublicKeyToken=78aea80f6827b5ab, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -103,13 +113,17 @@
     <Compile Include="TCPconnection.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DB gate Lib\LibDBgate.csproj">
+      <Project>{334db94a-ce87-45dc-907c-6d16919261a5}</Project>
+      <Name>LibDBgate</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Lib\Lib.csproj">
       <Project>{4ccfc338-0118-4300-857d-24fd88e9bb3b}</Project>
       <Name>Lib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OPC DB gate Lib\OPC DB gate Lib.csproj">
+    <ProjectReference Include="..\OPC DB gate Lib\LibOPCDBgate.csproj">
       <Project>{43847a49-f70c-48d9-ba18-d3ac34fec8ba}</Project>
-      <Name>OPC DB gate Lib</Name>
+      <Name>LibOPCDBgate</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

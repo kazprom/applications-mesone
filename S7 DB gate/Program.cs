@@ -39,13 +39,13 @@ namespace S7_DB_gate
                     config_file = new HandlerConfigFile(Lib.Global.NameExeFile.Split('.')[0] + ".xml");
                 }
 
-                Lib.Buffer<DB_gate_Lib.TagData> buffer = new Lib.Buffer<DB_gate_Lib.TagData>(10000);
+                Lib.Buffer<LibDBgate.TagData> buffer = new Lib.Buffer<LibDBgate.TagData>(10000);
 
                 Settings settings = new Settings();
                 Clients clients = new Clients();
                 Tags tags = new Tags();
-                DB_gate_Lib.RT_values rt_values = new DB_gate_Lib.RT_values();
-                DB_gate_Lib.History history = new DB_gate_Lib.History();
+                LibDBgate.RT_values rt_values = new LibDBgate.RT_values();
+                LibDBgate.History history = new LibDBgate.History();
                 Lib.Application application = new Lib.Application(); application.Put(Lib.Application.EKeys.APPINFO, Lib.Global.AppInfo());
                 Diagnostics diagnostics = new Diagnostics();
 
@@ -53,13 +53,14 @@ namespace S7_DB_gate
                                                                config_file.CONNECTION_STRING,
                                                                settings, clients, tags,
                                                                rt_values, history, application, diagnostics);
-                
+
                 Lib.DBLogger db_logger = new Lib.DBLogger(database.Database);
 
+                HandlerData data = new HandlerData(buffer, rt_values, history, application);
 
                 Connections connections = new Connections(clients, tags, buffer, diagnostics);
 
-                DB_gate_Lib.HistoryCleaner history_cleaner = new DB_gate_Lib.HistoryCleaner(database.Database, settings.DEPTH_HISTORY_HOUR);
+                LibDBgate.HistoryCleaner history_cleaner = new LibDBgate.HistoryCleaner(database.Database, settings.DEPTH_HISTORY_HOUR);
                 Lib.TextLogCleaner text_log_cleaner = new Lib.TextLogCleaner(text_logger, config_file.DEPTH_LOG_DAY);
                 Lib.DBLogCleaner db_log_cleaner = new Lib.DBLogCleaner(db_logger, settings.DEPTH_LOG_DAY);
 
