@@ -48,7 +48,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                throw new Exception("Error write", ex);
+                System.Console.WriteLine($"Error write text log {ex.Message}");
             }
 
 

@@ -140,14 +140,17 @@ namespace S7_DB_gate
                 if (database != null)
                 {
                     if (settings != null)
-                        database.Read(settings.Source);
+                        if (!database.Read(settings.Source))
+                            Lib.Message.Make("Can't read settings");
 
                     if (clients != null)
-                        database.Read(clients.Source);
-                    
+                        if(!database.Read(clients.Source))
+                            Lib.Message.Make("Can't read clients");
+
                     if (tags != null)
-                        database.Read(tags.Source);
-                    
+                        if(!database.Read(tags.Source))
+                            Lib.Message.Make("Can't read tags");
+
                 }
             }
             catch (Exception ex)
@@ -167,7 +170,8 @@ namespace S7_DB_gate
                     {
                         lock (database) lock (rt_values)
                             {
-                                database.Write(rt_values.Source, false, true);
+                                if(!database.Write(rt_values.Source, false, true))
+                                    Lib.Message.Make("Can't write rt_values");
                             }
                     }
 
@@ -175,7 +179,8 @@ namespace S7_DB_gate
                     {
                         lock (database) lock (history)
                             {
-                                database.Write(history.Source);
+                                if(!database.Write(history.Source))
+                                    Lib.Message.Make("Can't write history");
                                 history.Clear();
                             }
                     }
@@ -184,7 +189,8 @@ namespace S7_DB_gate
                     {
                         lock (database) lock (application)
                             {
-                                database.Write(application.Source, false, true);
+                                if(!database.Write(application.Source, false, true))
+                                    Lib.Message.Make("Can't write application");
                             }
                     }
 
@@ -192,7 +198,8 @@ namespace S7_DB_gate
                     {
                         lock (database) lock (diagnostics)
                             {
-                                database.Write(diagnostics.Source, false, true);
+                                if(!database.Write(diagnostics.Source, false, true))
+                                    Lib.Message.Make("Can't write diagnostics");
                             }
                     }
                 }

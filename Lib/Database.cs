@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Odbc;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace Lib
 {
@@ -41,7 +42,7 @@ namespace Lib
         private EType type = default_type;
         public EType Type { get { return type; } set { type = value; } }
 
-        public const string default_connection_string = "Driver ={mySQL ODBC 8.0 ANSI Driver}; Server=myServerAddress;Option=131072;Stmt=;Database=myDataBase;User=myUsername;Password=myPassword;";
+        public const string default_connection_string = "Driver={mySQL ODBC 8.0 ANSI Driver}; Server=myServerAddress;Option=131072;Stmt=;Database=myDataBase;User=myUsername;Password=myPassword;";
         private string connection_string = default_connection_string;
         public string ConnectionString { get { return connection_string; } set { connection_string = value; } }
 
@@ -57,7 +58,9 @@ namespace Lib
         #region PUBLICS
 
 
-        public void Read(DataSet ds)
+
+
+        public bool Read(DataSet ds)
         {
             try
             {
@@ -71,15 +74,22 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                throw new Exception("Error read data set", ex);
+                Lib.Message.Make("Error read data set", ex);
+                return false;
             }
+
+            return true;
         }
-        public void Read(DataTable dt)
+        public bool Read(DataTable dt)
         {
             try
             {
 
-                TestConnection();
+                if (!TestConnection())
+                    return false;
+
+                if (!TableCheckScheme(dt))
+                    return false;
 
                 string sql = string.Empty;
 
@@ -102,28 +112,38 @@ namespace Lib
                             }
                     }
 
+                    DataColumn[] pk_columns = dt.Columns.Cast<DataColumn>()
+                                                                    .Where(x => x.ExtendedProperties.ContainsKey(typeof(SExtProp)))
+                                                                    .Where(x =>
+                                                                    {
+                                                                        SExtProp prop = (SExtProp)x.ExtendedProperties[typeof(SExtProp)];
+                                                                        return prop.primary_key;
+                                                                    }).ToArray();
 
-
-                    if (dt.PrimaryKey.Length > 0)
+                    if (pk_columns.Length > 0)
                     {
                         DataTable result = dt.Clone();
                         lock (connection)
                         {
-                            OdbcDataAdapter adapter = new OdbcDataAdapter(sql, connection);
-                            adapter.Fill(result);
+                            using (OdbcDataAdapter adapter = new OdbcDataAdapter(sql, connection))
+                            {
+                                adapter.Fill(result);
+                            }
                         }
 
                         DataTable unnecessary = dt.Copy();
                         foreach (DataRow row in result.Rows)
                         {
-                            List<object> pk = new List<object>();
-                            foreach (DataColumn dc in result.PrimaryKey)
+                            List<string> conditions = new List<string>();
+
+                            foreach (DataColumn dc in pk_columns)
                             {
-                                //pk.Add(row.Field<object>(dc));
-                                pk.Add(row.ItemArray[dc.Ordinal]);
+                                conditions.Add($"{dc.ColumnName} = '{row[dc.ColumnName]}'");
                             }
 
-                            DataRow fr = dt.Rows.Find(pk.ToArray());
+                            string condition = string.Join(" AND ", conditions);
+
+                            DataRow fr = dt.Select(condition).FirstOrDefault();
                             if (fr == null)
                             {
                                 dt.Rows.Add(row.ItemArray);
@@ -131,18 +151,21 @@ namespace Lib
                             else
                             {
                                 fr.ItemArray = row.ItemArray;
-                                unnecessary.Rows.Remove(unnecessary.Rows.Find(pk.ToArray()));
+                                unnecessary.Rows.Remove(unnecessary.Select(condition).FirstOrDefault());
                             }
                         }
                         foreach (DataRow row in unnecessary.Rows)
                         {
-                            List<object> pk = new List<object>();
-                            foreach (DataColumn dc in unnecessary.PrimaryKey)
+                            List<string> conditions = new List<string>();
+
+                            foreach (DataColumn dc in pk_columns)
                             {
-                                //pk.Add(row.Field<object>(dc));
-                                pk.Add(row.ItemArray[dc.Ordinal]);
+                                conditions.Add($"{dc.ColumnName} = {row[dc.ColumnName]}");
                             }
-                            DataRow dr = dt.Rows.Find(pk.ToArray());
+
+                            string condition = string.Join(" AND ", conditions);
+
+                            DataRow dr = dt.Select(condition).FirstOrDefault();
                             dr.Delete();
                         }
                     }
@@ -150,8 +173,10 @@ namespace Lib
                     {
                         lock (connection)
                         {
-                            OdbcDataAdapter adapter = new OdbcDataAdapter(sql, connection);
-                            adapter.Fill(dt);
+                            using (OdbcDataAdapter adapter = new OdbcDataAdapter(sql, connection))
+                            {
+                                adapter.Fill(dt);
+                            }
                         }
                     }
 
@@ -159,16 +184,24 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                throw new Exception("Error read data table", ex);
+                string table_name = "unknown";
+                if (dt != null)
+                    table_name = dt.TableName;
+
+                Lib.Message.Make($"Error read data table [{table_name}]", ex);
+                return false;
             }
+
+            return true;
         }
 
 
-        public void Write(DataSet ds)
+        public bool Write(DataSet ds)
         {
             try
             {
-                TestConnection();
+                if (!TestConnection())
+                    return false;
 
                 lock (ds)
                 {
@@ -181,18 +214,22 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                throw new Exception("Error write data set", ex);
+                Lib.Message.Make("Error write data set", ex);
+                return false;
             }
-        }
 
-        public void Write(DataTable dt, bool create_table, bool rewrite_row)
+            return true;
+
+        }
+        public bool Write(DataTable dt, bool create_table, bool rewrite_row)
         {
             try
             {
                 if (dt != null)
                 {
 
-                    TestConnection();
+                    if (!TestConnection())
+                        return false;
 
                     lock (dt)
                     {
@@ -220,8 +257,11 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                throw new Exception("Error write data table", ex);
+                Lib.Message.Make("Error write data table", ex);
+                return false;
             }
+
+            return true;
 
         }
 
@@ -231,7 +271,8 @@ namespace Lib
         {
             try
             {
-                TestConnection();
+                if (!TestConnection())
+                    return null;
 
                 string sql = String.Empty;
 
@@ -250,22 +291,26 @@ namespace Lib
 
                 lock (command)
                 {
-                    OdbcDataAdapter adapter = new OdbcDataAdapter(sql, connection);
                     DataTable dt = new DataTable();
-                    adapter.Fill(dt);
+                    using (OdbcDataAdapter adapter = new OdbcDataAdapter(sql, connection))
+                    {
+                        adapter.Fill(dt);
+                    }
                     return dt.Rows.Cast<DataRow>().Select(x => x["TABLE_NAME"].ToString()).ToArray();
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception("Error get list tables", ex);
+                Lib.Message.Make("Error get list tables", ex);
+                return null;
             }
         }
-        public void DeleteTables(string[] table_names)
+        public bool DeleteTables(string[] table_names)
         {
             try
             {
-                TestConnection();
+                if (!TestConnection())
+                    return false;
 
                 foreach (string table_name in table_names)
                 {
@@ -274,16 +319,20 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                throw new Exception("Error delete tables", ex);
+                Lib.Message.Make("Error delete tables", ex);
+                return false;
             }
+
+            return true;
         }
 
-        public void DeleteTable(string table_name)
+        public bool DeleteTable(string table_name)
         {
 
             try
             {
-                TestConnection();
+                if (!TestConnection())
+                    return false;
 
                 string sql = String.Empty;
 
@@ -307,8 +356,11 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                throw new Exception("Error delete table", ex);
+                Lib.Message.Make($"Error delete table {table_name}", ex);
+                return false;
             }
+
+            return true;
 
         }
 
@@ -316,7 +368,7 @@ namespace Lib
 
         #region PRIVATES
 
-        private void TestConnection()
+        private bool TestConnection()
         {
             try
             {
@@ -346,9 +398,12 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                throw new Exception("Error connection", ex);
+                Lib.Message.Make("Error connection", ex);
+                return false;
 
             }
+
+            return true;
 
         }
 
@@ -375,9 +430,10 @@ namespace Lib
                 {
                     command.Parameters.Clear();
                     command.CommandText = sql;
-                    var reader = command.ExecuteReader();
-                    result = reader.HasRows;
-                    reader.Close();
+                    using (var reader = command.ExecuteReader())
+                    {
+                        result = reader.HasRows;
+                    }
                 }
             }
             catch (Exception ex)
@@ -388,7 +444,7 @@ namespace Lib
             return result;
         }
 
-        private void TableAdd(DataTable dt)
+        private bool TableAdd(DataTable dt)
         {
             try
             {
@@ -441,15 +497,120 @@ namespace Lib
                         }
                 }
 
-                command.Parameters.Clear();
-                command.CommandText = sql;
-                command.ExecuteNonQuery();
+                lock (command)
+                {
+
+                    command.Parameters.Clear();
+                    command.CommandText = sql;
+                    command.ExecuteNonQuery();
+
+                }
 
             }
             catch (Exception ex)
             {
-                throw new Exception("Error add table", ex);
+                Lib.Message.Make($"Error add table", ex);
+                return false;
             }
+
+            return true;
+
+        }
+
+        private bool TableCheckScheme(DataTable dt)
+        {
+
+            bool error = false;
+
+            try
+            {
+
+                string sql = string.Empty;
+
+                string col_name_column_name = "COLUMN_NAME";
+                string col_name_data_type = "DATA_TYPE";
+                string col_name_character_maximum_length = "CHARACTER_MAXIMUM_LENGTH";
+                string col_name_is_nullable = "IS_NULLABLE";
+
+                switch (type)
+                {
+                    case EType.MSSQLServer:
+                    case EType.MySQL:
+                    case EType.PostgreSQL:
+                        {
+                            sql = $"SELECT {col_name_column_name}, {col_name_data_type}, {col_name_character_maximum_length} , {col_name_is_nullable} " +
+                                  $"FROM INFORMATION_SCHEMA.COLUMNS " +
+                                  $"WHERE " +
+                                  $"TABLE_SCHEMA = '{connection.Database}' " +
+                                  $"AND " +
+                                  $"TABLE_NAME = '{dt.TableName}'";
+                            break;
+                        }
+                }
+
+                DataTable scheme = new DataTable();
+
+                lock (command)
+                {
+                    using (OdbcDataAdapter adapter = new OdbcDataAdapter(sql, connection))
+                    {
+                        adapter.Fill(scheme);
+                    }
+                }
+
+
+                foreach (DataColumn col in dt.Columns)
+                {
+
+                    if (!col.ExtendedProperties.ContainsKey(typeof(Lib.Database.SExtProp)))
+                    {
+                        Lib.Message.Make($"Error in configuration of data table [{dt.TableName}]. Column [{col.ColumnName}] doesn't contain extended properties.");
+                        error = true;
+                    }
+                    else
+                    {
+                        Lib.Database.SExtProp prop = (SExtProp)col.ExtendedProperties[typeof(Lib.Database.SExtProp)];
+
+                        DataRow row = scheme.Select($" {col_name_column_name} = '{col.ColumnName}' ").FirstOrDefault();
+
+                        if (row == null)
+                        {
+                            Lib.Message.Make($"Error in database. Table [{dt.TableName}] doesn't have column [{col.ColumnName}].");
+                            error = true;
+                        }
+                        else
+                        {
+                            if(!row[col_name_data_type].ToString().Equals(prop.data_type.ToString(), StringComparison.OrdinalIgnoreCase))
+                            {
+                                Lib.Message.Make($"Error in database. Table [{dt.TableName}] column [{col.ColumnName}] has different type is [{row[col_name_data_type]}]. Right data type is [{prop.data_type}]");
+                                error = true;
+                            }
+
+                            if(prop.size > 0)
+                            {
+                                if(row[col_name_character_maximum_length] == System.DBNull.Value || (Int64)row[col_name_character_maximum_length] != prop.size)
+                                {
+                                    Lib.Message.Make($"Error in database. Table [{dt.TableName}] column [{col.ColumnName}] has different size. Right size is [{prop.size}]");
+                                    error = true;
+                                }
+                            }
+
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string table_name = "unknown";
+                if (dt != null)
+                    table_name = dt.TableName;
+
+                Lib.Message.Make($"Error check scheme table [{table_name}]", ex);
+                error = true;
+            }
+
+            return !error;
         }
 
         private bool RowExists(DataRow dr)
@@ -511,9 +672,11 @@ namespace Lib
                         command.Parameters.Add("", ext_prop.data_type).Value = dr[col];
                     }
 
-                    var reader = command.ExecuteReader();
-                    result = reader.HasRows;
-                    reader.Close();
+                    using (var reader = command.ExecuteReader())
+                    {
+                        result = reader.HasRows;
+                    }
+                    //reader.Close();
                 }
 
             }
@@ -526,7 +689,7 @@ namespace Lib
             return result;
         }
 
-        private void RowInsert(DataRow dr)
+        private bool RowInsert(DataRow dr)
         {
             try
             {
@@ -560,26 +723,35 @@ namespace Lib
                         }
                 }
 
-                command.Parameters.Clear();
-                command.CommandText = sql;
-
-                foreach (DataColumn col in columns)
+                lock (command)
                 {
-                    SExtProp ext_prop = (SExtProp)col.ExtendedProperties[typeof(SExtProp)];
-                    command.Parameters.Add("", ext_prop.data_type).Value = dr[col];
+
+                    command.Parameters.Clear();
+                    command.CommandText = sql;
+
+                    foreach (DataColumn col in columns)
+                    {
+                        SExtProp ext_prop = (SExtProp)col.ExtendedProperties[typeof(SExtProp)];
+                        command.Parameters.Add("", ext_prop.data_type).Value = dr[col];
+                    }
+
+                    command.ExecuteNonQuery();
+
                 }
 
-                command.ExecuteNonQuery();
 
             }
             catch (Exception ex)
             {
 
-                throw new Exception("Error insert row", ex);
+                Lib.Message.Make("Error insert row", ex);
+                return false;
             }
+
+            return true;
         }
 
-        private void RowUpdate(DataRow dr)
+        private bool RowUpdate(DataRow dr)
         {
 
             try
@@ -643,29 +815,35 @@ namespace Lib
                         }
                 }
 
-                command.Parameters.Clear();
-                command.CommandText = sql;
-
-                foreach (DataColumn col in columns)
+                lock (command)
                 {
-                    SExtProp ext_prop = (SExtProp)col.ExtendedProperties[typeof(SExtProp)];
-                    command.Parameters.Add("", ext_prop.data_type).Value = dr[col];
+                    command.Parameters.Clear();
+                    command.CommandText = sql;
+
+                    foreach (DataColumn col in columns)
+                    {
+                        SExtProp ext_prop = (SExtProp)col.ExtendedProperties[typeof(SExtProp)];
+                        command.Parameters.Add("", ext_prop.data_type).Value = dr[col];
+                    }
+
+                    foreach (DataColumn col in pk_columns)
+                    {
+                        SExtProp ext_prop = (SExtProp)col.ExtendedProperties[typeof(SExtProp)];
+                        command.Parameters.Add("", ext_prop.data_type).Value = dr[col];
+                    }
+
+                    command.ExecuteNonQuery();
                 }
 
-                foreach (DataColumn col in pk_columns)
-                {
-                    SExtProp ext_prop = (SExtProp)col.ExtendedProperties[typeof(SExtProp)];
-                    command.Parameters.Add("", ext_prop.data_type).Value = dr[col];
-                }
-
-                command.ExecuteNonQuery();
 
             }
             catch (Exception ex)
             {
-
-                throw new Exception("Error update row", ex);
+                Lib.Message.Make("Error update row", ex);
+                return false;
             }
+
+            return true;
 
         }
 

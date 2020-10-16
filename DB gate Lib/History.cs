@@ -16,7 +16,7 @@ namespace LibDBgate
 
         public const string table_prefix = "t";
 
-        public const string col_name_id = "id";
+        //public const string col_name_id = "id";
         public const string col_name_tags_id = "tags_id";
         public const string col_name_timestamp = "timestamp";
         public const string col_name_value = "value";
@@ -43,7 +43,7 @@ namespace LibDBgate
                     if (table == null)
                     {
                         table = new DataTable(table_name);
-                        table.Columns.Add(col_name_id, typeof(int)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp),
+                        table.Columns.Add(BaseTable.col_name_id, typeof(int)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp),
                                                                                            new Lib.Database.SExtProp()
                                                                                            {
                                                                                                data_type = System.Data.Odbc.OdbcType.BigInt,

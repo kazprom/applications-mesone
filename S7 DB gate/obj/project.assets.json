@@ -11,15 +11,6 @@
           "lib/netstandard1.0/_._": {}
         }
       },
-      "S7netplus/0.7.0": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/S7.Net.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/S7.Net.dll": {}
-        }
-      },
       "System.Data.Odbc/4.7.0": {
         "type": "package",
         "dependencies": {
@@ -75,6 +66,16 @@
         "runtime": {
           "bin/placeholder/LibDBgate.dll": {}
         }
+      },
+      "S7netplus/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/S7netplus.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/S7netplus.dll": {}
+        }
       }
     }
   },
@@ -94,20 +95,6 @@
         "runtime.json",
         "useSharedDesignerContext.txt",
         "version.txt"
-      ]
-    },
-    "S7netplus/0.7.0": {
-      "sha512": "CF3m8/+uPKZU31o+ndrY38ObbtIBDspmoyZonHN6T0HKg2MT5pcWm0rw8YCRMetIfVEKTJKx4c7RI9/EykFCfQ==",
-      "type": "package",
-      "path": "s7netplus/0.7.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net452/S7.Net.dll",
-        "lib/netstandard1.3/S7.Net.dll",
-        "lib/netstandard2.0/S7.Net.dll",
-        "s7netplus.0.7.0.nupkg.sha512",
-        "s7netplus.nuspec"
       ]
     },
     "System.Data.Odbc/4.7.0": {
@@ -154,13 +141,18 @@
       "type": "project",
       "path": "../DB gate Lib/LibDBgate.csproj",
       "msbuildProject": "../DB gate Lib/LibDBgate.csproj"
+    },
+    "S7netplus/1.0.0": {
+      "type": "project",
+      "path": "../S7.Net/S7.Net.csproj",
+      "msbuildProject": "../S7.Net/S7.Net.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "Lib >= 1.0.0",
       "LibDBgate >= 1.0.0",
-      "S7netplus >= 0.7.0"
+      "S7netplus >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -198,6 +190,9 @@
             },
             "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\Lib.csproj": {
               "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\Lib.csproj"
+            },
+            "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\S7.Net\\S7.Net.csproj": {
+              "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\S7.Net\\S7.Net.csproj"
             }
           }
         }
@@ -210,12 +205,6 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
-        "dependencies": {
-          "S7netplus": {
-            "target": "Package",
-            "version": "[0.7.0, )"
-          }
-        },
         "imports": [
           "net461",
           "net462",

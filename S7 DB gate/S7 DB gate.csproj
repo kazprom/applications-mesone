@@ -12,12 +12,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="S7netplus" Version="0.7.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\DB gate Lib\LibDBgate.csproj" />
     <ProjectReference Include="..\Lib\Lib.csproj" />
+    <ProjectReference Include="..\S7.Net\S7.Net.csproj" />
   </ItemGroup>
 
 </Project>

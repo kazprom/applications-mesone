@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v3.1": {
       "App/1.0.0": {
         "dependencies": {
-          "Lib": "1.0.0"
+          "Lib": "1.0.0",
+          "LibOPCDBgate": "1.0.0"
         },
         "runtime": {
           "App.dll": {}
@@ -52,14 +53,6 @@
           }
         }
       },
-      "DB gate Lib/1.0.0": {
-        "dependencies": {
-          "Lib": "1.0.0"
-        },
-        "runtime": {
-          "DB gate Lib.dll": {}
-        }
-      },
       "Lib/1.0.0": {
         "dependencies": {
           "System.Data.Odbc": "4.7.0"
@@ -68,12 +61,20 @@
           "Lib.dll": {}
         }
       },
-      "OPC DB gate Lib/1.0.0": {
+      "LibDBgate/1.0.0": {
         "dependencies": {
-          "DB gate Lib": "1.0.0"
+          "Lib": "1.0.0"
         },
         "runtime": {
-          "OPC DB gate Lib.dll": {}
+          "LibDBgate.dll": {}
+        }
+      },
+      "LibOPCDBgate/1.0.0": {
+        "dependencies": {
+          "LibDBgate": "1.0.0"
+        },
+        "runtime": {
+          "LibOPCDBgate.dll": {}
         }
       }
     }
@@ -98,17 +99,17 @@
       "path": "system.data.odbc/4.7.0",
       "hashPath": "system.data.odbc.4.7.0.nupkg.sha512"
     },
-    "DB gate Lib/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
     "Lib/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "OPC DB gate Lib/1.0.0": {
+    "LibDBgate/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "LibOPCDBgate/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

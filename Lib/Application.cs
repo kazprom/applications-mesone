@@ -4,12 +4,11 @@ using System.Linq;
 
 namespace Lib
 {
-    public class Application
+    public class Application:BaseTable
     {
 
         #region CONSTANTS
 
-        public const string col_name_id = "id";
         public const string col_name_key = "key";
         public const string col_name_value = "value";
 
@@ -28,7 +27,6 @@ namespace Lib
 
         #region PROPERTIES
 
-        private DataTable source = new DataTable("application");
         public DataTable Source { get { return source; } }
 
         #endregion
@@ -37,15 +35,18 @@ namespace Lib
         {
             try
             {
+                source.TableName = "application";
 
-                source.Columns.Add(col_name_id, typeof(int));
+                Lib.Database.SExtProp prop = (Lib.Database.SExtProp)source.Columns[BaseTable.col_name_id].ExtendedProperties[typeof(Lib.Database.SExtProp)];
+                prop.primary_key = false;
+                prop.ignore = true;
+                source.Columns[BaseTable.col_name_id].ExtendedProperties[typeof(Lib.Database.SExtProp)] = prop;
                 source.Columns.Add(col_name_key, typeof(string)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp() {  data_type = System.Data.Odbc.OdbcType.VarChar,  primary_key = true });
                 source.Columns.Add(col_name_value, typeof(string)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp() { data_type = System.Data.Odbc.OdbcType.VarChar});
 
             }
             catch (Exception ex)
             {
-
                 throw new Exception("Error constructor", ex);
             }
 

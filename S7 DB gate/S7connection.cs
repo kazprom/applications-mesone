@@ -1,6 +1,9 @@
 ﻿using LibDBgate;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 
@@ -11,36 +14,51 @@ namespace S7_DB_gate
 
 
         #region VARIABLES
-
+        private string title = "";
         private Dictionary<int, Dictionary<int, TagSettings>> tag_groups = new Dictionary<int, Dictionary<int, TagSettings>>();
         private Dictionary<int, Timer> timers = new Dictionary<int, Timer>();
         private Lib.Buffer<LibDBgate.TagData> buffer;
         private Diagnostics diagnostics;
 
-        S7.Net.Plc plc;
+        private S7.Net.Plc plc;
+        private Timer connection_handler;
 
         #endregion
 
 
         #region PROPERTIES
 
-        private long id;
-        public long ID { get { return id; } }
+        private ClientSettings settings;
+        public ClientSettings Settings
+        {
+            get
+            {
+                return settings;
+            }
+            set
+            {
 
-        private S7.Net.CpuType cpu_type;
-        public S7.Net.CpuType CPUtype { get { return cpu_type; } }
+                if (settings == null ||
+                    !value.cpu_type.Equals(settings.cpu_type) ||
+                    !value.ip.Equals(settings.ip) ||
+                    value.port != settings.port ||
+                    value.rack != settings.rack ||
+                    value.slot != settings.slot)
+                {
+                    settings = value;
 
-        private string ip;
-        public string IP { get { return ip; } }
+                    if (plc != null && plc.IsConnected)
+                    {
+                        plc.Close();
+                    }
+                }
 
-        private short port;
-        public short Port { get { return port; } }
+                title = $"name<{settings.name}> cpu[{settings.cpu_type}] ip {settings.ip}:{settings.port} [r{settings.rack}:s{settings.slot}]";
 
-        private short rack;
-        public short Rack { get { return rack; } }
+            }
+        }
 
-        private short slot;
-        public short Slot { get { return slot; } }
+
 
         private string state;
         public string State
@@ -49,7 +67,7 @@ namespace S7_DB_gate
             private set
             {
                 state = value;
-                diagnostics.PutState(id, state);
+                diagnostics.PutState(settings.id, state);
             }
         }
 
@@ -58,11 +76,21 @@ namespace S7_DB_gate
 
         #region CONSTRUCTOR
 
-        public S7connection(long id, Lib.Buffer<LibDBgate.TagData> buffer, Diagnostics diagnostics)
+        public S7connection(ClientSettings settings, Lib.Buffer<LibDBgate.TagData> buffer, Diagnostics diagnostics)
         {
-            this.id = id;
-            this.buffer = buffer;
-            this.diagnostics = diagnostics;
+            try
+            {
+                Settings = settings;
+                this.buffer = buffer;
+                this.diagnostics = diagnostics;
+                connection_handler = new Timer(ConnectionHandler, null, 0, 10000);
+
+                Lib.Message.Make($"Created connection {title}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error constructor", ex);
+            }
         }
 
         #endregion
@@ -78,6 +106,24 @@ namespace S7_DB_gate
             {
                 if (disposing)
                 {
+
+                    int[][] tag_ids = tag_groups.Values.Select(x => x.Values.Select(y => y.id).ToArray()).ToArray();
+
+                    foreach (var group in tag_ids)
+                    {
+                        foreach (var id in group)
+                        {
+                            RemoveTag(id);
+                        }
+                    }
+
+                    if (plc != null && plc.IsConnected)
+                    {
+                        plc.Close();
+                    }
+
+                    Lib.Message.Make($"Removed connection {title}");
+
                     // TODO: освободить управляемое состояние (управляемые объекты)
                 }
 
@@ -106,39 +152,8 @@ namespace S7_DB_gate
 
         #region PUBLICS
 
-        public void Settings(S7.Net.CpuType cpu_type, string ip, short port, short rack, short slot)
-        {
-            try
-            {
-                if (!cpu_type.Equals(this.cpu_type) || !ip.Equals(this.ip) || port != this.port || rack != this.rack || slot != this.slot)
-                {
-                    if (plc == null && plc.IsConnected)
-                    {
-                        plc.Close();
-                    }
 
-                    this.cpu_type = cpu_type;
-                    this.ip = ip;
-                    this.port = port;
-                    this.rack = rack;
-                    this.slot = slot;
-
-                    plc = new S7.Net.Plc(this.cpu_type, this.ip, this.rack, this.slot);
-                    plc.Open();
-
-
-                    Lib.Message.Make($"Connect to {ip}:{port} rack:{rack} slot:{slot}");
-
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error settings", ex);
-            }
-
-        }
-
-        public void PutTag(int id, TagSettings tag)
+        public void PutTag(TagSettings tag)
         {
             try
             {
@@ -147,21 +162,21 @@ namespace S7_DB_gate
                     if (!tag_groups.ContainsKey(tag.rate))
                     {
                         tag_groups.Add(tag.rate, new Dictionary<int, TagSettings>());
-                        timers.Add(tag.rate, new Timer(TimerCallback, tag_groups[tag.rate], 0, tag.rate));
-                        Lib.Message.Make($"Add group {tag.rate}");
+                        timers.Add(tag.rate, new Timer(DataReader, tag_groups[tag.rate], 0, tag.rate));
+                        Lib.Message.Make($"Add group [{tag.rate}]");
                     }
 
                     Dictionary<int, TagSettings> tags = tag_groups[tag.rate];
 
                     lock (tags)
                     {
-                        if (!tags.ContainsKey(id))
+                        if (!tags.ContainsKey(tag.id))
                         {
-                            tags.Add(id, new TagSettings());
-                            Lib.Message.Make($"Add tag DB{tag.db_no}.{tag.db_offset} [{tag.req_type}]");
+                            tags.Add(tag.id, new TagSettings());
+                            Lib.Message.Make($"Add tag [{tag.name}] DB{tag.db_no}.{tag.db_offset} [{tag.req_type}]");
                         }
 
-                        tags[id] = tag;
+                        tags[tag.id] = tag;
                     }
                 }
             }
@@ -215,34 +230,73 @@ namespace S7_DB_gate
 
         #region PRIVATES
 
-        private void TimerCallback(object state)
+        private void ConnectionHandler(object state)
+        {
+
+            try
+            {
+                if (settings != null && plc == null)
+                {
+                    plc = new S7.Net.Plc(settings.cpu_type, settings.ip, settings.port, settings.rack, settings.slot);
+                }
+
+                if (plc != null && !plc.IsConnected)
+                {
+                    plc.Open();
+                    Lib.Message.Make($"Connect to {title}");
+                    State = "Connected";
+                }
+            }
+            catch (Exception ex)
+            {
+                Lib.Message.Make($"Can't connect to {title}", ex);
+                State = "Disconnected";
+            }
+
+        }
+
+        private void DataReader(object state)
         {
             Dictionary<int, TagSettings> group = state as Dictionary<int, TagSettings>;
 
             try
             {
-                foreach (var item in group)
+                lock (group)
                 {
-                    TagSettings tag = item.Value;
-                    try
+                    foreach (var item in group)
                     {
-                        if (plc != null && plc.IsConnected)
+                        TagSettings tag = item.Value;
+                        try
                         {
-                            object result = plc.Read(tag.plc_data_type, tag.db_no, tag.db_offset, tag.req_type, 1);
-                            buffer.Enqueue(new LibDBgate.TagData()
+                            if (tag.enabled && plc != null && plc.IsConnected)
                             {
-                                id = item.Key,
-                                timestamp = DateTime.Now,
-                                quality = LibDBgate.TagData.EQuality.Good,
-                                value = result
-                            });
+                                object result = plc.Read(tag.plc_data_type, tag.db_no, tag.db_offset, tag.req_type, 1);
+
+                                TagData data = new LibDBgate.TagData()
+                                {
+                                    id = item.Key,
+                                    timestamp = DateTime.Now,
+                                    quality = LibDBgate.TagData.EQuality.Good,
+                                    value = LibDBgate.TagData.ObjToDataType(result, tag.data_type)
+                                };
+
+                                if (tag.rt_value_enabled)
+                                    data.settings |= TagData.ESettings.rt_value_enabled;
+
+                                if (tag.history_enabled)
+                                    data.settings |= TagData.ESettings.history_enabled;
+
+                                buffer.Enqueue(data);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Lib.Message.Make($"Error read tag DB{tag.db_no}.{tag.db_offset} [{tag.req_type}", ex);
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        Lib.Message.Make($"Error read tag DB{tag.db_no}.{tag.db_offset} [{tag.req_type}", ex);
-                    }
                 }
+
+
             }
             catch (Exception ex)
             {

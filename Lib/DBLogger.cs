@@ -15,7 +15,6 @@ namespace Lib
 
         public const string table_prefix = "l";
 
-        public const string col_name_id = "id";
         public const string col_name_timestamp = "timestamp";
         public const string col_name_message = "message";
 
@@ -24,7 +23,7 @@ namespace Lib
         #region PROPERTIES
 
         private Database database;
-        public Database Database { get {return database; } }
+        public Database Database { get { return database; } }
 
         #endregion
 
@@ -48,7 +47,7 @@ namespace Lib
                 {
                     DataTable table = new DataTable(GetTableName(DateTime.Now));
 
-                    table.Columns.Add(col_name_id, typeof(int)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp),
+                    table.Columns.Add(BaseTable.col_name_id, typeof(int)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp),
                                                                                            new Lib.Database.SExtProp()
                                                                                            {
                                                                                                data_type = System.Data.Odbc.OdbcType.BigInt,
@@ -82,7 +81,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                throw new Exception("Error write", ex);
+                System.Console.WriteLine($"Error write log to database {ex.Message}");
             }
 
         }

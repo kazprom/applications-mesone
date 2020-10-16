@@ -60,10 +60,10 @@ namespace S7_DB_gate
                     {
                         LibDBgate.TagData tag = buffer.Dequeue();
 
-                        if (true)
+                        if (tag.settings.HasFlag(LibDBgate.TagData.ESettings.rt_value_enabled))
                             rt_values.Put(tag);
 
-                        if (true)
+                        if (tag.settings.HasFlag(LibDBgate.TagData.ESettings.history_enabled))
                             history.Put(tag);
 
                     }

@@ -42,21 +42,9 @@ namespace S7_DB_gate
             try
             {
 
-                int id = (int)e.Row[Tags.col_name_id];
-                int clients_id = (int)e.Row[Tags.col_name_clients_id];
-
-                TagSettings tag = new TagSettings()
-                {
-                    plc_data_type = (S7.Net.DataType)Enum.Parse(typeof(S7.Net.DataType), (string)e.Row[Tags.col_name_plc_data_type]),
-                    db_no = (int)e.Row[Tags.col_name_db_no],
-                    db_offset = (int)e.Row[Tags.col_name_db_offset],
-                    rate = (int)e.Row[Tags.col_name_rate],
-                    req_type = (S7.Net.VarType)Enum.Parse(typeof(S7.Net.VarType), (string)e.Row[Tags.col_name_req_type]),
-                    data_type = (LibDBgate.TagData.EDataType)e.Row[Tags.col_name_data_type],
-                    rt_value_enabled = (bool)e.Row[Tags.col_name_rt_values_enabled],
-                    history_enabled = (bool)e.Row[Tags.col_name_history_enabled]
-                };
-
+                TagSettings tag = new TagSettings();
+                TagSettings.SettingFromDataRow(e.Row, ref tag);
+                
                 lock (connections)
                 {
                     switch (e.Action)
@@ -64,14 +52,14 @@ namespace S7_DB_gate
                         case DataRowAction.Add:
                         case DataRowAction.Change:
                             {
-                                if (connections.ContainsKey(clients_id))
-                                    connections[clients_id].PutTag(id, tag);
+                                if (connections.ContainsKey(tag.clients_id))
+                                    connections[tag.clients_id].PutTag(tag);
                                 break;
                             }
                         case DataRowAction.Delete:
                             {
-                                if (connections.ContainsKey(clients_id))
-                                    connections[clients_id].RemoveTag(id);
+                                if (connections.ContainsKey(tag.clients_id))
+                                    connections[tag.clients_id].RemoveTag(tag.id);
                                 break;
                             }
                     }
@@ -89,12 +77,8 @@ namespace S7_DB_gate
 
             try
             {
-                int id = (int)e.Row[Clients.col_name_id];
-                S7.Net.CpuType cpu_type = (S7.Net.CpuType)Enum.Parse(typeof(S7.Net.CpuType), (string)e.Row[Clients.col_name_cpu_type]);
-                string ip = (string)e.Row[Clients.col_name_ip];
-                short port = (short)e.Row[Clients.col_name_port];
-                short rack = (short)e.Row[Clients.col_name_rack];
-                short slot = (short)e.Row[Clients.col_name_slot];
+                ClientSettings settings = new ClientSettings();
+                ClientSettings.SettingFromDataRow(e.Row, ref settings);
 
                 lock (connections)
                 {
@@ -103,15 +87,15 @@ namespace S7_DB_gate
                         case DataRowAction.Add:
                         case DataRowAction.Change:
                             {
-                                if (!connections.ContainsKey(id))
-                                    connections.Add(id, new S7connection(id, buffer, diagnostics));
-                                connections[id].Settings(cpu_type, ip, port, rack, slot);
+                                if (!connections.ContainsKey(settings.id))
+                                    connections.Add(settings.id, new S7connection(settings, buffer, diagnostics));
+                                connections[settings.id].Settings = settings;
                                 break;
                             }
                         case DataRowAction.Delete:
                             {
-                                connections[id].Dispose();
-                                connections.Remove(id);
+                                connections[settings.id].Dispose();
+                                connections.Remove(settings.id);
                                 break;
                             }
                     }

@@ -12,6 +12,9 @@ namespace LibOPCDBgate
         public int rate;
         public LibDBgate.TagData.EDataType data_type;
 
+        public bool rt_values_enabled;
+        public bool history_enabled;
+
     }
 
 

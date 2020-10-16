@@ -4,12 +4,11 @@ using System.Data;
 
 namespace S7_DB_gate
 {
-    public class Settings
+    public class Settings: Lib.BaseTable
     {
 
         #region CONSTANTS
 
-        public const string col_name_id = "id";
         public const string col_name_key = "key";
         public const string col_name_value = "value";
 
@@ -18,7 +17,6 @@ namespace S7_DB_gate
 
         #region PROPERTIES
 
-        private DataTable source = new DataTable("settings");
         public DataTable Source { get { return source; } }
 
 
@@ -36,9 +34,19 @@ namespace S7_DB_gate
             try
             {
 
-                source.Columns.Add(col_name_id, typeof(int));
-                source.Columns.Add(col_name_key, typeof(string)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp() { primary_key = true });
-                source.Columns.Add(col_name_value, typeof(string));
+                source.TableName = "settings";
+
+                source.Columns.Add(col_name_key, typeof(string)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp()
+                {
+                    data_type = System.Data.Odbc.OdbcType.VarChar,
+                    size = 50,
+                    primary_key = true
+                });
+                source.Columns.Add(col_name_value, typeof(string)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp()
+                {
+                    data_type = System.Data.Odbc.OdbcType.VarChar,
+                    size = 255,
+                });
 
 
                 source.RowChanged += ValueHandler;
