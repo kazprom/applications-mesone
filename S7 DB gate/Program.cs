@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 [assembly: AssemblyTitle("")]
@@ -10,6 +11,7 @@ using System.Threading;
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: Guid("4913BEB7-4481-417B-8E5E-D1B05DA4FB3A")]
 
 [assembly: AssemblyVersion("1.0.*")]
 
@@ -64,11 +66,7 @@ namespace S7_DB_gate
                 Lib.TextLogCleaner text_log_cleaner = new Lib.TextLogCleaner(text_logger, config_file.DEPTH_LOG_DAY);
                 Lib.DBLogCleaner db_log_cleaner = new Lib.DBLogCleaner(db_logger, settings.DEPTH_LOG_DAY);
 
-                while (true)
-                {
-                    Thread.Sleep(1000);
-                }
-
+                Lib.Global.InfinityWaiting();
 
             }
             catch (Exception ex)

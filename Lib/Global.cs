@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace Lib
@@ -21,8 +23,8 @@ namespace Lib
                                 var isCtrlC = e.SpecialKey == ConsoleSpecialKey.ControlC;
                                 var isCtrlBreak = e.SpecialKey == ConsoleSpecialKey.ControlBreak;
 
-                // Prevent CTRL-C from terminating
-                if (isCtrlC)
+                                // Prevent CTRL-C from terminating
+                                if (isCtrlC)
                                 {
                                     e.Cancel = true;
                                     System.Console.WriteLine("Program stopped!");
@@ -37,18 +39,43 @@ namespace Lib
 
         }
 
-        public static string AppInfo()
+        public static string AppName()
         {
             Assembly assembly = Assembly.GetEntryAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
-            var productName = fvi.ProductName;
-            var productVersion = fvi.ProductVersion;
-            return(productName + $" (v{productVersion})");
+            return fvi.ProductName;
+        }
+
+        public static string AppVersion()
+        {
+            Assembly assembly = Assembly.GetEntryAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            return fvi.ProductVersion;
+        }
+
+        public static string AppGUID()
+        {
+            Assembly assembly = Assembly.GetEntryAssembly();
+            GuidAttribute guidAttr = (GuidAttribute)assembly.GetCustomAttributes(typeof(GuidAttribute), true).FirstOrDefault();
+            return guidAttr.Value;
+        }
+
+        public static string AppInfo()
+        {
+            return $"{AppName()} (v{AppVersion()}) GUID [{AppGUID()}]";
         }
 
         public static void PrintAppInfo()
         {
             System.Console.WriteLine(AppInfo());
+        }
+
+        public static void InfinityWaiting()
+        {
+            while (true)
+            {
+                Thread.Sleep(1000);
+            }
         }
 
         #endregion
