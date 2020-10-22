@@ -47,6 +47,19 @@
         "runtime": {
           "bin/placeholder/Lib.dll": {}
         }
+      },
+      "LibMESone/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Lib": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/LibMESone.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/LibMESone.dll": {}
+        }
       }
     }
   },
@@ -233,11 +246,17 @@
       "type": "project",
       "path": "../Lib/Lib.csproj",
       "msbuildProject": "../Lib/Lib.csproj"
+    },
+    "LibMESone/1.0.0": {
+      "type": "project",
+      "path": "../LibMESone/LibMESone.csproj",
+      "msbuildProject": "../LibMESone/LibMESone.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
       "Lib >= 1.0.0",
+      "LibMESone >= 1.0.0",
       "NETStandard.Library >= 2.0.3"
     ]
   },
@@ -271,6 +290,9 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
+            "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibMESone\\LibMESone.csproj": {
+              "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibMESone\\LibMESone.csproj"
+            },
             "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\Lib.csproj": {
               "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\Lib.csproj"
             }

@@ -10,17 +10,17 @@ namespace LibMESone
 
         #region PROPERTIES
 
-        private Thosts hosts = new Thosts();
-        public Thosts Hosts { get { return hosts; } }
+        private Tables.Thosts hosts = new Tables.Thosts();
+        public Tables.Thosts Hosts { get { return hosts; } }
 
-        private Tdatabases databases = new Tdatabases();
-        public Tdatabases Databases { get { return databases; } }
+        private Tables.Tdatabases databases = new Tables.Tdatabases();
+        public Tables.Tdatabases Databases { get { return databases; } }
 
-        private Tservice_types service_types = new Tservice_types();
-        public Tservice_types ServiceTypes { get { return service_types; } }
+        private Tables.Tservice_types service_types = new Tables.Tservice_types();
+        public Tables.Tservice_types ServiceTypes { get { return service_types; } }
 
-        private Tservices services = new Tservices();
-        public Tservices Services { get { return services; } }
+        private Tables.Tservices services = new Tables.Tservices();
+        public Tables.Tservices Services { get { return services; } }
 
         #endregion
 

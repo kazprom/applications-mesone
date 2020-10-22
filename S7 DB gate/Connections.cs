@@ -7,14 +7,14 @@ namespace S7_DB_gate
 {
     public class Connections
     {
-        private Clients clients;
-        private Tags tags;
+        private Tables.Tclients clients;
+        private Tables.Ttags tags;
         private Lib.Buffer<LibDBgate.TagData> buffer;
-        private Diagnostics diagnostics;
+        private Tables.Tdiagnostics diagnostics;
 
         private Dictionary<int, S7connection> connections = new Dictionary<int, S7connection>();
 
-        public Connections(Clients clients, Tags tags, Lib.Buffer<LibDBgate.TagData> buffer, Diagnostics diagnostics)
+        public Connections(Tables.Tclients clients, Tables.Ttags tags, Lib.Buffer<LibDBgate.TagData> buffer, Tables.Tdiagnostics diagnostics)
         {
             try
             {

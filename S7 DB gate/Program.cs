@@ -19,7 +19,7 @@ namespace S7_DB_gate
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             try
             {
@@ -28,43 +28,34 @@ namespace S7_DB_gate
                 Lib.Global.Subscribe_Ctrl_C();
 
                 Lib.Console console = new Lib.Console();
-                Lib.TextLogger text_logger = new Lib.TextLogger($@"{Lib.Global.PathExeFolder}LOG");
-
-                HandlerConfigFile config_file;
-
-                if (args.Length == 1)
-                {
-                    config_file = new HandlerConfigFile(args[0]);
-                }
-                else
-                {
-                    config_file = new HandlerConfigFile(Lib.Global.NameExeFile.Split('.')[0] + ".xml");
-                }
+                LibMESone.Loggers.TextLogger text_logger = new LibMESone.Loggers.TextLogger();
+                LibMESone.ConfigFile config_file = new LibMESone.ConfigFile();
 
                 Lib.Buffer<LibDBgate.TagData> buffer = new Lib.Buffer<LibDBgate.TagData>(10000);
 
-                Settings settings = new Settings();
-                Clients clients = new Clients();
-                Tags tags = new Tags();
-                LibDBgate.RT_values rt_values = new LibDBgate.RT_values();
-                LibDBgate.History history = new LibDBgate.History();
-                Lib.Application application = new Lib.Application(); application.Put(Lib.Application.EKeys.APPINFO, Lib.Global.AppInfo());
-                Diagnostics diagnostics = new Diagnostics();
+                Tables.Tsettings settings = new Tables.Tsettings();
+                Tables.Tclients clients = new Tables.Tclients();
+                Tables.Ttags tags = new Tables.Ttags();
+                Tables.Tdiagnostics diagnostics = new Tables.Tdiagnostics();
 
-                HandlerDatabase database = new HandlerDatabase(config_file.DB_TYPE,
+                LibDBgate.Trt_values rt_values = new LibDBgate.Trt_values();
+                LibDBgate.HistoryFiller history = new LibDBgate.HistoryFiller();
+                LibMESone.Tables.Tapplication application = new LibMESone.Tables.Tapplication(); application.Put(LibMESone.Tables.Tapplication.EKeys.APPINFO, Lib.Global.AppInfo());
+
+                Handlers.HandlerDatabase database = new Handlers.HandlerDatabase(config_file.DB_TYPE,
                                                                config_file.CONNECTION_STRING,
                                                                settings, clients, tags,
                                                                rt_values, history, application, diagnostics);
 
-                Lib.DBLogger db_logger = new Lib.DBLogger(database.Database);
+                LibMESone.Loggers.DBLogger db_logger = new LibMESone.Loggers.DBLogger(database.Database);
 
-                HandlerData data = new HandlerData(buffer, rt_values, history, application);
+                Handlers.HandlerData data = new Handlers.HandlerData(buffer, rt_values, history, application);
 
                 Connections connections = new Connections(clients, tags, buffer, diagnostics);
 
                 LibDBgate.HistoryCleaner history_cleaner = new LibDBgate.HistoryCleaner(database.Database, settings.DEPTH_HISTORY_HOUR);
-                Lib.TextLogCleaner text_log_cleaner = new Lib.TextLogCleaner(text_logger, config_file.DEPTH_LOG_DAY);
-                Lib.DBLogCleaner db_log_cleaner = new Lib.DBLogCleaner(db_logger, settings.DEPTH_LOG_DAY);
+                LibMESone.Loggers.TextLogCleaner text_log_cleaner = new LibMESone.Loggers.TextLogCleaner(text_logger, config_file.DEPTH_LOG_DAY);
+                LibMESone.Loggers.DBLogCleaner db_log_cleaner = new LibMESone.Loggers.DBLogCleaner(db_logger, settings.DEPTH_LOG_DAY);
 
                 Lib.Global.InfinityWaiting();
 

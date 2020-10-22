@@ -18,15 +18,15 @@ namespace CSV_DB_gate
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Lib.Global.PrintAppInfo();
             Lib.Global.Subscribe_Ctrl_C();
 
             Lib.Console console = new Lib.Console();
-            Lib.TextLogger text_logger = new Lib.TextLogger($@"{Lib.Global.PathExeFolder}LOG");
+            Lib.TextLogger text_logger = new Lib.TextLogger();
 
-            HandlerConfigFile config_file = new HandlerConfigFile(Lib.Global.NameExeFile.Split('.')[0] + ".xml");
+            LibMESone.ConfigFile config_file = new LibMESone.ConfigFile();
 
 
 

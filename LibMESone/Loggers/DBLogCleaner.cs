@@ -3,34 +3,33 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
-namespace LibDBgate
+namespace LibMESone.Loggers
 {
-    public class HistoryCleaner
+    public class DBLogCleaner
     {
+        public const int default_depth_day = 2;
 
-        #region VARIABLE
 
+        #region VARIABLES
 
-        private Lib.Database database;
-        private Lib.Parameter<int> depth_hour;
+        private DBLogger logger;
+        private Lib.Parameter<int> depth_day;
 
         private Thread thread;
         private bool execution = true;
 
-
         #endregion
 
-
-        public HistoryCleaner(Lib.Database database, Lib.Parameter<int> depth_hour)
+        public DBLogCleaner(DBLogger logger, Lib.Parameter<int> depth_day)
         {
-            this.database = database;
-            this.depth_hour = depth_hour;
 
-            thread = new Thread(new ThreadStart(Handler)) { IsBackground = true, Name = "History cleaner" };
+            this.logger = logger;
+            this.depth_day = depth_day;
+
+            thread = new Thread(new ThreadStart(Handler)) { IsBackground = true, Name = "DB log cleaner" };
             thread.Start();
 
         }
-
 
 
         private void Handler()
@@ -45,7 +44,7 @@ namespace LibDBgate
 
                         foreach (DateTime timestamp in GetTimestamps())
                         {
-                            if (DateTime.Now.Subtract(timestamp).TotalHours >= depth_hour.Value)
+                            if (DateTime.Now.Subtract(timestamp).TotalDays >= depth_day.Value)
                                 DeleteTable(timestamp);
                         }
 
@@ -60,7 +59,6 @@ namespace LibDBgate
 
                 Thread.Sleep(30000);
             }
-
         }
 
 
@@ -70,18 +68,17 @@ namespace LibDBgate
             {
                 List<DateTime> result = new List<DateTime>();
 
-                foreach (string table in database.GetListTables($"TABLE_NAME Like '{HistoryFiller.table_prefix}{HistoryFiller.separator} %' "))
+                foreach (string table in logger.Database.GetListTables($"TABLE_NAME Like '{DBLogger.table_prefix}{DBLogger.separator} %' "))
                 {
-                    string[] part_timestamp = table.Split(HistoryFiller.separator);
-                    if (part_timestamp.Length == 5)
+                    string[] part_timestamp = table.Split(DBLogger.separator);
+                    if (part_timestamp.Length == 4)
                     {
-                        int year, month, day, hour;
+                        int year, month, day;
 
                         if (int.TryParse(part_timestamp[1], out year) &&
                             int.TryParse(part_timestamp[2], out month) &&
-                            int.TryParse(part_timestamp[3], out day) &&
-                            int.TryParse(part_timestamp[4], out hour))
-                            result.Add(new DateTime(year, month, day, hour, 0, 0));
+                            int.TryParse(part_timestamp[3], out day))
+                            result.Add(new DateTime(year, month, day));
 
                     }
                 }
@@ -98,8 +95,8 @@ namespace LibDBgate
         {
             try
             {
-                string table = Tables.Tt_.GetTableName(timestamp);
-                database.DeleteTable(table);
+                string table = DBLogger.GetTableName(timestamp);
+                logger.Database.DeleteTable(table);
                 Lib.Message.Make($"Deleted table {table}");
             }
             catch (Exception ex)
@@ -107,6 +104,7 @@ namespace LibDBgate
                 throw new Exception("Error delete table", ex);
             }
         }
+
 
     }
 }

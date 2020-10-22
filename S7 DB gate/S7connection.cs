@@ -18,7 +18,7 @@ namespace S7_DB_gate
         private Dictionary<int, Dictionary<int, TagSettings>> tag_groups = new Dictionary<int, Dictionary<int, TagSettings>>();
         private Dictionary<int, Timer> timers = new Dictionary<int, Timer>();
         private Lib.Buffer<LibDBgate.TagData> buffer;
-        private Diagnostics diagnostics;
+        private Tables.Tdiagnostics diagnostics;
 
         private S7.Net.Plc plc;
         private Timer connection_handler;
@@ -76,7 +76,7 @@ namespace S7_DB_gate
 
         #region CONSTRUCTOR
 
-        public S7connection(ClientSettings settings, Lib.Buffer<LibDBgate.TagData> buffer, Diagnostics diagnostics)
+        public S7connection(ClientSettings settings, Lib.Buffer<LibDBgate.TagData> buffer, Tables.Tdiagnostics diagnostics)
         {
             try
             {

@@ -52,13 +52,27 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "Lib": "1.0.0"
+          "Lib": "1.0.0",
+          "LibMESone": "1.0.0"
         },
         "compile": {
           "bin/placeholder/LibDBgate.dll": {}
         },
         "runtime": {
           "bin/placeholder/LibDBgate.dll": {}
+        }
+      },
+      "LibMESone/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Lib": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/LibMESone.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/LibMESone.dll": {}
         }
       }
     }
@@ -251,6 +265,11 @@
       "type": "project",
       "path": "../DB gate Lib/LibDBgate.csproj",
       "msbuildProject": "../DB gate Lib/LibDBgate.csproj"
+    },
+    "LibMESone/1.0.0": {
+      "type": "project",
+      "path": "../LibMESone/LibMESone.csproj",
+      "msbuildProject": "../LibMESone/LibMESone.csproj"
     }
   },
   "projectFileDependencyGroups": {
