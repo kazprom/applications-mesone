@@ -88,6 +88,9 @@ namespace Lib
                 if (!TestConnection())
                     return false;
 
+                if (!TableExists(dt))
+                    return false;
+
                 if (!TableCheckScheme(dt))
                     return false;
 
@@ -440,6 +443,9 @@ namespace Lib
             {
                 throw new Exception("Error to check table exists", ex);
             }
+
+            if (!result)
+                Message.Make($"Error in database. Database doesn't have table [{dt.TableName}].");
 
             return result;
         }

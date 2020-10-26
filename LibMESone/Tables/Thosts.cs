@@ -10,8 +10,19 @@ namespace LibMESone.Tables
 
         #region CONSTANTS
 
-        public const string col_name_IPaddress = "database";
-        public readonly static Type data_type_IPaddress = typeof(string);
+        public const string col_name_IPaddress = "IPaddress";
+        public Lib.Database.SExtProp prop_IPaddress = new Lib.Database.SExtProp()
+        {
+            data_type = OdbcType.VarChar,
+            size = 15
+        };
+
+        public const string col_name_DNSname = "DNSname";
+        public Lib.Database.SExtProp prop_DNSname = new Lib.Database.SExtProp()
+        {
+            data_type = OdbcType.VarChar,
+            size = 255
+        };
 
         #endregion
 
@@ -22,11 +33,9 @@ namespace LibMESone.Tables
 
             source.TableName = "hosts";
 
-            source.Columns.Add(col_name_IPaddress, data_type_IPaddress).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp()
-            {
-                data_type = OdbcType.VarChar,
-                size = 15
-            });
+            source.Columns.Add(col_name_IPaddress, typeof(string)).ExtendedProperties.Add(prop_IPaddress.GetType(), prop_IPaddress);
+            source.Columns.Add(col_name_DNSname, typeof(string)).ExtendedProperties.Add(prop_DNSname.GetType(), prop_DNSname);
+
         }
 
     }

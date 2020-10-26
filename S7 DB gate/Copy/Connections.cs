@@ -7,6 +7,8 @@ namespace S7_DB_gate
 {
     public class Connections
     {
+        /*
+
         private Tables.Tclients clients;
         private Tables.Ttags tags;
         private Lib.Buffer<LibDBgate.TagData> buffer;
@@ -109,5 +111,8 @@ namespace S7_DB_gate
             }
 
         }
+
+        */
+
     }
 }

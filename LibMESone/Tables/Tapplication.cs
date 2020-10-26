@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Data.Odbc;
 using System.Linq;
 
 namespace LibMESone.Tables
@@ -10,7 +11,21 @@ namespace LibMESone.Tables
         #region CONSTANTS
 
         public const string col_name_key = "key";
+        public Lib.Database.SExtProp prop_key = new Lib.Database.SExtProp()
+        {
+            data_type = System.Data.Odbc.OdbcType.VarChar,
+            size = 50,
+            primary_key = true
+        };
+
         public const string col_name_value = "value";
+        public Lib.Database.SExtProp prop_value = new Lib.Database.SExtProp()
+        {
+            data_type = System.Data.Odbc.OdbcType.VarChar,
+            size = 255
+        };
+
+        
 
         #endregion
 
@@ -37,8 +52,8 @@ namespace LibMESone.Tables
                 prop.primary_key = false;
                 prop.ignore = true;
                 source.Columns[Tbase.col_name_id].ExtendedProperties[typeof(Lib.Database.SExtProp)] = prop;
-                source.Columns.Add(col_name_key, typeof(string)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp() {  data_type = System.Data.Odbc.OdbcType.VarChar,  primary_key = true });
-                source.Columns.Add(col_name_value, typeof(string)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp() { data_type = System.Data.Odbc.OdbcType.VarChar});
+                source.Columns.Add(col_name_key, typeof(string)).ExtendedProperties.Add(prop_key.GetType(), prop_key);
+                source.Columns.Add(col_name_value, typeof(string)).ExtendedProperties.Add(prop_value.GetType(), prop_value);
 
             }
             catch (Exception ex)

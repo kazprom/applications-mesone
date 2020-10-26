@@ -9,9 +9,9 @@ using System.Threading;
 
 namespace S7_DB_gate
 {
-    public class S7connection : IDisposable
+    public class S7connection //: IDisposable
     {
-
+        /*
 
         #region VARIABLES
         private string title = "";
@@ -305,6 +305,6 @@ namespace S7_DB_gate
         }
 
         #endregion
-
+        */
     }
 }

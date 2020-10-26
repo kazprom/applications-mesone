@@ -41,7 +41,7 @@ namespace LibMESone
             try
             {
 
-                Path = Lib.Global.NameExeFile.Split('.')[0] + ".xml";
+                Path = $@"{Lib.Global.PathExeFolder}{Lib.Global.NameExeFile.Split('.')[0]}.xml";
 
                 FileHandler(null);
                 timer = new Timer(FileHandler, null, 0, 60000);

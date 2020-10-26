@@ -104,7 +104,7 @@ namespace S7_DB_gate.Handlers
 
                 int depth_log_day_result;
 
-                if (int.TryParse(file.ReadValue("DEPTH_LOG_DAY", Lib.TextLogCleaner.default_depth_day.ToString()), out depth_log_day_result))
+                if (int.TryParse(file.ReadValue("DEPTH_LOG_DAY", LibMESone.Loggers.TextLogCleaner.default_depth_day.ToString()), out depth_log_day_result))
                 {
                     depth_log_day.Value = depth_log_day_result;
                 }

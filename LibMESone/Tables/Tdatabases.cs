@@ -5,28 +5,50 @@ using System.Text;
 
 namespace LibMESone.Tables
 {
-    class Tdatabases: TbaseNE
+    public class Tdatabases: TbaseNE
     {
 
         #region CONSTANTS
 
         public const string col_name_database = "database";
-        public readonly static Type data_type_database = typeof(string);
+        public Lib.Database.SExtProp prop_database = new Lib.Database.SExtProp()
+        {
+            data_type = OdbcType.VarChar,
+            size = 255
+        };
 
         public const string col_name_driver = "driver";
-        public readonly static Type data_type_driver = typeof(string);
+        public Lib.Database.SExtProp prop_driver = new Lib.Database.SExtProp()
+        {
+            data_type = OdbcType.VarChar,
+            size = 255
+        };
 
         public const string col_name_hosts_id = "hosts_id";
-        public readonly static Type data_type_hosts_id = typeof(long);
+        public Lib.Database.SExtProp prop_hosts_id = new Lib.Database.SExtProp()
+        {
+            data_type = OdbcType.BigInt
+        };
 
         public const string col_name_port = "port";
-        public readonly static Type data_type_port = typeof(int);
+        public Lib.Database.SExtProp prop_port = new Lib.Database.SExtProp()
+        {
+            data_type = OdbcType.Int
+        };
 
         public const string col_name_username = "username";
-        public readonly static Type data_type_username = typeof(string);
+        public Lib.Database.SExtProp prop_username = new Lib.Database.SExtProp()
+        {
+            data_type = OdbcType.VarChar,
+            size = 255
+        };
 
         public const string col_name_password = "password";
-        public readonly static Type data_type_password = typeof(string);
+        public Lib.Database.SExtProp prop_password = new Lib.Database.SExtProp()
+        {
+            data_type = OdbcType.VarChar,
+            size = 255
+        };
 
         #endregion
 
@@ -37,39 +59,12 @@ namespace LibMESone.Tables
 
             source.TableName = "databases";
 
-            source.Columns.Add(col_name_database, data_type_database).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp()
-            {
-                data_type = OdbcType.VarChar,
-                size = 255
-            });
-
-            source.Columns.Add(col_name_driver, data_type_driver).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp()
-            {
-                data_type = OdbcType.VarChar,
-                size = 255
-            });
-
-            source.Columns.Add(col_name_hosts_id, data_type_hosts_id).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp()
-            {
-                data_type = OdbcType.BigInt
-            });
-
-            source.Columns.Add(col_name_port, data_type_port).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp()
-            {
-                data_type = OdbcType.Int
-            });
-
-            source.Columns.Add(col_name_username, data_type_username).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp()
-            {
-                data_type = OdbcType.VarChar,
-                size = 255
-            });
-
-            source.Columns.Add(col_name_password, data_type_password).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp()
-            {
-                data_type = OdbcType.VarChar,
-                size = 255
-            });
+            source.Columns.Add(col_name_database, typeof(string)).ExtendedProperties.Add(prop_database.GetType(), prop_database);
+            source.Columns.Add(col_name_driver, typeof(string)).ExtendedProperties.Add(prop_driver.GetType(), prop_driver);
+            source.Columns.Add(col_name_hosts_id, typeof(long)).ExtendedProperties.Add(col_name_hosts_id.GetType(), col_name_hosts_id);
+            source.Columns.Add(col_name_port, typeof(int)).ExtendedProperties.Add(prop_port.GetType(), prop_port);
+            source.Columns.Add(col_name_username, typeof(string)).ExtendedProperties.Add(prop_username.GetType(), prop_username);
+            source.Columns.Add(col_name_password, typeof(string)).ExtendedProperties.Add(prop_password.GetType(), prop_password);
 
         }
 

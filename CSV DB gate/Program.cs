@@ -24,7 +24,7 @@ namespace CSV_DB_gate
             Lib.Global.Subscribe_Ctrl_C();
 
             Lib.Console console = new Lib.Console();
-            Lib.TextLogger text_logger = new Lib.TextLogger();
+            LibMESone.Loggers.TextLogger text_logger = new LibMESone.Loggers.TextLogger();
 
             LibMESone.ConfigFile config_file = new LibMESone.ConfigFile();
 

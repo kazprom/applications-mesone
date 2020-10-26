@@ -29,8 +29,8 @@ namespace S7_DB_gate.Handlers
 
         #region PROPERTIES
 
-        private Lib.Parameter<Lib.Database.EType> type;
-        public Lib.Parameter<Lib.Database.EType> TYPE { get { return type; } }
+        private Lib.Parameter<Lib.Database.EType> db_type;
+        public Lib.Parameter<Lib.Database.EType> DB_TYPE { get { return db_type; } }
 
         private Lib.Parameter<string> connection_string;
         public Lib.Parameter<string> CONNECTION_STRING { get { return connection_string; } }
@@ -46,7 +46,7 @@ namespace S7_DB_gate.Handlers
 
         #region CONSTRUCTOR
 
-        public HandlerDatabase(Lib.Parameter<Lib.Database.EType> type,
+        public HandlerDatabase(Lib.Parameter<Lib.Database.EType> db_type,
                         Lib.Parameter<string> connection_string,
                         Tables.Tsettings settings,
                         Tables.Tclients clients,
@@ -59,9 +59,9 @@ namespace S7_DB_gate.Handlers
 
             try
             {
-                this.type = type;
-                Type_ValueChanged(this.type.Value);
-                this.type.ValueChanged += Type_ValueChanged;
+                this.db_type = db_type;
+                Type_ValueChanged(this.db_type.Value);
+                this.db_type.ValueChanged += Type_ValueChanged;
 
                 this.connection_string = connection_string;
                 Connection_string_ValueChanged(this.connection_string.Value);

@@ -11,10 +11,19 @@ namespace LibMESone.Tables
         #region CONSTANTS
 
         public const string col_name_name = "name";
-        public readonly static Type data_type_name = typeof(string);
+        public Lib.Database.SExtProp prop_name = new Lib.Database.SExtProp()
+        {
+            data_type = System.Data.Odbc.OdbcType.VarChar,
+            size = 255,
+            primary_key = true
+        };
 
         public const string col_name_guid = "GUID";
-        public readonly static Type data_type_guid = typeof(string);
+        public Lib.Database.SExtProp prop_guid = new Lib.Database.SExtProp()
+        {
+            data_type = System.Data.Odbc.OdbcType.VarChar,
+            size = 40
+        };
 
         #endregion
 
@@ -32,17 +41,8 @@ namespace LibMESone.Tables
 
                 source.TableName = "service_types";
 
-                source.Columns.Add(col_name_name, data_type_name).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp()
-                {
-                    data_type = System.Data.Odbc.OdbcType.VarChar,
-                    size = 255,
-                    primary_key = true
-                });
-                source.Columns.Add(col_name_guid, data_type_guid).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp()
-                {
-                    data_type = System.Data.Odbc.OdbcType.VarChar,
-                    size = 40,
-                });
+                source.Columns.Add(col_name_name, typeof(string)).ExtendedProperties.Add(prop_name.GetType(), prop_name);
+                source.Columns.Add(col_name_guid, typeof(string)).ExtendedProperties.Add(prop_guid.GetType(), prop_guid);
 
             }
             catch (Exception ex)

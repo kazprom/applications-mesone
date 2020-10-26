@@ -5,16 +5,22 @@ using System.Text;
 
 namespace LibMESone.Tables
 {
-    class Tservices:TbaseNE
+    public class Tservices:TbaseNE
     {
 
         #region CONSTANTS
 
         public const string col_name_databases_id = "databases_id";
-        public readonly static Type data_type_databases_id = typeof(long);
+        public Lib.Database.SExtProp prop_databases_id = new Lib.Database.SExtProp()
+        {
+            data_type = OdbcType.BigInt
+        };
 
         public const string col_name_service_types_id = "service_types_id";
-        public readonly static Type data_type_service_types_id = typeof(long);
+        public Lib.Database.SExtProp prop_service_types_id = new Lib.Database.SExtProp()
+        {
+            data_type = OdbcType.BigInt
+        };
 
         #endregion
 
@@ -23,16 +29,8 @@ namespace LibMESone.Tables
         {
             source.TableName = "services";
 
-            source.Columns.Add(col_name_databases_id, data_type_databases_id).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp()
-            {
-                data_type = OdbcType.BigInt
-            });
-
-            source.Columns.Add(col_name_service_types_id, data_type_service_types_id).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp()
-            {
-                data_type = OdbcType.BigInt
-            });
-
+            source.Columns.Add(col_name_databases_id, typeof(long)).ExtendedProperties.Add(prop_databases_id.GetType(), prop_databases_id);
+            source.Columns.Add(col_name_service_types_id, typeof(long)).ExtendedProperties.Add(prop_service_types_id.GetType(), prop_service_types_id);
 
         }
 
