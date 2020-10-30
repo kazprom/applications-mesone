@@ -4,9 +4,9 @@ using System.Text;
 
 namespace LibDBgate.Tables
 {
-    class Tt_ : LibMESone.Tables.Tbase
+    class Tt_ : LibMESone.Tables.BaseID
     {
-
+        /*
 
         #region CONSTANTS
 
@@ -64,6 +64,6 @@ namespace LibDBgate.Tables
             return table_prefix + separator + timestamp.ToString("yyyy" + separator + "MM" + separator + "dd" + separator + "HH");
         }
 
-
+        */
     }
 }

@@ -1,12 +1,28 @@
-﻿using System;
+﻿using Lib;
+using System;
 using System.Data;
 using System.Data.Odbc;
 using System.Linq;
 
 namespace LibMESone.Tables
 {
-    public class Tapplication:Tbase
+    public class Application : BaseID
     {
+
+        [Field(Field.Etype.VarChar, 50, pk: true)]
+        public string Key { get; set; }
+
+        [Field(Field.Etype.VarChar, 255)]
+        public string Value { get; set; }
+
+
+        public Application()
+        {
+            container.TableName = "application";
+        }
+
+
+        /*
 
         #region CONSTANTS
 
@@ -25,7 +41,7 @@ namespace LibMESone.Tables
             size = 255
         };
 
-        
+
 
         #endregion
 
@@ -89,6 +105,6 @@ namespace LibMESone.Tables
                 throw new Exception("Error put", ex);
             }
         }
-
+        */
     }
 }

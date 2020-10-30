@@ -1,13 +1,17 @@
-﻿using System;
-using System.Data;
-using System.Data.Odbc;
+﻿using Lib;
 
 namespace LibMESone.Tables
 {
-    public class Tbase
+    public class BaseID: Table
     {
 
+        [Field(Field.Etype.BigInt, pk: true, ai: true, nn: true)]
+        public long Id { get; set; }
 
+
+
+
+        /*
         public class Row
         {
 
@@ -48,6 +52,6 @@ namespace LibMESone.Tables
             source.Columns.Add(col_name_id, typeof(long)).ExtendedProperties.Add(prop_id.GetType(), prop_id);
         }
         #endregion
-
+        */
     }
 }

@@ -5,6 +5,8 @@ namespace S7_DB_gate.Handlers
 {
     public class HandlerData
     {
+        /*
+
         private Lib.Buffer<LibDBgate.TagData> buffer;
         private LibDBgate.Trt_values rt_values;
         private LibDBgate.HistoryFiller history;
@@ -75,6 +77,6 @@ namespace S7_DB_gate.Handlers
             }
         }
 
-
+        */
     }
 }

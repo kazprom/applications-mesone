@@ -42,7 +42,7 @@ namespace LibMESone.Loggers
         {
             try
             {
-
+                /*
                 if (database != null)
                 {
                     DataTable table = new DataTable(GetTableName(DateTime.Now));
@@ -75,9 +75,9 @@ namespace LibMESone.Loggers
                     row[col_name_message] = str;
                     table.Rows.Add(row);
 
-                    database.Write(table, true, false);
+                    //database.Write(table, true, false);
                 }
-
+                */
             }
             catch (Exception ex)
             {

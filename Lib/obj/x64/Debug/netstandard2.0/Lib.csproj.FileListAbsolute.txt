@@ -3,7 +3,7 @@ C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\bin\x64\Debug\netstandard2.
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\bin\x64\Debug\netstandard2.0\Lib.pdb
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\obj\x64\Debug\netstandard2.0\Lib.AssemblyInfoInputs.cache
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\obj\x64\Debug\netstandard2.0\Lib.AssemblyInfo.cs
-C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\obj\x64\Debug\netstandard2.0\Lib.csproj.CoreCompileInputs.cache
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\obj\x64\Debug\netstandard2.0\Lib.dll
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\obj\x64\Debug\netstandard2.0\Lib.pdb
+C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\obj\x64\Debug\netstandard2.0\Lib.csproj.CoreCompileInputs.cache
 C:\Users\i.korol\Desktop\DEV\applications-mesone\Lib\obj\x64\Debug\netstandard2.0\Lib.csprojAssemblyReference.cache

@@ -22,22 +22,22 @@ namespace S7_DB_gate.Handlers
         private LibDBgate.Trt_values rt_values;
         private LibDBgate.HistoryFiller history;
 
-        private LibMESone.Tables.Tapplication application;
+        private LibMESone.Tables.Application application;
 
 
         #endregion
 
         #region PROPERTIES
 
-        private Lib.Parameter<Lib.Database.EType> db_type;
-        public Lib.Parameter<Lib.Database.EType> DB_TYPE { get { return db_type; } }
+       // private Lib.Parameter<Lib.Database.EType> db_type;
+       // public Lib.Parameter<Lib.Database.EType> DB_TYPE { get { return db_type; } }
 
         private Lib.Parameter<string> connection_string;
         public Lib.Parameter<string> CONNECTION_STRING { get { return connection_string; } }
 
 
-        private Lib.Database database = new Lib.Database();
-        public Lib.Database Database { get { return database; } }
+        //private Lib.Database database = new Lib.Database();
+        //public Lib.Database Database { get { return database; } }
 
 
         #endregion
@@ -46,26 +46,26 @@ namespace S7_DB_gate.Handlers
 
         #region CONSTRUCTOR
 
-        public HandlerDatabase(Lib.Parameter<Lib.Database.EType> db_type,
+        public HandlerDatabase(Lib.Parameter<string> db_type,
                         Lib.Parameter<string> connection_string,
                         Tables.Tsettings settings,
                         Tables.Tclients clients,
                         Tables.Ttags tags,
                         LibDBgate.Trt_values rt_values,
                         LibDBgate.HistoryFiller history,
-                        LibMESone.Tables.Tapplication application,
+                        LibMESone.Tables.Application application,
                         Tables.Tdiagnostics diagnostics)
         {
 
             try
             {
-                this.db_type = db_type;
-                Type_ValueChanged(this.db_type.Value);
-                this.db_type.ValueChanged += Type_ValueChanged;
+                //this.db_type = db_type;
+                ////Type_ValueChanged(this.db_type.Value);
+               // this.db_type.ValueChanged += Type_ValueChanged;
 
-                this.connection_string = connection_string;
-                Connection_string_ValueChanged(this.connection_string.Value);
-                this.connection_string.ValueChanged += Connection_string_ValueChanged;
+                //this.connection_string = connection_string;
+                //Connection_string_ValueChanged(this.connection_string.Value);
+                //this.connection_string.ValueChanged += Connection_string_ValueChanged;
 
                 this.settings = settings;
                 this.clients = clients;
@@ -138,7 +138,7 @@ namespace S7_DB_gate.Handlers
         {
             try
             {
-
+                /*
                 if (database != null)
                 {
                     if (settings != null)
@@ -154,6 +154,7 @@ namespace S7_DB_gate.Handlers
                             Lib.Message.Make("Can't read tags");
 
                 }
+                */
             }
             catch (Exception ex)
             {
@@ -166,14 +167,15 @@ namespace S7_DB_gate.Handlers
         {
             try
             {
+                /*
                 if (database != null)
                 {
                     if (rt_values != null)
                     {
                         lock (database) lock (rt_values)
                             {
-                                if(!database.Write(rt_values.Source, false, true))
-                                    Lib.Message.Make("Can't write rt_values");
+                               // if(!database.Write(rt_values.Source, false, true))
+                                //    Lib.Message.Make("Can't write rt_values");
                             }
                     }
 
@@ -181,8 +183,8 @@ namespace S7_DB_gate.Handlers
                     {
                         lock (database) lock (history)
                             {
-                                if(!database.Write(history.Source))
-                                    Lib.Message.Make("Can't write history");
+                              //  if(!database.Write(history.Source))
+                               //     Lib.Message.Make("Can't write history");
                                 history.Clear();
                             }
                     }
@@ -191,8 +193,8 @@ namespace S7_DB_gate.Handlers
                     {
                         lock (database) lock (application)
                             {
-                                if(!database.Write(application.Source, false, true))
-                                    Lib.Message.Make("Can't write application");
+                               // if(!database.Write(application.Source, false, true))
+                                 //   Lib.Message.Make("Can't write application");
                             }
                     }
 
@@ -200,11 +202,12 @@ namespace S7_DB_gate.Handlers
                     {
                         lock (database) lock (diagnostics)
                             {
-                                if(!database.Write(diagnostics.Source, false, true))
-                                    Lib.Message.Make("Can't write diagnostics");
+                                //if(!database.Write(diagnostics.Source, false, true))
+                                 //   Lib.Message.Make("Can't write diagnostics");
                             }
                     }
                 }
+                    */
             }
             catch (Exception ex)
             {
@@ -213,7 +216,7 @@ namespace S7_DB_gate.Handlers
             }
 
         }
-
+/*
 
         private void Connection_string_ValueChanged(string value)
         {
@@ -225,7 +228,7 @@ namespace S7_DB_gate.Handlers
             database.Type = value;
         }
 
-
+        */
         #endregion
 
 

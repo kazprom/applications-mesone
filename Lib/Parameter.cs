@@ -33,7 +33,7 @@ namespace Lib
 
         #region EVENTS
 
-        public delegate void ValueChangedNotify(T value);  // delegate
+        public delegate void ValueChangedNotify(object value);  // delegate
         public event ValueChangedNotify ValueChanged; // event
 
         #endregion
@@ -43,6 +43,7 @@ namespace Lib
         {
             this.name = name;
         }
+
 
     }
 }

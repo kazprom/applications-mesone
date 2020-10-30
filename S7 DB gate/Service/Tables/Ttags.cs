@@ -10,7 +10,7 @@ namespace S7_DB_gate.Tables
 
     public class Ttags : LibDBgate.Tables.Ttags
     {
-
+        /*
         public new class Row : LibDBgate.Tables.Ttags.Row
         {
 
@@ -80,5 +80,6 @@ namespace S7_DB_gate.Tables
                 throw new Exception("Error constructor", ex);
             }
         }
+        */
     }
 }

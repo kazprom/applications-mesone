@@ -69,7 +69,7 @@ namespace LibDBgate
             try
             {
                 List<DateTime> result = new List<DateTime>();
-
+                /*
                 foreach (string table in database.GetListTables($"TABLE_NAME Like '{HistoryFiller.table_prefix}{HistoryFiller.separator} %' "))
                 {
                     string[] part_timestamp = table.Split(HistoryFiller.separator);
@@ -85,6 +85,7 @@ namespace LibDBgate
 
                     }
                 }
+                */
                 return result.ToArray();
             }
             catch (Exception ex)
@@ -96,16 +97,19 @@ namespace LibDBgate
 
         private void DeleteTable(DateTime timestamp)
         {
+            /*
             try
             {
                 string table = Tables.Tt_.GetTableName(timestamp);
-                database.DeleteTable(table);
+                //database.DeleteTable(table);
                 Lib.Message.Make($"Deleted table {table}");
             }
             catch (Exception ex)
             {
                 throw new Exception("Error delete table", ex);
             }
+
+            */
         }
 
     }

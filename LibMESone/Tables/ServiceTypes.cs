@@ -1,12 +1,25 @@
-﻿using System;
+﻿using Lib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace LibMESone.Tables
 {
-    public class Tservice_types : Tbase
+    public class ServiceTypes : BaseID
     {
+        [Field(Field.Etype.VarChar, 255, un: true)]
+        public string Name { get; set; }
+
+        [Field(Field.Etype.VarChar, 255)]
+        public string Guid { get; set; }
+
+        public ServiceTypes()
+        {
+            container.TableName = "service_types";
+        }
+
+        /*
 
         #region CONSTANTS
 
@@ -69,6 +82,6 @@ namespace LibMESone.Tables
                 throw new Exception("Error get id by GUID", ex);
             }
         }
-
+        */
     }
 }

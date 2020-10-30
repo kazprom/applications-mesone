@@ -51,9 +51,9 @@ namespace Lib
                 FullMsgMaked?.Invoke($"{message}" + (ex != null ? $"\n{msg_ex}\n{msg_stack_trace}" : ""));
 
             }
-            catch (Exception e)
+            catch (Exception eх)
             {
-                System.Console.WriteLine($"Error make message [{e.Message}]");
+                System.Console.WriteLine($"Error make message [{eх.Message}]");
             }
         }
     }

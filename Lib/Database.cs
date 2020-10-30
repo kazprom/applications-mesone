@@ -1,8 +1,13 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using Npgsql;
+using SqlKata.Execution;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Odbc;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices.ComTypes;
 
 namespace Lib
@@ -26,40 +31,101 @@ namespace Lib
 
         #region ENUMS
 
-        public enum EType
+        private enum EDriver
         {
-            Unknown = 0,
-            MSSQLServer = 1,
-            MySQL = 2,
-            PostgreSQL = 3
+            mysql = 0,
+            sqlsrv = 1,
+            pgsql = 2,
+            unknown = 3
         }
 
         #endregion
 
-        #region PROPERTIES
+        #region CONSTANTS
 
+        public const string default_driver = "mysql";
+        public const string default_host = "127.0.0.1";
+        public const int default_port = 3306;
+        public const string default_charset = "utf8mb4";
+        public const string default_base_name = "CORE";
+        public const string default_user = "mesone";
+        public const string default_password = "Mesone1_p@$$word";
+
+
+
+        #endregion
+
+        #region VARIABLE
+
+        private Parameter<string> driver;
+        private Parameter<string> host;
+        private Parameter<int> port;
+        private Parameter<string> charset;
+        private Parameter<string> base_name;
+        private Parameter<string> user;
+        private Parameter<string> password;
+
+        private IDbConnection connection;
+        private SqlKata.Compilers.Compiler compiler;
+        private QueryFactory db;
+
+        private OdbcCommand command = new OdbcCommand();
+
+        #endregion
+
+
+        #region PROPERTIES
+        /*
         public const EType default_type = EType.MySQL;
         private EType type = default_type;
         public EType Type { get { return type; } set { type = value; } }
 
         public const string default_connection_string = "Driver={mySQL ODBC 8.0 ANSI Driver}; Server=myServerAddress;Option=131072;Stmt=;Database=myDataBase;User=myUsername;Password=myPassword;";
         private string connection_string = default_connection_string;
-        public string ConnectionString { get { return connection_string; } set { connection_string = value; } }
+        public string ConnectionString { get { return connection_string; } }
+        */
+        #endregion
+
+
+        #region CONSTRUCTOR
+
+
+        public Database(Parameter<string> driver,
+                        Parameter<string> host,
+                        Parameter<int> port,
+                        Parameter<string> charset,
+                        Parameter<string> base_name,
+                        Parameter<string> user,
+                        Parameter<string> password)
+        {
+            this.driver = driver;
+            this.host = host;
+            this.port = port;
+            this.charset = charset;
+            this.base_name = base_name;
+            this.user = user;
+            this.password = password;
+
+            this.driver.ValueChanged += UpdateSettings;
+            this.host.ValueChanged += UpdateSettings;
+            this.port.ValueChanged += UpdateSettings;
+            this.charset.ValueChanged += UpdateSettings;
+            this.base_name.ValueChanged += UpdateSettings;
+            this.user.ValueChanged += UpdateSettings;
+            this.password.ValueChanged += UpdateSettings;
+
+            UpdateSettings(null);
+
+        }
 
         #endregion
 
-        #region VARIABLE
-
-        private OdbcConnection connection = new OdbcConnection();
-        private OdbcCommand command = new OdbcCommand();
-
-        #endregion
 
         #region PUBLICS
 
 
 
-
+        /*
         public bool Read(DataSet ds)
         {
             try
@@ -80,8 +146,90 @@ namespace Lib
 
             return true;
         }
-        public bool Read(DataTable dt)
+
+        */
+
+        public T[] Read<T>(Table table)
         {
+
+            try
+            {
+                if (db != null && table != null && table.Container != null && table.Container.TableName != null)
+                {
+                    lock (db)
+                    {
+
+                        IEnumerable<T> rows = db.Query(table.Container.TableName).Get<T>();
+
+                        IEnumerable<PropertyInfo> fields = table.GetType().GetProperties().Where(x => x.GetCustomAttribute<Field>() != null);
+                        foreach (PropertyInfo field in fields)
+                        {
+                            if (table.Container.Columns[field.Name] == null)
+                            {
+                                table.Container.Columns.Add(field.Name, field.PropertyType);
+                            }
+                        }
+
+                        IEnumerable<PropertyInfo> fields_pk = fields.Where(x => x.GetCustomAttribute<Field>().PK == true);
+
+                        DataTable unnecessary = table.Container.Copy();
+                        foreach (T row in rows)
+                        {
+                            List<string> conditions = new List<string>();
+
+                            foreach (PropertyInfo pi in fields_pk)
+                            {
+                                conditions.Add($"{pi.Name} = '{pi.GetValue(row)}'");
+                            }
+
+                            string condition = string.Join(" AND ", conditions);
+
+                            DataRow fr = table.Container.Select(condition).FirstOrDefault();
+                            if (fr == null)
+                            {
+                                DataRow ar = table.Container.NewRow();
+                                foreach (PropertyInfo pi in fields)
+                                {
+                                    ar[pi.Name] = pi.GetValue(row);
+                                }
+                                table.Container.Rows.Add(ar);
+                            }
+                            else
+                            {
+                                foreach (PropertyInfo pi in fields)
+                                {
+                                    fr[pi.Name] = pi.GetValue(row);
+                                }
+                                unnecessary.Rows.Remove(unnecessary.Select(condition).FirstOrDefault());
+                            }
+                        }
+                        foreach (DataRow row in unnecessary.Rows)
+                        {
+                            List<string> conditions = new List<string>();
+
+                            foreach (PropertyInfo pi in fields_pk)
+                            {
+                                conditions.Add($"{pi.Name} = {pi.GetValue(row)}");
+                            }
+
+                            string condition = string.Join(" AND ", conditions);
+
+                            DataRow dr = table.Container.Select(condition).FirstOrDefault();
+                            dr.Delete();
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+            return null;
+
+            /*
+
+
             try
             {
 
@@ -99,6 +247,9 @@ namespace Lib
                 lock (dt)
                 {
                     string[] columns_names = dt.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToArray();
+
+
+
 
                     switch (type)
                     {
@@ -194,11 +345,10 @@ namespace Lib
                 Lib.Message.Make($"Error read data table [{table_name}]", ex);
                 return false;
             }
-
-            return true;
+            */
         }
 
-
+        /*
         public bool Write(DataSet ds)
         {
             try
@@ -366,11 +516,48 @@ namespace Lib
             return true;
 
         }
-
+        */
         #endregion
 
         #region PRIVATES
 
+        private void UpdateSettings(object value)
+        {
+            try
+            {
+                switch (driver.Value)
+                {
+                    case "sqlsrv":
+                        connection = new SqlConnection();
+                        compiler = new SqlKata.Compilers.SqlServerCompiler();
+                        break;
+                    case "mysql":
+                        connection = new MySqlConnection($"Server={host.Value};Port={port.Value};CharSet={charset.Value};Database={base_name.Value};Uid={user.Value};Pwd={password.Value};");
+                        compiler = new SqlKata.Compilers.MySqlCompiler();
+                        break;
+                    case "pgsql":
+                        connection = new NpgsqlConnection();
+                        compiler = new SqlKata.Compilers.PostgresCompiler();
+                        break;
+                    default:
+                        connection = null;
+                        compiler = null;
+                        break;
+                }
+
+                if (connection != null && compiler != null)
+                    db = new QueryFactory(connection, compiler);
+                else
+                    db = null;
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        /*
         private bool TestConnection()
         {
             try
@@ -586,15 +773,15 @@ namespace Lib
                         }
                         else
                         {
-                            if(!row[col_name_data_type].ToString().Equals(prop.data_type.ToString(), StringComparison.OrdinalIgnoreCase))
+                            if (!row[col_name_data_type].ToString().Equals(prop.data_type.ToString(), StringComparison.OrdinalIgnoreCase))
                             {
                                 Lib.Message.Make($"Error in database. Table [{dt.TableName}] column [{col.ColumnName}] has different type is [{row[col_name_data_type]}]. Right data type is [{prop.data_type}]");
                                 error = true;
                             }
 
-                            if(prop.size > 0)
+                            if (prop.size > 0)
                             {
-                                if(row[col_name_character_maximum_length] == System.DBNull.Value || (Int64)row[col_name_character_maximum_length] != prop.size)
+                                if (row[col_name_character_maximum_length] == System.DBNull.Value || (Int64)row[col_name_character_maximum_length] != prop.size)
                                 {
                                     Lib.Message.Make($"Error in database. Table [{dt.TableName}] column [{col.ColumnName}] has different size. Right size is [{prop.size}]");
                                     error = true;
@@ -852,7 +1039,7 @@ namespace Lib
             return true;
 
         }
-
+        */
         #endregion
 
     }

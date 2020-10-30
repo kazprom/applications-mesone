@@ -4,9 +4,9 @@ using System.Data;
 
 namespace S7_DB_gate.Tables
 {
-    public class Tsettings : LibMESone.Tables.Tbase
+    public class Tsettings : LibMESone.Tables.BaseID
     {
-
+        /*
         #region CONSTANTS
 
         public const string col_name_key = "key";
@@ -98,6 +98,6 @@ namespace S7_DB_gate.Tables
         }
 
         #endregion
-
+        */
     }
 }

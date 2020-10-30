@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lib;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Odbc;
@@ -7,8 +8,15 @@ using System.Xml;
 
 namespace LibMESone.Tables
 {
-    public class TbaseNE : Tbase
+    public class BaseNE : BaseID
     {
+        [Field(Field.Etype.VarChar, 255)]
+        public string Name { get; set; }
+
+        [Field(Field.Etype.TinyInt, 1)]
+        public bool Enabled { get; set; }
+
+        /*
 
         public new class Row : Tbase.Row
         {
@@ -47,5 +55,8 @@ namespace LibMESone.Tables
             source.Columns.Add(col_name_name, typeof(string)).ExtendedProperties.Add(prop_name.GetType(), prop_name);
             source.Columns.Add(col_name_enabled, typeof(bool)).ExtendedProperties.Add(prop_enabled.GetType(), prop_enabled);
         }
+
+
+        */
     }
 }

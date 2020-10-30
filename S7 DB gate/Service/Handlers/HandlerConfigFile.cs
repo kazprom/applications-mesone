@@ -20,8 +20,8 @@ namespace S7_DB_gate.Handlers
         private string path;
         public string PATH { get { return path; } }
 
-        private Lib.Parameter<Lib.Database.EType> db_type = new Lib.Parameter<Lib.Database.EType>("XML DB_TYPE");
-        public Lib.Parameter<Lib.Database.EType> DB_TYPE { get { return db_type; } }
+       // private Lib.Parameter<Lib.Database.EType> db_type = new Lib.Parameter<Lib.Database.EType>("XML DB_TYPE");
+        //public Lib.Parameter<Lib.Database.EType> DB_TYPE { get { return db_type; } }
 
         private Lib.Parameter<string> connection_string = new Lib.Parameter<string>("XML CONNECTION_STRING");
         public Lib.Parameter<string> CONNECTION_STRING { get { return connection_string; } }
@@ -95,12 +95,12 @@ namespace S7_DB_gate.Handlers
 
                 object db_type_result;
 
-                if (Enum.TryParse(typeof(Lib.Database.EType), file.ReadValue("DB_TYPE", Lib.Database.default_type.ToString()), out db_type_result))
-                {
-                    db_type.Value = (Lib.Database.EType)db_type_result;
-                }
+                //if (Enum.TryParse(typeof(Lib.Database.EType), file.ReadValue("DB_TYPE", Lib.Database.default_type.ToString()), out db_type_result))
+                //{
+                //    db_type.Value = (Lib.Database.EType)db_type_result;
+                //}
 
-                connection_string.Value = file.ReadValue("CONNECTION_STRING", Lib.Database.default_connection_string);
+                //connection_string.Value = file.ReadValue("CONNECTION_STRING", Lib.Database.default_connection_string);
 
                 int depth_log_day_result;
 

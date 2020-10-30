@@ -3,9 +3,9 @@ using System.Data.Odbc;
 
 namespace LibDBgate.Tables
 {
-    public class Ttags : LibMESone.Tables.TbaseNE
+    public class Ttags : LibMESone.Tables.BaseNE
     {
-
+        /*
         public new class Row : LibMESone.Tables.TbaseNE.Row
         {
             public long clients_id;
@@ -68,5 +68,7 @@ namespace LibDBgate.Tables
             source.Columns.Add(col_name_rt_values_enabled, typeof(bool)).ExtendedProperties.Add(prop_rt_values_enabled.GetType(), prop_rt_values_enabled);
             source.Columns.Add(col_name_history_enabled, typeof(bool)).ExtendedProperties.Add(prop_history_enabled.GetType(), prop_history_enabled);
         }
+
+        */
     }
 }

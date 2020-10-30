@@ -9,9 +9,9 @@ using System.Threading;
 
 namespace S7_DB_gate.Tables
 {
-    public class Tclients:LibMESone.Tables.TbaseNE
+    public class Tclients:LibMESone.Tables.BaseNE
     {
-
+        /*
         public new class Row : LibMESone.Tables.TbaseNE.Row
         {
 
@@ -95,5 +95,8 @@ namespace S7_DB_gate.Tables
                 throw new Exception("Error constructor", ex);
             }
         }
+
+
+        */
     }
 }

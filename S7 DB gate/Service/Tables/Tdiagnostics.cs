@@ -4,8 +4,10 @@ using System.Linq;
 
 namespace S7_DB_gate.Tables
 {
-    public class Tdiagnostics: LibMESone.Tables.Tbase
+    public class Tdiagnostics: LibMESone.Tables.BaseID
     {
+        /*
+        igtb yi
         #region CONSTANTS
 
         public const string col_name_clients_id = "clients_id";
@@ -106,6 +108,6 @@ namespace S7_DB_gate.Tables
 
         #endregion
 
-
+        */
     }
 }

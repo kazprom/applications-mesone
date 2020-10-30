@@ -7,9 +7,9 @@ using System.Text;
 
 namespace LibDBgate
 {
-    public class Trt_values:LibMESone.Tables.Tbase
+    public class Trt_values:LibMESone.Tables.BaseID
     {
-
+        /*
         #region CONSTANTS
 
         public const string col_name_tags_id = "tags_id";
@@ -95,6 +95,6 @@ namespace LibDBgate
                 throw new Exception("Error put", ex);
             }
         }
-
+        */
     }
 }

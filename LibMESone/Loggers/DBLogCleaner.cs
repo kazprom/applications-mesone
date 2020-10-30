@@ -67,7 +67,7 @@ namespace LibMESone.Loggers
             try
             {
                 List<DateTime> result = new List<DateTime>();
-
+                /*
                 foreach (string table in logger.Database.GetListTables($"TABLE_NAME Like '{DBLogger.table_prefix}{DBLogger.separator} %' "))
                 {
                     string[] part_timestamp = table.Split(DBLogger.separator);
@@ -82,6 +82,7 @@ namespace LibMESone.Loggers
 
                     }
                 }
+                */
                 return result.ToArray();
             }
             catch (Exception ex)
@@ -96,7 +97,7 @@ namespace LibMESone.Loggers
             try
             {
                 string table = DBLogger.GetTableName(timestamp);
-                logger.Database.DeleteTable(table);
+                //logger.Database.DeleteTable(table);
                 Lib.Message.Make($"Deleted table {table}");
             }
             catch (Exception ex)

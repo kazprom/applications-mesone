@@ -1,13 +1,41 @@
-﻿using System;
+﻿using Lib;
+using System;
 using System.Collections.Generic;
 using System.Data.Odbc;
 using System.Text;
 
 namespace LibMESone.Tables
 {
-    public class Tdatabases: TbaseNE
+    public class Databases : BaseNE
     {
 
+        [Field(Field.Etype.VarChar, 255)]
+        public string Database { get; set; }
+
+        [Field(Field.Etype.VarChar, 255)]
+        public string Driver { get; set; }
+
+        [Field(Field.Etype.BigInt)]
+        public long Hosts_id { get; set; }
+
+        [Field(Field.Etype.Int)]
+        public int Port { get; set; }
+
+        [Field(Field.Etype.VarChar, 255)]
+        public string Username { get; set; }
+
+        [Field(Field.Etype.VarChar, 255)]
+        public string Password { get; set; }
+
+
+        public Databases()
+        {
+            container.TableName = "databases";
+        }
+
+
+
+        /*
         #region CONSTANTS
 
         public const string col_name_database = "database";
@@ -61,13 +89,13 @@ namespace LibMESone.Tables
 
             source.Columns.Add(col_name_database, typeof(string)).ExtendedProperties.Add(prop_database.GetType(), prop_database);
             source.Columns.Add(col_name_driver, typeof(string)).ExtendedProperties.Add(prop_driver.GetType(), prop_driver);
-            source.Columns.Add(col_name_hosts_id, typeof(long)).ExtendedProperties.Add(col_name_hosts_id.GetType(), col_name_hosts_id);
+            source.Columns.Add(col_name_hosts_id, typeof(long)).ExtendedProperties.Add(prop_hosts_id.GetType(), prop_hosts_id);
             source.Columns.Add(col_name_port, typeof(int)).ExtendedProperties.Add(prop_port.GetType(), prop_port);
             source.Columns.Add(col_name_username, typeof(string)).ExtendedProperties.Add(prop_username.GetType(), prop_username);
             source.Columns.Add(col_name_password, typeof(string)).ExtendedProperties.Add(prop_password.GetType(), prop_password);
 
         }
 
-
+        */
     }
 }

@@ -9,7 +9,7 @@ namespace LibDBgate
 {
     public class HistoryFiller
     {
-
+        /*
         #region CONSTANTS
 
         public const char separator = '_';
@@ -72,6 +72,6 @@ namespace LibDBgate
                 throw new Exception("Error clear", ex);
             }
         }
-
+        */
     }
 }
