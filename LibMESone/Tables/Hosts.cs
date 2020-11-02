@@ -12,9 +12,9 @@ namespace LibMESone.Tables
         [Field(Field.Etype.VarChar, 15)]
         public string Ip { get; set; }
 
-        [Field(Field.Etype.VarChar, 255)]
-        public string Dns_name { get; set; }
+        
 
+        /*
 
         public Hosts()
         {
@@ -22,7 +22,6 @@ namespace LibMESone.Tables
         }
 
 
-        /*
         #region CONSTANTS
 
         public const string col_name_IPaddress = "ip";

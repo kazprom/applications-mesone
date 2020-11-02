@@ -9,8 +9,8 @@ namespace Lib
 {
     public class Table
     {
-        protected DataTable container = new DataTable();
-        public DataTable Container { get { return container; } }
+        //protected DataTable container = new DataTable();
+        //public DataTable Container { get { return container; } }
 
 
     }

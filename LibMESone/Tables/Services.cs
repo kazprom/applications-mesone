@@ -15,6 +15,7 @@ namespace LibMESone.Tables
         [Field(Field.Etype.BigInt)]
         public long Service_types_id { get; set; }
 
+        /*
         public Services()
         {
             container.TableName = "services";

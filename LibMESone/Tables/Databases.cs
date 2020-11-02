@@ -22,12 +22,15 @@ namespace LibMESone.Tables
         public int Port { get; set; }
 
         [Field(Field.Etype.VarChar, 255)]
+        public string Charset { get; set; }
+
+        [Field(Field.Etype.VarChar, 255)]
         public string Username { get; set; }
 
         [Field(Field.Etype.VarChar, 255)]
         public string Password { get; set; }
 
-
+/*
         public Databases()
         {
             container.TableName = "databases";
@@ -35,7 +38,7 @@ namespace LibMESone.Tables
 
 
 
-        /*
+        
         #region CONSTANTS
 
         public const string col_name_database = "database";

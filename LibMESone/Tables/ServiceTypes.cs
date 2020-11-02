@@ -13,13 +13,13 @@ namespace LibMESone.Tables
 
         [Field(Field.Etype.VarChar, 255)]
         public string Guid { get; set; }
+        /*
 
         public ServiceTypes()
         {
             container.TableName = "service_types";
         }
 
-        /*
 
         #region CONSTANTS
 

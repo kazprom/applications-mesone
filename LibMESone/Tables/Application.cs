@@ -9,20 +9,21 @@ namespace LibMESone.Tables
     public class Application : BaseID
     {
 
+
         [Field(Field.Etype.VarChar, 50, pk: true)]
         public string Key { get; set; }
 
         [Field(Field.Etype.VarChar, 255)]
         public string Value { get; set; }
 
-
+/*
         public Application()
         {
             container.TableName = "application";
         }
 
 
-        /*
+        
 
         #region CONSTANTS
 

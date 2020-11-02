@@ -149,19 +149,24 @@ namespace Lib
 
         */
 
-        public T[] Read<T>(Table table)
+        public IEnumerable<T> Read<T>(string table_name)
         {
 
             try
             {
-                if (db != null && table != null && table.Container != null && table.Container.TableName != null)
+                if (db != null)// && table != null && table.Container != null && table.Container.TableName != null)
                 {
                     lock (db)
                     {
 
-                        IEnumerable<T> rows = db.Query(table.Container.TableName).Get<T>();
+                        //IEnumerable<T> rows;
 
+                        return db.Query(table_name).Get<T>();
+
+                        /*
                         IEnumerable<PropertyInfo> fields = table.GetType().GetProperties().Where(x => x.GetCustomAttribute<Field>() != null);
+
+
                         foreach (PropertyInfo field in fields)
                         {
                             if (table.Container.Columns[field.Name] == null)
@@ -217,6 +222,7 @@ namespace Lib
                             DataRow dr = table.Container.Select(condition).FirstOrDefault();
                             dr.Delete();
                         }
+                        */
                     }
                 }
             }

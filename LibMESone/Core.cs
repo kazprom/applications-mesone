@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Linq;
 using LibMESone.Tables;
+using Lib;
+using SqlKata;
 
 namespace LibMESone
 {
@@ -14,19 +16,21 @@ namespace LibMESone
         #region VARIABLES
 
         private ConfigFile config_file;
+        //private Lib.Parameter<string> service_guid;
+
         private Lib.Database database;
 
 
 
         // private Lib.Parameter<Lib.Database.EType> db_type;
-        private Lib.Parameter<string> connection_string;
+        //private Lib.Parameter<string> connection_string;
         private Timer timer;
 
         #endregion
 
 
         #region PROPERTIES
-
+        /*
         private Tables.Hosts hosts = new Tables.Hosts();
         public Tables.Hosts Hosts { get { return hosts; } }
 
@@ -38,7 +42,7 @@ namespace LibMESone
 
         private Tables.Services services = new Tables.Services();
         public Tables.Services Services { get { return services; } }
-
+        */
 
         // private Lib.Database database = new Lib.Database();
         // public Lib.Database Database { get { return database; } }
@@ -48,8 +52,8 @@ namespace LibMESone
 
         #region EVENTS
 
-        public delegate void ReadCompletedNotify();  // delegate
-        public event ReadCompletedNotify ReadCompleted; // event
+        public delegate void GetedServicesNotify(IEnumerable<DatabasesHosts> result);  // delegate
+        public event GetedServicesNotify GetedServices; // event
 
 
         #endregion
@@ -61,6 +65,7 @@ namespace LibMESone
         {
 
             this.config_file = config_file;
+
             database = new Lib.Database(config_file.DB_DRIVER,
                                         config_file.DB_HOST,
                                         config_file.DB_PORT,
@@ -78,7 +83,7 @@ namespace LibMESone
             //Connection_string_ValueChanged(this.connection_string.Value);
             // this.connection_string.ValueChanged += Connection_string_ValueChanged;
 
-            timer = new Timer(ReadAction, null, 0, 60000);
+            timer = new Timer(GetServices, null, 0, 60000);
 
         }
         #endregion
@@ -201,27 +206,164 @@ namespace LibMESone
 
         #region PRIVATES
 
-        private void ReadAction(object state)
+        private void GetServices(object state)
         {
+
 
             try
             {
 
                 if (database != null)
                 {
-                    if (database.Read<ServiceTypes>(service_types) != null)
+
+                    IEnumerable<ServiceTypes> service_types = database.Read<ServiceTypes>("service_types");
+                    if (service_types == null)
+                    {
                         Lib.Message.Make("Can't read service types");
+                    }
+                    else
+                    {
+                        ServiceTypes service_type = service_types.Where(x => x.Guid.Equals(Lib.Global.AppGUID(), StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
 
-                    if (database.Read<Services>(services) != null)
-                        Lib.Message.Make("Can't read services");
+                        if (service_type == null)
+                        {
+                            Lib.Message.Make("Can't find id of service");
+                        }
+                        else
+                        {
+                            IEnumerable<Services> services = database.Read<Services>("services");
 
-                    if (database.Read<Databases>(databases) != null)
-                        Lib.Message.Make("Can't read databases");
+                            if (services == null)
+                            {
+                                Lib.Message.Make("Can't read services");
+                            }
+                            else
+                            {
+                                IEnumerable<Services> enabled_services = services.Where(x => x.Enabled);
 
-                    if (database.Read<Hosts>(hosts) != null)
-                        Lib.Message.Make("Can't read hosts");
+                                if (enabled_services.Count() > 0)
+                                {
+                                    IEnumerable<Databases> databases = database.Read<Databases>("databases");
 
-                    ReadCompleted?.Invoke();
+                                    if (databases == null)
+                                    {
+                                        Lib.Message.Make("Can't read databases");
+                                    }
+                                    else
+                                    {
+                                        IEnumerable<Databases> enabled_databases = databases.Where(x => x.Enabled);
+
+                                        if (enabled_databases.Count() > 0)
+                                        {
+                                            IEnumerable<Hosts> hosts = database.Read<Hosts>("hosts");
+
+                                            if (hosts == null)
+                                            {
+                                                Lib.Message.Make("Can't read hosts");
+                                            }
+                                            else
+                                            {
+                                                IEnumerable<Hosts> enabled_hosts = hosts.Where(x => x.Enabled);
+
+                                                if (enabled_hosts.Count() > 0)
+                                                {
+                                                    IEnumerable<DatabasesHosts> dh;
+
+                                                    dh = enabled_databases
+                                                        .Join(
+                                                        enabled_hosts,
+                                                        db => db.Hosts_id,
+                                                        host => host.Id,
+                                                        (db, host) => new DatabasesHosts
+                                                        {
+                                                            Id = db.Id,
+                                                            Database = db.Database,
+                                                            Driver = db.Driver,
+                                                            Port = db.Port,
+                                                            Charset = db.Charset,
+                                                            Username = db.Username,
+                                                            Password = db.Password,
+                                                            Host = host.Ip
+                                                        }
+                                                        );
+
+                                                    IEnumerable<DatabasesHosts> sdh;
+
+                                                    sdh = enabled_services
+                                                        .Join(
+                                                        dh,
+                                                        srv => srv.Databases_id,
+                                                        d_h => d_h.Id,
+                                                        (srv, d_h) => new ServicesDatabasesHosts
+                                                        {
+                                                            Id = srv.Id,
+                                                            Name = srv.Name,
+                                                            Database = d_h.Database,
+                                                            Driver = d_h.Driver,
+                                                            Host = d_h.Host,
+                                                            Port = d_h.Port,
+                                                            Charset = d_h.Charset,
+                                                            Username = d_h.Username,
+                                                            Password = d_h.Password
+                                                        }
+                                                        );
+
+
+                                                    GetedServices?.Invoke(sdh);
+                                                }
+
+                                            }
+                                        }
+
+                                    }
+
+
+                                }
+
+
+                                foreach (var item in services.Where(x => x.Service_types_id == service_type.Id))
+                                {
+                                    System.Console.WriteLine(item.Id);
+                                }
+                            }
+
+
+                        }
+
+                        /*
+                        if (database.Read<Services>(services) == null)
+                        {
+                           
+                        }
+                        else
+                        {
+                            if (database.Read<Databases>(databases) == null)
+                            {
+                                Lib.Message.Make("Can't read databases");
+                            }
+                            else
+                            {
+                                if (database.Read<Hosts>(hosts) == null)
+                                {
+                                    Lib.Message.Make("Can't read hosts");
+                                }
+                                else
+                                {
+                                    DataTable result = null;
+
+
+                                    GetedServices?.Invoke(null);
+                                }
+
+                            }
+
+                        }
+                        */
+                    }
+
+
+
+
 
                 }
             }
@@ -229,7 +371,6 @@ namespace LibMESone
             {
                 Lib.Message.Make("Error read", ex);
             }
-
         }
 
         /*
