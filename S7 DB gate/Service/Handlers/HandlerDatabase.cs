@@ -7,7 +7,7 @@ namespace S7_DB_gate.Handlers
 {
     public class HandlerDatabase
     {
-
+        /*
 
         #region VARIABLES
 
@@ -155,6 +155,7 @@ namespace S7_DB_gate.Handlers
 
                 }
                 */
+        /*
             }
             catch (Exception ex)
             {
@@ -208,6 +209,8 @@ namespace S7_DB_gate.Handlers
                     }
                 }
                     */
+
+        /*
             }
             catch (Exception ex)
             {
@@ -229,8 +232,10 @@ namespace S7_DB_gate.Handlers
         }
 
         */
+
+        /*
         #endregion
 
-
+        */
     }
 }

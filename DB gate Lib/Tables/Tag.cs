@@ -1,10 +1,28 @@
-﻿using System.Data;
+﻿using Lib;
+using System.Data;
 using System.Data.Odbc;
 
 namespace LibDBgate.Tables
 {
-    public class Ttags : LibMESone.Tables.BaseNE
+    public class Tag : LibMESone.Tables.BaseNE
     {
+
+        [Field(Field.Etype.BigInt, NN = true)]
+        public long Clients_id { get; set; }
+
+        [Field(Field.Etype.SmallInt, NN = true)]
+        public short Rate { get; set; }
+
+        [Field(Field.Etype.VarChar, 15, NN = true)]
+        public string Data_type { get; set; }
+
+        [Field(Field.Etype.TinyInt, 1, NN = true)]
+        public bool RT_value_enabled { get; set; }
+
+        [Field(Field.Etype.TinyInt, 1, NN = true)]
+        public bool History_enabled { get; set; }
+
+
         /*
         public new class Row : LibMESone.Tables.TbaseNE.Row
         {

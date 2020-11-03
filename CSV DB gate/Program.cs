@@ -20,8 +20,8 @@ namespace CSV_DB_gate
     {
         static void Main()
         {
-            Lib.Global.PrintAppInfo();
-            Lib.Global.Subscribe_Ctrl_C();
+            Lib.Common.PrintAppInfo();
+            Lib.Common.Subscribe_Ctrl_C();
 
             Lib.Console console = new Lib.Console();
             LibMESone.Loggers.TextLogger text_logger = new LibMESone.Loggers.TextLogger();
@@ -30,7 +30,7 @@ namespace CSV_DB_gate
 
 
 
-            Lib.Global.InfinityWaiting();
+            Lib.Common.InfinityWaiting();
         }
     }
 }

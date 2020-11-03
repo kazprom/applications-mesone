@@ -23,7 +23,7 @@ namespace LibMESone.Loggers
 
         #region CONSTRUCTOR
 
-        public TextLogger() : this($@"{Lib.Global.PathExeFolder}LOG") { }
+        public TextLogger() : this($@"{Lib.Common.PathExeFolder}LOG") { }
 
         public TextLogger(string path)
         {

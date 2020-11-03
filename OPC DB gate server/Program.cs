@@ -25,11 +25,11 @@ namespace OPC_DB_gate_server
 
 
 
-                Lib.Global.PrintAppInfo();
-                Lib.Global.Subscribe_Ctrl_C();
+                Lib.Common.PrintAppInfo();
+                Lib.Common.Subscribe_Ctrl_C();
 
                 Lib.Console console = new Lib.Console();
-                Lib.TextLogger text_logger = new Lib.TextLogger($@"{Lib.Global.PathExeFolder}LOG");
+                Lib.TextLogger text_logger = new Lib.TextLogger($@"{Lib.Common.PathExeFolder}LOG");
 
                 HandlerConfigFile config_file;
 
@@ -39,7 +39,7 @@ namespace OPC_DB_gate_server
                 }
                 else
                 {
-                    config_file = new HandlerConfigFile(Lib.Global.NameExeFile.Split('.')[0] + ".xml");
+                    config_file = new HandlerConfigFile(Lib.Common.NameExeFile.Split('.')[0] + ".xml");
                 }
 
                 Lib.Buffer<LibDBgate.TagData> buffer = new Lib.Buffer<LibDBgate.TagData>(10000);
@@ -49,7 +49,7 @@ namespace OPC_DB_gate_server
                 Tags tags = new Tags();
                 RT_values rt_values = new RT_values();
                 History history = new History();
-                Application application = new Application(); application.Put(Application.EKeys.APPINFO, Lib.Global.AppInfo());
+                Application application = new Application(); application.Put(Application.EKeys.APPINFO, Lib.Common.AppInfo());
                 Diagnostics diagnostics = new Diagnostics();
 
                 HandlerDatabase database = new HandlerDatabase(config_file.DB_TYPE,

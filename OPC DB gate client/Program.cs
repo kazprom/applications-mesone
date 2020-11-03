@@ -22,8 +22,8 @@ namespace OPC_DB_gate_client
         static void Main(string[] args)
         {
 
-            Lib.Global.PrintAppInfo();
-            Lib.Global.Subscribe_Ctrl_C();
+            Lib.Common.PrintAppInfo();
+            Lib.Common.Subscribe_Ctrl_C();
 
             Lib.Console console = new Lib.Console();
 
@@ -35,10 +35,10 @@ namespace OPC_DB_gate_client
             }
             else
             {
-                config_file = new ConfigFile(Lib.Global.NameExeFile.Split('.')[0] + ".xml");
+                config_file = new ConfigFile(Lib.Common.NameExeFile.Split('.')[0] + ".xml");
             }
 
-            LibOPCDBgate.ClientInfo info = new LibOPCDBgate.ClientInfo() { appinfo = Lib.Global.AppInfo() };
+            LibOPCDBgate.ClientInfo info = new LibOPCDBgate.ClientInfo() { appinfo = Lib.Common.AppInfo() };
             Lib.Buffer<LibDBgate.TagData> buffer = new Lib.Buffer<LibDBgate.TagData>(10000);
 
             TCPconnection connection = new TCPconnection(config_file.SERVER_IP,

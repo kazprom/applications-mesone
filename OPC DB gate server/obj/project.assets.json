@@ -199,6 +199,15 @@
           "lib/netstandard2.1/Zstandard.Net.dll": {}
         }
       },
+      "NLog/4.7.5": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/NLog.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/NLog.dll": {}
+        }
+      },
       "Npgsql/4.1.5": {
         "type": "package",
         "dependencies": {
@@ -1301,6 +1310,7 @@
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
           "MySql.Data": "8.0.22",
+          "NLog": "4.7.5",
           "Npgsql": "4.1.5",
           "SqlKata": "2.2.0",
           "SqlKata.Execution": "2.2.0",
@@ -1687,6 +1697,39 @@
         "lib/netstandard2.1/Zstandard.Net.dll",
         "mysql.data.8.0.22.nupkg.sha512",
         "mysql.data.nuspec"
+      ]
+    },
+    "NLog/4.7.5": {
+      "sha512": "1Udzim+UwoAGk0vW6T2rEBXJq1COvqTuE+4NFj2zHytuX1WOu+1Yes1qABG1IJOA5V3OMilIufUU1Ha9T0rrzQ==",
+      "type": "package",
+      "path": "nlog/4.7.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/monoandroid44/NLog.dll",
+        "lib/monoandroid44/NLog.xml",
+        "lib/net35/NLog.dll",
+        "lib/net35/NLog.xml",
+        "lib/net40-client/NLog.dll",
+        "lib/net40-client/NLog.xml",
+        "lib/net45/NLog.dll",
+        "lib/net45/NLog.xml",
+        "lib/netstandard1.3/NLog.dll",
+        "lib/netstandard1.3/NLog.xml",
+        "lib/netstandard1.5/NLog.dll",
+        "lib/netstandard1.5/NLog.xml",
+        "lib/netstandard2.0/NLog.dll",
+        "lib/netstandard2.0/NLog.xml",
+        "lib/sl4/NLog.dll",
+        "lib/sl4/NLog.xml",
+        "lib/sl5/NLog.dll",
+        "lib/sl5/NLog.xml",
+        "lib/wp8/NLog.dll",
+        "lib/wp8/NLog.xml",
+        "lib/xamarinios10/NLog.dll",
+        "lib/xamarinios10/NLog.xml",
+        "nlog.4.7.5.nupkg.sha512",
+        "nlog.nuspec"
       ]
     },
     "Npgsql/4.1.5": {

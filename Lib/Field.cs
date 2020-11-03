@@ -13,7 +13,8 @@ namespace Lib
             Int,
             VarChar,
             TimeStamp,
-            TinyInt
+            TinyInt,
+            SmallInt
         }
 
         /// <summary>

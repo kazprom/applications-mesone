@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "gKsXV8OgqBoDXjN/mvV8U97odzIGqu72JuvhH0RzoumDzImhJUU+kJbKiDYmklJAajBhvwFS5a8GrGvTAuxsRw==",
+  "dgSpecHash": "scdtNxLAyViU/EH53Df0gCJUQhw1mGge3qYJf0/WnOaTgNci00nfsHwULBKsUXAmdXp54fkt33PS1PQAiGaf/A==",
   "success": true,
   "projectFilePath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\OPC DB gate server\\OPC DB gate server.csproj",
   "expectedPackageFiles": [
@@ -17,6 +17,7 @@
     "C:\\Users\\i.korol\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\i.korol\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Users\\i.korol\\.nuget\\packages\\mysql.data\\8.0.22\\mysql.data.8.0.22.nupkg.sha512",
+    "C:\\Users\\i.korol\\.nuget\\packages\\nlog\\4.7.5\\nlog.4.7.5.nupkg.sha512",
     "C:\\Users\\i.korol\\.nuget\\packages\\npgsql\\4.1.5\\npgsql.4.1.5.nupkg.sha512",
     "C:\\Users\\i.korol\\.nuget\\packages\\runtime.native.system\\4.0.0\\runtime.native.system.4.0.0.nupkg.sha512",
     "C:\\Users\\i.korol\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.7.0\\runtime.native.system.data.sqlclient.sni.4.7.0.nupkg.sha512",

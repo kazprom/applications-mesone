@@ -15,6 +15,8 @@ namespace Lib
     public class Database
     {
 
+        private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         #region STRUCTURES
 
         public struct SExtProp
@@ -51,8 +53,6 @@ namespace Lib
         public const string default_user = "mesone";
         public const string default_password = "Mesone1_p@$$word";
 
-
-
         #endregion
 
         #region VARIABLE
@@ -68,8 +68,6 @@ namespace Lib
         private IDbConnection connection;
         private SqlKata.Compilers.Compiler compiler;
         private QueryFactory db;
-
-        private OdbcCommand command = new OdbcCommand();
 
         #endregion
 
@@ -98,24 +96,30 @@ namespace Lib
                         Parameter<string> user,
                         Parameter<string> password)
         {
-            this.driver = driver;
-            this.host = host;
-            this.port = port;
-            this.charset = charset;
-            this.base_name = base_name;
-            this.user = user;
-            this.password = password;
+            try
+            {
+                this.driver = driver;
+                this.host = host;
+                this.port = port;
+                this.charset = charset;
+                this.base_name = base_name;
+                this.user = user;
+                this.password = password;
 
-            this.driver.ValueChanged += UpdateSettings;
-            this.host.ValueChanged += UpdateSettings;
-            this.port.ValueChanged += UpdateSettings;
-            this.charset.ValueChanged += UpdateSettings;
-            this.base_name.ValueChanged += UpdateSettings;
-            this.user.ValueChanged += UpdateSettings;
-            this.password.ValueChanged += UpdateSettings;
+                this.driver.ValueChanged += UpdateSettings;
+                this.host.ValueChanged += UpdateSettings;
+                this.port.ValueChanged += UpdateSettings;
+                this.charset.ValueChanged += UpdateSettings;
+                this.base_name.ValueChanged += UpdateSettings;
+                this.user.ValueChanged += UpdateSettings;
+                this.password.ValueChanged += UpdateSettings;
 
-            UpdateSettings(null);
-
+                UpdateSettings(null);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+            }
         }
 
         #endregion
@@ -124,234 +128,27 @@ namespace Lib
         #region PUBLICS
 
 
-
-        /*
-        public bool Read(DataSet ds)
-        {
-            try
-            {
-                lock (ds)
-                {
-                    foreach (DataTable table in ds.Tables)
-                    {
-                        Read(table);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Lib.Message.Make("Error read data set", ex);
-                return false;
-            }
-
-            return true;
-        }
-
-        */
-
         public IEnumerable<T> Read<T>(string table_name)
         {
 
+            IEnumerable<T> result = null;
+
             try
             {
-                if (db != null)// && table != null && table.Container != null && table.Container.TableName != null)
+                if (db != null)
                 {
                     lock (db)
                     {
-
-                        //IEnumerable<T> rows;
-
-                        return db.Query(table_name).Get<T>();
-
-                        /*
-                        IEnumerable<PropertyInfo> fields = table.GetType().GetProperties().Where(x => x.GetCustomAttribute<Field>() != null);
-
-
-                        foreach (PropertyInfo field in fields)
-                        {
-                            if (table.Container.Columns[field.Name] == null)
-                            {
-                                table.Container.Columns.Add(field.Name, field.PropertyType);
-                            }
-                        }
-
-                        IEnumerable<PropertyInfo> fields_pk = fields.Where(x => x.GetCustomAttribute<Field>().PK == true);
-
-                        DataTable unnecessary = table.Container.Copy();
-                        foreach (T row in rows)
-                        {
-                            List<string> conditions = new List<string>();
-
-                            foreach (PropertyInfo pi in fields_pk)
-                            {
-                                conditions.Add($"{pi.Name} = '{pi.GetValue(row)}'");
-                            }
-
-                            string condition = string.Join(" AND ", conditions);
-
-                            DataRow fr = table.Container.Select(condition).FirstOrDefault();
-                            if (fr == null)
-                            {
-                                DataRow ar = table.Container.NewRow();
-                                foreach (PropertyInfo pi in fields)
-                                {
-                                    ar[pi.Name] = pi.GetValue(row);
-                                }
-                                table.Container.Rows.Add(ar);
-                            }
-                            else
-                            {
-                                foreach (PropertyInfo pi in fields)
-                                {
-                                    fr[pi.Name] = pi.GetValue(row);
-                                }
-                                unnecessary.Rows.Remove(unnecessary.Select(condition).FirstOrDefault());
-                            }
-                        }
-                        foreach (DataRow row in unnecessary.Rows)
-                        {
-                            List<string> conditions = new List<string>();
-
-                            foreach (PropertyInfo pi in fields_pk)
-                            {
-                                conditions.Add($"{pi.Name} = {pi.GetValue(row)}");
-                            }
-
-                            string condition = string.Join(" AND ", conditions);
-
-                            DataRow dr = table.Container.Select(condition).FirstOrDefault();
-                            dr.Delete();
-                        }
-                        */
+                        result = db.Query(table_name).Get<T>();
                     }
-                }
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-            return null;
-
-            /*
-
-
-            try
-            {
-
-                if (!TestConnection())
-                    return false;
-
-                if (!TableExists(dt))
-                    return false;
-
-                if (!TableCheckScheme(dt))
-                    return false;
-
-                string sql = string.Empty;
-
-                lock (dt)
-                {
-                    string[] columns_names = dt.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToArray();
-
-
-
-
-                    switch (type)
-                    {
-                        case EType.MSSQLServer:
-                            {
-                                sql = $"SELECT [{string.Join("],[", columns_names)}] FROM [{dt.TableName}]";
-                                break;
-                            }
-                        case EType.MySQL:
-                        case EType.PostgreSQL:
-                            {
-                                sql = $"SELECT `{string.Join("`,`", columns_names)}` FROM `{dt.TableName}`";
-                                break;
-                            }
-                    }
-
-                    DataColumn[] pk_columns = dt.Columns.Cast<DataColumn>()
-                                                                    .Where(x => x.ExtendedProperties.ContainsKey(typeof(SExtProp)))
-                                                                    .Where(x =>
-                                                                    {
-                                                                        SExtProp prop = (SExtProp)x.ExtendedProperties[typeof(SExtProp)];
-                                                                        return prop.primary_key;
-                                                                    }).ToArray();
-
-                    if (pk_columns.Length > 0)
-                    {
-                        DataTable result = dt.Clone();
-                        lock (connection)
-                        {
-                            using (OdbcDataAdapter adapter = new OdbcDataAdapter(sql, connection))
-                            {
-                                adapter.Fill(result);
-                            }
-                        }
-
-                        DataTable unnecessary = dt.Copy();
-                        foreach (DataRow row in result.Rows)
-                        {
-                            List<string> conditions = new List<string>();
-
-                            foreach (DataColumn dc in pk_columns)
-                            {
-                                conditions.Add($"{dc.ColumnName} = '{row[dc.ColumnName]}'");
-                            }
-
-                            string condition = string.Join(" AND ", conditions);
-
-                            DataRow fr = dt.Select(condition).FirstOrDefault();
-                            if (fr == null)
-                            {
-                                dt.Rows.Add(row.ItemArray);
-                            }
-                            else
-                            {
-                                fr.ItemArray = row.ItemArray;
-                                unnecessary.Rows.Remove(unnecessary.Select(condition).FirstOrDefault());
-                            }
-                        }
-                        foreach (DataRow row in unnecessary.Rows)
-                        {
-                            List<string> conditions = new List<string>();
-
-                            foreach (DataColumn dc in pk_columns)
-                            {
-                                conditions.Add($"{dc.ColumnName} = {row[dc.ColumnName]}");
-                            }
-
-                            string condition = string.Join(" AND ", conditions);
-
-                            DataRow dr = dt.Select(condition).FirstOrDefault();
-                            dr.Delete();
-                        }
-                    }
-                    else
-                    {
-                        lock (connection)
-                        {
-                            using (OdbcDataAdapter adapter = new OdbcDataAdapter(sql, connection))
-                            {
-                                adapter.Fill(dt);
-                            }
-                        }
-                    }
-
                 }
             }
             catch (Exception ex)
             {
-                string table_name = "unknown";
-                if (dt != null)
-                    table_name = dt.TableName;
-
-                Lib.Message.Make($"Error read data table [{table_name}]", ex);
-                return false;
+                logger.Error(ex);
             }
-            */
+
+            return result;
         }
 
         /*
@@ -559,7 +356,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                throw;
+                logger.Error(ex);
             }
         }
 
