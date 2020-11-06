@@ -54,7 +54,7 @@ namespace LibMESone.Loggers
                 }
                 catch (Exception ex)
                 {
-                    Lib.Message.Make("Error clean log table", ex);
+                    //Lib.Message.Make("Error clean log table", ex);
                 }
 
                 Thread.Sleep(30000);
@@ -98,7 +98,7 @@ namespace LibMESone.Loggers
             {
                 string table = DBLogger.GetTableName(timestamp);
                 //logger.Database.DeleteTable(table);
-                Lib.Message.Make($"Deleted table {table}");
+                //Lib.Message.Make($"Deleted table {table}");
             }
             catch (Exception ex)
             {

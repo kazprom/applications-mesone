@@ -33,7 +33,7 @@ namespace LibMESone.Loggers
 
             this.database = database;
 
-            Lib.Message.FullMsgMaked += Write;
+            //Lib.Message.FullMsgMaked += Write;
 
         }
 

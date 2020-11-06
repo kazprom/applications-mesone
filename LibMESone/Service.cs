@@ -1,4 +1,4 @@
-﻿using LibMESone.Tables;
+﻿using LibMESone.Structs;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,11 +10,16 @@ namespace LibMESone
     public class Service : IDisposable
     {
 
-        private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         #region VARIABLES
 
-        protected string name;
+        private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
+        private Core parent;
+        private string name;
+        
+        public string title;
+        
         protected Lib.Parameter<string> driver;
         protected Lib.Parameter<string> host;
         protected Lib.Parameter<int> port;
@@ -30,13 +35,14 @@ namespace LibMESone
         #endregion
 
         #region CONSTRUCTOR
-        public Service(string name)
+        public Service(Core parent, string name)
         {
             try
             {
-                logger.Info(name);
 
+                this.parent = parent;
                 this.name = name;
+                this.title = $"Service [{this.name}]";
 
                 driver = new Lib.Parameter<string>($"SERVICE [{this.name}] DRIVER");
                 host = new Lib.Parameter<string>($"SERVICE [{this.name}] HOST");
@@ -46,7 +52,10 @@ namespace LibMESone
                 username = new Lib.Parameter<string>($"SERVICE [{this.name}] USERNAME");
                 password = new Lib.Parameter<string>($"SERVICE [{this.name}] PASSWORD");
 
-                timer = new Timer(Handler, null, 0, 6000);
+                //timer = new Timer(Handler, null, 0, 60000);
+                timer = new Timer(Handler, null, 0, 5000);
+
+                logger.Info($"{title} started");
             }
             catch (Exception ex)
             {
@@ -56,8 +65,12 @@ namespace LibMESone
 
         #endregion
 
-
         #region DESTRUCTOR
+
+        ~ Service()
+        {
+            logger.Info($"{title} stopped");
+        }
 
         protected bool disposedValue;
 
@@ -67,7 +80,6 @@ namespace LibMESone
         {
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
-            logger.Info(name);
         }
 
         #endregion
@@ -91,7 +103,7 @@ namespace LibMESone
             }
             catch (Exception ex)
             {
-                throw new Exception("Error update settings", ex);
+                logger.Error(ex);
             }
         }
 

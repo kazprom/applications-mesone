@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace LibMESone.Tables
+namespace LibMESone.Structs
 {
     public class ServiceTypes : BaseID
     {
-        [Field(Field.Etype.VarChar, 255, un: true)]
+        [Field(Field.Etype.VarChar, 255, UQ = true)]
         public string Name { get; set; }
 
         [Field(Field.Etype.VarChar, 255)]

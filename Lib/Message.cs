@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lib
 {
-    public class Message
+    class Message
     {
 
         #region EVENTS

@@ -1,13 +1,6 @@
-﻿using LibMESone.Tables;
-using NLog;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
+﻿using System;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Threading;
 
 [assembly: AssemblyTitle("")]
 [assembly: AssemblyDescription("")]

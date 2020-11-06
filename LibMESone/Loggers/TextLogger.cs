@@ -17,7 +17,7 @@ namespace LibMESone.Loggers
         #region PROPERTIES
 
         private string path;
-        public string Path { get { return path; } set { path = value; Lib.Message.Make($"Path to LOG = {path}"); } }
+        public string Path { get { return path; } set { path = value; /*Lib.Message.Make($"Path to LOG = {path}");*/ } }
 
         #endregion
 
@@ -28,7 +28,7 @@ namespace LibMESone.Loggers
         public TextLogger(string path)
         {
             Path = path;
-            Lib.Message.FullMsgMaked += Write;
+            //Lib.Message.FullMsgMaked += Write;
         }
 
         #endregion

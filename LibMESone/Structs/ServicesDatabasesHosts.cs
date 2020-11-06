@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LibMESone.Tables
+namespace LibMESone.Structs
 {
     public class ServicesDatabasesHosts: DatabasesHosts
     {

@@ -14,7 +14,8 @@ namespace Lib
             VarChar,
             TimeStamp,
             TinyInt,
-            SmallInt
+            SmallInt,
+            Binary
         }
 
         /// <summary>
@@ -46,8 +47,12 @@ namespace Lib
         /// <summary>
         /// unique
         /// </summary>
-        public bool UN = false;
+        public bool UQ = false;
 
+        /// <summary>
+        /// unsigned
+        /// </summary>
+        public bool UN = false;
 
         public Field(Etype type)
         {
@@ -59,19 +64,21 @@ namespace Lib
             SIZE = size;
         }
 
-        public Field(Etype type, uint size, bool pk = false, bool ai = false, bool nn = false, bool un = false) : this(type, size)
+        public Field(Etype type, uint size, bool pk = false, bool ai = false, bool nn = false, bool uq = false, bool un = false) : this(type, size)
         {
             PK = pk;
             AI = ai;
             NN = nn;
+            UQ = uq;
             UN = un;
         }
 
-        public Field(Etype type, bool pk = false, bool ai = false, bool nn = false, bool un = false) : this(type)
+        public Field(Etype type, bool pk = false, bool ai = false, bool nn = false, bool uq = false, bool un = false) : this(type)
         {
             PK = pk;
             AI = ai;
             NN = nn;
+            UQ = uq;
             UN = un;
         }
     }

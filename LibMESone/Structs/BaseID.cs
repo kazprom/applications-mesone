@@ -1,6 +1,6 @@
 ﻿using Lib;
 
-namespace LibMESone.Tables
+namespace LibMESone.Structs
 {
     public class BaseID: Table
     {

@@ -57,7 +57,7 @@ namespace LibMESone.Loggers
                 }
                 catch (Exception ex)
                 {
-                    Lib.Message.Make("Error clean log file", ex);
+                    //Lib.Message.Make("Error clean log file", ex);
                 }
 
                 Thread.Sleep(30000);
@@ -99,7 +99,7 @@ namespace LibMESone.Loggers
             {
                 string file = logger.Path + System.IO.Path.DirectorySeparatorChar + TextLogger.GetFileName(timestamp);
                 File.Delete(file);
-                Lib.Message.Make($"Deleted file {file}");
+                //Lib.Message.Make($"Deleted file {file}");
             }
             catch (Exception ex)
             {

@@ -55,7 +55,7 @@ namespace LibDBgate
                 }
                 catch (Exception ex)
                 {
-                    Lib.Message.Make("Error clean log table", ex);
+                  //  Lib.Message.Make("Error clean log table", ex);
                 }
 
                 Thread.Sleep(30000);

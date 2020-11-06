@@ -1,17 +1,19 @@
-﻿using System;
+﻿using LibMESone.Structs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace S7_DB_gate
 {
-    class Service : LibMESone.Service
+    class Service : LibDBgate.Service
     {
         private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private Dictionary<long, S7Client> points = new Dictionary<long, S7Client>();
 
 
-        public Service(string name) : base(name)
+        public Service(LibMESone.Core parent, string name) : base(parent, name)
         {
+
         }
 
 
@@ -22,7 +24,10 @@ namespace S7_DB_gate
                 if (database != null)
                 {
 
-                    IEnumerable<LibDBgate.Tables.Setting> settings = database.Read<LibDBgate.Tables.Setting>("settings");
+                    //database.Update("application", new Application() { Key = "Version", Value = Lib.Common.AppVersion() }) ;
+                    //database.Update("application", new Application() { Key = "Clock", Value = DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss") });
+
+                    IEnumerable<LibDBgate.Structs.Setting> settings = database.Read<LibDBgate.Structs.Setting>("settings");
                     IEnumerable<Structs.Client> clients = database.Read<Structs.Client>("clients");
                     IEnumerable<Structs.Tag> tags = database.Read<Structs.Tag>("tags");
 
@@ -58,13 +63,12 @@ namespace S7_DB_gate
                         foreach (long point_id in missing)
                         {
                             Structs.Client set_point = enabled_clients.First(x => x.Id == point_id);
-                            S7Client inst_point = new S7Client(set_point.Name);
-
-                            inst_point.UpdateSettings(set_point.Cpu_type,
-                                                      set_point.Ip,
-                                                      set_point.Port,
-                                                      set_point.Rack,
-                                                      set_point.Slot);
+                            S7Client inst_point = new S7Client(this, set_point.Name,
+                                                               set_point.Cpu_type,
+                                                               set_point.Ip,
+                                                               set_point.Port,
+                                                               set_point.Rack,
+                                                               set_point.Slot);
 
                             points.Add(set_point.Id, inst_point);
                         }
@@ -75,18 +79,17 @@ namespace S7_DB_gate
 
                         foreach (long id in client_ids)
                         {
-                            if(points.ContainsKey(id))
+                            if (points.ContainsKey(id))
                             {
                                 points[id].LoadTags(enabled_tags.Where(x => x.Clients_id == id));
                             }
                         }
-
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                logger.Error(ex, $"{title}. Handler");
             }
 
         }

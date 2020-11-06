@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LibDBgate.Tables
+namespace LibDBgate.Structs
 {
-    public class Client : LibMESone.Tables.BaseNE
+    public class Client : LibMESone.Structs.BaseNE
     {
 
 

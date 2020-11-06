@@ -6,7 +6,7 @@ using System.Data.Odbc;
 using System.Text;
 using System.Xml;
 
-namespace LibMESone.Tables
+namespace LibMESone.Structs
 {
     public class BaseNE : BaseID
     {

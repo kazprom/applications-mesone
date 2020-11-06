@@ -1,17 +1,26 @@
-﻿using System;
+﻿using NLog;
+using Org.BouncyCastle.Asn1.Cms;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Lib
 {
     public class Buffer<T>
     {
-        #region CONSTANTS
+        #region VARIABLES
 
-        private int limit;
+        private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private Queue<T> q = new Queue<T>();
+
+        private uint limit;
+        private uint time_storage;
+        
+
+        private Timer timer;
 
         #endregion
-
 
         #region EVENTS
 
@@ -25,19 +34,26 @@ namespace Lib
         public delegate void HalfNotify();  // delegate
         public event HalfNotify HalfEvent; // event
 
+        public delegate void CyclicNotify();  // delegate
+        public event CyclicNotify CyclicEvent; // event
 
+        #endregion
+
+        #region PROPERTIES
+
+        public int Count { get { return q.Count; } }
 
         #endregion
 
 
 
-        public int Count { get { return q.Count; } }
-
-        private Queue<T> q = new Queue<T>();
-
-        public Buffer(int limit)
+        public Buffer(uint limit, 
+                      uint time_storage)
         {
             this.limit = limit;
+            this.time_storage = time_storage;
+
+            timer = new Timer(Cleaner, null, 0, this.time_storage);
         }
 
         public void Enqueue(T obj)
@@ -47,7 +63,9 @@ namespace Lib
             EnqueueEvent?.Invoke(obj);
 
             if (q.Count > limit / 2)
+            {
                 HalfEvent?.Invoke();
+            }
 
             while (q.Count > limit)
             {
@@ -62,6 +80,29 @@ namespace Lib
             return obj;
         }
 
+
+        #region PRIVATES
+
+        private void Cleaner(object state)
+        {
+
+            CyclicEvent?.Invoke();
+
+            try
+            {
+
+                
+
+                
+
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "buffer cleaner");
+            }
+        }
+
+        #endregion
 
     }
 }

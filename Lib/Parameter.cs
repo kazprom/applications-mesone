@@ -7,6 +7,8 @@ namespace Lib
     public class Parameter<T>
     {
 
+        private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         #region PROPERTIES
 
         private string name;
@@ -21,7 +23,7 @@ namespace Lib
                 if (this.value == null || !this.value.Equals(value))
                 {
                     this.value = value;
-                    Lib.Message.Make($"{name} = {this.value}");
+                    logger.Info($"{name} = {this.value}");
                     ValueChanged?.Invoke(this.value);
                 }
             }

@@ -5,7 +5,7 @@ using System.Data;
 using System.Data.Odbc;
 using System.Text;
 
-namespace LibMESone.Tables
+namespace LibMESone.Structs
 {
     public class Services : BaseNE
     {

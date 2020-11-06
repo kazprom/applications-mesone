@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LibDBgate.Tables
+namespace LibDBgate.Structs
 {
-    class Tt_ : LibMESone.Tables.BaseID
+    class Tt_ : LibMESone.Structs.BaseID
     {
         /*
 

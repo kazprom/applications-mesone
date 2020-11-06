@@ -69,19 +69,8 @@ namespace Lib
         private SqlKata.Compilers.Compiler compiler;
         private QueryFactory db;
 
-        #endregion
+        private string title = "";
 
-
-        #region PROPERTIES
-        /*
-        public const EType default_type = EType.MySQL;
-        private EType type = default_type;
-        public EType Type { get { return type; } set { type = value; } }
-
-        public const string default_connection_string = "Driver={mySQL ODBC 8.0 ANSI Driver}; Server=myServerAddress;Option=131072;Stmt=;Database=myDataBase;User=myUsername;Password=myPassword;";
-        private string connection_string = default_connection_string;
-        public string ConnectionString { get { return connection_string; } }
-        */
         #endregion
 
 
@@ -127,7 +116,6 @@ namespace Lib
 
         #region PUBLICS
 
-
         public IEnumerable<T> Read<T>(string table_name)
         {
 
@@ -145,11 +133,95 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex);
+                logger.Error(ex, $"{title}. Read table {table_name}");
             }
 
             return result;
         }
+
+        public bool Update<T>(Func<string> func_table_namer, T data)
+        {
+            string table_name = "";
+
+            try
+            {
+                if (func_table_namer != null)
+                    table_name = func_table_namer();
+
+                return (Update<T>(table_name, data));
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, $"{title}. Update in table {table_name}");
+            }
+
+            return false;
+        }
+
+
+        public bool Update<T>(string table_name, T data)
+        {
+
+            bool result = false;
+
+            try
+            {
+                if (db != null)
+                {
+                    lock (db)
+                    {
+
+                        Dictionary<string, object> condition = new Dictionary<string, object>();
+                        Dictionary<string, object> values = new Dictionary<string, object>();
+                        foreach (PropertyInfo prop in data.GetType().GetProperties().Where(x => x.GetCustomAttribute(typeof(Field)) != null))
+                        {
+                            Field attr = prop.GetCustomAttribute(typeof(Field)) as Field;
+                            if (attr != null && (attr.PK || attr.NN))
+                                condition.Add(prop.Name, prop.GetValue(data));
+                            else
+                                values.Add(prop.Name, prop.GetValue(data));
+                        }
+
+
+                        if (db.Query(table_name).Where(condition).Update(values) == 0)
+                            Insert<T>(table_name, data);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, $"{title}. Update in table {table_name}");
+            }
+
+            return result;
+        }
+
+        public bool Insert<T>(string table_name, T data)
+        {
+            bool result = false;
+
+            try
+            {
+                if (db != null)
+                {
+                    lock (db)
+                    {
+                        db.Query(table_name).Insert(data);
+                    }
+                }
+
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, $"{title}. Insert to table {table_name}");
+            }
+
+            return result;
+        }
+
+
+
 
         /*
         public bool Write(DataSet ds)
@@ -320,6 +392,9 @@ namespace Lib
 
         }
         */
+
+
+
         #endregion
 
         #region PRIVATES
@@ -349,7 +424,10 @@ namespace Lib
                 }
 
                 if (connection != null && compiler != null)
+                {
                     db = new QueryFactory(connection, compiler);
+                    title = $"Databse {db.Connection.Database}";
+                }
                 else
                     db = null;
 

@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LibDBgate.Tables
+namespace LibDBgate.Structs
 {
-    public class Setting:LibMESone.Tables.BaseID
+    public class Setting:LibMESone.Structs.BaseID
     {
 
         [Field(Field.Etype.VarChar, 50, NN = true)]

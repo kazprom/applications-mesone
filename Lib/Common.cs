@@ -17,9 +17,11 @@ namespace Lib
 
 
             var configuration = new NLog.Config.LoggingConfiguration();
-            var console = new NLog.Targets.ColoredConsoleTarget("logconsole");
+            var consoleInfo = new NLog.Targets.ColoredConsoleTarget("console") { Layout = "[${longdate}] [${level}] ${message:withException=false}" };
+            var consoleError = new NLog.Targets.ColoredConsoleTarget("console") { Layout = consoleInfo.Layout + "${newline}${exception}" };
 
-            configuration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Fatal, console);
+            configuration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Info, consoleInfo);
+            configuration.AddRule(NLog.LogLevel.Warn, NLog.LogLevel.Fatal, consoleError);
             NLog.LogManager.Configuration = configuration;
 
             logger.Info("Program started!");
@@ -40,12 +42,7 @@ namespace Lib
             return fvi.ProductName;
         }
 
-        private  string AppVersion()
-        {
-            Assembly assembly = Assembly.GetEntryAssembly();
-            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
-            return fvi.ProductVersion;
-        }
+        
 
         private string AppInfo()
         {
@@ -91,7 +88,12 @@ namespace Lib
         }
 
 
-
+        public static string AppVersion()
+        {
+            Assembly assembly = Assembly.GetEntryAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            return fvi.ProductVersion;
+        }
 
         public static string AppGUID()
         {
