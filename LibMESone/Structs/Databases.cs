@@ -9,25 +9,25 @@ namespace LibMESone.Structs
     public class Databases : BaseNE
     {
 
-        [Field(Field.Etype.VarChar, 255)]
+        [Field(TYPE = Field.Etype.VarChar, SIZE = 255)]
         public string Database { get; set; }
 
-        [Field(Field.Etype.VarChar, 255)]
+        [Field(TYPE = Field.Etype.VarChar, SIZE = 255)]
         public string Driver { get; set; }
 
-        [Field(Field.Etype.BigInt)]
+        [Field(TYPE = Field.Etype.BigInt)]
         public long Hosts_id { get; set; }
 
-        [Field(Field.Etype.Int)]
+        [Field(TYPE = Field.Etype.Int)]
         public int Port { get; set; }
 
-        [Field(Field.Etype.VarChar, 255)]
+        [Field(TYPE = Field.Etype.VarChar, SIZE = 255)]
         public string Charset { get; set; }
 
-        [Field(Field.Etype.VarChar, 255)]
+        [Field(TYPE = Field.Etype.VarChar, SIZE = 255)]
         public string Username { get; set; }
 
-        [Field(Field.Etype.VarChar, 255)]
+        [Field(TYPE = Field.Etype.VarChar, SIZE = 255)]
         public string Password { get; set; }
 
 /*

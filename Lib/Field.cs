@@ -21,12 +21,17 @@ namespace Lib
         /// <summary>
         /// database type
         /// </summary>
-        public Etype? TYPE = null;
+        public Etype TYPE;
 
         /// <summary>
         /// database lenght
         /// </summary>
-        public uint? SIZE = null;
+        public uint SIZE;
+
+        /// <summary>
+        /// ignore
+        /// </summary>
+        public bool IGNORE = false;
 
         /// <summary>
         /// primary key
@@ -43,7 +48,6 @@ namespace Lib
         /// </summary>
         public bool NN = false;
 
-
         /// <summary>
         /// unique
         /// </summary>
@@ -54,32 +58,6 @@ namespace Lib
         /// </summary>
         public bool UN = false;
 
-        public Field(Etype type)
-        {
-            TYPE = type;
-        }
-
-        public Field(Etype type, uint size) : this(type)
-        {
-            SIZE = size;
-        }
-
-        public Field(Etype type, uint size, bool pk = false, bool ai = false, bool nn = false, bool uq = false, bool un = false) : this(type, size)
-        {
-            PK = pk;
-            AI = ai;
-            NN = nn;
-            UQ = uq;
-            UN = un;
-        }
-
-        public Field(Etype type, bool pk = false, bool ai = false, bool nn = false, bool uq = false, bool un = false) : this(type)
-        {
-            PK = pk;
-            AI = ai;
-            NN = nn;
-            UQ = uq;
-            UN = un;
-        }
+      
     }
 }

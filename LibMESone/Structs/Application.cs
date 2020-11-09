@@ -8,10 +8,10 @@ namespace LibMESone.Structs
 {
     public class Application
     {
-        [Field(Field.Etype.VarChar, 50, pk: true)]
+        [Field(TYPE = Field.Etype.VarChar, SIZE = 50, PK = true)]
         public string Key { get; set; }
 
-        [Field(Field.Etype.VarChar, 255)]
+        [Field(TYPE = Field.Etype.VarChar, SIZE = 255)]
         public string Value { get; set; }
 
     }

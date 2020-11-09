@@ -9,13 +9,13 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices.ComTypes;
+using System.Threading.Tasks;
+using Ubiety.Dns.Core.Records.NotUsed;
 
 namespace Lib
 {
     public class Database
     {
-
-        private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         #region STRUCTURES
 
@@ -57,6 +57,8 @@ namespace Lib
 
         #region VARIABLE
 
+        private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         private Parameter<string> driver;
         private Parameter<string> host;
         private Parameter<int> port;
@@ -72,7 +74,6 @@ namespace Lib
         private string title = "";
 
         #endregion
-
 
         #region CONSTRUCTOR
 
@@ -112,7 +113,6 @@ namespace Lib
         }
 
         #endregion
-
 
         #region PUBLICS
 
@@ -158,7 +158,6 @@ namespace Lib
             return false;
         }
 
-
         public bool Update<T>(string table_name, T data)
         {
 
@@ -176,17 +175,25 @@ namespace Lib
                         foreach (PropertyInfo prop in data.GetType().GetProperties().Where(x => x.GetCustomAttribute(typeof(Field)) != null))
                         {
                             Field attr = prop.GetCustomAttribute(typeof(Field)) as Field;
-                            if (attr != null && (attr.PK || attr.NN))
+                            if (attr != null && (attr.PK || attr.UQ))
                                 condition.Add(prop.Name, prop.GetValue(data));
                             else
                                 values.Add(prop.Name, prop.GetValue(data));
                         }
 
-
-                        if (db.Query(table_name).Where(condition).Update(values) == 0)
-                            Insert<T>(table_name, data);
+                        if (condition.Count > 0)
+                        {
+                            if (db.Query(table_name).Where(condition).Update(values) == 0) Insert<T>(table_name, data);
+                        }
+                        else
+                        {
+                            if (db.Query(table_name).Update(values) == 0) Insert<T>(table_name, data);
+                        }
                     }
                 }
+
+                result = true;
+
             }
             catch (Exception ex)
             {
@@ -220,180 +227,118 @@ namespace Lib
             return result;
         }
 
-
-
-
-        /*
-        public bool Write(DataSet ds)
+        public bool CheckExistTable(string table_name)
         {
+            bool result = false;
+
             try
             {
-                if (!TestConnection())
-                    return false;
-
-                lock (ds)
+                if (db != null)
                 {
-                    foreach (DataTable table in ds.Tables)
+                    lock (db)
                     {
-                        Write(table, true, false);
+                        string sql = string.Empty;
+
+                        if (connection.GetType().Equals(typeof(SqlConnection)))
+                        {
+                            throw new Exception("Create code for handling MSSQL");
+                        }
+                        else if (connection.GetType().Equals(typeof(MySqlConnection)))
+                        {
+                            IEnumerable<dynamic> result_query = db.Query("information_schema.tables").Where("Table_name", table_name).Where("Table_schema", connection.Database).Get();
+                            result = result_query.Count() != 0;
+
+                        }
+                        else if (connection.GetType().Equals(typeof(NpgsqlConnection)))
+                        {
+                            throw new Exception("Create code for handling PostgreSQL");
+                        }
+                        else
+                        {
+                            throw new Exception("Don't know database type");
+                        }
                     }
                 }
+
 
             }
             catch (Exception ex)
             {
-                Lib.Message.Make("Error write data set", ex);
-                return false;
+                logger.Error(ex, $"{title}. Check exist table {table_name}");
             }
 
-            return true;
-
+            return result;
         }
-        public bool Write(DataTable dt, bool create_table, bool rewrite_row)
+
+        public bool CreateTable<T>(string table_name)
         {
+
+            bool result = false;
+
             try
             {
-                if (dt != null)
+
+                if (db != null)
                 {
-
-                    if (!TestConnection())
-                        return false;
-
-                    lock (dt)
+                    lock (db)
                     {
-                        if (create_table && !TableExists(dt))
+                        string sql = string.Empty;
+
+                        if (connection.GetType().Equals(typeof(SqlConnection)))
                         {
-                            TableAdd(dt);
+                            throw new Exception("Create code for handling MSSQL");
                         }
-
-
-                        foreach (DataRow row in dt.Rows)
+                        else if (connection.GetType().Equals(typeof(MySqlConnection)))
                         {
-                            if (!rewrite_row || !RowExists(row))
+                            sql = $"CREATE TABLE `{table_name}` ( ";
+
+                            foreach (PropertyInfo prop in typeof(T).GetProperties().Where(x => x.GetCustomAttribute(typeof(Field)) != null))
                             {
-                                RowInsert(row);
+                                Field attr = prop.GetCustomAttribute(typeof(Field)) as Field;
+                                if (!attr.IGNORE)
+                                {
+
+                                    sql += $" `{prop.Name}` ";
+
+                                    sql += $" {attr.TYPE}";
+                                    if (attr.SIZE != 0) sql += $"({attr.SIZE}) ";
+                                    if (attr.UN) sql += $" UNSIGNED ";
+                                    if (attr.AI) sql += $" AUTO_INCREMENT ";
+                                    if (attr.PK) sql += $" PRIMARY KEY ";
+                                    if (attr.NN) sql += $" NOT NULL ";
+                                    sql += ",";
+                                    if (attr.UQ)
+                                    {
+                                        sql += $" UNIQUE (`{prop.Name}`),";
+                                    }
+                                }
                             }
-                            else
-                            {
-                                RowUpdate(row);
-                            }
+                            sql = sql.Substring(0, sql.Length - 1);
+                            sql += ");";
 
                         }
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-                Lib.Message.Make("Error write data table", ex);
-                return false;
-            }
-
-            return true;
-
-        }
-
-
-
-        public string[] GetListTables(string condition = "")
-        {
-            try
-            {
-                if (!TestConnection())
-                    return null;
-
-                string sql = String.Empty;
-
-                switch (type)
-                {
-                    case EType.MSSQLServer:
-                    case EType.MySQL:
-                    case EType.PostgreSQL:
+                        else if (connection.GetType().Equals(typeof(NpgsqlConnection)))
                         {
-                            sql = $@"SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '{connection.Database}' ";
-                            if (condition != "")
-                                sql += $"AND ({condition})";
-                            break;
+                            throw new Exception("Create code for handling PostgreSQL");
                         }
-                }
-
-                lock (command)
-                {
-                    DataTable dt = new DataTable();
-                    using (OdbcDataAdapter adapter = new OdbcDataAdapter(sql, connection))
-                    {
-                        adapter.Fill(dt);
-                    }
-                    return dt.Rows.Cast<DataRow>().Select(x => x["TABLE_NAME"].ToString()).ToArray();
-                }
-            }
-            catch (Exception ex)
-            {
-                Lib.Message.Make("Error get list tables", ex);
-                return null;
-            }
-        }
-        public bool DeleteTables(string[] table_names)
-        {
-            try
-            {
-                if (!TestConnection())
-                    return false;
-
-                foreach (string table_name in table_names)
-                {
-                    DeleteTable(table_name);
-                }
-            }
-            catch (Exception ex)
-            {
-                Lib.Message.Make("Error delete tables", ex);
-                return false;
-            }
-
-            return true;
-        }
-
-        public bool DeleteTable(string table_name)
-        {
-
-            try
-            {
-                if (!TestConnection())
-                    return false;
-
-                string sql = String.Empty;
-
-                switch (type)
-                {
-                    case EType.MSSQLServer:
-                    case EType.MySQL:
-                    case EType.PostgreSQL:
+                        else
                         {
-                            sql = $@"DROP TABLE '{table_name}' ";
-                            break;
+                            throw new Exception("Don't know database type");
                         }
-                }
 
-                lock (command)
-                {
-                    command.Parameters.Clear();
-                    command.CommandText = sql;
-                    command.ExecuteNonQuery();
+                        db.Statement(sql);
+                        result = true;
+                    }
                 }
             }
             catch (Exception ex)
             {
-                Lib.Message.Make($"Error delete table {table_name}", ex);
-                return false;
+                logger.Error(ex, $"{title}. Create table {table_name}");
             }
 
-            return true;
+            return result;
 
         }
-        */
-
-
 
         #endregion
 
@@ -406,6 +351,7 @@ namespace Lib
                 switch (driver.Value)
                 {
                     case "sqlsrv":
+                        throw new Exception("Create code for handling MSSQL");
                         connection = new SqlConnection();
                         compiler = new SqlKata.Compilers.SqlServerCompiler();
                         break;
@@ -414,6 +360,7 @@ namespace Lib
                         compiler = new SqlKata.Compilers.MySqlCompiler();
                         break;
                     case "pgsql":
+                        throw new Exception("Create code for handling PostgreSQL");
                         connection = new NpgsqlConnection();
                         compiler = new SqlKata.Compilers.PostgresCompiler();
                         break;
@@ -434,493 +381,10 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex);
+                logger.Error(ex, "update settings");
             }
         }
 
-        /*
-        private bool TestConnection()
-        {
-            try
-            {
-                lock (connection) lock (command)
-                    {
-                        if (connection.ConnectionString != connection_string)
-                        {
-                            if (connection.State != ConnectionState.Closed)
-                                connection.Close();
-
-                            connection.ConnectionString = connection_string;
-                        }
-
-                        if (connection.State != ConnectionState.Open)
-                        {
-                            connection.Open();
-                        }
-
-                        if (type == EType.Unknown)
-                            throw new Exception($"Unknow type data base. Choise next options {string.Join(" , ", Enum.GetValues(typeof(EType)).Cast<EType>().Where(x => x != EType.Unknown).Select(x => x.ToString()).ToArray())}");
-
-                        command.Connection = connection;
-                        command.CommandText = "SELECT 1";
-                        command.Parameters.Clear();
-                        command.ExecuteNonQuery();
-                    }
-            }
-            catch (Exception ex)
-            {
-                Lib.Message.Make("Error connection", ex);
-                return false;
-
-            }
-
-            return true;
-
-        }
-
-        private bool TableExists(DataTable dt)
-        {
-            bool result = false;
-
-            try
-            {
-                string sql = String.Empty;
-
-                switch (type)
-                {
-                    case EType.MSSQLServer:
-                    case EType.MySQL:
-                    case EType.PostgreSQL:
-                        {
-                            sql = $@"SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '{connection.Database}' AND  TABLE_NAME = '{dt.TableName}'";
-                            break;
-                        }
-                }
-
-                lock (command)
-                {
-                    command.Parameters.Clear();
-                    command.CommandText = sql;
-                    using (var reader = command.ExecuteReader())
-                    {
-                        result = reader.HasRows;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error to check table exists", ex);
-            }
-
-            if (!result)
-                Message.Make($"Error in database. Database doesn't have table [{dt.TableName}].");
-
-            return result;
-        }
-
-        private bool TableAdd(DataTable dt)
-        {
-            try
-            {
-
-                string sql = string.Empty;
-                List<string> props = new List<string>();
-
-                switch (type)
-                {
-                    case EType.MSSQLServer:
-                        {
-                            foreach (DataColumn col in dt.Columns)
-                            {
-                                List<string> result = new List<string>();
-                                if (col.ExtendedProperties.ContainsKey(typeof(SExtProp)))
-                                {
-                                    SExtProp ext_prop = (SExtProp)col.ExtendedProperties[typeof(SExtProp)];
-                                    result.Add(ext_prop.data_type.ToString());
-                                    if (ext_prop.size > 0) result.Add($"({ext_prop.size})");
-                                    if (ext_prop.auto_increment) result.Add("IDENTITY(1,1)");
-                                    if (ext_prop.primary_key) result.Add("PRIMARY KEY");
-                                    if (ext_prop.not_null) result.Add("NOT NULL"); else result.Add("NULL");
-                                }
-                                props.Add($"[{col}] { string.Join(" ", result.ToArray())} ");
-                            }
-
-                            sql = $@"CREATE TABLE [{dt.TableName}] ({string.Join(" , ", props)})";
-                            break;
-                        }
-                    case EType.MySQL:
-                    case EType.PostgreSQL:
-                        {
-                            foreach (DataColumn col in dt.Columns)
-                            {
-                                List<string> result = new List<string>();
-                                if (col.ExtendedProperties.ContainsKey(typeof(SExtProp)))
-                                {
-                                    SExtProp ext_prop = (SExtProp)col.ExtendedProperties[typeof(SExtProp)];
-                                    result.Add(ext_prop.data_type.ToString());
-                                    if (ext_prop.size > 0) result.Add($"({ext_prop.size})");
-                                    if (ext_prop.auto_increment) result.Add("AUTO_INCREMENT");
-                                    if (ext_prop.primary_key) result.Add("PRIMARY KEY");
-                                    if (ext_prop.not_null) result.Add("NOT NULL"); else result.Add("NULL");
-                                }
-                                props.Add($"`{col}` { string.Join(" ", result.ToArray())} ");
-                            }
-                            sql = $@"CREATE TABLE `{dt.TableName}` ({string.Join(" , ", props)})";
-                            break;
-
-                        }
-                }
-
-                lock (command)
-                {
-
-                    command.Parameters.Clear();
-                    command.CommandText = sql;
-                    command.ExecuteNonQuery();
-
-                }
-
-            }
-            catch (Exception ex)
-            {
-                Lib.Message.Make($"Error add table", ex);
-                return false;
-            }
-
-            return true;
-
-        }
-
-        private bool TableCheckScheme(DataTable dt)
-        {
-
-            bool error = false;
-
-            try
-            {
-
-                string sql = string.Empty;
-
-                string col_name_column_name = "COLUMN_NAME";
-                string col_name_data_type = "DATA_TYPE";
-                string col_name_character_maximum_length = "CHARACTER_MAXIMUM_LENGTH";
-                string col_name_is_nullable = "IS_NULLABLE";
-
-                switch (type)
-                {
-                    case EType.MSSQLServer:
-                    case EType.MySQL:
-                    case EType.PostgreSQL:
-                        {
-                            sql = $"SELECT {col_name_column_name}, {col_name_data_type}, {col_name_character_maximum_length} , {col_name_is_nullable} " +
-                                  $"FROM INFORMATION_SCHEMA.COLUMNS " +
-                                  $"WHERE " +
-                                  $"TABLE_SCHEMA = '{connection.Database}' " +
-                                  $"AND " +
-                                  $"TABLE_NAME = '{dt.TableName}'";
-                            break;
-                        }
-                }
-
-                DataTable scheme = new DataTable();
-
-                lock (command)
-                {
-                    using (OdbcDataAdapter adapter = new OdbcDataAdapter(sql, connection))
-                    {
-                        adapter.Fill(scheme);
-                    }
-                }
-
-
-                foreach (DataColumn col in dt.Columns)
-                {
-
-                    if (!col.ExtendedProperties.ContainsKey(typeof(Lib.Database.SExtProp)))
-                    {
-                        Lib.Message.Make($"Error in configuration of data table [{dt.TableName}]. Column [{col.ColumnName}] doesn't contain extended properties.");
-                        error = true;
-                    }
-                    else
-                    {
-                        Lib.Database.SExtProp prop = (SExtProp)col.ExtendedProperties[typeof(Lib.Database.SExtProp)];
-
-                        DataRow row = scheme.Select($" {col_name_column_name} = '{col.ColumnName}' ").FirstOrDefault();
-
-                        if (row == null)
-                        {
-                            Lib.Message.Make($"Error in database. Table [{dt.TableName}] doesn't have column [{col.ColumnName}].");
-                            error = true;
-                        }
-                        else
-                        {
-                            if (!row[col_name_data_type].ToString().Equals(prop.data_type.ToString(), StringComparison.OrdinalIgnoreCase))
-                            {
-                                Lib.Message.Make($"Error in database. Table [{dt.TableName}] column [{col.ColumnName}] has different type is [{row[col_name_data_type]}]. Right data type is [{prop.data_type}]");
-                                error = true;
-                            }
-
-                            if (prop.size > 0)
-                            {
-                                if (row[col_name_character_maximum_length] == System.DBNull.Value || (Int64)row[col_name_character_maximum_length] != prop.size)
-                                {
-                                    Lib.Message.Make($"Error in database. Table [{dt.TableName}] column [{col.ColumnName}] has different size. Right size is [{prop.size}]");
-                                    error = true;
-                                }
-                            }
-
-
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                string table_name = "unknown";
-                if (dt != null)
-                    table_name = dt.TableName;
-
-                Lib.Message.Make($"Error check scheme table [{table_name}]", ex);
-                error = true;
-            }
-
-            return !error;
-        }
-
-        private bool RowExists(DataRow dr)
-        {
-            bool result = false;
-
-            try
-            {
-
-                string sql = String.Empty;
-                DataColumn[] columns = dr.Table.Columns.Cast<DataColumn>()
-                                            .Where(x => x.ExtendedProperties.ContainsKey(typeof(SExtProp)))
-                                            .Where(x =>
-                                                        {
-                                                            SExtProp prop = (SExtProp)x.ExtendedProperties[typeof(SExtProp)];
-                                                            return prop.primary_key;
-                                                        }).ToArray();
-
-
-                List<string> conditions = new List<string>();
-
-
-                switch (type)
-                {
-                    case EType.MSSQLServer:
-                        {
-
-                            foreach (DataColumn col in columns)
-                            {
-                                conditions.Add($"[{col.ColumnName}] = ?");
-                            }
-
-                            sql = $@"SELECT [{string.Join("],[", columns.Select(x => x.ColumnName))}] FROM [{dr.Table.TableName}] WHERE {string.Join(" AND ", conditions)}";
-                            break;
-                        }
-                    case EType.MySQL:
-                    case EType.PostgreSQL:
-                        {
-
-                            foreach (DataColumn col in columns)
-                            {
-                                conditions.Add($"`{col.ColumnName}` = ?");
-                            }
-
-                            sql = $@"SELECT `{string.Join("`,`", columns.Select(x => x.ColumnName))}` FROM `{dr.Table.TableName}` WHERE {string.Join(" AND ", conditions)}";
-                            break;
-
-                        }
-                }
-
-                lock (command)
-                {
-                    command.Parameters.Clear();
-                    command.CommandText = sql;
-
-                    foreach (DataColumn col in columns)
-                    {
-                        SExtProp ext_prop = (SExtProp)col.ExtendedProperties[typeof(SExtProp)];
-                        command.Parameters.Add("", ext_prop.data_type).Value = dr[col];
-                    }
-
-                    using (var reader = command.ExecuteReader())
-                    {
-                        result = reader.HasRows;
-                    }
-                    //reader.Close();
-                }
-
-            }
-            catch (Exception ex)
-            {
-
-                throw new Exception("Error to check row exists", ex);
-            }
-
-            return result;
-        }
-
-        private bool RowInsert(DataRow dr)
-        {
-            try
-            {
-
-                string sql = string.Empty;
-                DataColumn[] columns = dr.Table.Columns.Cast<DataColumn>()
-                                            .Where(x => x.ExtendedProperties.ContainsKey(typeof(SExtProp)))
-                                            .Where(x =>
-                                            {
-                                                SExtProp prop = (SExtProp)x.ExtendedProperties[typeof(SExtProp)];
-                                                return !prop.ignore;
-                                            }).ToArray();
-
-
-                char[] q = new char[columns.Length];
-                for (int i = 0; i < q.Length; i++) { q[i] = '?'; }
-
-                switch (type)
-                {
-                    case EType.MSSQLServer:
-                        {
-                            sql = $@"INSERT INTO [{dr.Table.TableName}] ([{string.Join("],[", columns.Select(x => x.ColumnName))}]) VALUES ({string.Join(" , ", q)})";
-                            break;
-                        }
-                    case EType.MySQL:
-                    case EType.PostgreSQL:
-                        {
-                            sql = $@"INSERT `{dr.Table.TableName}` (`{string.Join("`,`", columns.Select(x => x.ColumnName))}`) VALUES ({string.Join(" , ", q)})";
-                            break;
-
-                        }
-                }
-
-                lock (command)
-                {
-
-                    command.Parameters.Clear();
-                    command.CommandText = sql;
-
-                    foreach (DataColumn col in columns)
-                    {
-                        SExtProp ext_prop = (SExtProp)col.ExtendedProperties[typeof(SExtProp)];
-                        command.Parameters.Add("", ext_prop.data_type).Value = dr[col];
-                    }
-
-                    command.ExecuteNonQuery();
-
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-
-                Lib.Message.Make("Error insert row", ex);
-                return false;
-            }
-
-            return true;
-        }
-
-        private bool RowUpdate(DataRow dr)
-        {
-
-            try
-            {
-
-                string sql = string.Empty;
-
-                DataColumn[] pk_columns = dr.Table.Columns.Cast<DataColumn>()
-                                        .Where(x => x.ExtendedProperties.ContainsKey(typeof(SExtProp)))
-                                        .Where(x =>
-                                        {
-                                            SExtProp prop = (SExtProp)x.ExtendedProperties[typeof(SExtProp)];
-                                            return prop.primary_key;
-                                        }).ToArray();
-
-                DataColumn[] columns = dr.Table.Columns.Cast<DataColumn>()
-                                        .Where(x => x.ExtendedProperties.ContainsKey(typeof(SExtProp)))
-                                        .Where(x =>
-                                        {
-                                            SExtProp prop = (SExtProp)x.ExtendedProperties[typeof(SExtProp)];
-                                            return !prop.primary_key && !prop.ignore;
-                                        }).ToArray();
-
-                List<string> conditions = new List<string>();
-                List<string> sets = new List<string>();
-
-                switch (type)
-                {
-                    case EType.MSSQLServer:
-                        {
-
-                            foreach (DataColumn col in columns)
-                            {
-                                sets.Add($"[{col.ColumnName}] = ?");
-                            }
-
-                            foreach (DataColumn col in pk_columns)
-                            {
-                                conditions.Add($"[{col.ColumnName}] = ?");
-                            }
-
-                            sql = $@"UPDATE [{dr.Table.TableName}] SET {string.Join(" , ", sets)} WHERE {string.Join(" AND ", conditions)}";
-                            break;
-                        }
-                    case EType.MySQL:
-                    case EType.PostgreSQL:
-                        {
-                            foreach (DataColumn col in columns)
-                            {
-                                sets.Add($"`{col.ColumnName}` = ?");
-                            }
-
-                            foreach (DataColumn col in pk_columns)
-                            {
-                                conditions.Add($"`{col.ColumnName}` = ?");
-                            }
-
-                            sql = $@"UPDATE `{dr.Table.TableName}` SET {string.Join(" , ", sets)} WHERE {string.Join(" AND ", conditions)}";
-                            break;
-
-                        }
-                }
-
-                lock (command)
-                {
-                    command.Parameters.Clear();
-                    command.CommandText = sql;
-
-                    foreach (DataColumn col in columns)
-                    {
-                        SExtProp ext_prop = (SExtProp)col.ExtendedProperties[typeof(SExtProp)];
-                        command.Parameters.Add("", ext_prop.data_type).Value = dr[col];
-                    }
-
-                    foreach (DataColumn col in pk_columns)
-                    {
-                        SExtProp ext_prop = (SExtProp)col.ExtendedProperties[typeof(SExtProp)];
-                        command.Parameters.Add("", ext_prop.data_type).Value = dr[col];
-                    }
-
-                    command.ExecuteNonQuery();
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                Lib.Message.Make("Error update row", ex);
-                return false;
-            }
-
-            return true;
-
-        }
-        */
         #endregion
 
     }

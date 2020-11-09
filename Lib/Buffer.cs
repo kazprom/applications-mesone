@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Lib
 {
@@ -64,6 +65,7 @@ namespace Lib
 
             if (q.Count > limit / 2)
             {
+
                 HalfEvent?.Invoke();
             }
 
@@ -88,18 +90,6 @@ namespace Lib
 
             CyclicEvent?.Invoke();
 
-            try
-            {
-
-                
-
-                
-
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex, "buffer cleaner");
-            }
         }
 
         #endregion

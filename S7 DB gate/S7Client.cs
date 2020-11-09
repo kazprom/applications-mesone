@@ -29,7 +29,7 @@ namespace S7_DB_gate
         private short rack;
         private short slot;
 
-        private Timer connection_handler;
+        private Timer timer;
 
 
         private Dictionary<short, Reader> readers = new Dictionary<short, Reader>();
@@ -51,7 +51,7 @@ namespace S7_DB_gate
 
                 UpdateSettings(cpu_type, ip, port, rack, slot);
 
-                connection_handler = new Timer(ConnectionHandler, null, 0, 10000);
+                timer = new Timer(ConnectionHandler, null, 0, 10000);
 
                 logger.Info($"{title} added");
             }
@@ -181,34 +181,45 @@ namespace S7_DB_gate
 
             try
             {
-                if (plc != null && (plc.CPU != cpu_type || plc.IP != ip || plc.Port != port || plc.Rack != rack || plc.Slot != slot))
-                {
-                    if (plc.IsConnected)
-                    {
-                        plc.Close();
-                        logger.Info($"{title} closed connection");
-                    }
-
-                    plc = null;
-                }
-
                 if (plc == null)
                 {
                     plc = new S7.Net.Plc(cpu_type, ip, port, rack, slot);
                 }
 
-                if (plc != null && !plc.IsConnected)
+                if (plc != null)
                 {
-                    try
+                    lock (plc)
                     {
-                        plc.Open();
-                        logger.Info($"{title} openned connection");
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.Warn(ex, $"{title} open connection");
+
+                        if (plc.CPU != cpu_type || plc.IP != ip || plc.Port != port || plc.Rack != rack || plc.Slot != slot)
+                        {
+                            if (plc.IsConnected)
+                            {
+                                plc.Close();
+                                logger.Info($"{title} closed connection");
+                            }
+
+                            plc = new S7.Net.Plc(cpu_type, ip, port, rack, slot);
+
+                        }
+
+                        if (!plc.IsConnected)
+                        {
+                            try
+                            {
+                                plc.Open();
+                                logger.Info($"{title} openned connection");
+                            }
+                            catch (Exception ex)
+                            {
+                                logger.Warn(ex, $"{title} open connection");
+                            }
+                        }
+
                     }
                 }
+
+
             }
             catch (Exception ex)
             {
@@ -247,6 +258,7 @@ namespace S7_DB_gate
             private S7Client parent;
             private short rate;
             private Dictionary<long, STag> tags = new Dictionary<long, STag>();
+
             private Timer timer;
 
             #endregion
@@ -264,7 +276,7 @@ namespace S7_DB_gate
 
                     title = $"{parent.title} group [{rate}]";
 
-                    timer = new Timer(Handler, null, 0, this.rate);
+                    timer = new Timer(Handler, null, 0, rate);
 
                     logger.Info($"{title} added");
 
@@ -397,54 +409,71 @@ namespace S7_DB_gate
             {
                 try
                 {
-                    if (parent.plc != null)// && parent.plc.IsConnected)
+                    lock (tags)
                     {
-                        lock (tags)
+                        foreach (STag tag in tags.Values)
                         {
-                            foreach (STag tag in tags.Values)
+
+                            DateTime ts = DateTime.Now;
+                            if (parent.plc != null && parent.plc.IsConnected)
                             {
                                 try
                                 {
+
+
                                     if (tag.rt_enabled || tag.history_enabled)
                                     {
 
-                                        DateTime ts = DateTime.Now;
                                         try
                                         {
-                                            object result = parent.plc.Read(tag.dataType,
-                                                                   tag.db,
-                                                                   tag.startByteAdr,
-                                                                   tag.varType,
-                                                                   1,
-                                                                   tag.bitAdr);
 
-                                            object value = TagData.ObjToDataType(result, tag.tagType);
-                                            byte[] value_raw = TagData.ObjToBin(value);
-                                            byte quality = (byte)TagData.EQuality.Good;
+                                            object result = null;
 
-                                            if (tag.rt_enabled)
-                                                parent.parent.rt_buf.Enqueue(new LibDBgate.Structs.RT_values()
+                                            lock (parent.plc)
+                                            {
+                                                result = parent.plc.Read(tag.dataType,
+                                                                         tag.db,
+                                                                         tag.startByteAdr,
+                                                                         tag.varType,
+                                                                         1,
+                                                                         tag.bitAdr);
+                                            }
+
+
+                                            if (result != null)
+                                            {
+                                                object value = TagData.ObjToDataType(result, tag.tagType);
+                                                byte[] value_raw = TagData.ObjToBin(value);
+                                                byte quality = (byte)TagData.EQuality.Good;
+
+
+                                                if (tag.rt_enabled)
                                                 {
-                                                    Tags_id = tag.id,
-                                                    Timestamp = ts,
-                                                    Value_raw = value_raw,
-                                                    Value_str = value.ToString(),
-                                                    Quality = quality
-                                                });
+                                                    parent.parent.rt_buf.Enqueue(new LibDBgate.Structs.RT_values()
+                                                    {
+                                                        Tags_id = tag.id,
+                                                        Timestamp = ts,
+                                                        Value_raw = value_raw,
+                                                        Value_str = value.ToString(),
+                                                        Quality = quality
+                                                    });
+                                                }
 
-                                            if (tag.history_enabled)
-                                                parent.parent.his_buf.Enqueue(new LibDBgate.Structs.History()
+                                                if (tag.history_enabled)
                                                 {
-                                                    Tags_id = tag.id,
-                                                    Timestamp = ts,
-                                                    Value = value_raw,
-                                                    Quality = quality
-                                                });
-
-
+                                                    parent.parent.his_buf.Enqueue(new LibDBgate.Structs.History()
+                                                    {
+                                                        Tags_id = tag.id,
+                                                        Timestamp = ts,
+                                                        Value = value_raw,
+                                                        Quality = quality
+                                                    });
+                                                }
+                                            }
                                         }
                                         catch (Exception ex)
                                         {
+
                                             if (tag.rt_enabled)
                                                 parent.parent.rt_buf.Enqueue(new LibDBgate.Structs.RT_values()
                                                 {
@@ -463,6 +492,18 @@ namespace S7_DB_gate
                                     logger.Warn(ex, $"{title} read");
                                 }
                             }
+                            else
+                            {
+
+                                if (tag.rt_enabled)
+                                    parent.parent.rt_buf.Enqueue(new LibDBgate.Structs.RT_values()
+                                    {
+                                        Tags_id = tag.id,
+                                        Timestamp = ts,
+                                        Quality = (byte)TagData.EQuality.Bad
+                                    });
+
+                            }
                         }
                     }
                 }
@@ -470,6 +511,8 @@ namespace S7_DB_gate
                 {
                     logger.Error(ex, $"{title} handler");
                 }
+
+
             }
 
             private bool Converter(Tag input, ref STag output)

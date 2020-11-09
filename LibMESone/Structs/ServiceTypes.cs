@@ -8,10 +8,10 @@ namespace LibMESone.Structs
 {
     public class ServiceTypes : BaseID
     {
-        [Field(Field.Etype.VarChar, 255, UQ = true)]
+        [Field(TYPE = Field.Etype.VarChar, SIZE = 255, UQ = true)]
         public string Name { get; set; }
 
-        [Field(Field.Etype.VarChar, 255)]
+        [Field(TYPE = Field.Etype.VarChar, SIZE = 255)]
         public string Guid { get; set; }
         /*
 

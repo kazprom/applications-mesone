@@ -5,19 +5,19 @@ using System.Text;
 
 namespace LibDBgate.Structs
 {
-    public class History 
+    public class History : LibMESone.Structs.BaseID
     {
 
-        [Field(Field.Etype.BigInt, NN = true)]
+        [Field(TYPE = Field.Etype.BigInt, NN = true, UN = true)]
         public long Tags_id { get; set; }
 
-        [Field(Field.Etype.TimeStamp, 3, NN = true)]
+        [Field(TYPE = Field.Etype.TimeStamp, SIZE = 3, NN = true)]
         public DateTime Timestamp { get; set; }
 
-        [Field(Field.Etype.Binary, 8, NN = true)]
+        [Field(TYPE = Field.Etype.Binary, SIZE = 8, NN = true)]
         public byte[] Value { get; set; }
 
-        [Field(Field.Etype.SmallInt, NN = true)]
+        [Field(TYPE = Field.Etype.SmallInt, NN = true)]
         public short Quality { get; set; }
 
 

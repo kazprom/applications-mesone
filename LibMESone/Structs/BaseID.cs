@@ -5,7 +5,7 @@ namespace LibMESone.Structs
     public class BaseID: Table
     {
 
-        [Field(Field.Etype.BigInt, pk: true, ai: true, nn: true)]
+        [Field(TYPE = Field.Etype.BigInt, PK = true, AI = true, NN = true, UN = true)]
         public long Id { get; set; }
 
 

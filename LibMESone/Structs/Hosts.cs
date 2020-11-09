@@ -9,7 +9,7 @@ namespace LibMESone.Structs
     public class Hosts:BaseNE
     {
 
-        [Field(Field.Etype.VarChar, 15)]
+        [Field(TYPE = Field.Etype.VarChar, SIZE = 15)]
         public string Ip { get; set; }
 
         

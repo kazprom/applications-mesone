@@ -9,10 +9,10 @@ namespace LibMESone.Structs
 {
     public class Services : BaseNE
     {
-        [Field(Field.Etype.BigInt)]
+        [Field(TYPE = Field.Etype.BigInt)]
         public long Databases_id { get; set; }
 
-        [Field(Field.Etype.BigInt)]
+        [Field(TYPE = Field.Etype.BigInt)]
         public long Service_types_id { get; set; }
 
         /*

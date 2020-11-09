@@ -10,19 +10,19 @@ namespace LibDBgate.Structs
     public class RT_values
     {
 
-        [Field(Field.Etype.BigInt, UN = true, NN = true, UQ = true)]
+        [Field(TYPE = Field.Etype.BigInt, UN = true, NN = true, UQ = true)]
         public long Tags_id { get; set; }
 
-        [Field(Field.Etype.TimeStamp, 3)]
+        [Field(TYPE = Field.Etype.TimeStamp, SIZE = 3)]
         public DateTime Timestamp { get; set; }
 
-        [Field(Field.Etype.Binary, 8)]
+        [Field(TYPE = Field.Etype.Binary, SIZE = 8)]
         public byte[] Value_raw { get; set; }
 
-        [Field(Field.Etype.VarChar, 255)]
+        [Field(TYPE = Field.Etype.VarChar, SIZE = 255)]
         public string Value_str { get; set; }
 
-        [Field(Field.Etype.TinyInt, UN = true)]
+        [Field(TYPE = Field.Etype.TinyInt, UN = true)]
         public byte Quality { get; set; }
        
     }

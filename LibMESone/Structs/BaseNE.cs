@@ -10,10 +10,10 @@ namespace LibMESone.Structs
 {
     public class BaseNE : BaseID
     {
-        [Field(Field.Etype.VarChar, 255)]
+        [Field(TYPE = Field.Etype.VarChar, SIZE = 255)]
         public string Name { get; set; }
 
-        [Field(Field.Etype.TinyInt, 1)]
+        [Field(TYPE = Field.Etype.TinyInt,SIZE = 1)]
         public bool Enabled { get; set; }
 
         /*

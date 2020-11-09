@@ -10,10 +10,10 @@ namespace LibDBgate.Structs
 
 
 
-        [Field(Field.Etype.VarChar, 15, NN = true)]
+        [Field(TYPE = Field.Etype.VarChar, SIZE = 15, NN = true)]
         public string Ip { get; set; }
 
-        [Field(Field.Etype.SmallInt, NN = true)]
+        [Field(TYPE = Field.Etype.SmallInt, NN = true)]
         public int Port { get; set; }
 
 
