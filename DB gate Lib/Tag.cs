@@ -5,8 +5,16 @@ using System.Text;
 namespace LibDBgate
 {
     [Serializable]
-    public class TagData
+    public class Tag : IDisposable
     {
+
+        #region VARIABLES
+
+        protected NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
+        #endregion
+
+        #region ENUMS
 
         [Serializable]
         public enum EQuality : byte
@@ -28,7 +36,6 @@ namespace LibDBgate
             Good_Local_Override = 216
         }
 
-
         [Serializable]
         public enum EDataType : byte
         {
@@ -44,20 +51,78 @@ namespace LibDBgate
             UInt64 = 10
         }
 
+        #endregion
 
-        [Serializable]
-        [Flags]
-        public enum ESettings : byte
+        #region PROPERTIES
+
+        public string Title { get; private set; }
+
+        public Group Parent { get; private set; }
+
+        public ulong ID { get; private set; }
+
+        public string Name { get; set; }
+
+        public DateTime Timestamp { get; set; }
+
+        public object Value { get; set; }
+
+        public EQuality Quality { get; set; }
+
+        #endregion
+
+        #region CONSTRUCTOR
+
+        public Tag(Group parent, ulong id)
         {
-            rt_value_enabled = 1,
-            history_enabled = 2
+
+            Parent = parent;
+            ID = id;
+
+            Title = $"{parent.Title} Tag [{id}]";
+
+
+            logger.Info($"{Title}. Created");
+
         }
 
-        public long id;
-        public DateTime timestamp;
-        public object value;
-        public EQuality quality;
-        public ESettings settings;
+        #endregion
+
+        #region DESTRUCTOR
+
+        ~Tag()
+        {
+        }
+
+        private bool disposedValue;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+            logger.Info($"{Title}. Disposed");
+        }
+
+        #endregion
+
+        #region PUBLICS
+
+        public virtual void LoadSettings(dynamic tag) { }
+
+
+        #endregion
 
         public static byte[] ObjToBin(object obj)
         {
@@ -105,6 +170,10 @@ namespace LibDBgate
                 {
                     System.Buffer.BlockCopy(BitConverter.GetBytes((UInt64)obj), 0, result, 0, sizeof(UInt64));
                 }
+                else if (obj == null)
+                {
+                    throw new Exception($"Data type of object is null");
+                }
                 else
                 {
                     throw new Exception($"Don't know data type of object. Type of object is {obj.GetType()}");
@@ -118,7 +187,6 @@ namespace LibDBgate
 
             return result;
         }
-
 
         public static object ObjToDataType(object obj, EDataType type)
         {
@@ -188,8 +256,5 @@ namespace LibDBgate
                     throw new Exception("Don't know data type");
             }
         }
-
-
-
     }
 }

@@ -1,6 +1,8 @@
 ﻿using LibDBgate.Structs;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,24 +12,57 @@ namespace LibDBgate
     public class Service : LibMESone.Service
     {
 
-        private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        #region VARIABLES
+
         private DateTime his_ts = default;
+        private Timer timer;
 
-        public Lib.Buffer<Structs.RT_values> rt_buf;
-        public Lib.Buffer<Structs.History> his_buf;
+        public Dictionary<ulong, Client> Clients = new Dictionary<ulong, Client>();
 
-        public Service(LibMESone.Core parent, string name) : base(parent, name)
+        public Lib.Buffer<RetroValue> retro_buf;
+
+        #endregion
+
+        #region CONSTRUCTOR
+        public Service(LibMESone.Core parent, ulong id) : base(parent, id)
         {
-            rt_buf = new Lib.Buffer<RT_values>(20, 1000);
-            rt_buf.CyclicEvent += Rt_buf_EmptierAsync;
-            rt_buf.HalfEvent += Rt_buf_EmptierAsync;
 
-            his_buf = new Lib.Buffer<History>(1000, 5000);
-            his_buf.CyclicEvent += His_buf_Emptier;
-            his_buf.HalfEvent += His_buf_Emptier;
+            retro_buf = new Lib.Buffer<RetroValue>(1000, 5000);
+            retro_buf.CyclicEvent += RetroDataHandler;
+            retro_buf.HalfEvent += RetroDataHandler;
+
+            timer = new Timer(ActualDataHandler, null, 0, 5000);
+
         }
 
-        private async void His_buf_Emptier()
+
+        #endregion
+
+        #region DESTRUCTOR
+
+        public override void Dispose(bool disposing)
+        {
+            if(disposing)
+            {
+                foreach (Client client in Clients.Values)
+                {
+                    client.Dispose();
+                }
+
+                Clients.Clear();
+                disposedValue = true;
+
+            }
+
+            base.Dispose(disposing);
+        }
+
+
+        #endregion
+
+        #region PRIVATES
+
+        private async void RetroDataHandler()
         {
             await Task.Run(() =>
             {
@@ -35,73 +70,93 @@ namespace LibDBgate
                 try
                 {
 
-                    History data = null;
+                    RetroValue data = null;
 
-                    while (his_buf.Count > 0)
+                    if (Database != null)
                     {
-
-                        if (data == null)
+                        while (retro_buf.Count > 0)
                         {
-                            data = his_buf.Dequeue();
 
-
-                            if (his_ts == default || his_ts != data.Timestamp)
+                            if (data == null)
                             {
-                                if (!database.CheckExistTable(History.GetTableName(data.Timestamp)))
+                                data = retro_buf.Dequeue();
+
+
+                                if (his_ts == default || his_ts != data.Timestamp)
                                 {
-                                    if (database.CreateTable<History>(History.GetTableName(data.Timestamp)))
+                                    if (!Database.CheckExistTable(RetroValue.GetTableName(data.Timestamp)))
                                     {
-                                        his_ts = data.Timestamp;
+                                        if (Database.CreateTable<RetroValue>(RetroValue.GetTableName(data.Timestamp)))
+                                        {
+                                            his_ts = data.Timestamp;
+                                        }
                                     }
                                 }
-                            }
 
-                            if (database.Insert(History.GetTableName(data.Timestamp), data))
-                            {
-                                data = null;
-                            }
-                            else
-                            {
-                                Thread.Sleep(1000);
+                                if (Database.Insert(RetroValue.GetTableName(data.Timestamp), data))
+                                {
+                                    data = null;
+                                }
+                                else
+                                {
+                                    Thread.Sleep(1000);
+                                }
                             }
                         }
                     }
-
                 }
                 catch (Exception ex)
                 {
-                    logger.Error(ex, $"{title}. Emptier history buffer");
+                    logger.Error(ex, $"{Title}. Retro data handler");
                 }
             });
         }
 
-        private async void Rt_buf_EmptierAsync()
+        private void ActualDataHandler(object state)
         {
-            await Task.Run(() =>
+            try
             {
-                try
+                if (Database != null)
                 {
-                    RT_values data = null;
 
-                    while (rt_buf.Count > 0)
+                    IEnumerable<Tag> rt_values = Clients.SelectMany(x => x.Value.Groups.SelectMany(y => y.Value.Tags.Values));
+
+                    foreach (Tag tag in rt_values)
                     {
-                        if (data == null)
-                            data = rt_buf.Dequeue();
-                        if (database.Update("rt_values", data))
-                            data = null;
-                        else
-                            Thread.Sleep(1000);
+                        Database.Update("rt_values", new RealTimeValue()
+                        {
+                            Tags_id = tag.ID,
+                            Timestamp = tag.Timestamp,
+                            Value_raw = Tag.ObjToBin(tag.Value),
+                            Value_str = tag.Value.ToString(),
+                            Quality = (byte)tag.Quality
+                        });
                     }
-                }
-                catch (Exception ex)
-                {
-                    logger.Error(ex, $"{title}. Emptier realtime buffer");
-                }
-            });
 
+                    IEnumerable<Diagnostic> diagnostics = Clients.Select(x => x.Value.Diagnostic);
+
+                    foreach (Diagnostic diagnostic in diagnostics)
+                    {
+                        Database.Update("diagnostics", diagnostic);
+                    }
+
+                    Database.WhereNotInDelete(Diagnostic.TableName,
+                                              nameof(Diagnostic.Clients_id),
+                                              Clients.Keys.ToArray());
+
+                    Database.WhereNotInDelete(RealTimeValue.TableName,
+                                              nameof(RealTimeValue.Tags_id),
+                                              Clients.SelectMany(x => x.Value.Groups.SelectMany(y => y.Value.Tags.Select(z => z.Key))).ToArray());
+
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, $"{Title}. Actual data handler");
+            }
         }
 
-
+        #endregion
 
     }
 }

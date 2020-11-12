@@ -8,44 +8,54 @@ namespace LibMESone
     public class ConfigFile
     {
 
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        #region CONSTANTS
+
+#if DEBUG
+        private const int period = 5000;
+#else
+        private const int period = 60000;
+#endif
+
+
+        #endregion
 
         #region VARIABLES
+
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private Lib.XML file = new Lib.XML();
         private Timer timer;
 
         #endregion
 
-        #region PROPERTIES
+        #region EVENTS
 
-        private string path;
-        public string Path { get { return path; } set { path = value; logger.Info($"Path to config file = {path}"); } }
-
-
-        private Lib.Parameter<string> db_driver = new Lib.Parameter<string>("CONFIG DB DRIVER");
-        public Lib.Parameter<string> DB_DRIVER { get { return db_driver; } }
-
-        private Lib.Parameter<string> db_host = new Lib.Parameter<string>("CONFIG DB HOST");
-        public Lib.Parameter<string> DB_HOST { get { return db_host; } }
-
-        private Lib.Parameter<int> db_port = new Lib.Parameter<int>("CONFIG DB PORT");
-        public Lib.Parameter<int> DB_PORT { get { return db_port; } }
-
-        private Lib.Parameter<string> db_charset = new Lib.Parameter<string>("CONFIG DB CHARSET");
-        public Lib.Parameter<string> DB_CHARSET { get { return db_charset; } }
-
-        private Lib.Parameter<string> db_base_name = new Lib.Parameter<string>("CONFIG DB BASE NAME");
-        public Lib.Parameter<string> DB_BASE_NAME { get { return db_base_name; } }
-
-        private Lib.Parameter<string> db_user = new Lib.Parameter<string>("CONFIG DB USER");
-        public Lib.Parameter<string> DB_USER { get { return db_user; } }
-
-        private Lib.Parameter<string> db_password = new Lib.Parameter<string>("CONFIG DB PASSWORD");
-        public Lib.Parameter<string> DB_PASSWORD { get { return db_password; } }
+        public delegate void ReadCompletedNotify(ConfigFile sender);  // delegate
+        public event ReadCompletedNotify ReadCompleted; // event
 
         #endregion
 
+        #region PROPERTIES
+
+        public string Title { get; private set; }
+
+        public string Path { get; private set; }
+
+        public string DB_Driver { get; private set; }
+
+        public string DB_Host { get; private set; }
+
+        public uint DB_Port { get; private set; }
+
+        public string DB_Charset { get; private set; }
+
+        public string DB_BaseName { get; private set; }
+
+        public string DB_User { get; private set; }
+
+        public string DB_Password { get; private set; }
+
+        #endregion
 
         #region CONSTRUCTOR
 
@@ -54,51 +64,65 @@ namespace LibMESone
             try
             {
 
-                Path = $@"{Lib.Common.PathExeFolder}{Lib.Common.NameExeFile.Split('.')[0]}.xml";
+                Title = $"Config file";
 
-                FileHandler(null);
-                timer = new Timer(FileHandler, null, 0, 60000);
+                Path = $@"{Lib.Common.PathExeFolder}{Lib.Common.NameExeFile.Split('.')[0]}.xml";
+                logger.Info($"{Title}. Path = {Path}");
+
+
+                timer = new Timer(FileHandler, null, 0, period);
 
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "Constructor");
+                logger.Error(ex, $"{Title}. Constructor");
             }
 
         }
 
-
-
         #endregion
 
-
-
         #region PRIVATES
-
-
 
         private void FileHandler(object state)
         {
             try
             {
-                file.Path = path;
+                file.Path = Path;
 
-                db_driver.Value = file.ReadValue("DB/DRIVER", Lib.Database.default_driver);
-                db_host.Value = file.ReadValue("DB/HOST", Lib.Database.default_host);
+                string result = "";
 
-                int db_port_value;
-                if (int.TryParse(file.ReadValue("DB/PORT", Lib.Database.default_port.ToString()), out db_port_value))
-                    db_port.Value = db_port_value;
+                result = file.ReadValue("DB/DRIVER", Lib.Database.default_driver);
+                if (DB_Driver != result) { DB_Driver = result; logger.Info($"{Title}. DB DRIVER = {DB_Driver}"); }
 
-                db_charset.Value = file.ReadValue("DB/CHARSET", Lib.Database.default_charset);
-                db_base_name.Value = file.ReadValue("DB/BASE_NAME", Lib.Database.default_base_name);
-                db_user.Value = file.ReadValue("DB/USER", Lib.Database.default_user);
-                db_password.Value = file.ReadValue("DB/PASSWORD", Lib.Database.default_password);
+
+                result = file.ReadValue("DB/HOST", Lib.Database.default_host);
+                if (DB_Host != result) { DB_Host = result; logger.Info($"{Title}. DB HOST = {DB_Host}"); }
+
+                uint port;
+                if (uint.TryParse(file.ReadValue("DB/PORT", Lib.Database.default_port.ToString()), out port))
+                {
+                    if (DB_Port != port) { DB_Port = port; logger.Info($"{Title}. DB PORT = {DB_Port}"); }
+                }
+
+                result = file.ReadValue("DB/CHARSET", Lib.Database.default_charset);
+                if (DB_Charset != result) { DB_Charset = result; logger.Info($"{Title}. DB CHARSET = {DB_Charset}"); }
+
+                result = file.ReadValue("DB/BASE_NAME", Lib.Database.default_base_name);
+                if (DB_BaseName != result) { DB_BaseName = result; logger.Info($"{Title}. DB BASE_NAME = {DB_Host}"); }
+
+                result = file.ReadValue("DB/USER", Lib.Database.default_user);
+                if (DB_User != result) { DB_User = result; logger.Info($"{Title}. DB USER = {DB_User}"); }
+
+                result = file.ReadValue("DB/PASSWORD", Lib.Database.default_password);
+                if (DB_Password != result) { DB_Password = result; logger.Info($"{Title}. DB PASSWORD = {DB_Password}"); }
+
+                ReadCompleted?.Invoke(this);
 
             }
             catch (Exception ex)
             {
-               logger.Error(ex, "Error to handle config file");
+                logger.Error(ex, $"{Title}. File handler");
             }
 
         }

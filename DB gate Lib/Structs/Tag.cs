@@ -7,11 +7,13 @@ namespace LibDBgate.Structs
     public class Tag : LibMESone.Structs.BaseNE
     {
 
-        [Field(TYPE = Field.Etype.BigInt, NN = true)]
-        public long Clients_id { get; set; }
+        static public string TableName = "tags";
 
-        [Field(TYPE = Field.Etype.SmallInt, NN = true)]
-        public short Rate { get; set; }
+        [Field(TYPE = Field.Etype.BigInt, NN = true, UN = true)]
+        public ulong Clients_id { get; set; }
+
+        [Field(TYPE = Field.Etype.SmallInt, NN = true, UN = true)]
+        public ushort Rate { get; set; }
 
         [Field(TYPE = Field.Etype.VarChar, SIZE = 15, NN = true)]
         public string Data_type { get; set; }
@@ -21,6 +23,6 @@ namespace LibDBgate.Structs
 
         [Field(TYPE = Field.Etype.TinyInt, SIZE = 1, NN = true)]
         public bool History_enabled { get; set; }
-    
+
     }
 }

@@ -23,7 +23,7 @@ namespace OPC_DB_gate_client
         #endregion
 
 
-        public OPCclient(string name, Lib.Buffer<LibDBgate.TagData> buffer) : base(name, buffer)
+        public OPCclient(string name, Lib.Buffer<LibDBgate.Tag> buffer) : base(name, buffer)
         {
             try
             {
@@ -86,7 +86,7 @@ namespace OPC_DB_gate_client
                         {
                             Opc.Da.Item item = new Opc.Da.Item();
                             item.ClientHandle = tag.id;
-                            item.ReqType = LibDBgate.TagData.DataTypeToType(tag.data_type);
+                            item.ReqType = LibDBgate.Tag.DataTypeToType(tag.data_type);
                             item.ItemName = tag.path;
                             items.Add(item);
                             Lib.Message.Make($"OPC server [{opc_server.Name}] group [{subscription_state.Name}] added tag [{tag.path}]");
@@ -109,12 +109,12 @@ namespace OPC_DB_gate_client
             {
                 foreach (var item in values)
                 {
-                    buffer.Enqueue(new LibDBgate.TagData()
+                    buffer.Enqueue(new LibDBgate.Tag()
                     {
                         id = (long)item.ClientHandle,
                         timestamp = DateTime.Now,
                         value = item.Value,
-                        quality = (LibDBgate.TagData.EQuality)item.Quality.GetCode()
+                        quality = (LibDBgate.Tag.EQuality)item.Quality.GetCode()
 
                     });
                 }

@@ -59,62 +59,70 @@ namespace Lib
 
         private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        private Parameter<string> driver;
-        private Parameter<string> host;
-        private Parameter<int> port;
-        private Parameter<string> charset;
-        private Parameter<string> base_name;
-        private Parameter<string> user;
-        private Parameter<string> password;
 
         private IDbConnection connection;
         private SqlKata.Compilers.Compiler compiler;
         private QueryFactory db;
 
-        private string title = "";
+
+        #endregion
+
+        #region PROPERTIES
+
+        public string Title { get; private set; }
+
+        public ulong ID { get; private set; }
+
+        public string Name { get; private set; }
+
+        public string Driver { get; private set; }
+
+        public string Host { get; private set; }
+
+        public uint Port { get; private set; }
+
+        public string Charset { get; private set; }
+
+        public string BaseName { get; private set; }
+
+        public string User { get; private set; }
+
+        public string Password { get; private set; }
 
         #endregion
 
         #region CONSTRUCTOR
 
-
-        public Database(Parameter<string> driver,
-                        Parameter<string> host,
-                        Parameter<int> port,
-                        Parameter<string> charset,
-                        Parameter<string> base_name,
-                        Parameter<string> user,
-                        Parameter<string> password)
+        public Database(ulong id)
         {
-            try
-            {
-                this.driver = driver;
-                this.host = host;
-                this.port = port;
-                this.charset = charset;
-                this.base_name = base_name;
-                this.user = user;
-                this.password = password;
-
-                this.driver.ValueChanged += UpdateSettings;
-                this.host.ValueChanged += UpdateSettings;
-                this.port.ValueChanged += UpdateSettings;
-                this.charset.ValueChanged += UpdateSettings;
-                this.base_name.ValueChanged += UpdateSettings;
-                this.user.ValueChanged += UpdateSettings;
-                this.password.ValueChanged += UpdateSettings;
-
-                UpdateSettings(null);
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex);
-            }
+            ID = id;
         }
 
         #endregion
 
         #region PUBLICS
+
+        public IEnumerable<T> WhereRead<T>(string table_name, object constraints)
+        {
+            IEnumerable<T> result = null;
+
+            try
+            {
+                if (db != null)
+                {
+                    lock (db)
+                    {
+                        result = db.Query(table_name).Where(constraints).Get<T>();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, $"{Title}. Read where table {table_name}");
+            }
+
+            return result;
+        }
 
         public IEnumerable<T> Read<T>(string table_name)
         {
@@ -133,29 +141,10 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"{title}. Read table {table_name}");
+                logger.Error(ex, $"{Title}. Read table {table_name}");
             }
 
             return result;
-        }
-
-        public bool Update<T>(Func<string> func_table_namer, T data)
-        {
-            string table_name = "";
-
-            try
-            {
-                if (func_table_namer != null)
-                    table_name = func_table_namer();
-
-                return (Update<T>(table_name, data));
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex, $"{title}. Update in table {table_name}");
-            }
-
-            return false;
         }
 
         public bool Update<T>(string table_name, T data)
@@ -165,25 +154,18 @@ namespace Lib
 
             try
             {
-                if (db != null)
+                if (db != null && data != null)
                 {
                     lock (db)
                     {
 
-                        Dictionary<string, object> condition = new Dictionary<string, object>();
+                        Dictionary<string, object> constraints = new Dictionary<string, object>();
                         Dictionary<string, object> values = new Dictionary<string, object>();
-                        foreach (PropertyInfo prop in data.GetType().GetProperties().Where(x => x.GetCustomAttribute(typeof(Field)) != null))
-                        {
-                            Field attr = prop.GetCustomAttribute(typeof(Field)) as Field;
-                            if (attr != null && (attr.PK || attr.UQ))
-                                condition.Add(prop.Name, prop.GetValue(data));
-                            else
-                                values.Add(prop.Name, prop.GetValue(data));
-                        }
+                        Constraints<T>(data, ref constraints, ref values);
 
-                        if (condition.Count > 0)
+                        if (constraints.Count > 0)
                         {
-                            if (db.Query(table_name).Where(condition).Update(values) == 0) Insert<T>(table_name, data);
+                            if (db.Query(table_name).Where(constraints).Update(values) == 0) Insert<T>(table_name, data);
                         }
                         else
                         {
@@ -197,7 +179,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"{title}. Update in table {table_name}");
+                logger.Error(ex, $"{Title}. Update in table {table_name}");
             }
 
             return result;
@@ -221,7 +203,48 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"{title}. Insert to table {table_name}");
+                logger.Error(ex, $"{Title}. Insert to table {table_name}");
+            }
+
+            return result;
+        }
+
+        public bool WhereNotInDelete<T>(string table_name, string col_name, T[] data)
+        {
+            bool result = false;
+            try
+            {
+
+                if (db != null)
+                {
+                    lock (db)
+                    {
+                        db.Query(table_name).WhereNotIn(col_name, data).Delete();
+                    }
+                }
+
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, $"{Title}. Delete where NOT in table {table_name}");
+            }
+
+            return result;
+        }
+
+        public bool CompareTableSchema<T>(string table_name)
+        {
+            bool result = false;
+
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
 
             return result;
@@ -264,7 +287,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"{title}. Check exist table {table_name}");
+                logger.Error(ex, $"{Title}. Check exist table {table_name}");
             }
 
             return result;
@@ -333,56 +356,106 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"{title}. Create table {table_name}");
+                logger.Error(ex, $"{Title}. Create table {table_name}");
             }
 
             return result;
 
         }
 
-        #endregion
-
-        #region PRIVATES
-
-        private void UpdateSettings(object value)
+        public void LoadSettings(string name, string driver, string host, uint port, string charset, string base_name, string user, string password)
         {
             try
             {
-                switch (driver.Value)
-                {
-                    case "sqlsrv":
-                        throw new Exception("Create code for handling MSSQL");
-                        connection = new SqlConnection();
-                        compiler = new SqlKata.Compilers.SqlServerCompiler();
-                        break;
-                    case "mysql":
-                        connection = new MySqlConnection($"Server={host.Value};Port={port.Value};CharSet={charset.Value};Database={base_name.Value};Uid={user.Value};Pwd={password.Value};");
-                        compiler = new SqlKata.Compilers.MySqlCompiler();
-                        break;
-                    case "pgsql":
-                        throw new Exception("Create code for handling PostgreSQL");
-                        connection = new NpgsqlConnection();
-                        compiler = new SqlKata.Compilers.PostgresCompiler();
-                        break;
-                    default:
-                        connection = null;
-                        compiler = null;
-                        break;
-                }
+                Name = name;
+                Title = $"Database {Name}";
 
-                if (connection != null && compiler != null)
+                if (Driver != driver || Host != host || Port != port || Charset != charset || BaseName != base_name || User != user || Password != password)
                 {
-                    db = new QueryFactory(connection, compiler);
-                    title = $"Databse {db.Connection.Database}";
+
+                    Driver = driver;
+                    Host = host;
+                    Port = port;
+                    Charset = charset;
+                    BaseName = base_name;
+                    User = user;
+                    Password = password;
+
+                    switch (driver)
+                    {
+                        case "sqlsrv":
+                            throw new Exception("Create code for handling MSSQL");
+                            connection = new SqlConnection();
+                            compiler = new SqlKata.Compilers.SqlServerCompiler();
+                            break;
+                        case "mysql":
+                            connection = new MySqlConnection($"Server={host};Port={port};CharSet={charset};Database={base_name};Uid={user};Pwd={password};");
+                            compiler = new SqlKata.Compilers.MySqlCompiler();
+                            break;
+                        case "pgsql":
+                            throw new Exception("Create code for handling PostgreSQL");
+                            connection = new NpgsqlConnection();
+                            compiler = new SqlKata.Compilers.PostgresCompiler();
+                            break;
+                        default:
+                            connection = null;
+                            compiler = null;
+                            break;
+                    }
+
+                    if (connection != null && compiler != null)
+                    {
+                        db = new QueryFactory(connection, compiler);
+                        logger.Info($"{Title}. Connection {connection.ConnectionString}");
+                    }
+                    else
+                        db = null;
+
                 }
-                else
-                    db = null;
 
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "update settings");
+                logger.Error(ex, $"{Title}. Settings");
             }
+        }
+
+        #endregion
+
+        #region PRIVATES
+
+
+        private void Constraints<T>(T data, ref Dictionary<string, object> constraints, ref Dictionary<string, object> values)
+        {
+            try
+            {
+                IEnumerable<PropertyInfo> props = data.GetType().GetProperties().Where(x => x.GetCustomAttribute(typeof(Field)) != null);
+                foreach (PropertyInfo prop in props)
+                {
+                    Field attr = prop.GetCustomAttribute(typeof(Field)) as Field;
+                    if (attr != null)
+                    {
+                        if (!attr.AI && !attr.IGNORE)
+                        {
+                            if (attr.PK || attr.UQ)
+                            {
+                                if (constraints != null)
+                                    constraints.Add(prop.Name, prop.GetValue(data));
+                            }
+                            else
+                            {
+                                if (values != null)
+                                    values.Add(prop.Name, prop.GetValue(data));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, $"{Title}. Constraints");
+            }
+
         }
 
         #endregion

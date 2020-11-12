@@ -2,47 +2,113 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Linq;
+using System.Reflection;
 
 namespace LibMESone
 {
-    public class Core
+    public class Core : IDisposable
     {
 
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        #region CONSTANTS
+
+#if DEBUG
+        private const int period = 5000;
+#else
+        private const int period = 60000;
+#endif
+
+        #endregion
+
 
         #region VARIABLES
 
-        private ConfigFile config_file;
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         private Type service_type;
-        private Dictionary<long, Service> services = new Dictionary<long, Service>();
+
+        private ConfigFile config_file = new ConfigFile();
+        private Dictionary<ulong, Service> services = new Dictionary<ulong, Service>();
 
         private Lib.Database database;
+
         private Timer timer;
 
         #endregion
 
+        #region PROPERTIES
+
+        public string Name { get { return "CORE"; } }
+
+        #endregion
 
         #region CONTRUCTOR
 
-        public Core(ConfigFile config_file, Type service_type)
+        public Core(Type service_type)
         {
+            try
+            {
 
-            this.config_file = config_file;
-            this.service_type = service_type;
+                this.service_type = service_type;
 
-            database = new Lib.Database(this.config_file.DB_DRIVER,
-                                        this.config_file.DB_HOST,
-                                        this.config_file.DB_PORT,
-                                        this.config_file.DB_CHARSET,
-                                        this.config_file.DB_BASE_NAME,
-                                        this.config_file.DB_USER,
-                                        this.config_file.DB_PASSWORD);
+                config_file.ReadCompleted += (ConfigFile sender) =>
+                {
+                    if (database == null) database = new Lib.Database(0);
 
-            timer = new Timer(GetServices, null, 0, 60000);
+                    database.LoadSettings(Name,
+                                          sender.DB_Driver,
+                                          sender.DB_Host,
+                                          sender.DB_Port,
+                                          sender.DB_Charset,
+                                          sender.DB_BaseName,
+                                          sender.DB_User,
+                                          sender.DB_Password);
+                };
 
+                timer = new Timer(GetServices, null, 0, period);
+
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, $"{Name}. Constructor");
+            }
         }
+
         #endregion
 
+        #region DESTRUCTOR
+
+        ~Core()
+        {
+            logger.Info($"{Name}. Disposed");
+        }
+
+        private bool disposedValue;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    foreach (Service service in services.Values)
+                    {
+                        service.Dispose();
+                    }
+
+                    services.Clear();
+
+                }
+
+                disposedValue = true;
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
 
         #region PRIVATES
 
@@ -79,18 +145,18 @@ namespace LibMESone
                     else if (services != null && database != null && hosts != null)
                     {
 
-                        IEnumerable<Structs.Services> enabled_services = services.Where(x => x.Service_types_id == service_type.Id).Where(x => x.Enabled);
-                        IEnumerable<Structs.Databases> enabled_databases = databases.Where(x => x.Enabled);
-                        IEnumerable<Structs.Hosts> enabled_hosts = hosts.Where(x => x.Enabled);
+                        IEnumerable<Structs.Services> enabled_services = services.Where(x => x.Service_types_id == service_type.Id).Where(x => (bool)x.Enabled);
+                        IEnumerable<Structs.Databases> enabled_databases = databases.Where(x => (bool)x.Enabled);
+                        IEnumerable<Structs.Hosts> enabled_hosts = hosts.Where(x => (bool)x.Enabled);
 
-                        IEnumerable<Structs.DatabasesHosts> dh;
+                        IEnumerable<DatabasesHosts> dh;
 
                         dh = enabled_databases
                             .Join(
                             enabled_hosts,
                             db => db.Hosts_id,
                             host => host.Id,
-                            (db, host) => new Structs.DatabasesHosts
+                            (db, host) => new DatabasesHosts
                             {
                                 Id = db.Id,
                                 Database = db.Database,
@@ -103,14 +169,14 @@ namespace LibMESone
                             }
                             );
 
-                        IEnumerable<Structs.ServicesDatabasesHosts> sdh;
+                        IEnumerable<ServicesDatabasesHosts> sdh;
 
                         sdh = enabled_services
                             .Join(
                             dh,
                             srv => srv.Databases_id,
                             d_h => d_h.Id,
-                            (srv, d_h) => new Structs.ServicesDatabasesHosts
+                            (srv, d_h) => new ServicesDatabasesHosts
                             {
                                 Id = srv.Id,
                                 Name = srv.Name,
@@ -124,55 +190,88 @@ namespace LibMESone
                             }
                             );
 
-                        IEnumerable<long> fresh_ids = sdh.Select(x => x.Id);
-                        IEnumerable<long> existing_ids = this.services.Keys;
+                        IEnumerable<ulong> fresh_ids = sdh.Select(x => (ulong)x.Id);
+                        IEnumerable<ulong> existing_ids = this.services.Keys;
 
-                        IEnumerable<long> waste = existing_ids.Except(fresh_ids);
-                        IEnumerable<long> modify = fresh_ids.Intersect(existing_ids);
-                        IEnumerable<long> missing = fresh_ids.Except(existing_ids);
+                        IEnumerable<ulong> waste = existing_ids.Except(fresh_ids);
+                        IEnumerable<ulong> modify = fresh_ids.Intersect(existing_ids);
+                        IEnumerable<ulong> missing = fresh_ids.Except(existing_ids);
 
-                        foreach (long service_id in waste)
+                        foreach (ulong service_id in waste)
                         {
                             this.services[service_id].Dispose();
                             this.services.Remove(service_id);
                         }
 
-                        foreach (long service_id in modify)
+                        foreach (ulong service_id in modify)
                         {
-                            Structs.ServicesDatabasesHosts set_service = sdh.First(x => x.Id == service_id);
+                            ServicesDatabasesHosts set_service = sdh.First(x => x.Id == service_id);
 
-                            this.services[service_id].UpdateSettings(set_service.Driver,
-                                                                     set_service.Host,
-                                                                     set_service.Port,
-                                                                     set_service.Charset,
-                                                                     set_service.Database,
-                                                                     set_service.Username,
-                                                                     set_service.Password);
+                            this.services[service_id].LoadDatabaseSettings((ulong)set_service.Id,
+                                                                           set_service.Name,
+                                                                           set_service.Driver,
+                                                                           set_service.Host,
+                                                                           set_service.Port,
+                                                                           set_service.Charset,
+                                                                           set_service.Database,
+                                                                           set_service.Username,
+                                                                           set_service.Password);
                         }
 
-                        foreach (long service_id in missing)
+                        foreach (ulong service_id in missing)
                         {
-                            Structs.ServicesDatabasesHosts set_service = sdh.First(x => x.Id == service_id);
-                            Service inst_service = (Service)Activator.CreateInstance(this.service_type, this, set_service.Name);
+                            ServicesDatabasesHosts set_service = sdh.First(x => x.Id == service_id);
+                            Service inst_service = (Service)Activator.CreateInstance(this.service_type, this, set_service.Id);
 
-                            inst_service.UpdateSettings(set_service.Driver,
-                                                        set_service.Host,
-                                                        set_service.Port,
-                                                        set_service.Charset,
-                                                        set_service.Database,
-                                                        set_service.Username,
-                                                        set_service.Password);
+                            inst_service.LoadDatabaseSettings((ulong)set_service.Id,
+                                                              set_service.Name,
+                                                              set_service.Driver,
+                                                              set_service.Host,
+                                                              set_service.Port,
+                                                              set_service.Charset,
+                                                              set_service.Database,
+                                                              set_service.Username,
+                                                              set_service.Password);
 
-                            this.services.Add(set_service.Id, inst_service);
+                            this.services.Add((ulong)set_service.Id, inst_service);
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                logger.Error(ex);
+                logger.Error(ex, $"{Name}. Get services");
             }
         }
+
+        private class ServicesDatabasesHosts : DatabasesHosts
+        {
+
+            public string Name { get; set; }
+
+
+        }
+
+        private class DatabasesHosts : Structs.BaseID
+        {
+
+            public string Database { get; set; }
+
+            public string Driver { get; set; }
+
+            public string Host { get; set; }
+
+            public uint Port { get; set; }
+
+            public string Charset { get; set; }
+
+            public string Username { get; set; }
+
+            public string Password { get; set; }
+
+
+        }
+
 
         #endregion
 

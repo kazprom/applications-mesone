@@ -14,14 +14,14 @@ namespace OPC_DB_gate_server
 
         private Clients clients;
         private Tags tags;
-        private Lib.Buffer<LibDBgate.TagData> buffer;
+        private Lib.Buffer<LibDBgate.Tag> buffer;
         private Diagnostics diagnostics;
 
         private Dictionary<int, TCPconnection> connections = new Dictionary<int, TCPconnection>();
 
         #endregion
 
-        public Connections(Clients clients, Tags tags, Lib.Buffer<LibDBgate.TagData> buffer, Diagnostics diagnostics)
+        public Connections(Clients clients, Tags tags, Lib.Buffer<LibDBgate.Tag> buffer, Diagnostics diagnostics)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace OPC_DB_gate_server
                 {
                     path = (string)e.Row.ItemArray[e.Row.Table.Columns.IndexOf(Tags.col_name_path)],
                     rate = (int)e.Row.ItemArray[e.Row.Table.Columns.IndexOf(Tags.col_name_rate)],
-                    data_type = (LibDBgate.TagData.EDataType)e.Row.ItemArray[e.Row.Table.Columns.IndexOf(Tags.col_name_data_type)]
+                    data_type = (LibDBgate.Tag.EDataType)e.Row.ItemArray[e.Row.Table.Columns.IndexOf(Tags.col_name_data_type)]
                 };
 
                 lock (connections)

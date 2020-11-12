@@ -11,14 +11,16 @@ namespace Lib
     {
 
         private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private const string layout_info = "[${longdate}] [${level}] ${message:withException=false}";
+        private const string layout_error = layout_info + "${newline}${exception}";
+
 
         public Common()
         {
 
-
             var configuration = new NLog.Config.LoggingConfiguration();
-            var consoleInfo = new NLog.Targets.ColoredConsoleTarget("console") { Layout = "[${longdate}] [${level}] ${message:withException=false}" };
-            var consoleError = new NLog.Targets.ColoredConsoleTarget("console") { Layout = consoleInfo.Layout + "${newline}${exception}" };
+            var consoleInfo = new NLog.Targets.ColoredConsoleTarget("console") { Layout = layout_info };
+            var consoleError = new NLog.Targets.ColoredConsoleTarget("console") { Layout = layout_error };
 
             configuration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Info, consoleInfo);
             configuration.AddRule(NLog.LogLevel.Warn, NLog.LogLevel.Fatal, consoleError);
@@ -33,7 +35,7 @@ namespace Lib
         public static string PathExeFolder { get { return System.AppDomain.CurrentDomain.BaseDirectory; } }
         public static string NameExeFile { get { return System.AppDomain.CurrentDomain.FriendlyName; } }
 
-       
+
 
         private string AppName()
         {
@@ -42,14 +44,12 @@ namespace Lib
             return fvi.ProductName;
         }
 
-        
-
         private string AppInfo()
         {
             return $"{AppName()} (v{AppVersion()}) GUID [{AppGUID()}]";
         }
 
-        private  void PrintAppInfo()
+        private void PrintAppInfo()
         {
             logger.Info(AppInfo());
         }
@@ -87,7 +87,6 @@ namespace Lib
             }
         }
 
-
         public static string AppVersion()
         {
             Assembly assembly = Assembly.GetEntryAssembly();
@@ -101,7 +100,6 @@ namespace Lib
             GuidAttribute guidAttr = (GuidAttribute)assembly.GetCustomAttributes(typeof(GuidAttribute), true).FirstOrDefault();
             return guidAttr.Value;
         }
-
 
 
     }

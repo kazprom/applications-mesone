@@ -36,7 +36,7 @@ namespace OPC_DB_gate_server
 
 
 
-        public void Put(LibDBgate.TagData tag)
+        public void Put(LibDBgate.Tag tag)
         {
             try
             {
@@ -85,7 +85,7 @@ namespace OPC_DB_gate_server
 
                     row[col_name_tags_id] = tag.id;
                     row[col_name_timestamp] = tag.timestamp;
-                    row[col_name_value] = LibDBgate.TagData.ObjToBin(tag.value);
+                    row[col_name_value] = LibDBgate.Tag.ObjToBin(tag.value);
                     row[col_name_quality] = tag.quality;
 
                     table.Rows.Add(row);

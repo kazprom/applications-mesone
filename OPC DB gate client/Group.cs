@@ -13,7 +13,7 @@ namespace OPC_DB_gate_client
         {
             public long id;
             public string path;
-            public LibDBgate.TagData.EDataType data_type;
+            public LibDBgate.Tag.EDataType data_type;
         }
 
         #endregion

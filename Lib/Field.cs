@@ -15,7 +15,8 @@ namespace Lib
             TimeStamp,
             TinyInt,
             SmallInt,
-            Binary
+            Binary,
+            Text
         }
 
         /// <summary>

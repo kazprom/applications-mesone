@@ -11,11 +11,11 @@ namespace S7_DB_gate.Structs
         [Field(TYPE = Field.Etype.VarChar, SIZE = 10, NN = true)]
         public string Cpu_type { get; set; }
 
-        [Field(TYPE = Field.Etype.SmallInt, NN = true)]
-        public short Rack { get; set; }
+        [Field(TYPE = Field.Etype.SmallInt, NN = true, UN = true)]
+        public ushort Rack { get; set; }
 
-        [Field(TYPE = Field.Etype.SmallInt, NN = true)]
-        public short Slot { get; set; }
+        [Field(TYPE = Field.Etype.SmallInt, NN = true, UN = true)]
+        public ushort Slot { get; set; }
 
     }
 }

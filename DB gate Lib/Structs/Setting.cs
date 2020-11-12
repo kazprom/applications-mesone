@@ -8,6 +8,8 @@ namespace LibDBgate.Structs
     public class Setting:LibMESone.Structs.BaseID
     {
 
+        static public string TableName = "settings";
+
         [Field(TYPE = Field.Etype.VarChar, SIZE = 50, NN = true)]
         public string Key { get; set; }
 

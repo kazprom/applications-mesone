@@ -5,11 +5,11 @@ using System.Text;
 
 namespace LibDBgate.Structs
 {
-    public class History : LibMESone.Structs.BaseID
+    public class RetroValue : LibMESone.Structs.BaseID
     {
 
         [Field(TYPE = Field.Etype.BigInt, NN = true, UN = true)]
-        public long Tags_id { get; set; }
+        public ulong Tags_id { get; set; }
 
         [Field(TYPE = Field.Etype.TimeStamp, SIZE = 3, NN = true)]
         public DateTime Timestamp { get; set; }
@@ -17,8 +17,8 @@ namespace LibDBgate.Structs
         [Field(TYPE = Field.Etype.Binary, SIZE = 8, NN = true)]
         public byte[] Value { get; set; }
 
-        [Field(TYPE = Field.Etype.SmallInt, NN = true)]
-        public short Quality { get; set; }
+        [Field(TYPE = Field.Etype.TinyInt, NN = true, UN = true)]
+        public byte Quality { get; set; }
 
 
         public static string GetTableName(DateTime ts)

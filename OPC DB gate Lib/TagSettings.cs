@@ -10,7 +10,7 @@ namespace LibOPCDBgate
 
         public string path;
         public int rate;
-        public LibDBgate.TagData.EDataType data_type;
+        public LibDBgate.Tag.EDataType data_type;
 
         public bool rt_values_enabled;
         public bool history_enabled;

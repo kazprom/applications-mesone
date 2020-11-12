@@ -46,7 +46,7 @@ namespace Lib
 
         #endregion
 
-
+        #region CONSTRUCTOR
 
         public Buffer(uint limit, 
                       uint time_storage)
@@ -56,6 +56,10 @@ namespace Lib
 
             timer = new Timer(Cleaner, null, 0, this.time_storage);
         }
+
+        #endregion
+
+        #region PUBLICS
 
         public void Enqueue(T obj)
         {
@@ -82,6 +86,7 @@ namespace Lib
             return obj;
         }
 
+        #endregion
 
         #region PRIVATES
 

@@ -12,14 +12,14 @@ namespace OPC_DB_gate_client
         #region VARIABLES
 
         private TCPconnection connection;
-        Lib.Buffer<LibDBgate.TagData> buffer;
+        Lib.Buffer<LibDBgate.Tag> buffer;
         private Dictionary<string, IDataReader> data_readers = new Dictionary<string, IDataReader>();
 
         #endregion
 
         #region CONSTRUCTOR
 
-        public DataReaders(TCPconnection connection, Lib.Buffer<LibDBgate.TagData> buffer)
+        public DataReaders(TCPconnection connection, Lib.Buffer<LibDBgate.Tag> buffer)
         {
 
             this.buffer = buffer;
