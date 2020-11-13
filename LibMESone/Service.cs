@@ -19,7 +19,7 @@ namespace LibMESone
         #region VARIABLES
 
         protected NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-        private Timer timer;
+        private Timer timer_database_read;
 
         #endregion
 
@@ -47,7 +47,7 @@ namespace LibMESone
                 ID = id;
                 Title = $"Service [{ID}]";
 
-                timer = new Timer(ClientsReader, null, 0, period);
+                timer_database_read = new Timer(DatabaseReadHandler, null, 0, period);
 
                 logger.Info($"{Title}. Created");
             }
@@ -65,9 +65,25 @@ namespace LibMESone
         {
         }
 
-        protected bool disposedValue;
+        private bool disposedValue;
 
-        public virtual void Dispose(bool disposing) { }
+        public virtual void Dispose(bool disposing) {
+
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    WaitHandle h = new AutoResetEvent(false);
+                    timer_database_read.Dispose(h);
+                    h.WaitOne();
+
+                    Database = null;
+                }
+
+                disposedValue = true;
+            }
+
+        }
 
         public void Dispose()
         {
@@ -95,7 +111,7 @@ namespace LibMESone
             }
         }
 
-        public virtual void ClientsReader(object state) { }
+        public virtual void DatabaseReadHandler(object state) { }
 
         #endregion
 

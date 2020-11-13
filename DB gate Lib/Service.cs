@@ -15,7 +15,7 @@ namespace LibDBgate
         #region VARIABLES
 
         private DateTime his_ts = default;
-        private Timer timer;
+        private Timer timer_database_write;
 
         public Dictionary<ulong, Client> Clients = new Dictionary<ulong, Client>();
 
@@ -31,7 +31,7 @@ namespace LibDBgate
             retro_buf.CyclicEvent += RetroDataHandler;
             retro_buf.HalfEvent += RetroDataHandler;
 
-            timer = new Timer(ActualDataHandler, null, 0, 5000);
+            timer_database_write = new Timer(DatabaseWriteHandler, null, 0, 5000);
 
         }
 
@@ -42,21 +42,26 @@ namespace LibDBgate
 
         public override void Dispose(bool disposing)
         {
-            if(disposing)
+
+            if (disposing)
             {
+
+                WaitHandle h = new AutoResetEvent(false);
+                timer_database_write.Dispose(h);
+                h.WaitOne();
+
                 foreach (Client client in Clients.Values)
                 {
                     client.Dispose();
                 }
 
                 Clients.Clear();
-                disposedValue = true;
 
             }
 
             base.Dispose(disposing);
-        }
 
+        }
 
         #endregion
 
@@ -112,23 +117,23 @@ namespace LibDBgate
             });
         }
 
-        private void ActualDataHandler(object state)
+        private void DatabaseWriteHandler(object state)
         {
             try
             {
                 if (Database != null)
                 {
 
-                    IEnumerable<Tag> rt_values = Clients.SelectMany(x => x.Value.Groups.SelectMany(y => y.Value.Tags.Values));
+                    IEnumerable<Tag> rt_values = Clients.SelectMany(x => x.Value.Groups.SelectMany(y => y.Value.Tags.Values).Where(z => z.Timestamp != null));
 
                     foreach (Tag tag in rt_values)
                     {
                         Database.Update("rt_values", new RealTimeValue()
                         {
                             Tags_id = tag.ID,
-                            Timestamp = tag.Timestamp,
+                            Timestamp = (DateTime)tag.Timestamp,
                             Value_raw = Tag.ObjToBin(tag.Value),
-                            Value_str = tag.Value.ToString(),
+                            Value_str = tag.Value != null ? tag.Value.ToString() : null,
                             Quality = (byte)tag.Quality
                         });
                     }
@@ -146,7 +151,8 @@ namespace LibDBgate
 
                     Database.WhereNotInDelete(RealTimeValue.TableName,
                                               nameof(RealTimeValue.Tags_id),
-                                              Clients.SelectMany(x => x.Value.Groups.SelectMany(y => y.Value.Tags.Select(z => z.Key))).ToArray());
+                                              rt_values.Select(x => x.ID).ToArray());
+                    //Clients.SelectMany(x => x.Value.Groups.SelectMany(y => y.Value.Tags.Select(z => z.Key))).ToArray());
 
                 }
             }

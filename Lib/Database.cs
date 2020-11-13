@@ -235,16 +235,73 @@ namespace Lib
 
         public bool CompareTableSchema<T>(string table_name)
         {
-            bool result = false;
+            bool result = true;
 
             try
             {
+                if (db != null)
+                {
+                    lock (db)
+                    {
 
+                        if (connection.GetType().Equals(typeof(SqlConnection)))
+                        {
+                            throw new Exception("Create code for handling MSSQL");
+                        }
+                        else if (connection.GetType().Equals(typeof(MySqlConnection)))
+                        {
+                            IEnumerable<Structs.MySQLInfoSchemaCols> rows;
+
+                            rows = WhereRead<Structs.MySQLInfoSchemaCols>("INFORMATION_SCHEMA.COLUMNS", new
+                            {
+                                Table_schema = db.Connection.Database,
+                                Table_name = table_name
+                            });
+
+                            if (rows != null)
+                            {
+                                foreach (PropertyInfo prop in typeof(T).GetProperties().Where(x => x.GetCustomAttribute(typeof(Field)) != null))
+                                {
+
+                                    Structs.MySQLInfoSchemaCols row = rows.Where(x => x.Column_name.Equals(prop.Name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+
+                                    if (row == null)
+                                    {
+                                        logger.Warn($"{Title}. Table [{table_name}] Column [{prop.Name}] not found");
+                                        result = false;
+                                    }
+                                    else
+                                    {
+                                        Field attr = prop.GetCustomAttribute(typeof(Field)) as Field;
+
+                                        string type = $"{attr.TYPE}";
+                                        type += attr.SIZE > 0 ? $"({attr.SIZE})" : "";
+                                        type += attr.UN ? " unsigned" : "";
+
+                                        if(!row.Column_type.Equals(type, StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            logger.Warn($"{Title}. Table [{table_name}] Column [{prop.Name}] Type [{type}] wrong. Current [{row.Column_type}]");
+                                            result = false;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else if (connection.GetType().Equals(typeof(NpgsqlConnection)))
+                        {
+                            throw new Exception("Create code for handling PostgreSQL");
+                        }
+                        else
+                        {
+                            throw new Exception("Don't know database type");
+                        }
+                    }
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                logger.Error(ex, $"{Title}. Comare table schema {table_name}");
+                result = false;
             }
 
             return result;

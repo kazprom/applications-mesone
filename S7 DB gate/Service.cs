@@ -20,8 +20,9 @@ namespace S7_DB_gate
 
         #region PUBLICS
 
-        public override void ClientsReader(object state)
+        public override void DatabaseReadHandler(object state)
         {
+
             try
             {
                 if (Database != null)
@@ -50,14 +51,14 @@ namespace S7_DB_gate
                         foreach (ulong point_id in modify)
                         {
                             Structs.Client set_point = clients.First(x => x.Id == point_id);
-                            Client srv = (Client)this.Clients[point_id];
+                            Client srv = (Client)Clients[point_id];
 
                             srv.LoadSettings(set_point.Name,
                                              set_point.Cpu_type,
                                              set_point.Ip,
                                              set_point.Port,
-                                             (ushort)set_point.Rack,
-                                             (ushort)set_point.Slot);
+                                             set_point.Rack,
+                                             set_point.Slot);
                         }
 
                         foreach (ulong point_id in missing)
@@ -68,15 +69,12 @@ namespace S7_DB_gate
                             inst_point.LoadSettings(set_point.Name,
                                                     set_point.Cpu_type,
                                                     set_point.Ip,
-                                                    (uint)set_point.Port,
-                                                    (ushort)set_point.Rack,
-                                                    (ushort)set_point.Slot);
+                                                    set_point.Port,
+                                                    set_point.Rack,
+                                                    set_point.Slot);
 
-                            Clients.Add((ulong)set_point.Id, inst_point);
+                            Clients.Add(set_point.Id, inst_point);
                         }
-
-
-
                     }
                 }
             }
@@ -85,6 +83,7 @@ namespace S7_DB_gate
                 logger.Error(ex, $"{Title}. Clients reader");
             }
 
+            base.DatabaseReadHandler(state);
         }
 
         #endregion

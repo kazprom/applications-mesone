@@ -63,7 +63,7 @@ namespace LibDBgate
 
         public string Name { get; set; }
 
-        public DateTime Timestamp { get; set; }
+        public DateTime? Timestamp { get; set; }
 
         public object Value { get; set; }
 
@@ -172,7 +172,7 @@ namespace LibDBgate
                 }
                 else if (obj == null)
                 {
-                    throw new Exception($"Data type of object is null");
+                    result = null;
                 }
                 else
                 {

@@ -55,6 +55,8 @@ namespace LibMESone
 
         public string DB_Password { get; private set; }
 
+        public uint LOG_DepthDay { get; private set; }
+
         #endregion
 
         #region CONSTRUCTOR
@@ -90,32 +92,37 @@ namespace LibMESone
             {
                 file.Path = Path;
 
-                string result = "";
+                string str_result = "";
+                uint uint_result;
 
-                result = file.ReadValue("DB/DRIVER", Lib.Database.default_driver);
-                if (DB_Driver != result) { DB_Driver = result; logger.Info($"{Title}. DB DRIVER = {DB_Driver}"); }
+                str_result = file.ReadValue("DB/DRIVER", Lib.Database.default_driver);
+                if (DB_Driver != str_result) { DB_Driver = str_result; logger.Info($"{Title}. DB DRIVER = {DB_Driver}"); }
 
 
-                result = file.ReadValue("DB/HOST", Lib.Database.default_host);
-                if (DB_Host != result) { DB_Host = result; logger.Info($"{Title}. DB HOST = {DB_Host}"); }
+                str_result = file.ReadValue("DB/HOST", Lib.Database.default_host);
+                if (DB_Host != str_result) { DB_Host = str_result; logger.Info($"{Title}. DB HOST = {DB_Host}"); }
 
-                uint port;
-                if (uint.TryParse(file.ReadValue("DB/PORT", Lib.Database.default_port.ToString()), out port))
+                if (uint.TryParse(file.ReadValue("DB/PORT", Lib.Database.default_port.ToString()), out uint_result))
                 {
-                    if (DB_Port != port) { DB_Port = port; logger.Info($"{Title}. DB PORT = {DB_Port}"); }
+                    if (DB_Port != uint_result) { DB_Port = uint_result; logger.Info($"{Title}. DB PORT = {DB_Port}"); }
                 }
 
-                result = file.ReadValue("DB/CHARSET", Lib.Database.default_charset);
-                if (DB_Charset != result) { DB_Charset = result; logger.Info($"{Title}. DB CHARSET = {DB_Charset}"); }
+                str_result = file.ReadValue("DB/CHARSET", Lib.Database.default_charset);
+                if (DB_Charset != str_result) { DB_Charset = str_result; logger.Info($"{Title}. DB CHARSET = {DB_Charset}"); }
 
-                result = file.ReadValue("DB/BASE_NAME", Lib.Database.default_base_name);
-                if (DB_BaseName != result) { DB_BaseName = result; logger.Info($"{Title}. DB BASE_NAME = {DB_Host}"); }
+                str_result = file.ReadValue("DB/BASE_NAME", Lib.Database.default_base_name);
+                if (DB_BaseName != str_result) { DB_BaseName = str_result; logger.Info($"{Title}. DB BASE_NAME = {DB_Host}"); }
 
-                result = file.ReadValue("DB/USER", Lib.Database.default_user);
-                if (DB_User != result) { DB_User = result; logger.Info($"{Title}. DB USER = {DB_User}"); }
+                str_result = file.ReadValue("DB/USER", Lib.Database.default_user);
+                if (DB_User != str_result) { DB_User = str_result; logger.Info($"{Title}. DB USER = {DB_User}"); }
 
-                result = file.ReadValue("DB/PASSWORD", Lib.Database.default_password);
-                if (DB_Password != result) { DB_Password = result; logger.Info($"{Title}. DB PASSWORD = {DB_Password}"); }
+                str_result = file.ReadValue("DB/PASSWORD", Lib.Database.default_password);
+                if (DB_Password != str_result) { DB_Password = str_result; logger.Info($"{Title}. DB PASSWORD = {DB_Password}"); }
+
+                if (uint.TryParse(file.ReadValue("LOG/DEPTH_DAY", Lib.Common.default_log_depth_day.ToString()), out uint_result))
+                {
+                    if (LOG_DepthDay != uint_result) { LOG_DepthDay = uint_result; logger.Info($"{Title}. LOG DEPTH DAY = {LOG_DepthDay}"); }
+                }
 
                 ReadCompleted?.Invoke(this);
 

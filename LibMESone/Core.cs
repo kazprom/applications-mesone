@@ -19,7 +19,6 @@ namespace LibMESone
 
         #endregion
 
-
         #region VARIABLES
 
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
@@ -62,6 +61,9 @@ namespace LibMESone
                                           sender.DB_BaseName,
                                           sender.DB_User,
                                           sender.DB_Password);
+
+                    NLog.Targets.FileTarget target = (NLog.Targets.FileTarget)NLog.LogManager.Configuration.FindTargetByName("file");
+                    target.MaxArchiveFiles = (int)sender.LOG_DepthDay;
                 };
 
                 timer = new Timer(GetServices, null, 0, period);
@@ -119,41 +121,64 @@ namespace LibMESone
                 if (database != null)
                 {
 
-                    IEnumerable<Structs.ServiceTypes> service_types = database.Read<Structs.ServiceTypes>("service_types");
-                    Structs.ServiceTypes service_type = null;
 
-                    if (service_types == null)
-                        logger.Warn("Can't read service types");
+                    IEnumerable<Structs.ServiceTypes> service_types = null;
+                    if (database.CompareTableSchema<Structs.ServiceTypes>("service_types"))
+                        service_types = database.WhereRead<Structs.ServiceTypes>("service_types", new { Guid = Lib.Common.AppGUID() });
                     else
-                        service_type = service_types.First(x => x.Guid.Equals(Lib.Common.AppGUID(), StringComparison.OrdinalIgnoreCase));
-
-
-                    IEnumerable<Structs.Services> services = database.Read<Structs.Services>("services");
-                    if (services == null)
-                        logger.Warn("Can't read services");
-
-                    IEnumerable<Structs.Databases> databases = database.Read<Structs.Databases>("databases");
-                    if (databases == null)
-                        logger.Warn("Can't read databases");
-
-                    IEnumerable<Structs.Hosts> hosts = database.Read<Structs.Hosts>("hosts");
-                    if (hosts == null)
-                        logger.Warn("Can't read hosts");
-
-                    if (service_type == null)
-                        logger.Warn("Can't find id of service");
-                    else if (services != null && database != null && hosts != null)
                     {
+                        logger.Warn("Can't read service types");
+                        return;
+                    }
 
-                        IEnumerable<Structs.Services> enabled_services = services.Where(x => x.Service_types_id == service_type.Id).Where(x => (bool)x.Enabled);
-                        IEnumerable<Structs.Databases> enabled_databases = databases.Where(x => (bool)x.Enabled);
-                        IEnumerable<Structs.Hosts> enabled_hosts = hosts.Where(x => (bool)x.Enabled);
+                    Structs.ServiceTypes service_type = null;
+                    if (service_types == null || service_types.Count() == 0)
+                    {
+                        logger.Warn("Can't find id of service");
+                        return;
+                    }
+
+
+                    IEnumerable<Structs.Services> services = null;
+                    if (database.CompareTableSchema<Structs.Services>("services"))
+                        services = database.WhereRead<Structs.Services>("services", new
+                        {
+                            Service_types_id = service_types.First().Id,
+                            Enabled = true
+                        });
+                    else
+                    {
+                        logger.Warn("Can't read services");
+                        return;
+                    }
+
+
+                    IEnumerable<Structs.Databases> databases = null;
+                    if (database.CompareTableSchema<Structs.Databases>("databases"))
+                        databases = database.WhereRead<Structs.Databases>("databases", new { Enabled = true });
+                    else
+                    {
+                        logger.Warn("Can't read databases");
+                        return;
+                    }
+
+                    IEnumerable<Structs.Hosts> hosts = null;
+                    if (database.CompareTableSchema<Structs.Hosts>("hosts"))
+                        hosts = database.WhereRead<Structs.Hosts>("hosts", new { Enabled = true });
+                    else
+                    {
+                        logger.Warn("Can't read hosts");
+                        return;
+                    }
+
+                    if (services != null && databases != null && hosts != null)
+                    {
 
                         IEnumerable<DatabasesHosts> dh;
 
-                        dh = enabled_databases
+                        dh = databases
                             .Join(
-                            enabled_hosts,
+                            hosts,
                             db => db.Hosts_id,
                             host => host.Id,
                             (db, host) => new DatabasesHosts
@@ -171,7 +196,7 @@ namespace LibMESone
 
                         IEnumerable<ServicesDatabasesHosts> sdh;
 
-                        sdh = enabled_services
+                        sdh = services
                             .Join(
                             dh,
                             srv => srv.Databases_id,

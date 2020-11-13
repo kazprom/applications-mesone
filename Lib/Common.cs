@@ -13,7 +13,9 @@ namespace Lib
         private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private const string layout_info = "[${longdate}] [${level}] ${message:withException=false}";
         private const string layout_error = layout_info + "${newline}${exception}";
+        private const string layout_file = "[${longdate}] [${level}] ${message:withException=true} ${exception}";
 
+        public const int default_log_depth_day = 3;
 
         public Common()
         {
@@ -21,9 +23,19 @@ namespace Lib
             var configuration = new NLog.Config.LoggingConfiguration();
             var consoleInfo = new NLog.Targets.ColoredConsoleTarget("console") { Layout = layout_info };
             var consoleError = new NLog.Targets.ColoredConsoleTarget("console") { Layout = layout_error };
+            var file = new NLog.Targets.FileTarget("file") {Layout = layout_file,
+                                                            FileName = "${basedir}/Logs/current.log",
+                                                            ArchiveFileName = "${basedir}/Logs/${date:yyyy_MM_dd}.log",
+                                                            ArchiveNumbering = NLog.Targets.ArchiveNumberingMode.Rolling,
+                                                            ArchiveEvery = NLog.Targets.FileArchivePeriod.Day,
+                                                            MaxArchiveFiles = default_log_depth_day,
+                                                            Encoding = System.Text.Encoding.UTF8,
+                                                            KeepFileOpen = true
+            };
 
             configuration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Info, consoleInfo);
             configuration.AddRule(NLog.LogLevel.Warn, NLog.LogLevel.Fatal, consoleError);
+            configuration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Fatal, file);
             NLog.LogManager.Configuration = configuration;
 
             logger.Info("Program started!");

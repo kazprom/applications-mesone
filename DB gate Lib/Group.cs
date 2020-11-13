@@ -36,7 +36,7 @@ namespace LibDBgate
         {
             try
             {
-                
+
                 Parent = parent;
                 Rate = rate;
 
@@ -70,6 +70,10 @@ namespace LibDBgate
             {
                 if (disposing)
                 {
+                    WaitHandle h = new AutoResetEvent(false);
+                    timer.Dispose(h);
+                    h.WaitOne();
+
                     foreach (Tag tag in Tags.Values)
                     {
                         tag.Dispose();

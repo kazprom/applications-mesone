@@ -74,6 +74,10 @@ namespace LibDBgate
             {
                 if (disposing)
                 {
+                    WaitHandle h = new AutoResetEvent(false);
+                    timer.Dispose(h);
+                    h.WaitOne();
+
                     foreach (Group group in Groups.Values)
                     {
                         group.Dispose();

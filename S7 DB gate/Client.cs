@@ -4,6 +4,7 @@ using S7_DB_gate.Structs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -33,7 +34,6 @@ namespace S7_DB_gate
 
         #endregion
 
-
         #region PROPERTIES
 
         public S7.Net.CpuType CPU_type { get; set; }
@@ -44,7 +44,6 @@ namespace S7_DB_gate
 
 
         #endregion
-
 
         #region CONSTRUCTOR
 
@@ -63,7 +62,29 @@ namespace S7_DB_gate
 
         #endregion
 
+        #region DESTRUCTOR
 
+        protected override void Dispose(bool disposing)
+        {
+
+            if (disposing)
+            {
+
+                WaitHandle h = new AutoResetEvent(false);
+                timer.Dispose(h);
+                h.WaitOne();
+
+                if (Plc != null && Plc.IsConnected)
+                {
+                    Plc.Close();
+                    logger.Info($"{Title}. Closed connection");
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
 
         #region PUBLICS
 
@@ -138,7 +159,16 @@ namespace S7_DB_gate
             {
                 if (Plc == null)
                 {
-                    Plc = new S7.Net.Plc(CPU_type, IP, (int)Port, (short)Rack, (short)Slot);
+                    IPAddress ip_result;
+                    if (IPAddress.TryParse(IP, out ip_result) && Port != 0)
+                        Plc = new S7.Net.Plc(CPU_type, IP, (int)Port, (short)Rack, (short)Slot);
+                    else
+                    {
+                        logger.Warn($"{Title}. Incorrect connection settings");
+                        Diagnostic.State = "Wrong settings";
+                        Diagnostic.Message = null;
+                    }
+
                 }
 
                 if (Plc != null)
@@ -187,9 +217,9 @@ namespace S7_DB_gate
             }
         }
 
+
+
         #endregion
-
-
 
     }
 }

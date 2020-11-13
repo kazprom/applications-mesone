@@ -11,7 +11,7 @@ namespace LibMESone.Structs
         [Field(TYPE = Field.Etype.VarChar, SIZE = 255, UQ = true)]
         public string Name { get; set; }
 
-        [Field(TYPE = Field.Etype.VarChar, SIZE = 255)]
+        [Field(TYPE = Field.Etype.VarChar, SIZE = 40)]
         public string Guid { get; set; }
     
     }
