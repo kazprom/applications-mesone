@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace LibMESone
 {
@@ -18,8 +19,10 @@ namespace LibMESone
 
         #region VARIABLES
 
-        protected NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        protected NLog.Logger logger;
         private Timer timer_database_read;
+        private Lib.Buffer<Structs.LogMessage> log_buf;
+        private DateTime log_ts = default;
 
         #endregion
 
@@ -49,6 +52,23 @@ namespace LibMESone
 
                 timer_database_read = new Timer(DatabaseReadHandler, null, 0, period);
 
+                log_buf = new Lib.Buffer<Structs.LogMessage>(100, 5000);
+                log_buf.CyclicEvent += LogDataHandler;
+                log_buf.HalfEvent += LogDataHandler;
+
+                var configuration = NLog.LogManager.Configuration;
+                var target = new NLog.Targets.MethodCallTarget(Title, (logEvent, parms) =>
+                {
+                    log_buf.Enqueue(new Structs.LogMessage() { Timestamp = logEvent.TimeStamp, Message = $"{logEvent.Level} {logEvent.Message} {logEvent.Exception}" });
+                });
+
+
+                configuration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Fatal, target, Title + "*");
+                NLog.LogManager.Configuration = configuration;
+
+
+                logger = NLog.LogManager.GetLogger(Title);
+
                 logger.Info($"{Title}. Created");
             }
             catch (Exception ex)
@@ -67,7 +87,8 @@ namespace LibMESone
 
         private bool disposedValue;
 
-        public virtual void Dispose(bool disposing) {
+        public virtual void Dispose(bool disposing)
+        {
 
             if (!disposedValue)
             {
@@ -76,6 +97,12 @@ namespace LibMESone
                     WaitHandle h = new AutoResetEvent(false);
                     timer_database_read.Dispose(h);
                     h.WaitOne();
+
+                    LogDataHandler();
+
+                    var configuration = NLog.LogManager.Configuration;
+                    configuration.RemoveRuleByName(Title);
+                    NLog.LogManager.Configuration = configuration;
 
                     Database = null;
                 }
@@ -100,7 +127,7 @@ namespace LibMESone
             try
             {
                 if (Database == null)
-                    Database = new Lib.Database(id);
+                    Database = new Lib.Database(id, logger);
 
                 Database.LoadSettings(name, driver, host, port, charset, base_name, username, password);
 
@@ -112,6 +139,61 @@ namespace LibMESone
         }
 
         public virtual void DatabaseReadHandler(object state) { }
+
+        #endregion
+
+        #region PRIVATES
+
+        private async void LogDataHandler()
+        {
+            await Task.Run(() =>
+            {
+
+                try
+                {
+
+                    Structs.LogMessage data = null;
+
+                    if (Database != null)
+                    {
+                        while (log_buf.Count > 0)
+                        {
+
+                            if (data == null)
+                            {
+                                data = log_buf.Dequeue();
+
+
+                                if (log_ts == default || log_ts != data.Timestamp)
+                                {
+                                    if (!Database.CheckExistTable(Structs.LogMessage.GetTableName(data.Timestamp)))
+                                    {
+                                        if (Database.CreateTable<Structs.LogMessage>(Structs.LogMessage.GetTableName(data.Timestamp)))
+                                        {
+                                            log_ts = data.Timestamp;
+                                        }
+                                    }
+                                }
+
+                                if (Database.Insert(Structs.LogMessage.GetTableName(data.Timestamp), data))
+                                {
+                                    data = null;
+                                }
+                                else
+                                {
+                                    Thread.Sleep(1000);
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex, $"{Title}. Log data handler");
+                }
+            });
+        }
+
 
         #endregion
 

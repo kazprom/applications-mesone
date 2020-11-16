@@ -7,7 +7,7 @@ namespace LibDBgate
 {
     public class Client : IDisposable
     {
-        
+
         #region CONSTANTS
 
 #if DEBUG
@@ -20,7 +20,7 @@ namespace LibDBgate
 
         #region VARIABLE
 
-        protected NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        protected NLog.Logger logger;
         public Dictionary<ushort, Group> Groups = new Dictionary<ushort, Group>();
         private Timer timer;
 
@@ -49,9 +49,11 @@ namespace LibDBgate
 
             Diagnostic = new Diagnostic() { Clients_id = ID };
 
-            Title = $"{Parent.Title}. Client [{ID}]";
+            Title = $"{Parent.Title} Client [{ID}]";
 
             timer = new Timer(TagsReader, null, 0, period);
+
+            logger = NLog.LogManager.GetLogger(Title);
 
             logger.Info($"{Title}. Created");
 

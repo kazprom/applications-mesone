@@ -28,8 +28,9 @@ namespace S7_DB_gate
                 if (Database != null)
                 {
 
-                    IEnumerable<Structs.Client> clients = Database.WhereRead<Structs.Client>(Structs.Client.TableName,
-                                                                                             new { Enabled = true });
+                    IEnumerable<Structs.Client> clients = null;
+                    if (Database.CompareTableSchema<Structs.Client>(Structs.Client.TableName))
+                        clients = Database.WhereRead<Structs.Client>(Structs.Client.TableName, new { Enabled = true });
 
                     if (clients != null)
                     {
@@ -75,6 +76,14 @@ namespace S7_DB_gate
 
                             Clients.Add(set_point.Id, inst_point);
                         }
+                    }
+                    else
+                    {
+                        foreach (Client client in Clients.Values)
+                        {
+                            client.Dispose();
+                        }
+                        Clients.Clear();
                     }
                 }
             }

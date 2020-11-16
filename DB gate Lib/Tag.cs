@@ -10,7 +10,7 @@ namespace LibDBgate
 
         #region VARIABLES
 
-        protected NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        protected NLog.Logger logger;
 
         #endregion
 
@@ -81,7 +81,7 @@ namespace LibDBgate
 
             Title = $"{parent.Title} Tag [{id}]";
 
-
+            logger = NLog.LogManager.GetLogger(Title);
             logger.Info($"{Title}. Created");
 
         }

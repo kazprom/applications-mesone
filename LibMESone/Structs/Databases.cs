@@ -15,7 +15,7 @@ namespace LibMESone.Structs
         [Field(TYPE = Field.Etype.VarChar, SIZE = 255)]
         public string Driver { get; set; }
 
-        [Field(TYPE = Field.Etype.BigInt, UN = true)]
+        [Field(TYPE = Field.Etype.BigInt, UN = true, NN = true)]
         public ulong Hosts_id { get; set; }
 
         [Field(TYPE = Field.Etype.Int, UN = true)]

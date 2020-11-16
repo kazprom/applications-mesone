@@ -57,7 +57,7 @@ namespace Lib
 
         #region VARIABLE
 
-        private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private NLog.Logger logger;
 
 
         private IDbConnection connection;
@@ -93,9 +93,15 @@ namespace Lib
 
         #region CONSTRUCTOR
 
-        public Database(ulong id)
+        public Database(ulong id, NLog.Logger logger = null)
         {
             ID = id;
+
+            if (logger == null)
+                this.logger = NLog.LogManager.GetCurrentClassLogger();
+            else
+                this.logger = logger;
+
         }
 
         #endregion
@@ -278,11 +284,36 @@ namespace Lib
                                         type += attr.SIZE > 0 ? $"({attr.SIZE})" : "";
                                         type += attr.UN ? " unsigned" : "";
 
-                                        if(!row.Column_type.Equals(type, StringComparison.OrdinalIgnoreCase))
+                                        if (!row.Column_type.Equals(type, StringComparison.OrdinalIgnoreCase))
                                         {
                                             logger.Warn($"{Title}. Table [{table_name}] Column [{prop.Name}] Type [{type}] wrong. Current [{row.Column_type}]");
                                             result = false;
                                         }
+
+                                        if (attr.PK != row.Column_key.Contains("PRI"))
+                                        {
+                                            logger.Warn($"{Title}. Table [{table_name}] Column [{prop.Name}] PRIMARY[{attr.PK}] wrong. Current [{row.Column_key}]");
+                                            result = false;
+                                        }
+
+                                        if (attr.UQ != row.Column_key.Contains("UNI"))
+                                        {
+                                            logger.Warn($"{Title}. Table [{table_name}] Column [{prop.Name}] UNIQUE[{attr.UQ}] wrong. Current [{row.Column_key}]");
+                                            result = false;
+                                        }
+
+                                        if (attr.AI != row.Extra.Contains("auto_increment"))
+                                        {
+                                            logger.Warn($"{Title}. Table [{table_name}] Column [{prop.Name}] AUTO_INCREMENT[{attr.AI}] wrong. Current [{row.Extra}]");
+                                            result = false;
+                                        }
+
+                                        if(attr.NN != row.Is_nullable.Equals("NO"))
+                                        {
+                                            logger.Warn($"{Title}. Table [{table_name}] Column [{prop.Name}] NOT NULL[{attr.NN}] wrong. Current IS_NULLABLE [{row.Is_nullable}]");
+                                            result = false;
+                                        }
+
                                     }
                                 }
                             }

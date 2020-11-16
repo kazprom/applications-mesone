@@ -10,7 +10,7 @@ namespace LibDBgate
 
         #region VARIABLES
 
-        protected NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        protected NLog.Logger logger ;
 
         public Dictionary<ulong, Tag> Tags = new Dictionary<ulong, Tag>();
 
@@ -43,6 +43,8 @@ namespace LibDBgate
                 Title = $"{parent.Title} Group [{rate}]";
 
                 timer = new Timer(Handler, null, 0, rate);
+
+                logger = NLog.LogManager.GetLogger(Title);
 
                 logger.Info($"{Title}. Created");
 
