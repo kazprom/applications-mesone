@@ -18,7 +18,7 @@ namespace LibDBgate.Structs
         [Field(TYPE = Field.Etype.TimeStamp, SIZE = 3)]
         public DateTime Timestamp { get; set; }
 
-        [Field(TYPE = Field.Etype.Binary, SIZE = 8)]
+        [Field(TYPE = Field.Etype.Blob)]
         public byte[] Value_raw { get; set; }
 
         [Field(TYPE = Field.Etype.VarChar, SIZE = 255)]

@@ -24,7 +24,12 @@ namespace Lib
             var consoleInfo = new NLog.Targets.ColoredConsoleTarget("console") { Layout = layout_info };
             var consoleError = new NLog.Targets.ColoredConsoleTarget("console") { Layout = layout_error };
             var file = new NLog.Targets.FileTarget("file") {Layout = layout_file,
-                                                            FileName = "${basedir}/Logs/${date:yyyy_MM_dd}.log",
+                                                            FileName = "${basedir}/Logs/actual.log",
+                                                            ArchiveFileName = "${basedir}/Logs/${date:yyyy_MM_dd}.log",
+                                                            ArchiveEvery = NLog.Targets.FileArchivePeriod.Day,
+                                                            ArchiveNumbering = NLog.Targets.ArchiveNumberingMode.Rolling,
+                                                            MaxArchiveFiles = default_log_depth_day,
+                                                            ArchiveAboveSize = 5242880,
                                                             KeepFileOpen = true
             };
 

@@ -30,13 +30,15 @@ namespace LibMESone
 
         private Lib.Database database;
 
-        private Timer timer;
+        private Timer timer_DB;
 
         #endregion
 
         #region PROPERTIES
 
         public string Name { get { return "CORE"; } }
+
+        public Structs.ServiceDiagnostic ServiceDiagnostic { get; private set; }
 
         #endregion
 
@@ -48,6 +50,8 @@ namespace LibMESone
             {
 
                 this.service_type = service_type;
+
+                ServiceDiagnostic = new Structs.ServiceDiagnostic() { Version = Lib.Common.AppVersion() };
 
                 config_file.ReadCompleted += (ConfigFile sender) =>
                 {
@@ -66,7 +70,7 @@ namespace LibMESone
                     target.MaxArchiveFiles = (int)sender.LOG_DepthDay;
                 };
 
-                timer = new Timer(GetServices, null, 0, period);
+                timer_DB = new Timer(DB_Handler, null, 0, period);
 
             }
             catch (Exception ex)
@@ -114,24 +118,23 @@ namespace LibMESone
 
         #region PRIVATES
 
-        private void GetServices(object state)
+        private void DB_Handler(object state)
         {
             try
             {
                 if (database != null)
                 {
 
-
-                    IEnumerable<Structs.ServiceTypes> service_types = null;
-                    if (database.CompareTableSchema<Structs.ServiceTypes>("service_types"))
-                        service_types = database.WhereRead<Structs.ServiceTypes>("service_types", new { Guid = Lib.Common.AppGUID() });
+                    //----------read---------------
+                    IEnumerable<Structs.ServiceType> service_types = null;
+                    if (database.CompareTableSchema<Structs.ServiceType>("service_types"))
+                        service_types = database.WhereRead<Structs.ServiceType>("service_types", new { Guid = Lib.Common.AppGUID() });
                     else
                     {
                         logger.Warn("Can't read service types");
                         return;
                     }
 
-                    Structs.ServiceTypes service_type = null;
                     if (service_types == null || service_types.Count() == 0)
                     {
                         logger.Warn("Can't find id of service");
@@ -139,13 +142,19 @@ namespace LibMESone
                     }
 
 
-                    IEnumerable<Structs.Services> services = null;
-                    if (database.CompareTableSchema<Structs.Services>("services"))
-                        services = database.WhereRead<Structs.Services>("services", new
+                    IEnumerable<Structs.Service> services = null;
+                    if (database.CompareTableSchema<Structs.Service>("services"))
+                    {
+
+                        ServiceDiagnostic.Service_types_id = service_types.First().Id;
+
+                        services = database.WhereRead<Structs.Service>("services", new
                         {
-                            Service_types_id = service_types.First().Id,
+                            Service_types_id = ServiceDiagnostic.Service_types_id,
                             Enabled = true
                         });
+                    }
+
                     else
                     {
                         logger.Warn("Can't read services");
@@ -162,9 +171,9 @@ namespace LibMESone
                         return;
                     }
 
-                    IEnumerable<Structs.Hosts> hosts = null;
-                    if (database.CompareTableSchema<Structs.Hosts>("hosts"))
-                        hosts = database.WhereRead<Structs.Hosts>("hosts", new { Enabled = true });
+                    IEnumerable<Structs.Host> hosts = null;
+                    if (database.CompareTableSchema<Structs.Host>("hosts"))
+                        hosts = database.WhereRead<Structs.Host>("hosts", new { Enabled = true });
                     else
                     {
                         logger.Warn("Can't read hosts");
@@ -261,11 +270,17 @@ namespace LibMESone
                             this.services.Add((ulong)set_service.Id, inst_service);
                         }
                     }
+
+                    //----------write---------------
+
+                    ServiceDiagnostic.Sys_ts = DateTime.Now;
+                    database.Update(Structs.ServiceDiagnostic.TableName, ServiceDiagnostic);
+
                 }
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"{Name}. Get services");
+                logger.Error(ex, $"{Name}. DB Handler");
             }
         }
 

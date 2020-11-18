@@ -1,5 +1,4 @@
-﻿using LibDBgate.Structs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -22,7 +21,7 @@ namespace LibDBgate
 
         protected NLog.Logger logger;
         public Dictionary<ushort, Group> Groups = new Dictionary<ushort, Group>();
-        private Timer timer;
+        private Timer timer_DB;
 
         #endregion
 
@@ -36,7 +35,7 @@ namespace LibDBgate
 
         public string Name { get; set; }
 
-        public Diagnostic Diagnostic { get; private set; }
+        public Structs.Diagnostic Diagnostic { get; private set; }
 
         #endregion
 
@@ -47,11 +46,11 @@ namespace LibDBgate
             Parent = parent;
             ID = id;
 
-            Diagnostic = new Diagnostic() { Clients_id = ID };
+            Diagnostic = new Structs.Diagnostic() { Clients_id = ID };
 
             Title = $"{Parent.Title} Client [{ID}]";
 
-            timer = new Timer(TagsReader, null, 0, period);
+            timer_DB = new Timer(DB_Handler, null, 0, period);
 
             logger = NLog.LogManager.GetLogger(Title);
 
@@ -77,7 +76,7 @@ namespace LibDBgate
                 if (disposing)
                 {
                     WaitHandle h = new AutoResetEvent(false);
-                    timer.Dispose(h);
+                    timer_DB.Dispose(h);
                     h.WaitOne();
 
                     foreach (Group group in Groups.Values)
@@ -103,7 +102,7 @@ namespace LibDBgate
 
         #region PUBLIC
 
-        public virtual void TagsReader(object state) { }
+        public virtual void DB_Handler(object state) { }
 
         #endregion
 

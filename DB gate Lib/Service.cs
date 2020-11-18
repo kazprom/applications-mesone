@@ -12,10 +12,18 @@ namespace LibDBgate
     public class Service : LibMESone.Service
     {
 
+
+        #region CONSTANTS
+
+        private const string depth_history_hour_name = "DEPTH_HISTORY_HOUR";
+        private const uint depth_history_hour_default = 24;
+
+        #endregion
+
         #region VARIABLES
 
         private DateTime his_ts = default;
-        private Timer timer_database_write;
+        private Timer timer_DB_W;
 
         public Dictionary<ulong, Client> Clients = new Dictionary<ulong, Client>();
 
@@ -31,7 +39,7 @@ namespace LibDBgate
             retro_buf.CyclicEvent += RetroDataHandler;
             retro_buf.HalfEvent += RetroDataHandler;
 
-            timer_database_write = new Timer(DatabaseWriteHandler, null, 0, 5000);
+            timer_DB_W = new Timer(DB_W_Handler, null, 0, 5000);
 
         }
 
@@ -47,7 +55,7 @@ namespace LibDBgate
             {
 
                 WaitHandle h = new AutoResetEvent(false);
-                timer_database_write.Dispose(h);
+                timer_DB_W.Dispose(h);
                 h.WaitOne();
 
                 foreach (Client client in Clients.Values)
@@ -117,7 +125,7 @@ namespace LibDBgate
             });
         }
 
-        private void DatabaseWriteHandler(object state)
+        private void DB_W_Handler(object state)
         {
             try
             {
@@ -152,17 +160,59 @@ namespace LibDBgate
                     Database.WhereNotInDelete(RealTimeValue.TableName,
                                               nameof(RealTimeValue.Tags_id),
                                               rt_values.Select(x => x.ID).ToArray());
-                    //Clients.SelectMany(x => x.Value.Groups.SelectMany(y => y.Value.Tags.Select(z => z.Key))).ToArray());
 
                 }
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"{Title}. Actual data handler");
+                logger.Error(ex, $"{Title}. DB W handler");
             }
         }
 
         #endregion
+        public override void DB_Handler(object state)
+        {
+            base.DB_Handler(state);
+
+            try
+            {
+                if (Database != null)
+                {
+
+                    //------------retro cleaner-----------
+
+                    uint depth_history_hours = depth_history_hour_default;
+                    if (Settings.ContainsKey(depth_history_hour_name))
+                    {
+                        if (!uint.TryParse(Settings[depth_history_hour_name], out depth_history_hours))
+                        {
+                            logger.Warn($"Setting [{depth_history_hour_name}] can't parse. Default value is {depth_history_hour_default}");
+                        }
+                    }
+                    else
+                    {
+                        logger.Warn($"Setting [{depth_history_hour_name}] not found. Default value is {depth_history_hour_default}");
+                    }
+
+                    IEnumerable<string> tables = Database.GetListTables(Structs.RetroValue.TablePrefix + "%");
+                    DateTime ts = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
+
+                    foreach (string table in tables)
+                    {
+                        if (ts.Subtract(Structs.RetroValue.GetTimeStamp(table)).TotalHours > depth_history_hours)
+                        {
+                            if (Database.RemoveTable(table))
+                                logger.Info($"{Title}. Removed retro table [{table}]");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, $"{Title}. DB handler");
+            }
+
+        }
 
     }
 }

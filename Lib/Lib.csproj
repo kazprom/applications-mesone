@@ -5,6 +5,7 @@
     <Platforms>AnyCPU;x86;x64</Platforms>
     <RootNamespace>Lib</RootNamespace>
     <Configurations>Debug;Release;Public</Configurations>
+    <UserSecretsId>9020be05-a7c1-445d-ba5f-9a4b5359e5ed</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +16,14 @@
     <PackageReference Include="SqlKata.Execution" Version="2.2.0" />
     <PackageReference Include="System.Data.Odbc" Version="4.7.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="System.Diagnostics.Debug" Version="4.3.0" />
+    <PackageReference Include="System.Globalization" Version="4.3.0" />
+    <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
+    <PackageReference Include="System.IO.FileSystem.Primitives" Version="4.3.0" />
+    <PackageReference Include="System.Net.NameResolution" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Extensions" Version="4.3.1" />
+    <PackageReference Include="System.Threading" Version="4.3.0" />
+    <PackageReference Include="System.Threading.ThreadPool" Version="4.3.0" />
   </ItemGroup>
 
 </Project>

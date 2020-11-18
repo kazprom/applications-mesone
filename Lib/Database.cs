@@ -10,7 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
-using Ubiety.Dns.Core.Records.NotUsed;
+//using Ubiety.Dns.Core.Records.NotUsed;
 
 namespace Lib
 {
@@ -107,6 +107,28 @@ namespace Lib
         #endregion
 
         #region PUBLICS
+
+        public IEnumerable<T> WhereLikeRead<T>(string table_name, object constraints, string column, string value)
+        {
+            IEnumerable<T> result = null;
+
+            try
+            {
+                if (db != null)
+                {
+                    lock (db)
+                    {
+                        result = db.Query(table_name).Where(constraints).WhereLike(column, value).Get<T>();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, $"{Title}. Read where like table {table_name}");
+            }
+
+            return result;
+        }
 
         public IEnumerable<T> WhereRead<T>(string table_name, object constraints)
         {
@@ -308,7 +330,7 @@ namespace Lib
                                             result = false;
                                         }
 
-                                        if(attr.NN != row.Is_nullable.Equals("NO"))
+                                        if (attr.NN != row.Is_nullable.Equals("NO"))
                                         {
                                             logger.Warn($"{Title}. Table [{table_name}] Column [{prop.Name}] NOT NULL[{attr.NN}] wrong. Current IS_NULLABLE [{row.Is_nullable}]");
                                             result = false;
@@ -449,6 +471,100 @@ namespace Lib
 
             return result;
 
+        } 
+        
+        public bool RemoveTable(string table_name)
+        {
+
+            bool result = false;
+
+            try
+            {
+
+                if (db != null)
+                {
+                    lock (db)
+                    {
+                        string sql = string.Empty;
+
+                        if (connection.GetType().Equals(typeof(SqlConnection)))
+                        {
+                            throw new Exception("Create code for handling MSSQL");
+                        }
+                        else if (connection.GetType().Equals(typeof(MySqlConnection)))
+                        {
+                            sql = $"DROP TABLE `{table_name}`";
+                        }
+                        else if (connection.GetType().Equals(typeof(NpgsqlConnection)))
+                        {
+                            throw new Exception("Create code for handling PostgreSQL");
+                        }
+                        else
+                        {
+                            throw new Exception("Don't know database type");
+                        }
+
+                        db.Statement(sql);
+                        result = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, $"{Title}. Remove table {table_name}");
+            }
+
+            return result;
+
+        }
+
+        public IEnumerable<string> GetListTables(string filter)
+        {
+            IEnumerable<string> result = null;
+
+            try
+            {
+
+                if (db != null)
+                {
+                    lock (db)
+                    {
+
+                        if (connection.GetType().Equals(typeof(SqlConnection)))
+                        {
+                            throw new Exception("Create code for handling MSSQL");
+                        }
+                        else if (connection.GetType().Equals(typeof(MySqlConnection)))
+                        {
+                            IEnumerable<Structs.MySQLInfoSchemaTabs> rows;
+
+                            rows = WhereLikeRead<Structs.MySQLInfoSchemaTabs>("INFORMATION_SCHEMA.TABLES", 
+                                                                              new { Table_schema = db.Connection.Database },
+                                                                              "table_name", filter);
+
+                            result = rows.Select(x => x.Table_name);
+
+                        }
+                        else if (connection.GetType().Equals(typeof(NpgsqlConnection)))
+                        {
+                            throw new Exception("Create code for handling PostgreSQL");
+                        }
+                        else
+                        {
+                            throw new Exception("Don't know database type");
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                logger.Error(ex, $"{Title}. Get list tables");
+
+            }
+
+            return result;
         }
 
         public void LoadSettings(string name, string driver, string host, uint port, string charset, string base_name, string user, string password)

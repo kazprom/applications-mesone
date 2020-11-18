@@ -1,15 +1,8 @@
-﻿using LibDBgate;
-using LibDBgate.Structs;
-using S7_DB_gate.Structs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
-using Ubiety.Dns.Core.Records;
 
 namespace S7_DB_gate
 {
@@ -107,11 +100,15 @@ namespace S7_DB_gate
         }
 
 
-        public override void TagsReader(object state)
+
+        public override void DB_Handler(object state)
         {
+            base.DB_Handler(state);
 
             try
             {
+
+                //-----------read------------------
 
                 IEnumerable<Structs.Tag> tags = null;
                 if (Parent.Database.CompareTableSchema<Structs.Tag>(Structs.Tag.TableName))
@@ -157,7 +154,7 @@ namespace S7_DB_gate
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"{Title}. Tags reader");
+                logger.Error(ex, $"{Title}. DB Handler");
             }
 
         }

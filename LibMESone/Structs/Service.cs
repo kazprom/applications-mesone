@@ -7,7 +7,7 @@ using System.Text;
 
 namespace LibMESone.Structs
 {
-    public class Services : BaseNE
+    public class Service : BaseNE
     {
         [Field(TYPE = Field.Etype.BigInt, UN = true)]
         public ulong Databases_id { get; set; }

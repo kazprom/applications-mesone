@@ -53,6 +53,30 @@
               "target": "Package",
               "version": "[2.0.3, )",
               "autoReferenced": true
+            },
+            "System.Globalization": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "System.IO.FileSystem": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "System.IO.FileSystem.Primitives": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "System.Net.NameResolution": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "System.Threading": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "System.Threading.ThreadPool": {
+              "target": "Package",
+              "version": "[4.3.0, )"
             }
           },
           "imports": [
@@ -115,6 +139,34 @@
               "target": "Package",
               "version": "[2.0.3, )",
               "autoReferenced": true
+            },
+            "System.Diagnostics.Debug": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "System.Globalization": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "System.IO.FileSystem": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "System.IO.FileSystem.Primitives": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "System.Net.NameResolution": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "System.Runtime.Extensions": {
+              "target": "Package",
+              "version": "[4.3.1, )"
+            },
+            "System.Threading.ThreadPool": {
+              "target": "Package",
+              "version": "[4.3.0, )"
             }
           },
           "imports": [
@@ -201,6 +253,38 @@
             "System.Data.SqlClient": {
               "target": "Package",
               "version": "[4.8.2, )"
+            },
+            "System.Diagnostics.Debug": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "System.Globalization": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "System.IO.FileSystem": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "System.IO.FileSystem.Primitives": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "System.Net.NameResolution": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "System.Runtime.Extensions": {
+              "target": "Package",
+              "version": "[4.3.1, )"
+            },
+            "System.Threading": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "System.Threading.ThreadPool": {
+              "target": "Package",
+              "version": "[4.3.0, )"
             }
           },
           "imports": [

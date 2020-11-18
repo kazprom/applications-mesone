@@ -57,6 +57,7 @@ namespace LibMESone
 
         public uint LOG_DepthDay { get; private set; }
 
+
         #endregion
 
         #region CONSTRUCTOR

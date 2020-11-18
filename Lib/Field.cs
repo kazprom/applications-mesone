@@ -16,7 +16,8 @@ namespace Lib
             TinyInt,
             SmallInt,
             Binary,
-            Text
+            Text,
+            Blob
         }
 
         /// <summary>

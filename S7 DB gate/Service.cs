@@ -20,7 +20,7 @@ namespace S7_DB_gate
 
         #region PUBLICS
 
-        public override void DatabaseReadHandler(object state)
+        public override void DB_Handler(object state)
         {
 
             try
@@ -92,7 +92,7 @@ namespace S7_DB_gate
                 logger.Error(ex, $"{Title}. Clients reader");
             }
 
-            base.DatabaseReadHandler(state);
+            base.DB_Handler(state);
         }
 
         #endregion

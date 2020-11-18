@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,12 +16,16 @@ namespace LibMESone
         private const int period = 60000;
 #endif
 
+
+        private const string depth_log_day_name = "DEPTH_LOG_DAY";
+        private const uint depth_log_days_default = 3;
+
         #endregion
 
         #region VARIABLES
 
         protected NLog.Logger logger;
-        private Timer timer_database_read;
+        private Timer timer_DB;
         private Lib.Buffer<Structs.LogMessage> log_buf;
         private DateTime log_ts = default;
 
@@ -38,6 +43,8 @@ namespace LibMESone
 
         public Lib.Database Database { get; set; }
 
+        public Dictionary<string, string> Settings { get; private set; }
+
         #endregion
 
         #region CONSTRUCTOR
@@ -50,7 +57,8 @@ namespace LibMESone
                 ID = id;
                 Title = $"Service [{ID}]";
 
-                timer_database_read = new Timer(DatabaseReadHandler, null, 0, period);
+                Settings = new Dictionary<string, string>();
+
 
                 log_buf = new Lib.Buffer<Structs.LogMessage>(100, 5000);
                 log_buf.CyclicEvent += LogDataHandler;
@@ -68,6 +76,8 @@ namespace LibMESone
 
 
                 logger = NLog.LogManager.GetLogger(Title);
+
+                timer_DB = new Timer(DB_Handler, null, 0, period);
 
                 logger.Info($"{Title}. Created");
             }
@@ -95,7 +105,7 @@ namespace LibMESone
                 if (disposing)
                 {
                     WaitHandle h = new AutoResetEvent(false);
-                    timer_database_read.Dispose(h);
+                    timer_DB.Dispose(h);
                     h.WaitOne();
 
                     LogDataHandler();
@@ -138,7 +148,71 @@ namespace LibMESone
             }
         }
 
-        public virtual void DatabaseReadHandler(object state) { }
+        public virtual void DB_Handler(object state)
+        {
+            try
+            {
+
+                if (Database != null)
+                {
+
+                    //--------read----------------
+
+                    IEnumerable<Structs.Setting> settings = null;
+                    if (Database.CompareTableSchema<Structs.Setting>(Structs.Setting.TableName))
+                        settings = Database.Read<Structs.Setting>(Structs.Setting.TableName);
+
+                    if (settings != null)
+                    {
+                        foreach (Structs.Setting setting in settings)
+                        {
+                            if (!Settings.ContainsKey(setting.Key))
+                                Settings.Add(setting.Key, "");
+
+                            if (Settings[setting.Key] != setting.Value)
+                            {
+                                Settings[setting.Key] = setting.Value;
+                                logger.Info($"{Title} Setting {setting.Key} = {setting.Value}");
+                            }
+
+                        }
+                    }
+
+                    //------------log cleaner-----------
+
+                    uint depth_log_days = depth_log_days_default;
+                    if (Settings.ContainsKey(depth_log_day_name))
+                    {
+                        if (!uint.TryParse(Settings[depth_log_day_name], out depth_log_days))
+                        {
+                            logger.Warn($"Setting [{depth_log_day_name}] can't parse. Default value is {depth_log_days_default}");
+                        }
+                    }
+                    else
+                    {
+                        logger.Warn($"Setting [{depth_log_day_name}] not found. Default value is {depth_log_days_default}");
+                    }
+
+                    IEnumerable<string> tables = Database.GetListTables(Structs.LogMessage.TablePrefix + "%");
+                    DateTime ts = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+
+                    foreach (string table in tables)
+                    {
+                        if (ts.Subtract(Structs.LogMessage.GetTimeStamp(table)).TotalDays > depth_log_days)
+                        {
+                            if (Database.RemoveTable(table))
+                                logger.Info($"{Title}. Removed log table [{table}]");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                logger.Error(ex, $"{Title}. DB handler");
+            }
+
+        }
 
         #endregion
 

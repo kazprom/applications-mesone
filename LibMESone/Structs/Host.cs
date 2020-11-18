@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LibMESone.Structs
 {
-    public class Hosts:BaseNE
+    public class Host:BaseNE
     {
 
         [Field(TYPE = Field.Etype.VarChar, SIZE = 15, NN = true)]
