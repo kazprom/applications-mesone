@@ -10,6 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="16.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DB gate Lib\LibDBgate.csproj" />
     <ProjectReference Include="..\LibMESone\LibMESone.csproj" />
     <ProjectReference Include="..\Lib\Lib.csproj" />
   </ItemGroup>
