@@ -27,7 +27,7 @@ namespace S7_DB_gate
             {
                 Lib.Common common = new Lib.Common();
 
-                LibMESone.Core core = new LibMESone.Core(typeof(Service));
+                LibMESone.CSrvCore core = new LibMESone.CSrvCore(typeof(Service));
 
                 common.InfinityWaiting();
 

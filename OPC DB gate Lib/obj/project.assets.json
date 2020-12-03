@@ -1351,7 +1351,6 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "Lib": "1.0.0",
           "LibMESone": "1.0.0",
           "System.Globalization": "4.3.0",
           "System.IO.FileSystem": "4.3.0",

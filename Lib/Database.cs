@@ -69,11 +69,11 @@ namespace Lib
 
         #region PROPERTIES
 
-        public string Title { get; private set; }
+        //public string Title { get; private set; }
 
         public ulong ID { get; private set; }
 
-        public string Name { get; private set; }
+        //public string Name { get; private set; }
 
         public string Driver { get; private set; }
 
@@ -98,7 +98,7 @@ namespace Lib
             ID = id;
 
             if (logger == null)
-                this.logger = NLog.LogManager.GetCurrentClassLogger();
+                this.logger = NLog.LogManager.GetLogger("Database");
             else
                 this.logger = logger;
 
@@ -124,7 +124,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"{Title}. Read where like table {table_name}");
+                logger.Error(ex, $"Table {table_name}");
             }
 
             return result;
@@ -146,7 +146,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"{Title}. Read where table {table_name}");
+                logger.Error(ex, $"Table {table_name}");
             }
 
             return result;
@@ -169,7 +169,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"{Title}. Read table {table_name}");
+                logger.Error(ex, $"Table {table_name}");
             }
 
             return result;
@@ -207,7 +207,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"{Title}. Update in table {table_name}");
+                logger.Error(ex, $"Table {table_name}");
             }
 
             return result;
@@ -231,7 +231,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"{Title}. Insert to table {table_name}");
+                logger.Error(ex, $"Table {table_name}");
             }
 
             return result;
@@ -255,15 +255,15 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"{Title}. Delete where NOT in table {table_name}");
+                logger.Error(ex, $"Table {table_name}");
             }
 
             return result;
         }
 
-        public bool CompareTableSchema<T>(string table_name)
+        public bool? CompareTableSchema<T>(string table_name)
         {
-            bool result = true;
+            bool? result = null;
 
             try
             {
@@ -278,9 +278,9 @@ namespace Lib
                         }
                         else if (connection.GetType().Equals(typeof(MySqlConnection)))
                         {
-                            IEnumerable<Structs.MySQLInfoSchemaCols> rows;
+                            IEnumerable<Tables.CMySQLInfoSchemaCols> rows;
 
-                            rows = WhereRead<Structs.MySQLInfoSchemaCols>("INFORMATION_SCHEMA.COLUMNS", new
+                            rows = WhereRead<Tables.CMySQLInfoSchemaCols>(Tables.CMySQLInfoSchemaCols.TableName, new
                             {
                                 Table_schema = db.Connection.Database,
                                 Table_name = table_name
@@ -288,14 +288,17 @@ namespace Lib
 
                             if (rows != null)
                             {
+
+                                result = true;
+
                                 foreach (PropertyInfo prop in typeof(T).GetProperties().Where(x => x.GetCustomAttribute(typeof(Field)) != null))
                                 {
 
-                                    Structs.MySQLInfoSchemaCols row = rows.Where(x => x.Column_name.Equals(prop.Name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                                    Tables.CMySQLInfoSchemaCols row = rows.Where(x => x.Column_name.Equals(prop.Name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
 
                                     if (row == null)
                                     {
-                                        logger.Warn($"{Title}. Table [{table_name}] Column [{prop.Name}] not found");
+                                        logger.Warn($"Table [{table_name}] Column [{prop.Name}] not found");
                                         result = false;
                                     }
                                     else
@@ -308,36 +311,40 @@ namespace Lib
 
                                         if (!row.Column_type.Equals(type, StringComparison.OrdinalIgnoreCase))
                                         {
-                                            logger.Warn($"{Title}. Table [{table_name}] Column [{prop.Name}] Type [{type}] wrong. Current [{row.Column_type}]");
+                                            logger.Warn($"Table [{table_name}] Column [{prop.Name}] Type [{type}] wrong. Current [{row.Column_type}]");
                                             result = false;
                                         }
 
                                         if (attr.PK != row.Column_key.Contains("PRI"))
                                         {
-                                            logger.Warn($"{Title}. Table [{table_name}] Column [{prop.Name}] PRIMARY[{attr.PK}] wrong. Current [{row.Column_key}]");
+                                            logger.Warn($"Table [{table_name}] Column [{prop.Name}] PRIMARY[{attr.PK}] wrong. Current [{row.Column_key}]");
                                             result = false;
                                         }
 
                                         if (attr.UQ != row.Column_key.Contains("UNI"))
                                         {
-                                            logger.Warn($"{Title}. Table [{table_name}] Column [{prop.Name}] UNIQUE[{attr.UQ}] wrong. Current [{row.Column_key}]");
+                                            logger.Warn($"Table [{table_name}] Column [{prop.Name}] UNIQUE[{attr.UQ}] wrong. Current [{row.Column_key}]");
                                             result = false;
                                         }
 
                                         if (attr.AI != row.Extra.Contains("auto_increment"))
                                         {
-                                            logger.Warn($"{Title}. Table [{table_name}] Column [{prop.Name}] AUTO_INCREMENT[{attr.AI}] wrong. Current [{row.Extra}]");
+                                            logger.Warn($"Table [{table_name}] Column [{prop.Name}] AUTO_INCREMENT[{attr.AI}] wrong. Current [{row.Extra}]");
                                             result = false;
                                         }
 
                                         if (attr.NN != row.Is_nullable.Equals("NO"))
                                         {
-                                            logger.Warn($"{Title}. Table [{table_name}] Column [{prop.Name}] NOT NULL[{attr.NN}] wrong. Current IS_NULLABLE [{row.Is_nullable}]");
+                                            logger.Warn($"Table [{table_name}] Column [{prop.Name}] NOT NULL[{attr.NN}] wrong. Current IS_NULLABLE [{row.Is_nullable}]");
                                             result = false;
                                         }
 
                                     }
                                 }
+                            }
+                            else
+                            {
+                                logger.Warn($"Can't get data from table {Tables.CMySQLInfoSchemaCols.TableName} for table {table_name}");
                             }
                         }
                         else if (connection.GetType().Equals(typeof(NpgsqlConnection)))
@@ -353,16 +360,15 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"{Title}. Comare table schema {table_name}");
-                result = false;
+                logger.Error(ex, $"Table {table_name}");
             }
 
             return result;
         }
 
-        public bool CheckExistTable(string table_name)
+        public bool? CheckExistTable(string table_name)
         {
-            bool result = false;
+            bool? result = null;
 
             try
             {
@@ -379,7 +385,16 @@ namespace Lib
                         else if (connection.GetType().Equals(typeof(MySqlConnection)))
                         {
                             IEnumerable<dynamic> result_query = db.Query("information_schema.tables").Where("Table_name", table_name).Where("Table_schema", connection.Database).Get();
-                            result = result_query.Count() != 0;
+
+                            if(result_query.Count() != 0)
+                            {
+                                result = true;
+                            }
+                            else
+                            {
+                                result = false;
+                                logger.Warn($"Table {table_name} is absent");
+                            }
 
                         }
                         else if (connection.GetType().Equals(typeof(NpgsqlConnection)))
@@ -397,7 +412,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"{Title}. Check exist table {table_name}");
+                logger.Error(ex, $"Table {table_name}");
             }
 
             return result;
@@ -466,7 +481,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"{Title}. Create table {table_name}");
+                logger.Error(ex, $"Table {table_name}");
             }
 
             return result;
@@ -511,7 +526,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"{Title}. Remove table {table_name}");
+                logger.Error(ex, $"Table {table_name}");
             }
 
             return result;
@@ -536,9 +551,9 @@ namespace Lib
                         }
                         else if (connection.GetType().Equals(typeof(MySqlConnection)))
                         {
-                            IEnumerable<Structs.MySQLInfoSchemaTabs> rows;
+                            IEnumerable<Tables.CMySQLInfoSchemaTabs> rows;
 
-                            rows = WhereLikeRead<Structs.MySQLInfoSchemaTabs>("INFORMATION_SCHEMA.TABLES", 
+                            rows = WhereLikeRead<Tables.CMySQLInfoSchemaTabs>(Tables.CMySQLInfoSchemaTabs.TableName, 
                                                                               new { Table_schema = db.Connection.Database },
                                                                               "table_name", filter);
 
@@ -560,19 +575,19 @@ namespace Lib
             catch (Exception ex)
             {
 
-                logger.Error(ex, $"{Title}. Get list tables");
+                logger.Error(ex);
 
             }
 
             return result;
         }
 
-        public void LoadSettings(string name, string driver, string host, uint port, string charset, string base_name, string user, string password)
+        public void LoadSettings(string driver, string host, uint port, string charset, string base_name, string user, string password)
         {
             try
             {
-                Name = name;
-                Title = $"Database {Name}";
+                //Name = name;
+                //Title = $"Database {Name}";
 
                 if (Driver != driver || Host != host || Port != port || Charset != charset || BaseName != base_name || User != user || Password != password)
                 {
@@ -610,7 +625,7 @@ namespace Lib
                     if (connection != null && compiler != null)
                     {
                         db = new QueryFactory(connection, compiler);
-                        logger.Info($"{Title}. Connection {connection.ConnectionString}");
+                        logger.Info($"Connection {connection.ConnectionString}");
                     }
                     else
                         db = null;
@@ -620,7 +635,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"{Title}. Settings");
+                logger.Error(ex);
             }
         }
 
@@ -657,7 +672,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"{Title}. Constraints");
+                logger.Error(ex);
             }
 
         }

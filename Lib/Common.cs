@@ -10,27 +10,32 @@ namespace Lib
     public class Common
     {
 
-        private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-        private const string layout_info = "[${longdate}] [${level}] ${message:withException=false}";
-        private const string layout_error = layout_info + "${newline}${exception}";
-        private const string layout_file = "[${longdate}] [${level}] ${message:withException=true} ${exception}";
+        private NLog.Logger logger = NLog.LogManager.GetLogger("Main");
+        private const string layout_title = "[${longdate}] [${logger}] ";
+        private const string layout_info = layout_title + "${message:withException=false}";
+        private const string layout_error = layout_title + "[${level}] [${callsite}] ${message:withException=false} ${newline}${exception}";
+        private const string layout_file = layout_title + "${message:withException=true} ${exception}";
 
         public const int default_log_depth_day = 3;
 
         public Common()
         {
 
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
             var configuration = new NLog.Config.LoggingConfiguration();
             var consoleInfo = new NLog.Targets.ColoredConsoleTarget("console") { Layout = layout_info };
             var consoleError = new NLog.Targets.ColoredConsoleTarget("console") { Layout = layout_error };
-            var file = new NLog.Targets.FileTarget("file") {Layout = layout_file,
-                                                            FileName = "${basedir}/Logs/actual.log",
-                                                            ArchiveFileName = "${basedir}/Logs/${date:yyyy_MM_dd}.log",
-                                                            ArchiveEvery = NLog.Targets.FileArchivePeriod.Day,
-                                                            ArchiveNumbering = NLog.Targets.ArchiveNumberingMode.Rolling,
-                                                            MaxArchiveFiles = default_log_depth_day,
-                                                            ArchiveAboveSize = 5242880,
-                                                            KeepFileOpen = true
+            var file = new NLog.Targets.FileTarget("file")
+            {
+                Layout = layout_file,
+                FileName = "${basedir}/Logs/actual.log",
+                ArchiveFileName = "${basedir}/Logs/${date:yyyy_MM_dd}.log",
+                ArchiveEvery = NLog.Targets.FileArchivePeriod.Day,
+                ArchiveNumbering = NLog.Targets.ArchiveNumberingMode.Rolling,
+                MaxArchiveFiles = default_log_depth_day,
+                ArchiveAboveSize = 5242880,
+                KeepFileOpen = true
             };
 
             configuration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Info, consoleInfo);
@@ -48,6 +53,12 @@ namespace Lib
         public static string NameExeFile { get { return System.AppDomain.CurrentDomain.FriendlyName; } }
 
 
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Exception ex = (Exception)e.ExceptionObject;
+            logger.Fatal(ex);
+
+        }
 
         private string AppName()
         {

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace S7_DB_gate.Structs
 {
-    public class Client:LibDBgate.Structs.Client
+    public class Client:LibPlcDBgate.Structs.Client
     {
 
         [Field(TYPE = Field.Etype.VarChar, SIZE = 10, NN = true)]

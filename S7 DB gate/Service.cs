@@ -1,5 +1,5 @@
 ﻿using Lib;
-using LibMESone.Structs;
+using LibMESone.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +7,11 @@ using System.Threading;
 
 namespace S7_DB_gate
 {
-    public class Service : LibDBgate.Service
+    public class Service : LibPlcDBgate.Service
     {
 
         #region CONSTRUCTOR
-        public Service(LibMESone.Core parent, ulong id) : base(parent, id)
+        public Service(LibMESone.CSrvCore parent, ulong id) : base(parent, id)
         {
 
         }

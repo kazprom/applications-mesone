@@ -5304,7 +5304,6 @@
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
-      "Lib >= 1.0.0",
       "LibMESone >= 1.0.0",
       "NETStandard.Library >= 2.0.3",
       "System.Globalization >= 4.3.0",
@@ -5347,9 +5346,6 @@
           "projectReferences": {
             "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibMESone\\LibMESone.csproj": {
               "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibMESone\\LibMESone.csproj"
-            },
-            "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\Lib.csproj": {
-              "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\Lib.csproj"
             }
           }
         }

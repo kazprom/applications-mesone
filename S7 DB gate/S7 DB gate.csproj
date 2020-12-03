@@ -24,8 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DB gate Lib\LibDBgate.csproj" />
-    <ProjectReference Include="..\Lib\Lib.csproj" />
+    <ProjectReference Include="..\LibTagsDBGate\LibPlcDBGate.csproj" />
     <ProjectReference Include="..\S7.Net\S7.Net.csproj" />
   </ItemGroup>
 
