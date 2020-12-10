@@ -29,7 +29,6 @@ namespace LibMESone
 
         private Lib.Buffer<CLogMessage> log_buf;
         private DateTime log_ts = default;
-        private string logger_name;
 
         #endregion
 
@@ -71,7 +70,7 @@ namespace LibMESone
                     LogDataHandler();
 
                     var configuration = NLog.LogManager.Configuration;
-                    configuration.RemoveRuleByName(logger_name);
+                    configuration.RemoveRuleByName(Logger.Name);
                     NLog.LogManager.Configuration = configuration;
 
                     Database = null;
@@ -97,7 +96,7 @@ namespace LibMESone
                 ID = _setting.Id;
                 Name = _setting.Name;
 
-                logger_name = $"Proc [{ID}] <{Name}>";
+                string logger_name = $"Proc [{ID}] <{Name}>";
 
                 if (Logger != NLog.LogManager.GetLogger(logger_name))
                 {
@@ -114,10 +113,6 @@ namespace LibMESone
                         NLog.LogManager.Configuration = configuration;
 
                         Logger = NLog.LogManager.GetLogger(logger_name);
-                    }
-                    else
-                    {
-
                     }
                 }
 

@@ -11,25 +11,25 @@ namespace LibMESone.Tables.Core
 
         static public string TableName = "databases";
 
-        [Field(TYPE = Field.Etype.VarChar, SIZE = 255)]
+        [Field(TYPE = Field.EDoctrine.String, SIZE = 255)]
         public string Database { get; set; }
 
-        [Field(TYPE = Field.Etype.VarChar, SIZE = 255)]
+        [Field(TYPE = Field.EDoctrine.String, SIZE = 255)]
         public string Driver { get; set; }
 
-        [Field(TYPE = Field.Etype.BigInt, UN = true, NN = true)]
+        [Field(TYPE = Field.EDoctrine.BigInt, NN = true)]
         public ulong Hosts_id { get; set; }
 
-        [Field(TYPE = Field.Etype.Int, UN = true)]
+        [Field(TYPE = Field.EDoctrine.Integer)]
         public uint Port { get; set; }
 
-        [Field(TYPE = Field.Etype.VarChar, SIZE = 255)]
+        [Field(TYPE = Field.EDoctrine.String, SIZE = 255)]
         public string Charset { get; set; }
 
-        [Field(TYPE = Field.Etype.VarChar, SIZE = 255)]
+        [Field(TYPE = Field.EDoctrine.String, SIZE = 255)]
         public string Username { get; set; }
 
-        [Field(TYPE = Field.Etype.VarChar, SIZE = 255)]
+        [Field(TYPE = Field.EDoctrine.String, SIZE = 255)]
         public string Password { get; set; }
 
 

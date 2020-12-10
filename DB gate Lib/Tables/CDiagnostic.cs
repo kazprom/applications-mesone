@@ -8,10 +8,10 @@ namespace LibDBgate.Tables
         static public string TableName = "diagnostics";
 
 
-        [Field(TYPE = Field.Etype.VarChar, SIZE = 50)]
+        [Field(TYPE = Field.EDoctrine.String, SIZE = 50)]
         public string State { get; set; }
 
-        [Field(TYPE = Field.Etype.Text)]
+        [Field(TYPE = Field.EDoctrine.String)]
         public string Message { get; set; }
 
 

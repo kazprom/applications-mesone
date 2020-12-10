@@ -12,10 +12,10 @@ namespace LibMESone.Tables.Core
 
         static public string TableName = "services";
 
-        [Field(TYPE = Field.Etype.BigInt, UN = true)]
+        [Field(TYPE = Field.EDoctrine.BigInt)]
         public ulong Databases_id { get; set; }
 
-        [Field(TYPE = Field.Etype.BigInt, UN = true)]
+        [Field(TYPE = Field.EDoctrine.BigInt)]
         public ulong Service_types_id { get; set; }
 
      

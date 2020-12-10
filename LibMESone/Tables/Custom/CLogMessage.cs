@@ -8,10 +8,10 @@ namespace LibMESone.Tables.Custom
 
         public const string TablePrefix = "l_";
 
-        [Field(TYPE = Field.Etype.TimeStamp, SIZE = 3, NN = true)]
+        [Field(TYPE = Field.EDoctrine.DateTime, SIZE = 3, NN = true)]
         public DateTime Timestamp { get; set; }
 
-        [Field(TYPE = Field.Etype.Text, NN = true)]
+        [Field(TYPE = Field.EDoctrine.Text, NN = true)]
         public string Message { get; set; }
 
         public static string GetTableName(DateTime ts)

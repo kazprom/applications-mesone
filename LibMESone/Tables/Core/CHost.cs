@@ -11,7 +11,7 @@ namespace LibMESone.Tables.Core
 
         static public string TableName = "hosts";
 
-        [Field(TYPE = Field.Etype.VarChar, SIZE = 15, NN = true)]
+        [Field(TYPE = Field.EDoctrine.String, SIZE = 15, NN = true)]
         public string Ip { get; set; }
 
     }

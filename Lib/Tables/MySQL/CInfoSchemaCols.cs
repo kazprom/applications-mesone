@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Lib.Tables
+﻿
+namespace Lib.Tables.MySQL
 {
-    class CMySQLInfoSchemaCols
+    class CInfoSchemaCols
     {
 
         static public string TableName = "INFORMATION_SCHEMA.COLUMNS";

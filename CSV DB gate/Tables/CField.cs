@@ -10,18 +10,18 @@ namespace CSV_DB_gate.Tables
 
         static public string TableName = "fields";
 
-        [Field(TYPE = Field.Etype.BigInt, NN = true)]
+        [Field(TYPE = Field.EDoctrine.BigInt, NN = true)]
         public ulong Converters_id { get; set; }
 
-        [Field(TYPE = Field.Etype.VarChar, SIZE = 255, NN = true)]
+        [Field(TYPE = Field.EDoctrine.String, SIZE = 255, NN = true)]
         public string Name_src { get; set; }
         
-        [Field(TYPE = Field.Etype.VarChar, SIZE = 255, NN = true)]
+        [Field(TYPE = Field.EDoctrine.String, SIZE = 255, NN = true)]
         public string Name_dst { get; set; }
 
-        [Field(TYPE = Field.Etype.VarChar, SIZE = 15, NN = true)]
+        [Field(TYPE = Field.EDoctrine.String, SIZE = 15, NN = true)]
         public string Data_type { get; set; }
 
-
+        
     }
 }

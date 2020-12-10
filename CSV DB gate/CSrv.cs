@@ -16,7 +16,6 @@ namespace CSV_DB_gate
 
         #endregion
 
-
         #region PUBLICS
 
         public override void Timer_Handler(object state)
@@ -78,13 +77,19 @@ namespace CSV_DB_gate
                                        Start_timestamp = convs.Start_timestamp,
                                        Frequency_sec = convs.Frequency_sec,
                                        Timeout_sec = convs.Timeout_sec,
+                                       Has_header_record = convs.Has_header_record,
+                                       Delimiter = convs.Delimiter,
+                                       Quote = convs.Quote,
+                                       Quotes_ignore = convs.Quotes_ignore,
+                                       Detect_column_count_changes = convs.Detect_column_count_changes,
+
                                        Fields = from fields in TFields
                                                 where fields.Enabled == true && fields.Converters_id == convs.Id
                                                 select new Structs.CField()
                                                 {
                                                     NameSource = fields.Name_src,
                                                     NameDestination = fields.Name_dst,
-                                                    DataType = Type.GetType($"System.{fields.Data_type}", false, true)
+                                                    DataType = Lib.Field.TypeParce(fields.Data_type)
                                                 }
                                    };
                     }
@@ -92,82 +97,14 @@ namespace CSV_DB_gate
                     CUD<CConverter>(settings);
 
                 }
-
-                /*
-                if (Database != null)
-                {
-
-                    IEnumerable<Structs.File> files = null;
-                    if (Database.CompareTableSchema<Structs.File>(Structs.File.TableName))
-                        files = Database.WhereRead<Structs.File>(Structs.File.TableName, new { Enabled = true });
-
-                    if (files != null)
-                    {
-
-                        IEnumerable<ulong> fresh_ids = files.Select(x => (ulong)x.Id);
-                        IEnumerable<ulong> existing_ids = this.SubServices.Keys;
-
-                        IEnumerable<ulong> waste = existing_ids.Except(fresh_ids);
-                        IEnumerable<ulong> modify = fresh_ids.Intersect(existing_ids);
-                        IEnumerable<ulong> missing = fresh_ids.Except(existing_ids);
-
-                        foreach (ulong point_id in waste)
-                        {
-                            Client srv = (Client)this.Clients[point_id];
-                            srv.Dispose();
-                            this.Clients.Remove(point_id);
-                        }
-
-                        foreach (ulong point_id in modify)
-                        {
-                            Structs.Client set_point = clients.First(x => x.Id == point_id);
-                            Client srv = (Client)Clients[point_id];
-
-                            srv.LoadSettings(set_point.Name,
-                                             set_point.Cpu_type,
-                                             set_point.Ip,
-                                             set_point.Port,
-                                             set_point.Rack,
-                                             set_point.Slot);
-                        }
-
-                        foreach (ulong point_id in missing)
-                        {
-                            Structs.Client set_point = clients.First(x => x.Id == point_id);
-                            Client inst_point = new Client(this, point_id);
-
-                            inst_point.LoadSettings(set_point.Name,
-                                                    set_point.Cpu_type,
-                                                    set_point.Ip,
-                                                    set_point.Port,
-                                                    set_point.Rack,
-                                                    set_point.Slot);
-
-                            Clients.Add(set_point.Id, inst_point);
-                        }
-                    }
-                    else
-                    {
-                        foreach (Client client in Clients.Values)
-                        {
-                            client.Dispose();
-                        }
-                        Clients.Clear();
-                    }
-                }
-                */
             }
             catch (Exception ex)
             {
                 Logger.Error(ex);
             }
-
-
         }
 
         #endregion
-
-
 
     }
 }

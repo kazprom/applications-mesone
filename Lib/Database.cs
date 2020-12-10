@@ -212,7 +212,31 @@ namespace Lib
 
             return result;
         }
+        
+        public bool Insert(string table_name, IReadOnlyDictionary<string, object> data)
+        {
+            bool result = false;
 
+            try
+            {
+                if (db != null)
+                {
+                    lock (db)
+                    {
+                        db.Query(table_name).Insert(data);
+                    }
+                }
+
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, $"Table {table_name}");
+            }
+
+            return result;
+        }
+        
         public bool Insert<T>(string table_name, T data)
         {
             bool result = false;
@@ -263,6 +287,14 @@ namespace Lib
 
         public bool? CompareTableSchema<T>(string table_name)
         {
+            return CompareTableSchema(table_name,
+                                      typeof(T).
+                                      GetProperties().
+                                      Where(x => x.GetCustomAttribute(typeof(Field)) != null).
+                                      ToDictionary(y => y.Name, y => (Field)y.GetCustomAttribute(typeof(Field))));
+        }
+        public bool? CompareTableSchema(string table_name, Dictionary<string, Field> fields)
+        {
             bool? result = null;
 
             try
@@ -278,9 +310,9 @@ namespace Lib
                         }
                         else if (connection.GetType().Equals(typeof(MySqlConnection)))
                         {
-                            IEnumerable<Tables.CMySQLInfoSchemaCols> rows;
+                            IEnumerable<Tables.MySQL.CInfoSchemaCols> rows;
 
-                            rows = WhereRead<Tables.CMySQLInfoSchemaCols>(Tables.CMySQLInfoSchemaCols.TableName, new
+                            rows = WhereRead<Tables.MySQL.CInfoSchemaCols>(Tables.MySQL.CInfoSchemaCols.TableName, new
                             {
                                 Table_schema = db.Connection.Database,
                                 Table_name = table_name
@@ -291,51 +323,46 @@ namespace Lib
 
                                 result = true;
 
-                                foreach (PropertyInfo prop in typeof(T).GetProperties().Where(x => x.GetCustomAttribute(typeof(Field)) != null))
+                                foreach (var field in fields)
                                 {
-
-                                    Tables.CMySQLInfoSchemaCols row = rows.Where(x => x.Column_name.Equals(prop.Name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                                    Tables.MySQL.CInfoSchemaCols row = rows.Where(x => x.Column_name.Equals(field.Key, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
 
                                     if (row == null)
                                     {
-                                        logger.Warn($"Table [{table_name}] Column [{prop.Name}] not found");
+                                        logger.Warn($"Table [{table_name}] Column [{field.Key}] not found");
                                         result = false;
                                     }
                                     else
                                     {
-                                        Field attr = prop.GetCustomAttribute(typeof(Field)) as Field;
-
-                                        string type = $"{attr.TYPE}";
-                                        type += attr.SIZE > 0 ? $"({attr.SIZE})" : "";
-                                        type += attr.UN ? " unsigned" : "";
+                                        string type = field.Value.GetType_MySQL();
 
                                         if (!row.Column_type.Equals(type, StringComparison.OrdinalIgnoreCase))
                                         {
-                                            logger.Warn($"Table [{table_name}] Column [{prop.Name}] Type [{type}] wrong. Current [{row.Column_type}]");
+                                            logger.Warn($"Table [{table_name}] Column [{field.Key}] Type [{type}] wrong. Current [{row.Column_type}]");
                                             result = false;
                                         }
 
-                                        if (attr.PK != row.Column_key.Contains("PRI"))
+                                        if (field.Value.PK != row.Column_key.Contains("PRI"))
                                         {
-                                            logger.Warn($"Table [{table_name}] Column [{prop.Name}] PRIMARY[{attr.PK}] wrong. Current [{row.Column_key}]");
+                                            logger.Warn($"Table [{table_name}] Column [{field.Key}] PRIMARY[{field.Value.PK}] wrong. Current [{row.Column_key}]");
                                             result = false;
                                         }
 
-                                        if (attr.UQ != row.Column_key.Contains("UNI"))
+                                        if (field.Value.UQ != row.Column_key.Contains("UNI"))
                                         {
-                                            logger.Warn($"Table [{table_name}] Column [{prop.Name}] UNIQUE[{attr.UQ}] wrong. Current [{row.Column_key}]");
+                                            logger.Warn($"Table [{table_name}] Column [{field.Key}] UNIQUE[{field.Value.UQ}] wrong. Current [{row.Column_key}]");
                                             result = false;
                                         }
 
-                                        if (attr.AI != row.Extra.Contains("auto_increment"))
+                                        if (field.Value.AI != row.Extra.Contains("auto_increment"))
                                         {
-                                            logger.Warn($"Table [{table_name}] Column [{prop.Name}] AUTO_INCREMENT[{attr.AI}] wrong. Current [{row.Extra}]");
+                                            logger.Warn($"Table [{table_name}] Column [{field.Key}] AUTO_INCREMENT[{field.Value.AI}] wrong. Current [{row.Extra}]");
                                             result = false;
                                         }
 
-                                        if (attr.NN != row.Is_nullable.Equals("NO"))
+                                        if (field.Value.NN != row.Is_nullable.Equals("NO"))
                                         {
-                                            logger.Warn($"Table [{table_name}] Column [{prop.Name}] NOT NULL[{attr.NN}] wrong. Current IS_NULLABLE [{row.Is_nullable}]");
+                                            logger.Warn($"Table [{table_name}] Column [{field.Key}] NOT NULL[{field.Value.NN}] wrong. Current IS_NULLABLE [{row.Is_nullable}]");
                                             result = false;
                                         }
 
@@ -344,7 +371,7 @@ namespace Lib
                             }
                             else
                             {
-                                logger.Warn($"Can't get data from table {Tables.CMySQLInfoSchemaCols.TableName} for table {table_name}");
+                                logger.Warn($"Can't get data from table {Tables.MySQL.CInfoSchemaCols.TableName} for table {table_name}");
                             }
                         }
                         else if (connection.GetType().Equals(typeof(NpgsqlConnection)))
@@ -386,7 +413,7 @@ namespace Lib
                         {
                             IEnumerable<dynamic> result_query = db.Query("information_schema.tables").Where("Table_name", table_name).Where("Table_schema", connection.Database).Get();
 
-                            if(result_query.Count() != 0)
+                            if (result_query.Count() != 0)
                             {
                                 result = true;
                             }
@@ -421,6 +448,15 @@ namespace Lib
         public bool CreateTable<T>(string table_name)
         {
 
+            return CreateTable(table_name,
+                                typeof(T).
+                                GetProperties().
+                                Where(x => x.GetCustomAttribute(typeof(Field)) != null).
+                                ToDictionary(y => y.Name, y => (Field)y.GetCustomAttribute(typeof(Field))));
+        }
+
+        public bool CreateTable(string table_name, Dictionary<string, Field> fields)
+        {
             bool result = false;
 
             try
@@ -440,25 +476,19 @@ namespace Lib
                         {
                             sql = $"CREATE TABLE `{table_name}` ( ";
 
-                            foreach (PropertyInfo prop in typeof(T).GetProperties().Where(x => x.GetCustomAttribute(typeof(Field)) != null))
+                            foreach (var field in fields)
                             {
-                                Field attr = prop.GetCustomAttribute(typeof(Field)) as Field;
-                                if (!attr.IGNORE)
+
+                                sql += $" `{field.Key}` ";
+
+                                sql += $" {field.Value.GetType_MySQL()}";
+                                if (field.Value.AI) sql += $" AUTO_INCREMENT ";
+                                if (field.Value.PK) sql += $" PRIMARY KEY ";
+                                if (field.Value.NN) sql += $" NOT NULL ";
+                                sql += ",";
+                                if (field.Value.UQ)
                                 {
-
-                                    sql += $" `{prop.Name}` ";
-
-                                    sql += $" {attr.TYPE}";
-                                    if (attr.SIZE != 0) sql += $"({attr.SIZE}) ";
-                                    if (attr.UN) sql += $" UNSIGNED ";
-                                    if (attr.AI) sql += $" AUTO_INCREMENT ";
-                                    if (attr.PK) sql += $" PRIMARY KEY ";
-                                    if (attr.NN) sql += $" NOT NULL ";
-                                    sql += ",";
-                                    if (attr.UQ)
-                                    {
-                                        sql += $" UNIQUE (`{prop.Name}`),";
-                                    }
+                                    sql += $" UNIQUE (`{field.Key}`),";
                                 }
                             }
                             sql = sql.Substring(0, sql.Length - 1);
@@ -485,9 +515,8 @@ namespace Lib
             }
 
             return result;
+        }
 
-        } 
-        
         public bool RemoveTable(string table_name)
         {
 
@@ -551,9 +580,9 @@ namespace Lib
                         }
                         else if (connection.GetType().Equals(typeof(MySqlConnection)))
                         {
-                            IEnumerable<Tables.CMySQLInfoSchemaTabs> rows;
+                            IEnumerable<Tables.MySQL.CInfoSchemaTabs> rows;
 
-                            rows = WhereLikeRead<Tables.CMySQLInfoSchemaTabs>(Tables.CMySQLInfoSchemaTabs.TableName, 
+                            rows = WhereLikeRead<Tables.MySQL.CInfoSchemaTabs>(Tables.MySQL.CInfoSchemaTabs.TableName,
                                                                               new { Table_schema = db.Connection.Database },
                                                                               "table_name", filter);
 
@@ -654,7 +683,7 @@ namespace Lib
                     Field attr = prop.GetCustomAttribute(typeof(Field)) as Field;
                     if (attr != null)
                     {
-                        if (!attr.AI && !attr.IGNORE)
+                        if (!attr.AI)
                         {
                             if (attr.PK || attr.UQ)
                             {

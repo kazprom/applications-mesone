@@ -23,7 +23,15 @@ namespace CSV_DB_gate.Structs
 
         public IEnumerable<CField> Fields { get; set; }
 
+        public bool Has_header_record { get; set; }
 
+        public string Delimiter { get; set; }
+
+        public char Quote { get; set; }
+
+        public bool Quotes_ignore { get; set; }
+
+        public bool Detect_column_count_changes { get; set; }
 
     }
 }

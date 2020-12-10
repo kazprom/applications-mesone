@@ -11,7 +11,7 @@ namespace CSV_DB_gate.Structs
 
         public string NameDestination { get; set; }
 
-        public Type DataType { get; set; }
+        public Lib.Field.EDoctrine? DataType { get; set; }
 
     }
 }

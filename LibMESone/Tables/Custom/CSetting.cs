@@ -10,10 +10,10 @@ namespace LibMESone.Tables.Custom
 
         static public string TableName = "settings";
 
-        [Field(TYPE = Field.Etype.VarChar, SIZE = 50, NN = true, UQ = true)]
+        [Field(TYPE = Field.EDoctrine.String, SIZE = 50, NN = true, UQ = true)]
         public string Key { get; set; }
 
-        [Field(TYPE = Field.Etype.VarChar, SIZE = 255, NN = true)]
+        [Field(TYPE = Field.EDoctrine.String, SIZE = 255, NN = true)]
         public string Value { get; set; }
 
 
