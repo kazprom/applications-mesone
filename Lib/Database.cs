@@ -175,6 +175,39 @@ namespace Lib
             return result;
         }
 
+        public bool Update(string table_name, Dictionary<string, object> constraints, Dictionary<string, object> values, bool auto_insert = true)
+        {
+            bool result = false;
+
+            try
+            {
+                if (db != null && constraints != null && values != null)
+                {
+                    lock (db)
+                    {
+                        if (constraints.Count > 0)
+                            result = db.Query(table_name).Where(constraints).Update(values) != 0;
+                        else
+                            result = db.Query(table_name).Update(values) != 0;
+
+                        //Insert(table_name, values);
+
+                        if (!result && auto_insert)
+                            result = Insert(table_name, constraints.Concat(values).ToDictionary(x => x.Key, x => x.Value));
+
+                    }
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, $"Table {table_name}");
+            }
+
+            return result;
+        }
+
         public bool Update<T>(string table_name, T data)
         {
 
@@ -191,6 +224,9 @@ namespace Lib
                         Dictionary<string, object> values = new Dictionary<string, object>();
                         Constraints<T>(data, ref constraints, ref values);
 
+                        Update(table_name, constraints, values);
+
+                        /*
                         if (constraints.Count > 0)
                         {
                             if (db.Query(table_name).Where(constraints).Update(values) == 0) Insert<T>(table_name, data);
@@ -199,6 +235,7 @@ namespace Lib
                         {
                             if (db.Query(table_name).Update(values) == 0) Insert<T>(table_name, data);
                         }
+                        */
                     }
                 }
 
@@ -212,8 +249,8 @@ namespace Lib
 
             return result;
         }
-        
-        public bool Insert(string table_name, IReadOnlyDictionary<string, object> data)
+
+        public bool Insert(string table_name, Dictionary<string, object> data)
         {
             bool result = false;
 
@@ -233,10 +270,9 @@ namespace Lib
             {
                 logger.Error(ex, $"Table {table_name}");
             }
-
             return result;
         }
-        
+
         public bool Insert<T>(string table_name, T data)
         {
             bool result = false;
@@ -293,6 +329,7 @@ namespace Lib
                                       Where(x => x.GetCustomAttribute(typeof(Field)) != null).
                                       ToDictionary(y => y.Name, y => (Field)y.GetCustomAttribute(typeof(Field))));
         }
+
         public bool? CompareTableSchema(string table_name, Dictionary<string, Field> fields)
         {
             bool? result = null;
@@ -517,6 +554,49 @@ namespace Lib
             return result;
         }
 
+        public bool ClearTable(string table_name)
+        {
+            bool result = false;
+
+            try
+            {
+
+                if (db != null)
+                {
+                    lock (db)
+                    {
+                        string sql = string.Empty;
+
+                        if (connection.GetType().Equals(typeof(SqlConnection)))
+                        {
+                            throw new Exception("Create code for handling MSSQL");
+                        }
+                        else if (connection.GetType().Equals(typeof(MySqlConnection)))
+                        {
+                            sql = $"DELETE FROM `{table_name}`";
+                        }
+                        else if (connection.GetType().Equals(typeof(NpgsqlConnection)))
+                        {
+                            throw new Exception("Create code for handling PostgreSQL");
+                        }
+                        else
+                        {
+                            throw new Exception("Don't know database type");
+                        }
+
+                        db.Statement(sql);
+                        result = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, $"Table {table_name}");
+            }
+
+            return result;
+        }
+
         public bool RemoveTable(string table_name)
         {
 
@@ -671,7 +751,6 @@ namespace Lib
         #endregion
 
         #region PRIVATES
-
 
         private void Constraints<T>(T data, ref Dictionary<string, object> constraints, ref Dictionary<string, object> values)
         {

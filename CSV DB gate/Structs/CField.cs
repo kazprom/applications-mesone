@@ -13,5 +13,7 @@ namespace CSV_DB_gate.Structs
 
         public Lib.Field.EDoctrine? DataType { get; set; }
 
+        public bool Unique { get; set; }
+
     }
 }

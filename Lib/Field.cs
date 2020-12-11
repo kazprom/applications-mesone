@@ -67,7 +67,7 @@ namespace Lib
             switch (TYPE)
             {
                 case EDoctrine.SmallInt:
-                    throw new Exception();
+                    result = "SMALLINT UNSIGNED"; break;
                 case EDoctrine.Integer:
                     result = "INT UNSIGNED"; break;
                 case EDoctrine.BigInt:
@@ -75,7 +75,8 @@ namespace Lib
                 case EDoctrine.Decimal:
                     throw new Exception();
                 case EDoctrine.Float:
-                    result = "DOUBLE PRECISION UNSIGNED"; break;
+                    //result = "DOUBLE PRECISION UNSIGNED"; break;
+                    result = "DOUBLE UNSIGNED"; break;
                 case EDoctrine.String:
                     result = "VARCHAR()"; break;
                 case EDoctrine.ASCII_String:

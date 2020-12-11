@@ -12,6 +12,14 @@ namespace CSV_DB_gate
     public class CConverter : LibDBgate.CSrvSUB
     {
 
+        #region CONSTANTS
+
+        private const string COL_NAME_ID = "id";
+        private const string COL_NAME_CREATED_AT = "created_at";
+        private const string COL_NAME_UPDATED_AT = "updated_at";
+
+        #endregion
+
         #region PROPERTIES
 
         public Structs.CSetConverter Settings { get; set; }
@@ -51,11 +59,58 @@ namespace CSV_DB_gate
             try
             {
 
-                DataTable source = ReadFile();
 
-                DataTable target = PrepareTable(source);
+                string file_path = Settings.Base_path + Path.DirectorySeparatorChar + Settings.File_path;
 
-                WriteTable(target);
+                if (!File.Exists(file_path))
+                {
+                    Logger.Warn($"File {Settings.File_path} is absent");
+                }
+                else
+                {
+
+
+
+                    DataTable source = ReadFile(file_path);
+
+                    DataTable target = PrepareTable(source);
+
+                    WriteTable(target);
+
+                    if (Settings.File_depth_his > 0)
+                    {
+                        try
+                        {
+
+                            new FileInfo(Settings.His_path).Directory.Create();
+                            File.Copy(file_path, $"{Settings.His_path}" +
+                                                 $"{Path.DirectorySeparatorChar}" +
+                                                 $"{Name}" +
+                                                 $"{Path.DirectorySeparatorChar}" +
+                                                 $"{DateTime.Now:yyyy_MM_dd_HH_mm_ss}_{Path.GetFileName(file_path)}");
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Warn(ex, "Can't save history file");
+                        }
+                    }
+
+                    if (Settings.File_delete)
+                    {
+                        try
+                        {
+                            File.Delete(file_path);
+                            Logger.Info($"File {file_path} deleted");
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Warn(ex, "Can't delete file");
+                        }
+                    }
+
+                }
+
 
             }
             catch (Exception ex)
@@ -65,22 +120,18 @@ namespace CSV_DB_gate
         }
 
 
-        private DataTable ReadFile()
+        private DataTable ReadFile(string file_path)
         {
             DataTable result = null;
 
             try
             {
-
-                if (!File.Exists(Settings.File_path))
-                {
-                    Logger.Warn($"File {Settings.File_path} is absent");
-                    return null;
-                }
-
-                using (var reader = new StreamReader(Settings.File_path))
+                using (var reader = new StreamReader(file_path))
                 using (var csv = new CsvReader(reader, System.Globalization.CultureInfo.CurrentCulture))
                 {
+
+                    Logger.Info($"Read {file_path}");
+
                     csv.Configuration.HasHeaderRecord = Settings.Has_header_record;
                     csv.Configuration.Delimiter = Settings.Delimiter;
                     csv.Configuration.Quote = Settings.Quote;
@@ -103,12 +154,12 @@ namespace CSV_DB_gate
 
                     csv.Configuration.BadDataFound = (context) =>
                     {
-                        Logger.Warn($"Bad data: <{context.RawRecord}>");
+                        Logger.Warn($"Bad data: R[{context.Row}] <{context.RawRecord}>");
                     };
 
                     csv.Configuration.MissingFieldFound = (headerNames, index, context) =>
                     {
-                        Logger.Warn($"MissingField: [{context.CurrentIndex}] <{context.RawRecord}");
+                        Logger.Warn($"MissingField: R[{context.Row}] <{context.RawRecord}");
                     };
 
                     result = new DataTable();
@@ -126,6 +177,8 @@ namespace CSV_DB_gate
                     }
 
                 }
+
+
             }
             catch (Exception ex)
             {
@@ -205,56 +258,81 @@ namespace CSV_DB_gate
                 if (data != null)
                 {
 
-                    CSrv parrent = Parent as CSrv;
+                    CSrv parent = Parent as CSrv;
 
-                    Action add_table = () =>
-                        {
-                            Dictionary<string, Lib.Field> table_struct = Settings.Fields.
-                                                                            GroupBy(x => x.NameDestination).Select(x => x.First()).
-                                                                            Where(x => x.DataType != null).
-                                                                            ToDictionary(
-                                                                                        x => x.NameDestination,
-                                                                                        x => new Lib.Field()
-                                                                                        {
-                                                                                            TYPE = (Lib.Field.EDoctrine)x.DataType
-                                                                                        });
+                    string table_name = $"{Tables.CTargetTable.TablePrefix}{Settings.Name}";
 
-                            if (table_struct.ContainsKey("id"))
-                                table_struct.Remove("id");
+                    Dictionary<string, Lib.Field> table_struct = Settings.Fields.
+                                                                    GroupBy(x => x.NameDestination).Select(x => x.First()).
+                                                                    Where(x => x.DataType != null).
+                                                                    ToDictionary(
+                                                                                x => x.NameDestination,
+                                                                                x => new Lib.Field()
+                                                                                {
+                                                                                    TYPE = (Lib.Field.EDoctrine)x.DataType,
+                                                                                    UQ = x.Unique
+                                                                                });
 
-                            if (table_struct.ContainsKey("created_at"))
-                                table_struct.Remove("created_at");
+                    if (table_struct.ContainsKey(COL_NAME_ID))
+                        table_struct.Remove(COL_NAME_ID);
 
-                            if (table_struct.ContainsKey("updated_at"))
-                                table_struct.Remove("updated_at");
+                    if (table_struct.ContainsKey(COL_NAME_CREATED_AT))
+                        table_struct.Remove(COL_NAME_CREATED_AT);
+
+                    if (table_struct.ContainsKey(COL_NAME_UPDATED_AT))
+                        table_struct.Remove(COL_NAME_UPDATED_AT);
 
 
-                            table_struct.Add("id", new Lib.Field() { TYPE = Lib.Field.EDoctrine.BigInt, PK = true, AI = true });
-                            table_struct.Add("created_at", new Lib.Field() { TYPE = Lib.Field.EDoctrine.DateTime });
-                            table_struct.Add("updated_at", new Lib.Field() { TYPE = Lib.Field.EDoctrine.DateTime });
+                    table_struct.Add(COL_NAME_ID, new Lib.Field() { TYPE = Lib.Field.EDoctrine.BigInt, PK = true, AI = true, NN = true });
+                    table_struct.Add(COL_NAME_CREATED_AT, new Lib.Field() { TYPE = Lib.Field.EDoctrine.DateTime });
+                    table_struct.Add(COL_NAME_UPDATED_AT, new Lib.Field() { TYPE = Lib.Field.EDoctrine.DateTime });
 
-                            parrent.Database.CreateTable($"{Tables.CTargetTable.TablePrefix}{Settings.Name}", table_struct);
-                        };
 
-                    switch (parrent.Database.CheckExistTable($"{Tables.CTargetTable.TablePrefix}{Settings.Name}"))
+                    switch (parent.Database.CheckExistTable(table_name))
                     {
                         case true:
-                            parrent.Database.RemoveTable($"{Tables.CTargetTable.TablePrefix}{Settings.Name}");
-                            add_table();
+
+                            switch (parent.Database.CompareTableSchema(table_name, table_struct))
+                            {
+                                case false:
+                                    parent.Database.RemoveTable(table_name);
+                                    parent.Database.CreateTable(table_name, table_struct);
+                                    break;
+
+                                case true:
+                                    if (Settings.Table_clear)
+                                    {
+                                        parent.Database.ClearTable(table_name);
+                                    }
+                                    break;
+                            }
+
                             break;
 
                         case false:
-                            add_table();
+                            parent.Database.CreateTable(table_name, table_struct);
                             break;
                     }
 
                     foreach (DataRow row in data.Rows)
                     {
-                        parrent.Database.Insert($"{Tables.CTargetTable.TablePrefix}{Settings.Name}",
-                                                (IReadOnlyDictionary<string, object>)row.ItemArray.
-                                                Select((value, index) => new { value, index }).
-                                                Where(x => x.value != DBNull.Value).
-                                                ToDictionary(x => row.Table.Columns[x.index].ColumnName, y => y.value));
+
+                        Dictionary<string, object> new_row = row.ItemArray.
+                                                                Select((value, index) => new { value, index }).
+                                                                Where(x => x.value != DBNull.Value).
+                                                                ToDictionary(x => row.Table.Columns[x.index].ColumnName, y => y.value);
+
+
+                        Dictionary<string, object> constraints = new_row.Where(x => table_struct.ContainsKey(x.Key) && table_struct[x.Key].UQ).ToDictionary(x => x.Key, x => x.Value);
+                        Dictionary<string, object> values = new_row.Where(x => table_struct.ContainsKey(x.Key) && !table_struct[x.Key].UQ).ToDictionary(x => x.Key, x => x.Value);
+
+                        values.Add(COL_NAME_UPDATED_AT, DateTime.Now);
+                        if (!Settings.Replaceable || !parent.Database.Update(table_name, constraints, values, false))
+                        {
+                            values.Remove(COL_NAME_UPDATED_AT);
+                            new_row.Add(COL_NAME_CREATED_AT, DateTime.Now);
+                            parent.Database.Insert(table_name, new_row);
+                        }
                     }
 
 

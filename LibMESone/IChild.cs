@@ -8,6 +8,8 @@ namespace LibMESone
     {
         ulong ID { get; set; }
 
+        string Name { get; set; }
+
         IParent Parent { get; set; }
 
         void LoadSetting(ISetting setting);

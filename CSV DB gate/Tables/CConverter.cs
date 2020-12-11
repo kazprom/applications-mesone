@@ -16,6 +16,9 @@ namespace CSV_DB_gate.Tables
         [Field(TYPE = Field.EDoctrine.Boolean,  NN = true)]
         public bool File_delete { get; set; }
 
+        [Field(TYPE = Field.EDoctrine.SmallInt, NN = true)]
+        public uint File_depth_his { get; set; }
+
         [Field(TYPE = Field.EDoctrine.Boolean, NN = true)]
         public bool Table_clear { get; set; }
 
@@ -43,5 +46,7 @@ namespace CSV_DB_gate.Tables
         [Field(TYPE = Field.EDoctrine.Boolean, NN = true)]
         public bool Detect_column_count_changes { get; set; }
 
+        [Field(TYPE = Field.EDoctrine.Boolean, NN = true)]
+        public bool Replaceable { get; set; }
     }
 }

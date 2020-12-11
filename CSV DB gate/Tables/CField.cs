@@ -22,6 +22,8 @@ namespace CSV_DB_gate.Tables
         [Field(TYPE = Field.EDoctrine.String, SIZE = 15, NN = true)]
         public string Data_type { get; set; }
 
-        
+        [Field(TYPE = Field.EDoctrine.Boolean, NN = true)]
+        public bool Unique { get; set; }
+
     }
 }

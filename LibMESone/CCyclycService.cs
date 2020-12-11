@@ -140,7 +140,8 @@ namespace LibMESone
                     CSetting setting = settings.First(x => x.Id == id);
                     IChild instance = new T();
                     instance.Parent = this;
-                    instance.ID = id;
+                    instance.ID = setting.Id;
+                    instance.Name = setting.Name;
                     instance.LoadSetting(setting);
                     Children.Add(id, instance);
                 }
