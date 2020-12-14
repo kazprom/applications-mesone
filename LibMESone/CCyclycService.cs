@@ -138,10 +138,12 @@ namespace LibMESone
                 foreach (ulong id in missing)
                 {
                     CSetting setting = settings.First(x => x.Id == id);
-                    IChild instance = new T();
-                    instance.Parent = this;
-                    instance.ID = setting.Id;
-                    instance.Name = setting.Name;
+                    IChild instance = new T
+                    {
+                        Parent = this,
+                        ID = setting.Id,
+                        Name = setting.Name
+                    };
                     instance.LoadSetting(setting);
                     Children.Add(id, instance);
                 }

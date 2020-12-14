@@ -58,7 +58,10 @@ namespace CSV_DB_gate
         {
             try
             {
+                var time = DateTime.Now.Subtract(Settings.Start_timestamp).TotalSeconds % Settings.Frequency_sec;
 
+                if (time < 0 || time > Settings.Frequency_sec / 4)
+                    return;
 
                 string file_path = Settings.Base_path + Path.DirectorySeparatorChar + Settings.File_path;
 
@@ -77,17 +80,24 @@ namespace CSV_DB_gate
 
                     WriteTable(target);
 
+                    
+                    string path_dest = $"{Settings.His_path}" +
+                                  $"{Path.DirectorySeparatorChar}" +
+                                  $"{Name}";
+
+                    string file_name = Path.GetFileName(file_path);
+
+                    //Save history files
                     if (Settings.File_depth_his > 0)
                     {
                         try
                         {
 
-                            new FileInfo(Settings.His_path).Directory.Create();
-                            File.Copy(file_path, $"{Settings.His_path}" +
+                            DirectoryInfo di = Directory.CreateDirectory(path_dest);
+
+                            File.Copy(file_path, path_dest +
                                                  $"{Path.DirectorySeparatorChar}" +
-                                                 $"{Name}" +
-                                                 $"{Path.DirectorySeparatorChar}" +
-                                                 $"{DateTime.Now:yyyy_MM_dd_HH_mm_ss}_{Path.GetFileName(file_path)}");
+                                                 $"{DateTime.Now:yyyy_MM_dd_HH_mm_ss}_{file_name}");
 
                         }
                         catch (Exception ex)
@@ -96,6 +106,16 @@ namespace CSV_DB_gate
                         }
                     }
 
+                    //Clear history
+                    string[] filePaths = Directory.GetFiles(path_dest, $"*{file_name}");
+                    Array.Sort(filePaths, StringComparer.InvariantCulture);
+                    Array.Reverse(filePaths);
+                    for (uint i = Settings.File_depth_his; i < filePaths.Length; i++)
+                    {
+                        File.Delete(filePaths[i]);
+                    }
+
+                    //Delete original file
                     if (Settings.File_delete)
                     {
                         try

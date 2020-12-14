@@ -7,8 +7,6 @@ namespace CSV_DB_gate.Structs
     public class CSetConverter : LibDBgate.Structs.CSetSUB
     {
 
-        public string Name { get; set; }
-
         public string Base_path { get; set; }
 
         public string File_path { get; set; }

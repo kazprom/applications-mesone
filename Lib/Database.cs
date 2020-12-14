@@ -448,7 +448,10 @@ namespace Lib
                         }
                         else if (connection.GetType().Equals(typeof(MySqlConnection)))
                         {
-                            IEnumerable<dynamic> result_query = db.Query("information_schema.tables").Where("Table_name", table_name).Where("Table_schema", connection.Database).Get();
+                            IEnumerable<dynamic> result_query = db.Query(Tables.MySQL.CInfoSchemaTabs.TableName).
+                                                                   Where("Table_name", table_name).
+                                                                   Where("Table_schema", connection.Database).
+                                                                   Get();
 
                             if (result_query.Count() != 0)
                             {

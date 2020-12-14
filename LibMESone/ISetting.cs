@@ -7,6 +7,9 @@ namespace LibMESone
     public interface ISetting
     {
 
+        ulong Id { get; set; }
+
+        string Name { get; set; }
 
     }
 }

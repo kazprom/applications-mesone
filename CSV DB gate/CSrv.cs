@@ -33,7 +33,7 @@ namespace CSV_DB_gate
 
             try
             {
-                if (Database != null)
+                if (Database != null && Settings != null)
                 {
 
                     string base_path = Settings.Where(x => x.Key.Equals(KEY_BASE_PATH, StringComparison.OrdinalIgnoreCase)).Select(x => x.Value).FirstOrDefault();
