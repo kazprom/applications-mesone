@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Timers;
 
 namespace CSV_DB_gate
 {
@@ -26,10 +27,9 @@ namespace CSV_DB_gate
 
         #region PUBLICS
 
-        public override void Timer_Handler(object state)
+        public override void Timer_Handler(object sender, ElapsedEventArgs e)
         {
 
-            base.Timer_Handler(state);
 
             try
             {
@@ -128,6 +128,10 @@ namespace CSV_DB_gate
             {
                 Logger.Error(ex);
             }
+
+            base.Timer_Handler(sender, e);
+
+
         }
 
         #endregion

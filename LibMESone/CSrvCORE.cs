@@ -4,6 +4,7 @@ using System.Threading;
 using System.Linq;
 using LibMESone.Tables.Core;
 using LibMESone.Structs;
+using System.Timers;
 
 namespace LibMESone
 {
@@ -45,7 +46,7 @@ namespace LibMESone
         public CSrvCORE()
         {
             Logger = NLog.LogManager.GetLogger("CORE");
-            
+
             try
             {
                 TServiceDiagnostic = new CServiceDiagnostic() { Version = Lib.Common.AppVersion() };
@@ -64,7 +65,7 @@ namespace LibMESone
 
         #region PRIVATES
 
-        public override void Timer_Handler(object state)
+        public override void Timer_Handler(object sender, ElapsedEventArgs e)
         {
 
             try
@@ -151,98 +152,7 @@ namespace LibMESone
 
                         CUD<SrvCustom>(settings);
 
-                        /*
-                        IEnumerable<DatabasesHosts> dh;
-                        var dh = TDatabases
-                            .Join(
-                            THosts,
-                            db => db.Hosts_id,
-                            host => host.Id,
-                            (db, host) => new 
-                            {
-                                Id = db.Id,
-                                Database = db.Database,
-                                Driver = db.Driver,
-                                Port = db.Port,
-                                Charset = db.Charset,
-                                Username = db.Username,
-                                Password = db.Password,
-                                Host = host.Ip
-                            }
-                            ).jo;
-                        /*
-                        IEnumerable<ServicesDatabasesHosts> sdh;
 
-                        sdh = TServices
-                            .Join(
-                            dh,
-                            srv => srv.Databases_id,
-                            d_h => d_h.Id,
-                            (srv, d_h) => new ServicesDatabasesHosts
-                            {
-                                Id = srv.Id,
-                                Name = srv.Name,
-                                Database = d_h.Database,
-                                Driver = d_h.Driver,
-                                Host = d_h.Host,
-                                Port = d_h.Port,
-                                Charset = d_h.Charset,
-                                Username = d_h.Username,
-                                Password = d_h.Password
-                            }
-                            );
-                        */
-
-
-
-                        /*
-                        IEnumerable<ulong> fresh_ids = sdh.Select(x => (ulong)x.Id);
-                        IEnumerable<ulong> existing_ids = this.services.Keys;
-
-                        IEnumerable<ulong> waste = existing_ids.Except(fresh_ids);
-                        IEnumerable<ulong> modify = fresh_ids.Intersect(existing_ids);
-                        IEnumerable<ulong> missing = fresh_ids.Except(existing_ids);
-
-                        foreach (ulong service_id in waste)
-                        {
-                            this.services[service_id].Dispose();
-                            this.services.Remove(service_id);
-                        }
-
-                        foreach (ulong service_id in modify)
-                        {
-                            ServicesDatabasesHosts set_service = sdh.First(x => x.Id == service_id);
-
-                            this.services[service_id].LoadDatabaseSettings((ulong)set_service.Id,
-                                                                           set_service.Name,
-                                                                           set_service.Driver,
-                                                                           set_service.Host,
-                                                                           set_service.Port,
-                                                                           set_service.Charset,
-                                                                           set_service.Database,
-                                                                           set_service.Username,
-                                                                           set_service.Password);
-                        }
-
-                        foreach (ulong service_id in missing)
-                        {
-                            ServicesDatabasesHosts set_service = sdh.First(x => x.Id == service_id);
-                            ServiceCustom inst_service = (ServiceCustom)Activator.CreateInstance(this.service_type, this, set_service.Id);
-
-                            inst_service.LoadDatabaseSettings((ulong)set_service.Id,
-                                                              set_service.Name,
-                                                              set_service.Driver,
-                                                              set_service.Host,
-                                                              set_service.Port,
-                                                              set_service.Charset,
-                                                              set_service.Database,
-                                                              set_service.Username,
-                                                              set_service.Password);
-
-                            this.services.Add((ulong)set_service.Id, inst_service);
-                        }
-                    }
-                    */
                         //----------write---------------
 
                         TServiceDiagnostic.Sys_ts = DateTime.Now;
@@ -255,6 +165,8 @@ namespace LibMESone
             {
                 Logger.Error(ex);
             }
+
+            base.Timer_Handler(sender, e);
         }
 
         public void LoadSettingFromConfigFile(CConfigFile config)

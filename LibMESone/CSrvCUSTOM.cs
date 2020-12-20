@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using LibMESone.Structs;
 using LibMESone.Tables.Custom;
 
@@ -138,7 +139,7 @@ namespace LibMESone
             }
         }
 
-        public override void Timer_Handler(object state)
+        public override void Timer_Handler(object sender, ElapsedEventArgs e)
         {
             try
             {
@@ -209,6 +210,8 @@ namespace LibMESone
 
                 Logger.Error(ex);
             }
+
+            base.Timer_Handler(sender, e);
 
         }
 

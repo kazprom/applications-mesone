@@ -4,6 +4,8 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Timers;
 using CsvHelper;
 using LibMESone;
 
@@ -37,8 +39,7 @@ namespace CSV_DB_gate
                 if (Settings != null)
                 {
                     Logger = NLog.LogManager.GetLogger($"{Parent.Logger.Name} Task [{Settings.Id}] <{Settings.Name}>");
-                    CycleRate = Settings.Frequency_sec * 250;
-
+                    CycleRate = 200;
                 }
                 else
                 {
@@ -54,89 +55,96 @@ namespace CSV_DB_gate
 
         }
 
-        public override void Timer_Handler(object state)
+        public override void Timer_Handler(object sender, ElapsedEventArgs e)
         {
             try
             {
                 var time = DateTime.Now.Subtract(Settings.Start_timestamp).TotalSeconds % Settings.Frequency_sec;
 
-                if (time < 0 || time > Settings.Frequency_sec / 4)
-                    return;
-
-                string file_path = Settings.Base_path + Path.DirectorySeparatorChar + Settings.File_path;
-
-                if (!File.Exists(file_path))
+                if (time < 0 || time > 1)
                 {
-                    Logger.Warn($"File {Settings.File_path} is absent");
+                    //Console.WriteLine(time);
                 }
                 else
                 {
+                    Thread.Sleep(1000);
 
+                    string file_path = Settings.Base_path + Path.DirectorySeparatorChar + Settings.File_path;
 
-
-                    DataTable source = ReadFile(file_path);
-
-                    DataTable target = PrepareTable(source);
-
-                    WriteTable(target);
-
-                    
-                    string path_dest = $"{Settings.His_path}" +
-                                  $"{Path.DirectorySeparatorChar}" +
-                                  $"{Name}";
-
-                    string file_name = Path.GetFileName(file_path);
-
-                    //Save history files
-                    if (Settings.File_depth_his > 0)
+                    if (!File.Exists(file_path))
                     {
-                        try
-                        {
-
-                            DirectoryInfo di = Directory.CreateDirectory(path_dest);
-
-                            File.Copy(file_path, path_dest +
-                                                 $"{Path.DirectorySeparatorChar}" +
-                                                 $"{DateTime.Now:yyyy_MM_dd_HH_mm_ss}_{file_name}");
-
-                        }
-                        catch (Exception ex)
-                        {
-                            Logger.Warn(ex, "Can't save history file");
-                        }
+                        Logger.Warn($"File {Settings.File_path} is absent");
                     }
-
-                    //Clear history
-                    string[] filePaths = Directory.GetFiles(path_dest, $"*{file_name}");
-                    Array.Sort(filePaths, StringComparer.InvariantCulture);
-                    Array.Reverse(filePaths);
-                    for (uint i = Settings.File_depth_his; i < filePaths.Length; i++)
+                    else
                     {
-                        File.Delete(filePaths[i]);
-                    }
 
-                    //Delete original file
-                    if (Settings.File_delete)
-                    {
-                        try
-                        {
-                            File.Delete(file_path);
-                            Logger.Info($"File {file_path} deleted");
-                        }
-                        catch (Exception ex)
-                        {
-                            Logger.Warn(ex, "Can't delete file");
-                        }
-                    }
 
+
+                        DataTable source = ReadFile(file_path);
+
+                        DataTable target = PrepareTable(source);
+
+                        WriteTable(target);
+
+
+                        string path_dest = $"{Settings.His_path}" +
+                                      $"{Path.DirectorySeparatorChar}" +
+                                      $"{Name}";
+
+                        string file_name = Path.GetFileName(file_path);
+
+                        //Save history files
+                        if (Settings.File_depth_his > 0)
+                        {
+                            try
+                            {
+
+                                DirectoryInfo di = Directory.CreateDirectory(path_dest);
+
+                                File.Copy(file_path, path_dest +
+                                                     $"{Path.DirectorySeparatorChar}" +
+                                                     $"{DateTime.Now:yyyy_MM_dd_HH_mm_ss}_{file_name}");
+
+                            }
+                            catch (Exception ex)
+                            {
+                                Logger.Warn(ex, "Can't save history file");
+                            }
+                        }
+
+                        //Clear history
+                        string[] filePaths = Directory.GetFiles(path_dest, $"*{file_name}");
+                        Array.Sort(filePaths, StringComparer.InvariantCulture);
+                        Array.Reverse(filePaths);
+                        for (uint i = Settings.File_depth_his; i < filePaths.Length; i++)
+                        {
+                            File.Delete(filePaths[i]);
+                        }
+
+                        //Delete original file
+                        if (Settings.File_delete)
+                        {
+                            try
+                            {
+                                File.Delete(file_path);
+                                Logger.Info($"File {file_path} deleted");
+                            }
+                            catch (Exception ex)
+                            {
+                                Logger.Warn(ex, "Can't delete file");
+                            }
+                        }
+
+                    }
                 }
-
 
             }
             catch (Exception ex)
             {
                 Logger.Error(ex);
             }
+
+            base.Timer_Handler(sender, e);
         }
 
 
@@ -218,47 +226,49 @@ namespace CSV_DB_gate
                 if (source != null)
                 {
 
-                    result = new DataTable();
-
-                    result.Columns.AddRange(Settings.
-                                            Fields.
-                                            GroupBy(x => x.NameDestination).
-                                            Select(x => x.First()).
-                                            Where(x => x.DataType != null).
-                                            Select(x => new DataColumn(x.NameDestination)).
-                                            ToArray());
-
-                    string[] source_columns = Settings.
-                                              Fields.
-                                              GroupBy(x => x.NameSource).
-                                              Select(x => x.First()).
-                                              Where(x => x.DataType != null).
-                                              Select(x => x.NameSource).
-                                              ToArray();
-
-
-                    foreach (DataRow row in source.Rows)
+                    using (result = new DataTable())
                     {
-                        DataRow r = result.NewRow();
-                        foreach (var col in source_columns)
+                        result.Columns.AddRange(Settings.
+                                                Fields.
+                                                GroupBy(x => x.NameDestination).
+                                                Select(x => x.First()).
+                                                Where(x => x.DataType != null).
+                                                Select(x => new DataColumn(x.NameDestination)).
+                                                ToArray());
+
+                        string[] source_columns = Settings.
+                                                  Fields.
+                                                  GroupBy(x => x.NameSource).
+                                                  Select(x => x.First()).
+                                                  Where(x => x.DataType != null).
+                                                  Select(x => x.NameSource).
+                                                  ToArray();
+
+
+                        foreach (DataRow row in source.Rows)
                         {
-
-                            var c = row.Table.Columns[col];
-                            if (c != null)
+                            DataRow r = result.NewRow();
+                            foreach (var col in source_columns)
                             {
-                                string target_column = Settings.
-                                                       Fields.
-                                                       Where(x => x.NameSource.Equals(col) && x.DataType != null).
-                                                       Select(x => x.NameDestination).
-                                                       FirstOrDefault();
 
-                                if (target_column != null)
+                                var c = row.Table.Columns[col];
+                                if (c != null)
                                 {
-                                    r[target_column] = row[c.Ordinal];
+                                    string target_column = Settings.
+                                                           Fields.
+                                                           Where(x => x.NameSource.Equals(col) && x.DataType != null).
+                                                           Select(x => x.NameDestination).
+                                                           FirstOrDefault();
+
+                                    if (target_column != null)
+                                    {
+                                        r[target_column] = row[c.Ordinal];
+                                    }
                                 }
                             }
+                            result.Rows.Add(r);
                         }
-                        result.Rows.Add(r);
+                        return result;
                     }
                 }
 

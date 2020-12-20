@@ -6,7 +6,7 @@ namespace LibMESone.Structs
 {
     public class CSetCUSTOM: CSetting
     {
-        public string Name { get; set; }
+        //public string Name { get; set; }
 
         public string Database { get; set; }
 

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
+using System.Timers;
 
 namespace LibMESone
 {
@@ -36,22 +36,31 @@ namespace LibMESone
 
                     if (timer != null)
                     {
-                        WaitHandle h = new AutoResetEvent(false);
-                        timer.Dispose(h);
-                        h.WaitOne();
+                        //WaitHandle h = new AutoResetEvent(false);
+                        timer.Dispose();
+                        //timer.Dispose(h);
+                        //h.WaitOne();
                         timer = null;
                     }
 
                     if (cycle_rate > 0)
                     {
-                        timer = new Timer(Timer_Handler, null, 0, (int)cycle_rate);
+                        //timer = new Timer(Timer_Handler, null, 0, (int)cycle_rate);
+                        timer = new Timer(cycle_rate);
+                        timer.Elapsed += Timer_Handler;
+                        timer.AutoReset = false;
+                        timer.Start();
+                        //timer.Enabled = true;
                     }
                 }
             }
         }
 
-
-        public abstract void Timer_Handler(object state);
+        public virtual void Timer_Handler(object sender, ElapsedEventArgs e)
+        {
+            //timer.Enabled = true;
+            timer.Start();
+        }
 
         public abstract void LoadSetting(ISetting setting);
 

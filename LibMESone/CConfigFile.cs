@@ -109,7 +109,7 @@ namespace LibMESone
                 if (DB_Charset != str_result) { DB_Charset = str_result; logger.Info($"DB CHARSET = {DB_Charset}"); }
 
                 str_result = file.ReadValue("DB/BASE_NAME", Lib.Database.default_base_name);
-                if (DB_BaseName != str_result) { DB_BaseName = str_result; logger.Info($"DB BASE_NAME = {DB_Host}"); }
+                if (DB_BaseName != str_result) { DB_BaseName = str_result; logger.Info($"DB BASE_NAME = {DB_BaseName}"); }
 
                 str_result = file.ReadValue("DB/USER", Lib.Database.default_user);
                 if (DB_User != str_result) { DB_User = str_result; logger.Info($"DB USER = {DB_User}"); }
