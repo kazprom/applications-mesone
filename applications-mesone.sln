@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OPC UA DB gate", "OPC UA DB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MELSEC DB gate", "MELSEC DB gate\MELSEC DB gate.csproj", "{13C0ECC6-0879-4EFF-B6B4-0AEC2B891B8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibPlcDBGate", "LibTagsDBGate\LibPlcDBGate.csproj", "{D39ADC1E-71E2-4549-ACE4-A9B5F9257A46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibPlcDBgate", "LibTagsDBGate\LibPlcDBgate.csproj", "{D39ADC1E-71E2-4549-ACE4-A9B5F9257A46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

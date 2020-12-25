@@ -40,7 +40,7 @@ namespace OPC_DB_gate_server
         public Tags()
         {
             
-            source.Columns.Add(col_name_id, typeof(int)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp() { primary_key = true });
+            source.Columns.Add(col_name_id, typeof(int)).ExtendedProperties.Add(typeof(Lib.CDatabase.SExtProp), new Lib.CDatabase.SExtProp() { primary_key = true });
             source.Columns.Add(col_name_clients_id, typeof(int));
             source.Columns.Add(col_name_path, typeof(string));
             source.Columns.Add(col_name_rate, typeof(int));

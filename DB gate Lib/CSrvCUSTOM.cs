@@ -4,12 +4,12 @@ using System.Text;
 
 namespace LibDBgate
 {
-    public class CSrvCUSTOM : LibMESone.CSrvCUSTOM
+    public class CSrvCustom : LibMESone.CCUSTOM
     {
 
         #region VARIABLES
 
-        public Dictionary<ulong, CSrvSUB> SubServices = new Dictionary<ulong, CSrvSUB>();
+        public Dictionary<ulong, CSrvSub> SubServices = new Dictionary<ulong, CSrvSub>();
 
         #endregion
 
@@ -19,7 +19,7 @@ namespace LibDBgate
         public override void Dispose(bool disposing)
         {
 
-            foreach (CSrvSUB sub_service in SubServices.Values)
+            foreach (CSrvSub sub_service in SubServices.Values)
             {
                 sub_service.Dispose();
             }

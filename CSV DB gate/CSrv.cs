@@ -7,7 +7,7 @@ using System.Timers;
 
 namespace CSV_DB_gate
 {
-    public class CSrv : LibDBgate.CSrvCUSTOM
+    public class CSrv : LibDBgate.CSrvCustom
     {
 
         #region CONSTANTS
@@ -50,14 +50,7 @@ namespace CSV_DB_gate
                         return;
                     }
 
-                    switch (Database.CheckExistTable(Tables.CConverter.TableName))
-                    {
-                        case null:
-                        case false:
-                            return;
-                    }
-
-                    switch (Database.CompareTableSchema<Tables.CConverter>(Tables.CConverter.TableName))
+                    switch (Database.CheckTable<Tables.CConverter>(Tables.CConverter.TableName))
                     {
                         case null:
                         case false:
@@ -66,14 +59,7 @@ namespace CSV_DB_gate
 
                     TConverters = Database.WhereRead<Tables.CConverter>(Tables.CConverter.TableName, new { Enabled = true });
 
-                    switch (Database.CheckExistTable(Tables.CField.TableName))
-                    {
-                        case null:
-                        case false:
-                            return;
-                    }
-
-                    switch (Database.CompareTableSchema<Tables.CField>(Tables.CField.TableName))
+                    switch (Database.CheckTable<Tables.CField>(Tables.CField.TableName))
                     {
                         case null:
                         case false:

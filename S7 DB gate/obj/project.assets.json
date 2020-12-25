@@ -1371,17 +1371,17 @@
           "bin/placeholder/LibMESone.dll": {}
         }
       },
-      "LibPlcDBGate/1.0.0": {
+      "LibPlcDBgate/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
           "LibDBgate": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/LibPlcDBGate.dll": {}
+          "bin/placeholder/LibPlcDBgate.dll": {}
         },
         "runtime": {
-          "bin/placeholder/LibPlcDBGate.dll": {}
+          "bin/placeholder/LibPlcDBgate.dll": {}
         }
       },
       "S7netplus/1.0.0": {
@@ -5102,10 +5102,10 @@
       "path": "../LibMESone/LibMESone.csproj",
       "msbuildProject": "../LibMESone/LibMESone.csproj"
     },
-    "LibPlcDBGate/1.0.0": {
+    "LibPlcDBgate/1.0.0": {
       "type": "project",
-      "path": "../LibTagsDBGate/LibPlcDBGate.csproj",
-      "msbuildProject": "../LibTagsDBGate/LibPlcDBGate.csproj"
+      "path": "../LibTagsDBGate/LibPlcDBgate.csproj",
+      "msbuildProject": "../LibTagsDBGate/LibPlcDBgate.csproj"
     },
     "S7netplus/1.0.0": {
       "type": "project",
@@ -5115,7 +5115,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "LibPlcDBGate >= 1.0.0",
+      "LibPlcDBgate >= 1.0.0",
       "S7netplus >= 1.0.0",
       "System.Diagnostics.Debug >= 4.3.0",
       "System.Globalization >= 4.3.0",
@@ -5158,8 +5158,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibTagsDBGate\\LibPlcDBGate.csproj": {
-              "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibTagsDBGate\\LibPlcDBGate.csproj"
+            "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibTagsDBGate\\LibPlcDBgate.csproj": {
+              "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibTagsDBGate\\LibPlcDBgate.csproj"
             },
             "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\S7.Net\\S7.Net.csproj": {
               "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\S7.Net\\S7.Net.csproj"

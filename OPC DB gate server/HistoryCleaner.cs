@@ -11,7 +11,7 @@ namespace OPC_DB_gate_server
         #region VARIABLE
 
 
-        private Lib.Database database;
+        private Lib.CDatabase database;
         private Lib.Parameter<int> depth_hour;
 
         private Thread thread;
@@ -21,7 +21,7 @@ namespace OPC_DB_gate_server
         #endregion
 
 
-        public HistoryCleaner(Lib.Database database, Lib.Parameter<int> depth_hour)
+        public HistoryCleaner(Lib.CDatabase database, Lib.Parameter<int> depth_hour)
         {
             this.database = database;
             this.depth_hour = depth_hour;

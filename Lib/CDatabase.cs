@@ -8,13 +8,10 @@ using System.Data.Odbc;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices.ComTypes;
-using System.Threading.Tasks;
-//using Ubiety.Dns.Core.Records.NotUsed;
 
 namespace Lib
 {
-    public class Database
+    public class CDatabase
     {
 
         #region STRUCTURES
@@ -41,6 +38,17 @@ namespace Lib
             unknown = 3
         }
 
+        public enum EPropKeys
+        {
+            Driver,
+            Host,
+            Port,
+            Charset,
+            BaseName,
+            User,
+            Password
+        }
+
         #endregion
 
         #region CONSTANTS
@@ -57,54 +65,20 @@ namespace Lib
 
         #region VARIABLE
 
-        private NLog.Logger logger;
-
-
         private IDbConnection connection;
         private SqlKata.Compilers.Compiler compiler;
         private QueryFactory db;
 
-
         #endregion
 
         #region PROPERTIES
+        public NLog.Logger Logger { get; set; }
 
-        //public string Title { get; private set; }
-
-        public ulong ID { get; private set; }
-
-        //public string Name { get; private set; }
-
-        public string Driver { get; private set; }
-
-        public string Host { get; private set; }
-
-        public uint Port { get; private set; }
-
-        public string Charset { get; private set; }
-
-        public string BaseName { get; private set; }
-
-        public string User { get; private set; }
-
-        public string Password { get; private set; }
+        public Dictionary<string, object> Props { get; set; } = new Dictionary<string, string>();
 
         #endregion
 
-        #region CONSTRUCTOR
 
-        public Database(ulong id, NLog.Logger logger = null)
-        {
-            ID = id;
-
-            if (logger == null)
-                this.logger = NLog.LogManager.GetLogger("Database");
-            else
-                this.logger = logger;
-
-        }
-
-        #endregion
 
         #region PUBLICS
 
@@ -124,7 +98,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"Table {table_name}");
+                if (Logger != null) Logger.Error(ex, $"Table {table_name}");
             }
 
             return result;
@@ -146,7 +120,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"Table {table_name}");
+                if (Logger != null) Logger.Error(ex, $"Table {table_name}");
             }
 
             return result;
@@ -169,7 +143,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"Table {table_name}");
+                if (Logger != null) Logger.Error(ex, $"Table {table_name}");
             }
 
             return result;
@@ -202,7 +176,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"Table {table_name}");
+                if (Logger != null) Logger.Error(ex, $"Table {table_name}");
             }
 
             return result;
@@ -244,7 +218,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"Table {table_name}");
+                if (Logger != null) Logger.Error(ex, $"Table {table_name}");
             }
 
             return result;
@@ -268,7 +242,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"Table {table_name}");
+                if (Logger != null) Logger.Error(ex, $"Table {table_name}");
             }
             return result;
         }
@@ -291,7 +265,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"Table {table_name}");
+                if (Logger != null) Logger.Error(ex, $"Table {table_name}");
             }
 
             return result;
@@ -315,7 +289,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"Table {table_name}");
+                if (Logger != null) Logger.Error(ex, $"Table {table_name}");
             }
 
             return result;
@@ -366,7 +340,7 @@ namespace Lib
 
                                     if (row == null)
                                     {
-                                        logger.Warn($"Table [{table_name}] Column [{field.Key}] not found");
+                                        Logger.Warn($"Table [{table_name}] Column [{field.Key}] not found");
                                         result = false;
                                     }
                                     else
@@ -375,31 +349,31 @@ namespace Lib
 
                                         if (!row.Column_type.Equals(type, StringComparison.OrdinalIgnoreCase))
                                         {
-                                            logger.Warn($"Table [{table_name}] Column [{field.Key}] Type [{type}] wrong. Current [{row.Column_type}]");
+                                            Logger.Warn($"Table [{table_name}] Column [{field.Key}] Type [{type}] wrong. Current [{row.Column_type}]");
                                             result = false;
                                         }
 
                                         if (field.Value.PK != row.Column_key.Contains("PRI"))
                                         {
-                                            logger.Warn($"Table [{table_name}] Column [{field.Key}] PRIMARY[{field.Value.PK}] wrong. Current [{row.Column_key}]");
+                                            Logger.Warn($"Table [{table_name}] Column [{field.Key}] PRIMARY[{field.Value.PK}] wrong. Current [{row.Column_key}]");
                                             result = false;
                                         }
 
                                         if (field.Value.UQ != row.Column_key.Contains("UNI"))
                                         {
-                                            logger.Warn($"Table [{table_name}] Column [{field.Key}] UNIQUE[{field.Value.UQ}] wrong. Current [{row.Column_key}]");
+                                            Logger.Warn($"Table [{table_name}] Column [{field.Key}] UNIQUE[{field.Value.UQ}] wrong. Current [{row.Column_key}]");
                                             result = false;
                                         }
 
                                         if (field.Value.AI != row.Extra.Contains("auto_increment"))
                                         {
-                                            logger.Warn($"Table [{table_name}] Column [{field.Key}] AUTO_INCREMENT[{field.Value.AI}] wrong. Current [{row.Extra}]");
+                                            Logger.Warn($"Table [{table_name}] Column [{field.Key}] AUTO_INCREMENT[{field.Value.AI}] wrong. Current [{row.Extra}]");
                                             result = false;
                                         }
 
                                         if (field.Value.NN != row.Is_nullable.Equals("NO"))
                                         {
-                                            logger.Warn($"Table [{table_name}] Column [{field.Key}] NOT NULL[{field.Value.NN}] wrong. Current IS_NULLABLE [{row.Is_nullable}]");
+                                            Logger.Warn($"Table [{table_name}] Column [{field.Key}] NOT NULL[{field.Value.NN}] wrong. Current IS_NULLABLE [{row.Is_nullable}]");
                                             result = false;
                                         }
 
@@ -408,7 +382,7 @@ namespace Lib
                             }
                             else
                             {
-                                logger.Warn($"Can't get data from table {Tables.MySQL.CInfoSchemaCols.TableName} for table {table_name}");
+                                Logger.Warn($"Can't get data from table {Tables.MySQL.CInfoSchemaCols.TableName} for table {table_name}");
                             }
                         }
                         else if (connection.GetType().Equals(typeof(NpgsqlConnection)))
@@ -424,7 +398,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"Table {table_name}");
+                if (Logger != null) Logger.Error(ex, $"Table {table_name}");
             }
 
             return result;
@@ -460,7 +434,7 @@ namespace Lib
                             else
                             {
                                 result = false;
-                                logger.Warn($"Table {table_name} is absent");
+                                //logger.Warn($"Table {table_name} is absent");
                             }
 
                         }
@@ -479,10 +453,42 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"Table {table_name}");
+                if (Logger != null) Logger.Error(ex, $"Table {table_name}");
             }
 
             return result;
+        }
+
+        public bool? CheckTable<T>(string table_name)
+        {
+            try
+            {
+                switch (CheckExistTable(table_name))
+                {
+                    case null:
+                        return null;
+                    case false:
+                        Logger.Warn($"Table {table_name} is absent");
+                        return false;
+                }
+
+                switch (CompareTableSchema<T>(table_name))
+                {
+                    case null:
+                        return null;
+                    case false:
+                        Logger.Warn($"Table {table_name} has wrong scheme");
+                        return false;
+                }
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                if (Logger != null) Logger.Error(ex);
+                return null;
+            }
         }
 
         public bool CreateTable<T>(string table_name)
@@ -551,7 +557,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"Table {table_name}");
+                if (Logger != null) Logger.Error(ex, $"Table {table_name}");
             }
 
             return result;
@@ -594,7 +600,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"Table {table_name}");
+                if (Logger != null) Logger.Error(ex, $"Table {table_name}");
             }
 
             return result;
@@ -638,7 +644,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"Table {table_name}");
+                if (Logger != null) Logger.Error(ex, $"Table {table_name}");
             }
 
             return result;
@@ -687,32 +693,44 @@ namespace Lib
             catch (Exception ex)
             {
 
-                logger.Error(ex);
+                if (Logger != null) Logger.Error(ex);
 
             }
 
             return result;
         }
 
-        public void LoadSettings(string driver, string host, uint port, string charset, string base_name, string user, string password)
+        public void LoadSettings(Dictionary<string, object> props)
         {
             try
             {
-                //Name = name;
-                //Title = $"Database {Name}";
+                bool reconnect = false;
 
-                if (Driver != driver || Host != host || Port != port || Charset != charset || BaseName != base_name || User != user || Password != password)
+                foreach (string key in Enum.GetValues(typeof(EPropKeys)))
+                {
+                    if (props.ContainsKey(key))
+                    {
+                        if (!Props.ContainsKey(key))
+                            Props.Add(key, null);
+
+                        if (!Props[key].Equals(props[key]))
+                        {
+                            Props[key] = props[key];
+                            reconnect = true;
+                        }
+                    }
+                    else
+                    {
+                        Logger.Error($"Properties don't contain key {key}");
+                    }
+
+                }
+
+                if (reconnect)
                 {
 
-                    Driver = driver;
-                    Host = host;
-                    Port = port;
-                    Charset = charset;
-                    BaseName = base_name;
-                    User = user;
-                    Password = password;
 
-                    switch (driver)
+                    switch (Props[EPropKeys.Driver.ToString()])
                     {
                         case "sqlsrv":
                             throw new Exception("Create code for handling MSSQL");
@@ -720,7 +738,12 @@ namespace Lib
                             compiler = new SqlKata.Compilers.SqlServerCompiler();
                             break;
                         case "mysql":
-                            connection = new MySqlConnection($"Server={host};Port={port};CharSet={charset};Database={base_name};Uid={user};Pwd={password};");
+                            connection = new MySqlConnection($"Server={Props[EPropKeys.Host.ToString()]};" +
+                                                             $"Port={Props[EPropKeys.Port.ToString()]};" +
+                                                             $"CharSet={Props[EPropKeys.Charset.ToString()]};" +
+                                                             $"Database={Props[EPropKeys.BaseName.ToString()]};" +
+                                                             $"Uid={Props[EPropKeys.User.ToString()]};" +
+                                                             $"Pwd={Props[EPropKeys.Password.ToString()]};");
                             compiler = new SqlKata.Compilers.MySqlCompiler();
                             break;
                         case "pgsql":
@@ -737,7 +760,7 @@ namespace Lib
                     if (connection != null && compiler != null)
                     {
                         db = new QueryFactory(connection, compiler);
-                        logger.Info($"Connection {connection.ConnectionString}");
+                        Logger.Info($"Connection {connection.ConnectionString}");
                     }
                     else
                         db = null;
@@ -747,7 +770,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex);
+                if (Logger != null) Logger.Error(ex);
             }
         }
 
@@ -783,7 +806,7 @@ namespace Lib
             }
             catch (Exception ex)
             {
-                logger.Error(ex);
+                if (Logger != null) Logger.Error(ex);
             }
 
         }

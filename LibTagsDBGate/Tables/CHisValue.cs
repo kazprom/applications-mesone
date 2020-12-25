@@ -1,25 +1,23 @@
 ﻿using Lib;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace LibPlcDBgate.Structs
+namespace LibPlcDBgate.Tables
 {
-    public class RetroValue : LibMESone.Tables.BaseID
+    public class CHisValue : LibMESone.Tables.CBaseID
     {
 
         public const string TablePrefix = "h_";
 
-        [Field(TYPE = Field.Etype.BigInt, NN = true, UN = true)]
+        [Field(TYPE = Field.EDoctrine.BigInt, NN = true)]
         public ulong Tags_id { get; set; }
 
-        [Field(TYPE = Field.Etype.TimeStamp, SIZE = 3, NN = true)]
+        [Field(TYPE = Field.EDoctrine.DateTime, SIZE = 3, NN = true)]
         public DateTime Timestamp { get; set; }
 
-        [Field(TYPE = Field.Etype.Blob, NN = true)]
+        [Field(TYPE = Field.EDoctrine.Blob, NN = true)]
         public byte[] Value { get; set; }
 
-        [Field(TYPE = Field.Etype.TinyInt, NN = true, UN = true)]
+        [Field(TYPE = Field.EDoctrine.SmallInt, NN = true)]
         public byte Quality { get; set; }
 
 

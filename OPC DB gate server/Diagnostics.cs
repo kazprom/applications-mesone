@@ -33,12 +33,12 @@ namespace OPC_DB_gate_server
         {
             try
             {
-                source.Columns.Add(col_name_id, typeof(int)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp() { data_type = System.Data.Odbc.OdbcType.BigInt, ignore = true });
-                source.Columns.Add(col_name_clients_id, typeof(int)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp() { data_type = System.Data.Odbc.OdbcType.BigInt, primary_key = true });
-                source.Columns.Add(col_name_state, typeof(string)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp() { data_type = System.Data.Odbc.OdbcType.VarChar });
-                source.Columns.Add(col_name_clock, typeof(DateTime)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp() { data_type = System.Data.Odbc.OdbcType.DateTime });
-                source.Columns.Add(col_name_appinfo, typeof(string)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp() { data_type = System.Data.Odbc.OdbcType.VarChar });
-                source.Columns.Add(col_name_message, typeof(string)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp() { data_type = System.Data.Odbc.OdbcType.VarChar });
+                source.Columns.Add(col_name_id, typeof(int)).ExtendedProperties.Add(typeof(Lib.CDatabase.SExtProp), new Lib.CDatabase.SExtProp() { data_type = System.Data.Odbc.OdbcType.BigInt, ignore = true });
+                source.Columns.Add(col_name_clients_id, typeof(int)).ExtendedProperties.Add(typeof(Lib.CDatabase.SExtProp), new Lib.CDatabase.SExtProp() { data_type = System.Data.Odbc.OdbcType.BigInt, primary_key = true });
+                source.Columns.Add(col_name_state, typeof(string)).ExtendedProperties.Add(typeof(Lib.CDatabase.SExtProp), new Lib.CDatabase.SExtProp() { data_type = System.Data.Odbc.OdbcType.VarChar });
+                source.Columns.Add(col_name_clock, typeof(DateTime)).ExtendedProperties.Add(typeof(Lib.CDatabase.SExtProp), new Lib.CDatabase.SExtProp() { data_type = System.Data.Odbc.OdbcType.DateTime });
+                source.Columns.Add(col_name_appinfo, typeof(string)).ExtendedProperties.Add(typeof(Lib.CDatabase.SExtProp), new Lib.CDatabase.SExtProp() { data_type = System.Data.Odbc.OdbcType.VarChar });
+                source.Columns.Add(col_name_message, typeof(string)).ExtendedProperties.Add(typeof(Lib.CDatabase.SExtProp), new Lib.CDatabase.SExtProp() { data_type = System.Data.Odbc.OdbcType.VarChar });
             }
             catch (Exception ex)
             {

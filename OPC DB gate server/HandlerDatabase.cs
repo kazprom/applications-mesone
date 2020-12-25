@@ -27,15 +27,15 @@ namespace OPC_DB_gate_server
 
         #region PROPERTIES
 
-        private Lib.Parameter<Lib.Database.EType> type;
-        public Lib.Parameter<Lib.Database.EType> TYPE { get { return type; } }
+        private Lib.Parameter<Lib.CDatabase.EType> type;
+        public Lib.Parameter<Lib.CDatabase.EType> TYPE { get { return type; } }
 
         private Lib.Parameter<string> connection_string;
         public Lib.Parameter<string> CONNECTION_STRING { get { return connection_string; } }
 
 
-        private Lib.Database database = new Lib.Database();
-        public Lib.Database Database { get { return database; } }
+        private Lib.CDatabase database = new Lib.CDatabase();
+        public Lib.CDatabase Database { get { return database; } }
 
 
         #endregion
@@ -44,7 +44,7 @@ namespace OPC_DB_gate_server
 
         #region CONSTRUCTOR
 
-        public HandlerDatabase(Lib.Parameter<Lib.Database.EType> type,
+        public HandlerDatabase(Lib.Parameter<Lib.CDatabase.EType> type,
                         Lib.Parameter<string> connection_string,
                         Settings settings,
                         Clients clients,
@@ -211,7 +211,7 @@ namespace OPC_DB_gate_server
             database.ConnectionString = value;
         }
 
-        private void Type_ValueChanged(Lib.Database.EType value)
+        private void Type_ValueChanged(Lib.CDatabase.EType value)
         {
             database.Type = value;
         }

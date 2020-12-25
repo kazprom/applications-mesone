@@ -48,33 +48,33 @@ namespace OPC_DB_gate_server
                     if (table == null)
                     {
                         table = new DataTable(table_name);
-                        table.Columns.Add(col_name_id, typeof(int)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp),
-                                                                                           new Lib.Database.SExtProp()
+                        table.Columns.Add(col_name_id, typeof(int)).ExtendedProperties.Add(typeof(Lib.CDatabase.SExtProp),
+                                                                                           new Lib.CDatabase.SExtProp()
                                                                                            {
                                                                                                data_type = System.Data.Odbc.OdbcType.BigInt,
                                                                                                primary_key = true,
                                                                                                auto_increment = true,
                                                                                                not_null = true
                                                                                            });
-                        table.Columns.Add(col_name_tags_id, typeof(int)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp),
-                                                                                                new Lib.Database.SExtProp()
+                        table.Columns.Add(col_name_tags_id, typeof(int)).ExtendedProperties.Add(typeof(Lib.CDatabase.SExtProp),
+                                                                                                new Lib.CDatabase.SExtProp()
                                                                                                 {
                                                                                                     data_type = System.Data.Odbc.OdbcType.BigInt,
                                                                                                 });
-                        table.Columns.Add(col_name_timestamp, typeof(DateTime)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp),
-                                                                                                              new Lib.Database.SExtProp()
+                        table.Columns.Add(col_name_timestamp, typeof(DateTime)).ExtendedProperties.Add(typeof(Lib.CDatabase.SExtProp),
+                                                                                                              new Lib.CDatabase.SExtProp()
                                                                                                               {
                                                                                                                   data_type = System.Data.Odbc.OdbcType.DateTime,
                                                                                                                   size = 3
                                                                                                               });
-                        table.Columns.Add(col_name_value, typeof(byte[])).ExtendedProperties.Add(typeof(Lib.Database.SExtProp),
-                                                                                                 new Lib.Database.SExtProp()
+                        table.Columns.Add(col_name_value, typeof(byte[])).ExtendedProperties.Add(typeof(Lib.CDatabase.SExtProp),
+                                                                                                 new Lib.CDatabase.SExtProp()
                                                                                                  {
                                                                                                      data_type = System.Data.Odbc.OdbcType.Binary,
                                                                                                      size = 8
                                                                                                  });
-                        table.Columns.Add(col_name_quality, typeof(byte)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp),
-                                                                                                 new Lib.Database.SExtProp()
+                        table.Columns.Add(col_name_quality, typeof(byte)).ExtendedProperties.Add(typeof(Lib.CDatabase.SExtProp),
+                                                                                                 new Lib.CDatabase.SExtProp()
                                                                                                  {
                                                                                                      data_type = System.Data.Odbc.OdbcType.SmallInt,
                                                                                                  }); ;

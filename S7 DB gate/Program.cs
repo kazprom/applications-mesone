@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibMESone;
+using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -27,7 +28,10 @@ namespace S7_DB_gate
             {
                 Lib.Common common = new Lib.Common();
 
-                LibMESone.CSrvCore core = new LibMESone.CSrvCore(typeof(Service));
+                CConfigFile config_file = new CConfigFile();
+                CCORE<CSrv> core = new CCORE<CSrv>();
+
+                config_file.ReadCompleted += (CConfigFile sender) => { core.LoadSettingFromConfigFile(sender); };
 
                 common.InfinityWaiting();
 

@@ -5,26 +5,26 @@ using System.Data;
 using System.Linq;
 using System.Text;
 
-namespace LibPlcDBgate.Structs
+namespace LibPlcDBgate.Tables
 {
-    public class RealTimeValue
+    public class CRtValue : LibMESone.Tables.CBaseID
     {
 
         static public string TableName = "rt_values";
 
-        [Field(TYPE = Field.Etype.BigInt, UN = true, NN = true, UQ = true)]
+        [Field(TYPE = Field.EDoctrine.BigInt, NN = true, UQ = true)]
         public ulong Tags_id { get; set; }
 
-        [Field(TYPE = Field.Etype.TimeStamp, SIZE = 3)]
+        [Field(TYPE = Field.EDoctrine.DateTime, SIZE = 3)]
         public DateTime Timestamp { get; set; }
 
-        [Field(TYPE = Field.Etype.Blob)]
+        [Field(TYPE = Field.EDoctrine.Blob)]
         public byte[] Value_raw { get; set; }
 
-        [Field(TYPE = Field.Etype.VarChar, SIZE = 255)]
+        [Field(TYPE = Field.EDoctrine.String, SIZE = 255)]
         public string Value_str { get; set; }
 
-        [Field(TYPE = Field.Etype.TinyInt, UN = true)]
+        [Field(TYPE = Field.EDoctrine.SmallInt)]
         public byte Quality { get; set; }
        
     }

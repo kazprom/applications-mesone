@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LibDBgate.Structs
+namespace LibDBgate
 {
-    public class CSetSUB:LibMESone.CSetting
+    class CSrvSubProps
     {
-
-
     }
 }

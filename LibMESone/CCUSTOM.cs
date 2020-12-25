@@ -4,13 +4,16 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
-using LibMESone.Structs;
 using LibMESone.Tables.Custom;
 
 namespace LibMESone
 {
-    public class CSrvCUSTOM : CCyclycService
+    public class CCUSTOM : CSrvDB
     {
+
+
+
+
 
         #region CONSTANTS
 
@@ -35,23 +38,91 @@ namespace LibMESone
 
         #region PROPERTIES
 
-        public Lib.Database Database { get; set; }
+        
 
         public IEnumerable<Tables.Custom.CSetting> Settings { get; private set; }
+
+
+
+        public string Driver { get; set; }
+
+        public string Host { get; set; }
+
+        public uint Port { get; set; }
+
+        public string Charset { get; set; }
+
+        public string Username { get; set; }
+
+        public string Password { get; set; }
+
 
         #endregion
 
         #region CONSTRUCTOR
-        public CSrvCUSTOM()
+        public CCUSTOM()
         {
 
             log_buf = new Lib.Buffer<CLogMessage>(100, 5000);
             log_buf.CyclicEvent += LogDataHandler;
             log_buf.HalfEvent += LogDataHandler;
 
+
             CycleRate = period;
 
         }
+
+        private void CSrvCustom_PropsChangedEvent(CChildProps props)
+        {
+            try
+            {
+
+                if (Logger != null && Logger != NLog.LogManager.GetLogger(logger_name))
+                {
+
+                    var configuration = NLog.LogManager.Configuration;
+                    configuration.RemoveTarget(logger_name);
+                    configuration.RemoveRuleByName(logger_name + "*");
+                    NLog.LogManager.Configuration = configuration;
+                    Logger = null;
+
+                }
+
+                if (Logger == null)
+                {
+                    var configuration = NLog.LogManager.Configuration;
+                    var target = new NLog.Targets.MethodCallTarget(Logger.Name, (logEvent, parms) =>
+                    {
+                        log_buf.Enqueue(new CLogMessage() { Timestamp = logEvent.TimeStamp, Message = $"{logEvent.Level} {logEvent.Message} {logEvent.Exception}" });
+                    });
+
+
+                    configuration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Fatal, target, Logger.Name + "*");
+                    NLog.LogManager.Configuration = configuration;
+
+                }
+
+                if (Database == null)
+                    Database = new Lib.CDatabase(Props.Id, Logger);
+
+                CSrvCustomProps set = Props as CSrvCustomProps;
+
+                Database.LoadSettings(set.Driver,
+                                      set.Host,
+                                      set.Port,
+                                      set.Charset,
+                                      set.Database,
+                                      set.Username,
+                                      set.Password);
+
+            }
+            catch (Exception ex)
+            {
+                if (Logger != null) Logger.Error(ex);
+            }
+        }
+
+
 
         #endregion
 
@@ -66,7 +137,6 @@ namespace LibMESone
                 if (disposing)
                 {
 
-                    base.Dispose(disposing);
 
                     LogDataHandler();
 
@@ -75,8 +145,11 @@ namespace LibMESone
                     NLog.LogManager.Configuration = configuration;
 
                     Database = null;
+
                 }
             }
+
+            base.Dispose(disposing);
 
         }
 
@@ -86,58 +159,6 @@ namespace LibMESone
         #region PUBLICS
 
 
-        public override void LoadSetting(ISetting setting)
-        {
-
-            try
-            {
-
-                CSetCUSTOM _setting = setting as CSetCUSTOM;
-
-                ID = _setting.Id;
-                Name = _setting.Name;
-
-                string logger_name = $"Proc [{ID}] <{Name}>";
-
-                if (Logger != NLog.LogManager.GetLogger(logger_name))
-                {
-                    if (Logger == null)
-                    {
-                        var configuration = NLog.LogManager.Configuration;
-                        var target = new NLog.Targets.MethodCallTarget(logger_name, (logEvent, parms) =>
-                        {
-                            log_buf.Enqueue(new CLogMessage() { Timestamp = logEvent.TimeStamp, Message = $"{logEvent.Level} {logEvent.Message} {logEvent.Exception}" });
-                        });
-
-
-                        configuration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Fatal, target, logger_name + "*");
-                        NLog.LogManager.Configuration = configuration;
-
-                        Logger = NLog.LogManager.GetLogger(logger_name);
-                    }
-                }
-
-
-
-
-
-                if (Database == null)
-                    Database = new Lib.Database(ID, Logger);
-
-                Database.LoadSettings(_setting.Driver,
-                                      _setting.Host,
-                                      _setting.Port,
-                                      _setting.Charset,
-                                      _setting.Database,
-                                      _setting.Username,
-                                      _setting.Password);
-
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex);
-            }
-        }
 
         public override void Timer_Handler(object sender, ElapsedEventArgs e)
         {
@@ -208,14 +229,12 @@ namespace LibMESone
             catch (Exception ex)
             {
 
-                Logger.Error(ex);
+                if (Logger != null) Logger.Error(ex);
             }
 
             base.Timer_Handler(sender, e);
 
         }
-
-
 
         #endregion
 
@@ -274,15 +293,6 @@ namespace LibMESone
                 }
             });
         }
-
-
-
-
-
-
-
-
-
 
         #endregion
 

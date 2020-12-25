@@ -180,12 +180,12 @@
         }
       }
     },
-    "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibTagsDBGate\\LibPlcDBGate.csproj": {
+    "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibTagsDBGate\\LibPlcDBgate.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibTagsDBGate\\LibPlcDBGate.csproj",
-        "projectName": "LibPlcDBGate",
-        "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibTagsDBGate\\LibPlcDBGate.csproj",
+        "projectUniqueName": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibTagsDBGate\\LibPlcDBgate.csproj",
+        "projectName": "LibPlcDBgate",
+        "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibTagsDBGate\\LibPlcDBgate.csproj",
         "packagesPath": "C:\\Users\\i.korol\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibTagsDBGate\\obj\\",
         "projectStyle": "PackageReference",
@@ -386,8 +386,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibTagsDBGate\\LibPlcDBGate.csproj": {
-                "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibTagsDBGate\\LibPlcDBGate.csproj"
+              "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibTagsDBGate\\LibPlcDBgate.csproj": {
+                "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibTagsDBGate\\LibPlcDBgate.csproj"
               },
               "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\S7.Net\\S7.Net.csproj": {
                 "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\S7.Net\\S7.Net.csproj"

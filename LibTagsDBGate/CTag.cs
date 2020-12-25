@@ -1,18 +1,15 @@
-﻿using System;
+﻿using LibMESone;
+using NLog;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace LibPlcDBgate
 {
     [Serializable]
-    public class Tag : IDisposable
+    public class CTag : CChild
     {
 
-        #region VARIABLES
-
-        protected NLog.Logger logger;
-
-        #endregion
 
         #region ENUMS
 
@@ -55,74 +52,17 @@ namespace LibPlcDBgate
 
         #region PROPERTIES
 
-        public string Title { get; private set; }
-
-        public Group Parent { get; private set; }
-
-        public ulong ID { get; private set; }
-
-        public string Name { get; set; }
-
         public DateTime? Timestamp { get; set; }
 
         public object Value { get; set; }
 
-        public EQuality Quality { get; set; }
+        public EQuality? Quality { get; set; }
+        
 
         #endregion
 
-        #region CONSTRUCTOR
-
-        public Tag(Group parent, ulong id)
-        {
-
-            Parent = parent;
-            ID = id;
-
-            Title = $"{parent.Title} Tag [{id}]";
-
-            logger = NLog.LogManager.GetLogger(Title);
-            logger.Info($"{Title}. Created");
-
-        }
-
-        #endregion
-
-        #region DESTRUCTOR
-
-        ~Tag()
-        {
-        }
-
-        private bool disposedValue;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                }
-
-                disposedValue = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-            logger.Info($"{Title}. Disposed");
-        }
-
-        #endregion
-
-        #region PUBLICS
-
-        public virtual void LoadSettings(dynamic tag) { }
 
 
-        #endregion
 
         public static byte[] ObjToBin(object obj)
         {
@@ -134,9 +74,9 @@ namespace LibPlcDBgate
                 {
                     System.Buffer.BlockCopy(BitConverter.GetBytes((Boolean)obj), 0, result, 0, sizeof(Boolean));
                 }
-                else if (obj is Byte)
+                else if (obj is Byte @byte)
                 {
-                    System.Buffer.BlockCopy(BitConverter.GetBytes((Byte)obj), 0, result, 0, sizeof(Byte));
+                    System.Buffer.BlockCopy(BitConverter.GetBytes(@byte), 0, result, 0, sizeof(Byte));
                 }
                 else if (obj is Char)
                 {
@@ -256,5 +196,17 @@ namespace LibPlcDBgate
                     throw new Exception("Don't know data type");
             }
         }
+
+
+        public override void LoadSetting(ISetting setting)
+        {
+
+
+
+            base.LoadSetting(setting);
+        }
+
+
+
     }
 }

@@ -43,8 +43,8 @@ namespace OPC_DB_gate_server
             {
 
                 source.Columns.Add(col_name_id, typeof(int));
-                source.Columns.Add(col_name_key, typeof(string)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp() {  data_type = System.Data.Odbc.OdbcType.VarChar,  primary_key = true });
-                source.Columns.Add(col_name_value, typeof(string)).ExtendedProperties.Add(typeof(Lib.Database.SExtProp), new Lib.Database.SExtProp() { data_type = System.Data.Odbc.OdbcType.VarChar});
+                source.Columns.Add(col_name_key, typeof(string)).ExtendedProperties.Add(typeof(Lib.CDatabase.SExtProp), new Lib.CDatabase.SExtProp() {  data_type = System.Data.Odbc.OdbcType.VarChar,  primary_key = true });
+                source.Columns.Add(col_name_value, typeof(string)).ExtendedProperties.Add(typeof(Lib.CDatabase.SExtProp), new Lib.CDatabase.SExtProp() { data_type = System.Data.Odbc.OdbcType.VarChar});
 
             }
             catch (Exception ex)

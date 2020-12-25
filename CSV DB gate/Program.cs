@@ -33,7 +33,7 @@ namespace CSV_DB_gate
                 Lib.Common common = new Lib.Common();
 
                 CConfigFile config_file = new CConfigFile();
-                CSrvCORE<CSrv> core = new CSrvCORE<CSrv>();
+                CCORE<CSrv> core = new CCORE<CSrv>();
 
                 config_file.ReadCompleted += (CConfigFile sender) => { core.LoadSettingFromConfigFile(sender); };
 

@@ -93,28 +93,28 @@ namespace LibMESone
                 ushort ushort_result;
                 uint uint_result;
 
-                str_result = file.ReadValue("DB/DRIVER", Lib.Database.default_driver);
+                str_result = file.ReadValue("DB/DRIVER", Lib.CDatabase.default_driver);
                 if (DB_Driver != str_result) { DB_Driver = str_result; logger.Info($"DB DRIVER = {DB_Driver}"); }
 
 
-                str_result = file.ReadValue("DB/HOST", Lib.Database.default_host);
+                str_result = file.ReadValue("DB/HOST", Lib.CDatabase.default_host);
                 if (DB_Host != str_result) { DB_Host = str_result; logger.Info($"DB HOST = {DB_Host}"); }
 
-                if (ushort.TryParse(file.ReadValue("DB/PORT", Lib.Database.default_port.ToString()), out ushort_result))
+                if (ushort.TryParse(file.ReadValue("DB/PORT", Lib.CDatabase.default_port.ToString()), out ushort_result))
                 {
                     if (DB_Port != ushort_result) { DB_Port = ushort_result; logger.Info($"DB PORT = {DB_Port}"); }
                 }
 
-                str_result = file.ReadValue("DB/CHARSET", Lib.Database.default_charset);
+                str_result = file.ReadValue("DB/CHARSET", Lib.CDatabase.default_charset);
                 if (DB_Charset != str_result) { DB_Charset = str_result; logger.Info($"DB CHARSET = {DB_Charset}"); }
 
-                str_result = file.ReadValue("DB/BASE_NAME", Lib.Database.default_base_name);
+                str_result = file.ReadValue("DB/BASE_NAME", Lib.CDatabase.default_base_name);
                 if (DB_BaseName != str_result) { DB_BaseName = str_result; logger.Info($"DB BASE_NAME = {DB_BaseName}"); }
 
-                str_result = file.ReadValue("DB/USER", Lib.Database.default_user);
+                str_result = file.ReadValue("DB/USER", Lib.CDatabase.default_user);
                 if (DB_User != str_result) { DB_User = str_result; logger.Info($"DB USER = {DB_User}"); }
 
-                str_result = file.ReadValue("DB/PASSWORD", Lib.Database.default_password);
+                str_result = file.ReadValue("DB/PASSWORD", Lib.CDatabase.default_password);
                 if (DB_Password != str_result) { DB_Password = str_result; logger.Info($"DB PASSWORD = {DB_Password}"); }
 
                 if (uint.TryParse(file.ReadValue("LOG/DEPTH_DAY", Lib.Common.default_log_depth_day.ToString()), out uint_result))

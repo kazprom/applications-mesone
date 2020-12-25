@@ -4,12 +4,7 @@ using System.Text;
 
 namespace LibMESone
 {
-    public interface ISetting
+    class CSrvCycP
     {
-
-        ulong Id { get; set; }
-
-        string Name { get; set; }
-
     }
 }
