@@ -17,10 +17,10 @@ namespace LibMESone.Tables.Core
         [Field(TYPE = Field.EDoctrine.String, SIZE = 255)]
         public string Driver { get; set; }
 
-        [Field(TYPE = Field.EDoctrine.BigInt, NN = true)]
+        [Field(TYPE = Field.EDoctrine.UnsignedBigInteger, NN = true)]
         public ulong Hosts_id { get; set; }
 
-        [Field(TYPE = Field.EDoctrine.Integer)]
+        [Field(TYPE = Field.EDoctrine.UnsignedInteger)]
         public uint Port { get; set; }
 
         [Field(TYPE = Field.EDoctrine.String, SIZE = 255)]

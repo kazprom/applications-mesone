@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Lib\Lib.csproj" />
+    <ProjectReference Include="..\Lib\0_Lib.csproj" />
     <ProjectReference Include="..\OPC DB gate Lib\LibOPCDBgate.csproj" />
   </ItemGroup>
 

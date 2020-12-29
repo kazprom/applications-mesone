@@ -26,7 +26,7 @@ namespace OPC_DB_gate_client
         private Dictionary<int, Timer> times = new Dictionary<int, Timer>();
 
 
-        public IntInfo(Lib.Buffer<LibDBgate.Tag> buffer) : base(default_name, buffer)
+        public IntInfo(Lib.CBuffer<LibDBgate.Tag> buffer) : base(default_name, buffer)
         {
 
             PutEvent += GroupHandlerRunner;

@@ -29,7 +29,7 @@ namespace S7_DB_gate
                 Lib.Common common = new Lib.Common();
 
                 CConfigFile config_file = new CConfigFile();
-                CCORE<CSrv> core = new CCORE<CSrv>();
+                CCORE<CCUSTOM> core = new CCORE<CCUSTOM>();
 
                 config_file.ReadCompleted += (CConfigFile sender) => { core.LoadSettingFromConfigFile(sender); };
 

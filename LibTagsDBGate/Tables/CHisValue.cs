@@ -8,16 +8,16 @@ namespace LibPlcDBgate.Tables
 
         public const string TablePrefix = "h_";
 
-        [Field(TYPE = Field.EDoctrine.BigInt, NN = true)]
+        [Field(TYPE = Field.EDoctrine.UnsignedBigInteger, NN = true)]
         public ulong Tags_id { get; set; }
 
         [Field(TYPE = Field.EDoctrine.DateTime, SIZE = 3, NN = true)]
         public DateTime Timestamp { get; set; }
 
-        [Field(TYPE = Field.EDoctrine.Blob, NN = true)]
+        [Field(TYPE = Field.EDoctrine.Binary, NN = true)]
         public byte[] Value { get; set; }
 
-        [Field(TYPE = Field.EDoctrine.SmallInt, NN = true)]
+        [Field(TYPE = Field.EDoctrine.UnsignedSmallInteger, NN = true)]
         public byte Quality { get; set; }
 
 

@@ -10,7 +10,7 @@ namespace LibPlcDBgate.Tables
         [Field(TYPE = Field.EDoctrine.String, SIZE = 15, NN = true)]
         public string Ip { get; set; }
 
-        [Field(TYPE = Field.EDoctrine.SmallInt, NN = true)]
+        [Field(TYPE = Field.EDoctrine.UnsignedSmallInteger, NN = true)]
         public uint Port { get; set; }
 
     }

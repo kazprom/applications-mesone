@@ -113,13 +113,13 @@
     <Compile Include="TCPconnection.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DB gate Lib\LibDBgate.csproj">
+    <ProjectReference Include="..\DB gate Lib\2_LibDBgate.csproj">
       <Project>{334db94a-ce87-45dc-907c-6d16919261a5}</Project>
-      <Name>LibDBgate</Name>
+      <Name>2_LibDBgate</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Lib\Lib.csproj">
+    <ProjectReference Include="..\Lib\0_Lib.csproj">
       <Project>{4ccfc338-0118-4300-857d-24fd88e9bb3b}</Project>
-      <Name>Lib</Name>
+      <Name>0_Lib</Name>
     </ProjectReference>
     <ProjectReference Include="..\OPC DB gate Lib\LibOPCDBgate.csproj">
       <Project>{43847a49-f70c-48d9-ba18-d3ac34fec8ba}</Project>

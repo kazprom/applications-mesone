@@ -10,22 +10,69 @@ namespace Lib
         public enum EDoctrine
         {
             None = 0,
-            SmallInt,
-            Integer,
-            BigInt,
-            Decimal,
-            Float,
-            String,
-            ASCII_String,
-            Text,
+
+            BigIncrements,
+            BigInteger,
             Binary,
-            Blob,
             Boolean,
-            Date,
+            Char,
+            DateTimeTz,
             DateTime,
-            DateTimeZ,
+            Date,
+            Decimal,
+            Double,
+            Enum,
+            Float,
+            ForeignId,
+            GeometryCollection,
+            Geometry,
+            Id,
+            Increments,
+            Integer,
+            IpAddress,
+            Json,
+            Jsonb,
+            LineString,
+            LongText,
+            MacAddress,
+            MediumIncrements,
+            MediumInteger,
+            MediumText,
+            Morphs,
+            MultiLineString,
+            MultiPoint,
+            MultiPolygon,
+            NullableMorphs,
+            NullableTimestamps,
+            NullableUuidMorphs,
+            Point,
+            Polygon,
+            RememberToken,
+            Set,
+            SmallIncrements,
+            SmallInteger,
+            SoftDeletesTz,
+            SoftDeletes,
+            String,
+            Text,
+            TimeTz,
             Time,
-            Array
+            TimestampTz,
+            Timestamp,
+            TimestampsTz,
+            Timestamps,
+            TinyIncrements,
+            TinyInteger,
+            UnsignedBigInteger,
+            UnsignedDecimal,
+            UnsignedInteger,
+            UnsignedMediumInteger,
+            UnsignedSmallInteger,
+            UnsignedTinyInteger,
+            UuidMorphs,
+            Uuid,
+            Year
+
         }
 
 
@@ -66,39 +113,132 @@ namespace Lib
 
             switch (TYPE)
             {
-                case EDoctrine.SmallInt:
-                    result = "SMALLINT UNSIGNED"; break;
-                case EDoctrine.Integer:
-                    result = "INT UNSIGNED"; break;
-                case EDoctrine.BigInt:
-                    result = "BIGINT UNSIGNED"; break;
-                case EDoctrine.Decimal:
-                    throw new Exception();
-                case EDoctrine.Float:
-                    //result = "DOUBLE PRECISION UNSIGNED"; break;
-                    result = "DOUBLE UNSIGNED"; break;
-                case EDoctrine.String:
-                    result = "VARCHAR()"; break;
-                case EDoctrine.ASCII_String:
-                    throw new Exception();
-                case EDoctrine.Text:
-                    result = "TEXT"; break;
+                case EDoctrine.None:
+                    break;
+                case EDoctrine.BigIncrements:
+                    break;
+                case EDoctrine.BigInteger:
+                    result = "BIGINT"; break;
                 case EDoctrine.Binary:
-                    throw new Exception();
-                case EDoctrine.Blob:
-                    throw new Exception();
+                    break;
                 case EDoctrine.Boolean:
                     result = "TINYINT(1)"; break;
-                case EDoctrine.Date:
-                    throw new Exception();
+                case EDoctrine.Char:
+                    break;
+                case EDoctrine.DateTimeTz:
+                    break;
                 case EDoctrine.DateTime:
                     result = "DATETIME()"; break;
-                case EDoctrine.DateTimeZ:
-                    throw new Exception();
+                case EDoctrine.Date:
+                    break;
+                case EDoctrine.Decimal:
+                    break;
+                case EDoctrine.Double:
+                    break;
+                case EDoctrine.Enum:
+                    break;
+                case EDoctrine.Float:
+                    result = "DOUBLE"; break;
+                case EDoctrine.ForeignId:
+                    break;
+                case EDoctrine.GeometryCollection:
+                    break;
+                case EDoctrine.Geometry:
+                    break;
+                case EDoctrine.Id:
+                    break;
+                case EDoctrine.Increments:
+                    break;
+                case EDoctrine.Integer:
+                    result = "INT"; break;
+                case EDoctrine.IpAddress:
+                    break;
+                case EDoctrine.Json:
+                    break;
+                case EDoctrine.Jsonb:
+                    break;
+                case EDoctrine.LineString:
+                    break;
+                case EDoctrine.LongText:
+                    break;
+                case EDoctrine.MacAddress:
+                    break;
+                case EDoctrine.MediumIncrements:
+                    break;
+                case EDoctrine.MediumInteger:
+                    break;
+                case EDoctrine.MediumText:
+                    break;
+                case EDoctrine.Morphs:
+                    break;
+                case EDoctrine.MultiLineString:
+                    break;
+                case EDoctrine.MultiPoint:
+                    break;
+                case EDoctrine.MultiPolygon:
+                    break;
+                case EDoctrine.NullableMorphs:
+                    break;
+                case EDoctrine.NullableTimestamps:
+                    break;
+                case EDoctrine.NullableUuidMorphs:
+                    break;
+                case EDoctrine.Point:
+                    break;
+                case EDoctrine.Polygon:
+                    break;
+                case EDoctrine.RememberToken:
+                    break;
+                case EDoctrine.Set:
+                    break;
+                case EDoctrine.SmallIncrements:
+                    break;
+                case EDoctrine.SmallInteger:
+                    result = "SMALLINT"; break;
+                case EDoctrine.SoftDeletesTz:
+                    break;
+                case EDoctrine.SoftDeletes:
+                    break;
+                case EDoctrine.String:
+                    result = "VARCHAR()"; break;
+                case EDoctrine.Text:
+                    result = "TEXT"; break;
+                case EDoctrine.TimeTz:
+                    break;
                 case EDoctrine.Time:
-                    throw new Exception();
-                case EDoctrine.Array:
-                    throw new Exception();
+                    break;
+                case EDoctrine.TimestampTz:
+                    break;
+                case EDoctrine.Timestamp:
+                    break;
+                case EDoctrine.TimestampsTz:
+                    break;
+                case EDoctrine.Timestamps:
+                    break;
+                case EDoctrine.TinyIncrements:
+                    break;
+                case EDoctrine.TinyInteger:
+                    result = "TINYINT"; break;
+                case EDoctrine.UnsignedBigInteger:
+                    result = "BIGINT UNSIGNED"; break;
+                case EDoctrine.UnsignedDecimal:
+                    break;
+                case EDoctrine.UnsignedInteger:
+                    result = "INT UNSIGNED"; break;
+                case EDoctrine.UnsignedMediumInteger:
+                    break;
+                case EDoctrine.UnsignedSmallInteger:
+                    result = "SMALLINT UNSIGNED"; break;
+                case EDoctrine.UnsignedTinyInteger:
+                    result = "TINYINT UNSIGNED"; break;
+                case EDoctrine.UuidMorphs:
+                    break;
+                case EDoctrine.Uuid:
+                    break;
+                case EDoctrine.Year:
+                    break;
+                default:
+                    break;
             }
 
             if (result.Contains("()"))
@@ -125,13 +265,13 @@ namespace Lib
 
             switch (TYPE)
             {
-                case EDoctrine.SmallInt:
+                case EDoctrine.SmallInteger:
                     result = typeof(short);
                     break;
                 case EDoctrine.Integer:
                     result = typeof(int);
                     break;
-                case EDoctrine.BigInt:
+                case EDoctrine.BigInteger:
                     result = typeof(long);
                     break;
                 case EDoctrine.Decimal:
@@ -143,26 +283,18 @@ namespace Lib
                 case EDoctrine.String:
                     result = typeof(string);
                     break;
-                case EDoctrine.ASCII_String:
-                    result = typeof(string);
-                    break;
                 case EDoctrine.Text:
                     result = typeof(string);
                     break;
                 case EDoctrine.Binary:
-                    break;
-                case EDoctrine.Blob:
                     break;
                 case EDoctrine.Boolean:
                     result = typeof(bool);
                     break;
                 case EDoctrine.Date:
                 case EDoctrine.DateTime:
-                case EDoctrine.DateTimeZ:
                 case EDoctrine.Time:
                     result = typeof(DateTime);
-                    break;
-                case EDoctrine.Array:
                     break;
             }
 

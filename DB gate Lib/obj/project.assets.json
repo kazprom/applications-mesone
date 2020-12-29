@@ -5293,13 +5293,13 @@
     },
     "Lib/1.0.0": {
       "type": "project",
-      "path": "../Lib/Lib.csproj",
-      "msbuildProject": "../Lib/Lib.csproj"
+      "path": "../Lib/0_Lib.csproj",
+      "msbuildProject": "../Lib/0_Lib.csproj"
     },
     "LibMESone/1.0.0": {
       "type": "project",
-      "path": "../LibMESone/LibMESone.csproj",
-      "msbuildProject": "../LibMESone/LibMESone.csproj"
+      "path": "../LibMESone/1_LibMESone.csproj",
+      "msbuildProject": "../LibMESone/1_LibMESone.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -5321,9 +5321,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\DB gate Lib\\LibDBgate.csproj",
+      "projectUniqueName": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\DB gate Lib\\2_LibDBgate.csproj",
       "projectName": "LibDBgate",
-      "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\DB gate Lib\\LibDBgate.csproj",
+      "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\DB gate Lib\\2_LibDBgate.csproj",
       "packagesPath": "C:\\Users\\i.korol\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\DB gate Lib\\obj\\",
       "projectStyle": "PackageReference",
@@ -5344,8 +5344,8 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibMESone\\LibMESone.csproj": {
-              "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibMESone\\LibMESone.csproj"
+            "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibMESone\\1_LibMESone.csproj": {
+              "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibMESone\\1_LibMESone.csproj"
             }
           }
         }

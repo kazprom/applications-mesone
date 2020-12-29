@@ -21,7 +21,7 @@ namespace LibMESone
 
         #region VARIABLES
 
-        private static NLog.Logger logger = NLog.LogManager.GetLogger("Config file");
+        private static NLog.Logger logger = NLog.LogManager.GetLogger("CONFIG FILE");
 
         private Lib.XML file = new Lib.XML();
         private Timer timer;

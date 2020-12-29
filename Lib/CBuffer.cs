@@ -8,18 +8,13 @@ using System.Threading.Tasks;
 
 namespace Lib
 {
-    public class Buffer<T>
+    public class CBuffer<T>
     {
         #region VARIABLES
 
-        private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private Queue<T> q = new Queue<T>();
 
         private uint limit;
-        private uint time_storage;
-        
-
-        private Timer timer;
 
         #endregion
 
@@ -32,11 +27,8 @@ namespace Lib
         public delegate void DequeueNotify(T obj);  // delegate
         public event DequeueNotify DequeueEvent; // event
 
-        public delegate void HalfNotify();  // delegate
-        public event HalfNotify HalfEvent; // event
-
-        public delegate void CyclicNotify();  // delegate
-        public event CyclicNotify CyclicEvent; // event
+        public delegate void FullNotify(T obj);  // delegate
+        public event FullNotify FullEvent; // event
 
         #endregion
 
@@ -48,13 +40,9 @@ namespace Lib
 
         #region CONSTRUCTOR
 
-        public Buffer(uint limit, 
-                      uint time_storage)
+        public CBuffer(uint limit)
         {
             this.limit = limit;
-            this.time_storage = time_storage;
-
-            timer = new Timer(Cleaner, null, 0, this.time_storage);
         }
 
         #endregion
@@ -67,11 +55,8 @@ namespace Lib
             q.Enqueue(obj);
             EnqueueEvent?.Invoke(obj);
 
-            if (q.Count > limit / 2)
-            {
-
-                HalfEvent?.Invoke();
-            }
+            if (q.Count > limit)
+                FullEvent?.Invoke(obj);
 
             while (q.Count > limit)
             {
@@ -88,16 +73,7 @@ namespace Lib
 
         #endregion
 
-        #region PRIVATES
 
-        private void Cleaner(object state)
-        {
-
-            CyclicEvent?.Invoke();
-
-        }
-
-        #endregion
 
     }
 }

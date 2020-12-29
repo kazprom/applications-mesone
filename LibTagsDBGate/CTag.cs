@@ -7,7 +7,7 @@ using System.Text;
 namespace LibPlcDBgate
 {
     [Serializable]
-    public class CTag : CChild
+    public class CTag : Lib.CChild
     {
 
 
@@ -52,18 +52,154 @@ namespace LibPlcDBgate
 
         #region PROPERTIES
 
-        public DateTime? Timestamp { get; set; }
+        public CHistorian Historian { get; set; }
 
-        public object Value { get; set; }
+        private EDataType data_type;
+        public dynamic Data_type
+        {
+            get { return data_type; }
+            set
+            {
+                try
+                {
+                    data_type = Enum.Parse(typeof(EDataType), Convert.ToString(value));
+                }
+                catch (Exception ex)
+                {
+                    Logger.Warn(ex);
+                }
+            }
+        }
 
-        public EQuality? Quality { get; set; }
-        
+        private bool? rt_enabled;
+        public dynamic RT_enabled
+        {
+            get { return rt_enabled; }
+            set
+            {
+                try
+                {
+                    rt_enabled = bool.Parse(Convert.ToString(value));
+                }
+                catch (Exception ex)
+                {
+                    Logger.Warn(ex);
+                }
+            }
+        }
+
+        private bool? history_enabled;
+        public dynamic History_enabled
+        {
+            get { return history_enabled; }
+            set
+            {
+                try
+                {
+                    history_enabled = bool.Parse(Convert.ToString(value));
+                }
+                catch (Exception ex)
+                {
+                    Logger.Warn(ex);
+                }
+            }
+        }
+
+        public DateTime Timestamp { get; set; }
+
+        private object value;
+        public object Value
+        {
+            get { return value; }
+            set
+            {
+                try
+                {
+                    value = ObjToDataType(value, data_type);
+
+                    if (history_enabled == true)
+                    {
+                        if (Historian != null) Historian.Put(Id, Timestamp, ObjToBin(Value), (byte)Quality);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Logger.Warn(ex);
+                }
+            }
+        }
+
+        public EQuality Quality { get; set; }
+
 
         #endregion
 
+        public CTag()
+        {
+            try
+            {
+                Lib.CParent parent = this.Parent;
+                while (parent != null || !(parent is CCUSTOM))
+                {
+                    if (parent is CCUSTOM)
+                    {
+                        CCUSTOM custom = parent as CCUSTOM;
+                        Historian = custom.Historian;
+                        custom.RTviewer.Subscribe(this);
+                    }
+                    else
+                        parent = parent.Parent;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+            }
+
+        }
 
 
+        private static object ObjToDataType(object obj, EDataType type)
+        {
+            try
+            {
+                if (obj == null)
+                    return null;
 
+                switch (type)
+                {
+                    case EDataType.Boolean:
+                        return Convert.ToBoolean(obj);
+                    case EDataType.Byte:
+                        return Convert.ToByte(obj);
+                    case EDataType.Char:
+                        return Convert.ToChar(obj);
+                    case EDataType.Double:
+                        return Convert.ToDouble(obj);
+                    case EDataType.Int16:
+                        return Convert.ToInt16(obj);
+                    case EDataType.Int32:
+                        return Convert.ToInt32(obj);
+                    case EDataType.Int64:
+                        return Convert.ToInt64(obj);
+                    case EDataType.UInt16:
+                        return Convert.ToUInt16(obj);
+                    case EDataType.UInt32:
+                        return Convert.ToUInt32(obj);
+                    case EDataType.UInt64:
+                        return Convert.ToUInt64(obj);
+                }
+
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error convert object to data type", ex);
+            }
+
+        }
         public static byte[] ObjToBin(object obj)
         {
             byte[] result = new byte[8];
@@ -128,47 +264,13 @@ namespace LibPlcDBgate
             return result;
         }
 
-        public static object ObjToDataType(object obj, EDataType type)
-        {
-            try
-            {
-                if (obj == null)
-                    throw new Exception("Can't convert null object");
 
-                switch (type)
-                {
-                    case EDataType.Boolean:
-                        return Convert.ToBoolean(obj);
-                    case EDataType.Byte:
-                        return Convert.ToByte(obj);
-                    case EDataType.Char:
-                        return Convert.ToChar(obj);
-                    case EDataType.Double:
-                        return Convert.ToDouble(obj);
-                    case EDataType.Int16:
-                        return Convert.ToInt16(obj);
-                    case EDataType.Int32:
-                        return Convert.ToInt32(obj);
-                    case EDataType.Int64:
-                        return Convert.ToInt64(obj);
-                    case EDataType.UInt16:
-                        return Convert.ToUInt16(obj);
-                    case EDataType.UInt32:
-                        return Convert.ToUInt32(obj);
-                    case EDataType.UInt64:
-                        return Convert.ToUInt64(obj);
-                    default:
-                        throw new Exception("Don't know data type.");
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error convert object to data type", ex);
-            }
 
-        }
 
-        public static Type DataTypeToType(EDataType type)
+
+
+
+        private static Type DataTypeToType(EDataType type)
         {
             switch (type)
             {
@@ -196,17 +298,6 @@ namespace LibPlcDBgate
                     throw new Exception("Don't know data type");
             }
         }
-
-
-        public override void LoadSetting(ISetting setting)
-        {
-
-
-
-            base.LoadSetting(setting);
-        }
-
-
 
     }
 }

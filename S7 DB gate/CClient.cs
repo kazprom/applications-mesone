@@ -11,26 +11,108 @@ namespace S7_DB_gate
     public class CClient : LibPlcDBgate.CClient
     {
 
-        #region CONSTANTS
 
-#if DEBUG
-        private const int period = 5000;
-#else
-        private const int period = 30000;
-#endif
-
-        #endregion
 
         #region VARIABLES
 
-        public S7.Net.Plc PLC { get; set; }
+        public S7.Net.Plc plc { get; set; }
 
         #endregion
 
         #region PROPERTIES
 
-        public Structs.CClient Settings { get; set; }
+        private S7.Net.CpuType cpu_type;
+        public dynamic Cpu_type
+        {
+            get { return cpu_type.ToString(); }
+            set
+            {
+                try
+                {
+                    cpu_type = Enum.Parse(typeof(S7.Net.CpuType), value);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Warn(ex);
+                }
+            }
+        }
 
+        private ushort rack;
+        public dynamic Rack
+        {
+            get { return rack; }
+            set
+            {
+                try
+                {
+                    rack = ushort.Parse(Convert.ToString(value));
+                }
+                catch (Exception ex)
+                {
+                    Logger.Warn(ex);
+                }
+            }
+        }
+
+        private ushort slot;
+        public dynamic Slot
+        {
+            get { return slot; }
+            set
+            {
+                try
+                {
+                    slot = ushort.Parse(Convert.ToString(value));
+                }
+                catch (Exception ex)
+                {
+                    Logger.Warn(ex);
+                }
+            }
+        }
+
+
+        public override dynamic Tags
+        {
+            set
+            {
+
+                var data = from tags in (IEnumerable<dynamic>)value
+                           group tags by tags.Rate into groups
+                           select new
+                           {
+                               Parent = this,
+                               Id = groups.Key,
+
+                               Tags = from group_tags in groups
+                                      select new
+                                      {
+                                          group_tags.Id,
+                                          group_tags.Name,
+
+                                          group_tags.Data_type,
+                                          group_tags.History_enabled,
+                                          group_tags.RT_values_enabled,
+
+                                          S7_Data_Type = group_tags.PLC_data_type,
+                                          DB = group_tags.Data_block_no,
+                                          StartByteAdr = group_tags.Data_block_offset,
+                                          BitAdr = group_tags.Bit_offset,
+                                          S7_Var_Type = group_tags.Request_type
+                                      }
+                           };
+
+
+
+                Dictionary<ulong, Dictionary<string, object>> children_props = data.ToDictionary(o => (ulong)o.Id,
+                                                                                                 o => o.
+                                                                                                      GetType().
+                                                                                                      GetProperties().ToDictionary(z => z.Name,
+                                                                                                                                   z => z.GetValue(o)));
+                CUD<CGroup>(children_props);
+            }
+        }
 
         #endregion
 
@@ -44,9 +126,9 @@ namespace S7_DB_gate
             {
                 if (disposing)
                 {
-                    if (PLC != null && PLC.IsConnected)
+                    if (plc != null && plc.IsConnected)
                     {
-                        PLC.Close();
+                        plc.Close();
                         Logger.Info($"Closed connection");
                     }
                 }
@@ -60,7 +142,7 @@ namespace S7_DB_gate
 
         #region PUBLICS
 
-
+        /*
         public override void LoadSetting(ISetting setting)
         {
 
@@ -79,7 +161,7 @@ namespace S7_DB_gate
             base.LoadSetting(setting);
 
         }
-
+        */
 
 
         /*
@@ -150,11 +232,10 @@ namespace S7_DB_gate
 
             try
             {
-                if (PLC == null)
+                if (plc == null)
                 {
-                    IPAddress ip_result;
-                    if (IPAddress.TryParse(Settings.Ip, out ip_result) && Settings.Port != 0)
-                        PLC = new S7.Net.Plc(Settings.Cpu_type, IP, (int)Port, (short)Rack, (short)Slot);
+                    if (ip != null && port != null)
+                        plc = new S7.Net.Plc(cpu_type, ip.ToString(), (int)port, (short)rack, (short)slot);
                     else
                     {
                         Logger.Warn($"Incorrect connection settings");
@@ -162,28 +243,28 @@ namespace S7_DB_gate
 
                 }
 
-                if (PLC != null)
+                if (plc != null)
                 {
-                    lock (PLC)
+                    lock (plc)
                     {
 
-                        if (PLC.CPU != CPU_type || PLC.IP != IP || PLC.Port != Port || PLC.Rack != Rack || PLC.Slot != Slot)
+                        if (plc.CPU != cpu_type || plc.IP != ip.ToString() || plc.Port != port || plc.Rack != rack || plc.Slot != slot)
                         {
-                            if (PLC.IsConnected)
+                            if (plc.IsConnected)
                             {
-                                PLC.Close();
+                                plc.Close();
                                 Logger.Info($"Closed connection");
                             }
 
-                            PLC = new S7.Net.Plc(CPU_type, IP, (int)Port, (short)Rack, (short)Slot);
+                            plc = new S7.Net.Plc(cpu_type, ip.ToString(), (int)port, (short)rack, (short)slot);
 
                         }
 
-                        if (!PLC.IsConnected)
+                        if (!plc.IsConnected)
                         {
                             try
                             {
-                                PLC.Open();
+                                plc.Open();
                                 Logger.Info($"Openned connection");
                             }
                             catch (Exception ex)

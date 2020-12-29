@@ -10,34 +10,99 @@ namespace S7_DB_gate
 
         #region PROPERTIES
 
-        public S7.Net.DataType DataType { get; set; }
+        private S7.Net.DataType? data_type;
+        public dynamic S7_Data_Type
+        {
+            get { return data_type; }
+            set
+            {
+                try
+                {
+                    if (!Equals(data_type, value))
+                    {
+                        data_type = Enum.Parse(typeof(S7.Net.DataType), Convert.ToString(value));
+                        Logger.Info(value);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.Warn(ex);
+                }
+            }
+        }
 
-        public int DB { get; set; }
+        public int? db { get; set; }
+        public dynamic DB
+        {
+            get { return db; }
+            set
+            {
+                try
+                {
+                    db = int.Parse(Convert.ToString(value));
+                }
+                catch (Exception ex)
+                {
+                    Logger.Warn(ex);
+                }
+            }
+        }
 
-        public int StartByteAdr { get; set; }
 
-        public S7.Net.VarType VarType { get; set; }
+        private int? start_byte_adr;
+        public dynamic StartByteAdr
+        {
+            get { return start_byte_adr; }
+            set
+            {
+                try
+                {
+                    start_byte_adr = int.Parse(Convert.ToString(value));
+                }
+                catch (Exception ex)
+                {
+                    Logger.Warn(ex);
+                }
+            }
+        }
 
-        public byte BitAdr { get; set; }
+        private S7.Net.VarType? s7_var_type;
+        public dynamic S7_Var_Type
+        {
+            get { return s7_var_type; }
+            set
+            {
+                try
+                {
+                    s7_var_type = Enum.Parse(typeof(S7.Net.VarType), Convert.ToString(value));
+                }
+                catch (Exception ex)
+                {
+                    Logger.Warn(ex);
+                }
+            }
+        }
 
-        public EDataType TagType { get; set; }
+        public byte? bit_adr;
+        public dynamic BitAdr
+        {
+            get { return bit_adr; }
+            set
+            {
+                try
+                {
+                    bit_adr = byte.Parse(Convert.ToString(value));
+                }
+                catch (Exception ex)
+                {
+                    Logger.Warn(ex);
+                }
+            }
+        }
+
+
 
         #endregion
-
-        public override void LoadSetting(ISetting setting)
-        {
-
-            try
-            {
-
-            }
-            catch (Exception)
-            {
-
-            }
-
-            base.LoadSetting(setting);
-        }
 
 
         #region PUBLICS

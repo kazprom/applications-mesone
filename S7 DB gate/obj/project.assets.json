@@ -5089,23 +5089,23 @@
     },
     "Lib/1.0.0": {
       "type": "project",
-      "path": "../Lib/Lib.csproj",
-      "msbuildProject": "../Lib/Lib.csproj"
+      "path": "../Lib/0_Lib.csproj",
+      "msbuildProject": "../Lib/0_Lib.csproj"
     },
     "LibDBgate/1.0.0": {
       "type": "project",
-      "path": "../DB gate Lib/LibDBgate.csproj",
-      "msbuildProject": "../DB gate Lib/LibDBgate.csproj"
+      "path": "../DB gate Lib/2_LibDBgate.csproj",
+      "msbuildProject": "../DB gate Lib/2_LibDBgate.csproj"
     },
     "LibMESone/1.0.0": {
       "type": "project",
-      "path": "../LibMESone/LibMESone.csproj",
-      "msbuildProject": "../LibMESone/LibMESone.csproj"
+      "path": "../LibMESone/1_LibMESone.csproj",
+      "msbuildProject": "../LibMESone/1_LibMESone.csproj"
     },
     "LibPlcDBgate/1.0.0": {
       "type": "project",
-      "path": "../LibTagsDBGate/LibPlcDBgate.csproj",
-      "msbuildProject": "../LibTagsDBGate/LibPlcDBgate.csproj"
+      "path": "../LibTagsDBGate/3_LibPlcDBgate.csproj",
+      "msbuildProject": "../LibTagsDBGate/3_LibPlcDBgate.csproj"
     },
     "S7netplus/1.0.0": {
       "type": "project",
@@ -5158,8 +5158,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibTagsDBGate\\LibPlcDBgate.csproj": {
-              "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibTagsDBGate\\LibPlcDBgate.csproj"
+            "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibTagsDBGate\\3_LibPlcDBgate.csproj": {
+              "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibTagsDBGate\\3_LibPlcDBgate.csproj"
             },
             "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\S7.Net\\S7.Net.csproj": {
               "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\S7.Net\\S7.Net.csproj"

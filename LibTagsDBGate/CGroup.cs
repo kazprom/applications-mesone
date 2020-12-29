@@ -9,23 +9,20 @@ namespace LibPlcDBgate
     public class CGroup : CSrvCyc
     {
 
-        public Structs.CGroup Settings { get; set; }
-
-        public override void LoadSetting(ISetting setting)
+        public override ulong Id
         {
-            Settings = setting as Structs.CGroup;
+            set
+            {
+                base.Id = value;
+                Name = $"g{Id}";
 
-            CycleRate = Settings.Rate;
-
+                CycleRate = (uint)value;
+            }
         }
 
-        public override void Timer_Handler(object sender, ElapsedEventArgs e)
-        {
 
+        public virtual dynamic Tags { get; set; }
 
-
-            base.Timer_Handler(sender, e);  
-        }
 
     }
 }

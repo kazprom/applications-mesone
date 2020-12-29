@@ -11,6 +11,122 @@ namespace S7_DB_gate
     public class CGroup : LibPlcDBgate.CGroup
     {
 
+        public override dynamic Tags
+        {
+            set
+            {
+                try
+                {
+
+                    var data = from tags in (IEnumerable<dynamic>)value
+                               select new
+                               {
+                                   Parent = this,
+
+                                   tags.Id,
+                                   tags.Name,
+
+                                   tags.Data_type,
+                                   tags.History_enabled,
+                                   tags.RT_values_enabled,
+
+                                   tags.PLC_data_type,
+                                   tags.Data_block_no,
+                                   tags.Data_block_offset,
+                                   tags.Bit_offset,
+                                   tags.Request_type
+                               };
+
+
+
+                    Dictionary<ulong, Dictionary<string, object>> children_props = data.ToDictionary(o => (ulong)o.Id,
+                                                                                                     o => o.
+                                                                                                          GetType().
+                                                                                                          GetProperties().ToDictionary(z => z.Name,
+                                                                                                                                       z => z.GetValue(o)));
+
+                    CUD<CTag>(children_props);
+
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex);
+                }
+
+            }
+        }
+
+
+        public override void Timer_Handler(object sender, ElapsedEventArgs e)
+        {
+
+            try
+            {
+
+                lock (Children)
+                {
+
+                    foreach (CTag tag in Children.Values)
+                    {
+                        if (tag.RT_enabled || tag.History_enabled)
+                        {
+
+                            tag.Timestamp = DateTime.Now;
+                            CClient parent = (CClient)Parent;
+
+                            if (parent.plc != null && parent.plc.IsConnected)
+                            {
+
+                                object result = null;
+
+                                lock (parent.plc)
+                                {
+                                    try
+                                    {
+                                        result = parent.plc.Read(tag.S7_Data_Type,
+                                                                 tag.DB,
+                                                                 tag.StartByteAdr,
+                                                                 tag.S7_Var_Type,
+                                                                 1,
+                                                                 tag.BitAdr);
+
+
+                                        if (result == null)
+                                        {
+                                            tag.Quality = LibPlcDBgate.CTag.EQuality.Bad;
+                                        }
+                                        else
+                                        {
+                                            tag.Quality = LibPlcDBgate.CTag.EQuality.Good;
+                                        }
+
+                                        tag.Value = result;
+
+                                    }
+                                    catch (Exception)
+                                    {
+                                        tag.Quality = LibPlcDBgate.CTag.EQuality.Uncertain;
+                                        tag.Value = null;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                tag.Quality = LibPlcDBgate.CTag.EQuality.Bad_Comm_Failure;
+                                tag.Value = null;
+                            }
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+            }
+
+            base.Timer_Handler(sender, e);
+        }
 
 
         /*
@@ -65,86 +181,7 @@ namespace S7_DB_gate
 
         public override void Handler(object state)
         {
-            try
-            {
-                lock (Tags)
-                {
-                    foreach (CTag tag in Tags.Values)
-                    {
-                        if (tag.RT_enabled || tag.History_enabled)
-                        {
-
-                            tag.Timestamp = DateTime.Now;
-                            CClient parent = (CClient)Parent;
-
-                            if (parent.Plc != null && parent.Plc.IsConnected)
-                            {
-
-                                object result = null;
-
-                                lock (parent.Plc)
-                                {
-                                    try
-                                    {
-                                        result = parent.Plc.Read(tag.DataType,
-                                                                 tag.DB,
-                                                                 tag.StartByteAdr,
-                                                                 tag.VarType,
-                                                                 1,
-                                                                 tag.BitAdr);
-
-                                        if (result == null)
-                                        {
-                                            tag.Value = null;
-                                            tag.Quality = LibDBgate.Tag.EQuality.Bad;
-
-                                            logger.Warn($"{Title}. Tag is null");
-                                        }
-                                        else
-                                        {
-                                            tag.Value = LibDBgate.Tag.ObjToDataType(result, tag.TagType);
-                                            tag.Quality = LibDBgate.Tag.EQuality.Good;
-
-                                            if (tag.History_enabled)
-                                            {
-                                                parent.Parent.retro_buf.Enqueue(new LibDBgate.Structs.RetroValue()
-                                                {
-                                                    Tags_id = tag.ID,
-                                                    Timestamp = (DateTime)tag.Timestamp,
-                                                    Value = LibDBgate.Tag.ObjToBin(tag.Value),
-                                                    Quality = (byte)tag.Quality
-                                                });
-                                            }
-                                        }
-
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        tag.Value = null;
-                                        tag.Quality = (byte)LibDBgate.Tag.EQuality.Bad;
-
-                                        logger.Error(ex, $"{Title}. Read tag");
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                tag.Value = null;
-                                tag.Quality = (byte)LibDBgate.Tag.EQuality.Bad;
-                            }
-
-                        }
-                        else
-                        {
-                            tag.Timestamp = null;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex, $"{Title}. Handler");
-            }
+            
 
         }
 
@@ -152,7 +189,7 @@ namespace S7_DB_gate
         #endregion
         */
 
-
+        /*
         public override void LoadSetting(ISetting setting)
         {
             base.LoadSetting(setting);
@@ -168,100 +205,18 @@ namespace S7_DB_gate
 
         }
 
+        */
+
+        /*
         public override void Timer_Handler(object sender, ElapsedEventArgs e)
         {
 
-            try
-            {
-
-                lock (Children)
-                {
-
-                    foreach (CTag tag in Children.Values)
-                    {
-                        if (tag.RT_enabled || tag.History_enabled)
-                        {
-
-                            tag.Timestamp = DateTime.Now;
-                            CClient parent = (CClient)Parent;
-
-                            if (parent.Plc != null && parent.Plc.IsConnected)
-                            {
-
-                                object result = null;
-
-                                lock (parent.Plc)
-                                {
-                                    try
-                                    {
-                                        result = parent.Plc.Read(tag.DataType,
-                                                                 tag.DB,
-                                                                 tag.StartByteAdr,
-                                                                 tag.VarType,
-                                                                 1,
-                                                                 tag.BitAdr);
-
-                                        if (result == null)
-                                        {
-                                            tag.Value = null;
-                                            tag.Quality = LibDBgate.Tag.EQuality.Bad;
-
-                                            logger.Warn($"{Title}. Tag is null");
-                                        }
-                                        else
-                                        {
-                                            tag.Value = LibDBgate.Tag.ObjToDataType(result, tag.TagType);
-                                            tag.Quality = LibDBgate.Tag.EQuality.Good;
-
-                                            if (tag.History_enabled)
-                                            {
-                                                parent.Parent.retro_buf.Enqueue(new LibDBgate.Structs.RetroValue()
-                                                {
-                                                    Tags_id = tag.ID,
-                                                    Timestamp = (DateTime)tag.Timestamp,
-                                                    Value = LibDBgate.Tag.ObjToBin(tag.Value),
-                                                    Quality = (byte)tag.Quality
-                                                });
-                                            }
-                                        }
-
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        tag.Value = null;
-                                        tag.Quality = (byte)LibDBgate.Tag.EQuality.Bad;
-
-                                        logger.Error(ex, $"{Title}. Read tag");
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                tag.Value = null;
-                                tag.Quality = (byte)LibDBgate.Tag.EQuality.Bad;
-                            }
-
-                        }
-                        else
-                        {
-                            tag.Timestamp = null;
-                        }
-                    }
-
-
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex);
-            }
+   
 
 
             base.Timer_Handler(sender, e);
         }
-
+        */
 
     }
 }

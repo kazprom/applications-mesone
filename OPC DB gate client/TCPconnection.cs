@@ -26,7 +26,7 @@ namespace OPC_DB_gate_client
         private Encryption encryption = new Encryption(false);
         private LibOPCDBgate.Protocol protocol = new LibOPCDBgate.Protocol();
         private byte[] buf = new byte[LibOPCDBgate.Protocol.SIZE_BUFFER];
-        private Lib.Buffer<LibDBgate.Tag> buffer;
+        private Lib.CBuffer<LibDBgate.Tag> buffer;
         private LibOPCDBgate.ClientInfo info;
 
         #endregion
@@ -60,7 +60,7 @@ namespace OPC_DB_gate_client
 
         public TCPconnection(Lib.Parameter<IPAddress> ip_address,
                              Lib.Parameter<int> port,
-                             Lib.Buffer<LibDBgate.Tag> buffer,
+                             Lib.CBuffer<LibDBgate.Tag> buffer,
                              LibOPCDBgate.ClientInfo info)
         {
 

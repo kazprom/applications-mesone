@@ -39,7 +39,7 @@ namespace OPC_DB_gate_client
             }
 
             LibOPCDBgate.ClientInfo info = new LibOPCDBgate.ClientInfo() { appinfo = Lib.Common.AppInfo() };
-            Lib.Buffer<LibDBgate.Tag> buffer = new Lib.Buffer<LibDBgate.Tag>(10000);
+            Lib.CBuffer<LibDBgate.Tag> buffer = new Lib.CBuffer<LibDBgate.Tag>(10000);
 
             TCPconnection connection = new TCPconnection(config_file.SERVER_IP,
                                                          config_file.SERVER_PORT,

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MmoPqDIcFoPhqOk0PPmnx+Zo32lMZl5D702zWSlHbiIS1ZGE+MeOc1sFPO8WSTMG26jAvUk4A5OVYPuqkAT2sA==",
+  "dgSpecHash": "t9YsXXllrge9Ks4PcUi6IA3Ycm0o2IqmdlzCHQK75iguxoW1DB3V/rveTh8BctTI5kJ9+jMDvtCho2j1sRHrOw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\Lib.csproj",
+  "projectFilePath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\0_Lib.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\i.korol\\.nuget\\packages\\bouncycastle.netcore\\1.8.3\\bouncycastle.netcore.1.8.3.nupkg.sha512",
     "C:\\Users\\i.korol\\.nuget\\packages\\dapper\\1.50.5\\dapper.1.50.5.nupkg.sha512",

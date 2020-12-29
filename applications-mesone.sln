@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OPC DB gate server", "OPC DB gate server\OPC DB gate server.csproj", "{B23CCAB7-46C8-4841-895D-B1335F558250}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lib", "Lib\Lib.csproj", "{4CCFC338-0118-4300-857D-24FD88E9BB3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "0_Lib", "Lib\0_Lib.csproj", "{4CCFC338-0118-4300-857D-24FD88E9BB3B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OPC DB gate client", "OPC DB gate client\OPC DB gate client.csproj", "{A0B1AB2E-A89A-4FBD-BD6C-9C15CF0CB17E}"
 EndProject
@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibOPCDBgate", "OPC DB gate
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "S7 DB gate", "S7 DB gate\S7 DB gate.csproj", "{4913BEB7-4481-417B-8E5E-D1B05DA4FB3A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibDBgate", "DB gate Lib\LibDBgate.csproj", "{334DB94A-CE87-45DC-907C-6D16919261A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "2_LibDBgate", "DB gate Lib\2_LibDBgate.csproj", "{334DB94A-CE87-45DC-907C-6D16919261A5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "S7.Net", "S7.Net\S7.Net.csproj", "{8D45B8DE-CA06-4037-9677-AFF1EB45F5A0}"
 EndProject
@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XML DB gate", "XML DB gate\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSV DB gate", "CSV DB gate\CSV DB gate.csproj", "{73671BAC-8507-466A-A46E-38EADB04B4CF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibMESone", "LibMESone\LibMESone.csproj", "{411C99BB-A658-4206-9595-418E37EB5F72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1_LibMESone", "LibMESone\1_LibMESone.csproj", "{411C99BB-A658-4206-9595-418E37EB5F72}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelegramBot", "TelegramBot\TelegramBot.csproj", "{FDC4CDF5-A09C-4232-B2F0-006B55F7B37D}"
 EndProject
@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OPC UA DB gate", "OPC UA DB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MELSEC DB gate", "MELSEC DB gate\MELSEC DB gate.csproj", "{13C0ECC6-0879-4EFF-B6B4-0AEC2B891B8D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibPlcDBgate", "LibTagsDBGate\LibPlcDBgate.csproj", "{D39ADC1E-71E2-4549-ACE4-A9B5F9257A46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "3_LibPlcDBgate", "LibTagsDBGate\3_LibPlcDBgate.csproj", "{D39ADC1E-71E2-4549-ACE4-A9B5F9257A46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

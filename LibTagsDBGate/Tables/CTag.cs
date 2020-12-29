@@ -10,10 +10,10 @@ namespace LibPlcDBgate.Tables
 
         static public string TableName = "tags";
 
-        [Field(TYPE = Field.EDoctrine.BigInt, NN = true)]
+        [Field(TYPE = Field.EDoctrine.UnsignedBigInteger, NN = true)]
         public ulong Clients_id { get; set; }
 
-        [Field(TYPE = Field.EDoctrine.SmallInt, NN = true)]
+        [Field(TYPE = Field.EDoctrine.UnsignedSmallInteger, NN = true)]
         public ushort Rate { get; set; }
 
         [Field(TYPE = Field.EDoctrine.String, SIZE = 15, NN = true)]

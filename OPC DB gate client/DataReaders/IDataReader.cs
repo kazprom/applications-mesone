@@ -24,7 +24,7 @@ namespace OPC_DB_gate_client
         #region VARIABLES
 
         protected Dictionary<int, Group> groups = new Dictionary<int, Group>();
-        protected Lib.Buffer<LibDBgate.Tag> buffer;
+        protected Lib.CBuffer<LibDBgate.Tag> buffer;
 
         #endregion
 
@@ -46,7 +46,7 @@ namespace OPC_DB_gate_client
 
         #region CONSTRUCTOR
 
-        public IDataReader(string name, Lib.Buffer<LibDBgate.Tag> buffer)
+        public IDataReader(string name, Lib.CBuffer<LibDBgate.Tag> buffer)
         {
             this.name = name;
             this.buffer = buffer;

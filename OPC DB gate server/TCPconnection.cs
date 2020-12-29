@@ -26,7 +26,7 @@ namespace OPC_DB_gate_server
         private LibOPCDBgate.Protocol protocol = new LibOPCDBgate.Protocol();
         byte[] buf = new byte[LibOPCDBgate.Protocol.SIZE_BUFFER];
         private Dictionary<int, LibOPCDBgate.TagSettings> tags = new Dictionary<int, LibOPCDBgate.TagSettings>();
-        private Lib.Buffer<LibDBgate.Tag> buffer;
+        private Lib.CBuffer<LibDBgate.Tag> buffer;
         private Diagnostics diagnostics;
         #endregion
 
@@ -56,7 +56,7 @@ namespace OPC_DB_gate_server
 
         #region CONSTRUCTOR
 
-        public TCPconnection(long id, Lib.Buffer<LibDBgate.Tag> buffer, Diagnostics diagnostics)
+        public TCPconnection(long id, Lib.CBuffer<LibDBgate.Tag> buffer, Diagnostics diagnostics)
         {
             this.id = id;
             this.buffer = buffer;

@@ -5272,9 +5272,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\Lib.csproj",
+      "projectUniqueName": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\0_Lib.csproj",
       "projectName": "Lib",
-      "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\Lib.csproj",
+      "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\0_Lib.csproj",
       "packagesPath": "C:\\Users\\i.korol\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\obj\\",
       "projectStyle": "PackageReference",

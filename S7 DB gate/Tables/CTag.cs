@@ -12,13 +12,13 @@ namespace S7_DB_gate.Tables
         [Field(TYPE = Field.EDoctrine.String, SIZE = 10, NN = true)]
         public string PLC_data_type { get; set; }
 
-        [Field(TYPE = Field.EDoctrine.Integer, NN = true)]
+        [Field(TYPE = Field.EDoctrine.UnsignedInteger, NN = true)]
         public int Data_block_no { get; set; }
 
-        [Field(TYPE = Field.EDoctrine.Integer, NN = true)]
+        [Field(TYPE = Field.EDoctrine.UnsignedInteger, NN = true)]
         public int Data_block_offset { get; set; }
 
-        [Field(TYPE = Field.EDoctrine.SmallInt, NN = true)]
+        [Field(TYPE = Field.EDoctrine.UnsignedTinyInteger, NN = true)]
         public byte Bit_offset { get; set; }
 
         [Field(TYPE = Field.EDoctrine.String, SIZE = 15, NN = true)]

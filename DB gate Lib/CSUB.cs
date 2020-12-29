@@ -1,7 +1,7 @@
 ﻿
 namespace LibDBgate
 {
-    public abstract class CSrvSub : LibMESone.CSrvCyc
+    public abstract class CSUB : LibMESone.CSrvCyc
     {
 
         #region PROPERTIES

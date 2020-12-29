@@ -7,7 +7,7 @@ using System.Timers;
 
 namespace CSV_DB_gate
 {
-    public class CSrv : LibDBgate.CSrvCustom
+    public class CSrv : LibMESone.CCUSTOM
     {
 
         #region CONSTANTS
@@ -33,40 +33,40 @@ namespace CSV_DB_gate
 
             try
             {
-                if (Database != null && Settings != null)
+                if (DB != null && TSettings != null)
                 {
 
-                    string base_path = Settings.Where(x => x.Key.Equals(KEY_BASE_PATH, StringComparison.OrdinalIgnoreCase)).Select(x => x.Value).FirstOrDefault();
+                    string base_path = TSettings.Where(x => x.Key.Equals(KEY_BASE_PATH, StringComparison.OrdinalIgnoreCase)).Select(x => x.Value).FirstOrDefault();
                     if (base_path == null)
                     {
                         Logger.Warn($"Can't find parameter {KEY_BASE_PATH}");
                         return;
                     }
 
-                    string his_path = Settings.Where(x => x.Key.Equals(KEY_HIS_PATH, StringComparison.OrdinalIgnoreCase)).Select(x => x.Value).FirstOrDefault();
+                    string his_path = TSettings.Where(x => x.Key.Equals(KEY_HIS_PATH, StringComparison.OrdinalIgnoreCase)).Select(x => x.Value).FirstOrDefault();
                     if (his_path == null)
                     {
                         Logger.Warn($"Can't find parameter {KEY_HIS_PATH}");
                         return;
                     }
 
-                    switch (Database.CheckTable<Tables.CConverter>(Tables.CConverter.TableName))
+                    switch (DB.CheckTable<Tables.CConverter>(Tables.CConverter.TableName))
                     {
                         case null:
                         case false:
                             return;
                     }
 
-                    TConverters = Database.WhereRead<Tables.CConverter>(Tables.CConverter.TableName, new { Enabled = true });
+                    TConverters = DB.WhereRead<Tables.CConverter>(Tables.CConverter.TableName, new { Enabled = true });
 
-                    switch (Database.CheckTable<Tables.CField>(Tables.CField.TableName))
+                    switch (DB.CheckTable<Tables.CField>(Tables.CField.TableName))
                     {
                         case null:
                         case false:
                             return;
                     }
 
-                    TFields = Database.WhereRead<Tables.CField>(Tables.CField.TableName, new { Enabled = true });
+                    TFields = DB.WhereRead<Tables.CField>(Tables.CField.TableName, new { Enabled = true });
 
                     IEnumerable<Structs.CSetConverter> settings = default;
 

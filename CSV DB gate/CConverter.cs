@@ -11,7 +11,7 @@ using LibMESone;
 
 namespace CSV_DB_gate
 {
-    public class CConverter : LibDBgate.CSrvSub
+    public class CConverter : LibDBgate.CSUB
     {
 
         #region CONSTANTS

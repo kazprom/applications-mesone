@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace Lib
 {
-    public class CDatabase
+    public class CDatabase : CChild
     {
 
         #region STRUCTURES
@@ -49,6 +49,12 @@ namespace Lib
             Password
         }
 
+        public enum EState
+        {
+            Disconnected,
+            Connected
+        }
+
         #endregion
 
         #region CONSTANTS
@@ -72,9 +78,10 @@ namespace Lib
         #endregion
 
         #region PROPERTIES
-        public NLog.Logger Logger { get; set; }
 
-        public Dictionary<string, object> Props { get; set; } = new Dictionary<string, string>();
+        public EState State { get { return db != null ? EState.Connected : EState.Disconnected; } }
+
+        public Dictionary<string, string> Props { get; set; } = new Dictionary<string, string>();
 
         #endregion
 
@@ -700,22 +707,22 @@ namespace Lib
             return result;
         }
 
-        public void LoadSettings(Dictionary<string, object> props)
+        public void LoadSettings(Dictionary<string, string> props)
         {
             try
             {
                 bool reconnect = false;
 
-                foreach (string key in Enum.GetValues(typeof(EPropKeys)))
+                foreach (var key in Enum.GetValues(typeof(EPropKeys)))
                 {
-                    if (props.ContainsKey(key))
+                    if (props.ContainsKey(key.ToString()))
                     {
-                        if (!Props.ContainsKey(key))
-                            Props.Add(key, null);
+                        if (!Props.ContainsKey(key.ToString()))
+                            Props.Add(key.ToString(), null);
 
-                        if (!Props[key].Equals(props[key]))
+                        if (Props[key.ToString()] != (props[key.ToString()]))
                         {
-                            Props[key] = props[key];
+                            Props[key.ToString()] = props[key.ToString()];
                             reconnect = true;
                         }
                     }

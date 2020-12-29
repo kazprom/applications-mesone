@@ -4,12 +4,12 @@
     "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\OPC DB gate server\\OPC DB gate server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\DB gate Lib\\LibDBgate.csproj": {
+    "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\DB gate Lib\\2_LibDBgate.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\DB gate Lib\\LibDBgate.csproj",
+        "projectUniqueName": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\DB gate Lib\\2_LibDBgate.csproj",
         "projectName": "LibDBgate",
-        "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\DB gate Lib\\LibDBgate.csproj",
+        "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\DB gate Lib\\2_LibDBgate.csproj",
         "packagesPath": "C:\\Users\\i.korol\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\DB gate Lib\\obj\\",
         "projectStyle": "PackageReference",
@@ -30,8 +30,8 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibMESone\\LibMESone.csproj": {
-                "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibMESone\\LibMESone.csproj"
+              "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibMESone\\1_LibMESone.csproj": {
+                "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibMESone\\1_LibMESone.csproj"
               }
             }
           }
@@ -90,12 +90,12 @@
         }
       }
     },
-    "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibMESone\\LibMESone.csproj": {
+    "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibMESone\\1_LibMESone.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibMESone\\LibMESone.csproj",
+        "projectUniqueName": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibMESone\\1_LibMESone.csproj",
         "projectName": "LibMESone",
-        "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibMESone\\LibMESone.csproj",
+        "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibMESone\\1_LibMESone.csproj",
         "packagesPath": "C:\\Users\\i.korol\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\LibMESone\\obj\\",
         "projectStyle": "PackageReference",
@@ -116,8 +116,8 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\Lib.csproj": {
-                "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\Lib.csproj"
+              "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\0_Lib.csproj": {
+                "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\0_Lib.csproj"
               }
             }
           }
@@ -180,12 +180,12 @@
         }
       }
     },
-    "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\Lib.csproj": {
+    "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\0_Lib.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\Lib.csproj",
+        "projectUniqueName": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\0_Lib.csproj",
         "projectName": "Lib",
-        "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\Lib.csproj",
+        "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\0_Lib.csproj",
         "packagesPath": "C:\\Users\\i.korol\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\obj\\",
         "projectStyle": "PackageReference",
@@ -324,8 +324,8 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\DB gate Lib\\LibDBgate.csproj": {
-                "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\DB gate Lib\\LibDBgate.csproj"
+              "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\DB gate Lib\\2_LibDBgate.csproj": {
+                "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\DB gate Lib\\2_LibDBgate.csproj"
               }
             }
           }
@@ -386,8 +386,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\Lib.csproj": {
-                "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\Lib.csproj"
+              "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\0_Lib.csproj": {
+                "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\Lib\\0_Lib.csproj"
               },
               "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\OPC DB gate Lib\\LibOPCDBgate.csproj": {
                 "projectPath": "C:\\Users\\i.korol\\Desktop\\DEV\\applications-mesone\\OPC DB gate Lib\\LibOPCDBgate.csproj"

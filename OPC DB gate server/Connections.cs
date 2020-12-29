@@ -14,14 +14,14 @@ namespace OPC_DB_gate_server
 
         private Clients clients;
         private Tags tags;
-        private Lib.Buffer<LibDBgate.Tag> buffer;
+        private Lib.CBuffer<LibDBgate.Tag> buffer;
         private Diagnostics diagnostics;
 
         private Dictionary<int, TCPconnection> connections = new Dictionary<int, TCPconnection>();
 
         #endregion
 
-        public Connections(Clients clients, Tags tags, Lib.Buffer<LibDBgate.Tag> buffer, Diagnostics diagnostics)
+        public Connections(Clients clients, Tags tags, Lib.CBuffer<LibDBgate.Tag> buffer, Diagnostics diagnostics)
         {
             try
             {

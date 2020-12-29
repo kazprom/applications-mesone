@@ -12,19 +12,19 @@ namespace LibPlcDBgate.Tables
 
         static public string TableName = "rt_values";
 
-        [Field(TYPE = Field.EDoctrine.BigInt, NN = true, UQ = true)]
+        [Field(TYPE = Field.EDoctrine.UnsignedBigInteger, NN = true, UQ = true)]
         public ulong Tags_id { get; set; }
 
         [Field(TYPE = Field.EDoctrine.DateTime, SIZE = 3)]
         public DateTime Timestamp { get; set; }
 
-        [Field(TYPE = Field.EDoctrine.Blob)]
+        [Field(TYPE = Field.EDoctrine.Binary)]
         public byte[] Value_raw { get; set; }
 
         [Field(TYPE = Field.EDoctrine.String, SIZE = 255)]
         public string Value_str { get; set; }
 
-        [Field(TYPE = Field.EDoctrine.SmallInt)]
+        [Field(TYPE = Field.EDoctrine.UnsignedSmallInteger)]
         public byte Quality { get; set; }
        
     }

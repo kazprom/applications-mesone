@@ -1,76 +1,57 @@
 ﻿using LibMESone;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using System.Timers;
 
 namespace LibPlcDBgate
 {
-    public class CClient : LibDBgate.CSrvSub
+    public class CClient : LibDBgate.CSUB
     {
-        /*
-        #region CONSTANTS
 
-#if DEBUG
-        private const int period = 5000;
-#else
-        private const int period = 60000;
-#endif
+        protected IPAddress ip;
+        public dynamic Ip
+        {
+            get { return ip != null ? ip.ToString() : null; }
+            set
+            {
+                try
+                {
+                    ip = IPAddress.Parse(Convert.ToString(value));
+                }
+                catch (Exception ex)
+                {
+                    Logger.Warn(ex);
+                }
+            }
+        }
 
-        #endregion
+        protected ushort? port;
+        public dynamic Port
+        {
+            get { return port; }
+            set
+            {
+                try
+                {
+                    port = ushort.Parse(Convert.ToString(value));
+                }
+                catch (Exception ex)
+                {
+                    Logger.Warn(ex);
+                }
+            }
+        }
 
-        #region VARIABLE
+        public virtual dynamic Tags { get; set; }
 
-        public Dictionary<ulong, CGroup> Groups { get; set; }
-
-        #endregion
-
-        #region CONSTRUCTOR
 
         public CClient()
         {
-            Groups = new Dictionary<ulong, CGroup>();
+            CycleRate = 10000;
         }
 
-        #endregion
-
-        #region DESTRUCTOR
-
-        public override void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    foreach (CGroup group in Groups.Values)
-                    {
-                        group.Dispose();
-                    }
-                    Groups.Clear();
-                }
-            }
-
-            base.Dispose(disposing);
-        }
-
-        #endregion
-
-        #region PUBLIC
-
-        public virtual void DB_Handler(object state) { }
-
-
-        #endregion
-        */
-
-
-        public override void Timer_Handler(object sender, ElapsedEventArgs e)
-        {
-
-
-
-            base.Timer_Handler(sender, e);
-        }
 
     }
 }

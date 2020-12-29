@@ -23,7 +23,7 @@ namespace OPC_DB_gate_client
         #endregion
 
 
-        public OPCclient(string name, Lib.Buffer<LibDBgate.Tag> buffer) : base(name, buffer)
+        public OPCclient(string name, Lib.CBuffer<LibDBgate.Tag> buffer) : base(name, buffer)
         {
             try
             {

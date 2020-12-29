@@ -8,10 +8,10 @@ namespace S7_DB_gate.Tables
         [Field(TYPE = Field.EDoctrine.String, SIZE = 10, NN = true)]
         public string Cpu_type { get; set; }
 
-        [Field(TYPE = Field.EDoctrine.SmallInt, NN = true)]
+        [Field(TYPE = Field.EDoctrine.UnsignedTinyInteger, NN = true)]
         public ushort Rack { get; set; }
 
-        [Field(TYPE = Field.EDoctrine.SmallInt, NN = true)]
+        [Field(TYPE = Field.EDoctrine.UnsignedTinyInteger, NN = true)]
         public ushort Slot { get; set; }
 
     }

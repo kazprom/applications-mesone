@@ -10,18 +10,6 @@ namespace LibMESone
     public class CCORE<SrvCustom> : CSrvDB where SrvCustom : CCUSTOM, new()
     {
 
-        #region CONSTANTS
-
-#if DEBUG
-        private const int period = 5000;
-#else
-        private const int period = 60000;
-#endif
-
-        #endregion
-
-
-
         #region PROPERTIES
 
         public IEnumerable<CServiceType> TServiceTypes { get; set; }
@@ -42,12 +30,14 @@ namespace LibMESone
 
         public CCORE()
         {
-            Name = "CORE";
+            //Id = 0;
+            //Name = "CORE";
+
+            Logger = NLog.LogManager.GetLogger("CORE");
 
             try
             {
                 TServiceDiagnostic = new CServiceDiagnostic() { Version = Lib.Common.AppVersion() };
-                CycleRate = period;
 
                 Target_TextLog = (NLog.Targets.FileTarget)NLog.LogManager.Configuration.FindTargetByName("file");
 
@@ -69,63 +59,61 @@ namespace LibMESone
 
             try
             {
-                if (Database != null)
+                if (DB != null && DB.State == Lib.CDatabase.EState.Connected)
                 {
 
                     //----------read---------------
 
-                    switch (Database.CompareTableSchema<CServiceType>(CServiceType.TableName))
+                    switch (DB.CompareTableSchema<CServiceType>(CServiceType.TableName))
                     {
-                        case null:
-                        case false:
-                            return;
+                        case true:
+                            TServiceTypes = DB.WhereRead<CServiceType>(CServiceType.TableName, new { Guid = Lib.Common.AppGUID() });
+                            break;
 
                     }
 
-                    TServiceTypes = Database.WhereRead<CServiceType>(CServiceType.TableName, new { Guid = Lib.Common.AppGUID() });
-
-
-                    if (TServiceTypes == null || TServiceTypes.Count() == 0)
+                    if (TServiceTypes != null && TServiceTypes.Count() == 0)
                     {
                         Logger.Warn("Can't find id of service");
-                        return;
+                    }
+                    else if (TServiceTypes != null)
+                    {
+                        ulong id = TServiceTypes.First().Id;
+
+                        switch (DB.CompareTableSchema<CService>(CService.TableName))
+                        {
+                            case true:
+                                TServiceDiagnostic.Service_types_id = id;
+
+                                TServices = DB.WhereRead<CService>(CService.TableName, new
+                                {
+                                    Service_types_id = id,
+                                    Enabled = true
+                                });
+
+                                break;
+
+                        }
+
                     }
 
-                    switch (Database.CompareTableSchema<CService>(CService.TableName))
+
+                    switch (DB.CompareTableSchema<CDatabase>(CDatabase.TableName))
                     {
-                        case null:
-                        case false:
-                            return;
-
-                    }
-                    ulong id = TServiceTypes.First().Id;
-                    TServiceDiagnostic.Service_types_id = id;
-
-                    TServices = Database.WhereRead<CService>(CService.TableName, new
-                    {
-                        Service_types_id = id,
-                        Enabled = true
-                    });
-
-
-                    switch (Database.CompareTableSchema<CDatabase>(CDatabase.TableName))
-                    {
-                        case null:
-                        case false:
-                            return;
+                        case true:
+                            TDatabases = DB.WhereRead<CDatabase>(CDatabase.TableName, new { Enabled = true });
+                            break;
                     }
 
-                    TDatabases = Database.WhereRead<CDatabase>(CDatabase.TableName, new { Enabled = true });
 
 
-                    switch (Database.CompareTableSchema<CHost>(CHost.TableName))
+                    switch (DB.CompareTableSchema<CHost>(CHost.TableName))
                     {
-                        case null:
-                        case false:
-                            return;
+                        case true:
+                            THosts = DB.WhereRead<CHost>(CHost.TableName, new { Enabled = true });
+                            break;
                     }
 
-                    THosts = Database.WhereRead<CHost>(CHost.TableName, new { Enabled = true });
 
 
                     if (TServices != null && TDatabases != null && THosts != null)
@@ -134,29 +122,36 @@ namespace LibMESone
                         var data = from db in TDatabases
                                    join host in THosts on db.Hosts_id equals host.Id
                                    join service in TServices on db.Id equals service.Databases_id
-                                   select new 
+                                   select new
                                    {
-                                       Id = db.Id,
-                                       Name = service.Name,
-                                       Database = db.Database,
-                                       Driver = db.Driver,
-                                       Host = host.Ip,
-                                       Port = db.Port,
-                                       Charset = db.Charset,
-                                       Username = db.Username,
-                                       Password = db.Password
+                                       db.Id,
+                                       service.Name,
+                                       DBprops = new Dictionary<string, string>()
+                                       {
+                                           { Lib.CDatabase.EPropKeys.Driver.ToString(), db.Driver},
+                                           { Lib.CDatabase.EPropKeys.Host.ToString(), host.Ip },
+                                           { Lib.CDatabase.EPropKeys.Port.ToString(), db.Port.ToString() },
+                                           { Lib.CDatabase.EPropKeys.Charset.ToString(), db.Charset },
+                                           { Lib.CDatabase.EPropKeys.BaseName.ToString(), db.Database },
+                                           { Lib.CDatabase.EPropKeys.User.ToString(), db.Username },
+                                           { Lib.CDatabase.EPropKeys.Password.ToString(), db.Password }
+                                       }
                                    }
                                    ;
 
-                        IDictionary<ulong, IDictionary<string, object>> children_props = data.ToDictionary<ulong, Dictionary<string, object>>( o => o.Id, o => o.);
+
+                        Dictionary<ulong, Dictionary<string, object>> children_props = data.ToDictionary(o => o.Id,
+                                                                                                         o => o.
+                                                                                                              GetType().
+                                                                                                              GetProperties().ToDictionary(z => z.Name,
+                                                                                                                                           z => z.GetValue(o)));
 
                         CUD<SrvCustom>(children_props);
-
 
                         //----------write---------------
 
                         TServiceDiagnostic.Sys_ts = DateTime.Now;
-                        Database.Update(CServiceDiagnostic.TableName, TServiceDiagnostic);
+                        DB.Update(CServiceDiagnostic.TableName, TServiceDiagnostic);
 
                     }
                 }
@@ -173,19 +168,17 @@ namespace LibMESone
         {
             try
             {
+                DBprops.Clear();
 
-                var props = new Dictionary<string, object>();
+                DBprops.Add(Lib.CDatabase.EPropKeys.Driver.ToString(), config.DB_Driver);
+                DBprops.Add(Lib.CDatabase.EPropKeys.Host.ToString(), config.DB_Host);
+                DBprops.Add(Lib.CDatabase.EPropKeys.Port.ToString(), config.DB_Port.ToString());
+                DBprops.Add(Lib.CDatabase.EPropKeys.Charset.ToString(), config.DB_Charset);
+                DBprops.Add(Lib.CDatabase.EPropKeys.BaseName.ToString(), config.DB_BaseName);
+                DBprops.Add(Lib.CDatabase.EPropKeys.User.ToString(), config.DB_User);
+                DBprops.Add(Lib.CDatabase.EPropKeys.Password.ToString(), config.DB_Password);
 
-                props.Add(Lib.CDatabase.EPropKeys.Driver.ToString(), config.DB_Driver);
-                props.Add(Lib.CDatabase.EPropKeys.Host.ToString(), config.DB_Host);
-                props.Add(Lib.CDatabase.EPropKeys.Port.ToString(), config.DB_Port);
-                props.Add(Lib.CDatabase.EPropKeys.Charset.ToString(), config.DB_Charset);
-                props.Add(Lib.CDatabase.EPropKeys.BaseName.ToString(), config.DB_BaseName);
-                props.Add(Lib.CDatabase.EPropKeys.User.ToString(), config.DB_User);
-                props.Add(Lib.CDatabase.EPropKeys.Password.ToString(), config.DB_Password);
-
-
-                Database.LoadSettings(props);
+                DB.LoadSettings(DBprops);
 
                 if (Target_TextLog != null)
                     Target_TextLog.MaxArchiveFiles = (int)config.LOG_DepthDay;

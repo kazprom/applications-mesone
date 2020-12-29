@@ -10,7 +10,7 @@ namespace LibMESone.Tables.Core
     {
         static public string TableName = "service_diagnostics";
 
-        [Field(TYPE = Field.EDoctrine.BigInt, UQ = true, NN = true)]
+        [Field(TYPE = Field.EDoctrine.UnsignedBigInteger, UQ = true, NN = true)]
         public ulong Service_types_id { get; set; }
 
         [Field(TYPE = Field.EDoctrine.String, SIZE = 30)]

@@ -11,18 +11,7 @@ namespace LibMESone
     public class CCUSTOM : CSrvDB
     {
 
-
-
-
-
         #region CONSTANTS
-
-#if DEBUG
-        private const int period = 5000;
-#else
-        private const int period = 60000;
-#endif
-
 
         private const string depth_log_day_name = "DEPTH_LOG_DAY";
         private const uint depth_log_days_default = 3;
@@ -31,31 +20,15 @@ namespace LibMESone
 
         #region VARIABLES
 
-        private Lib.Buffer<CLogMessage> log_buf;
-        private DateTime log_ts = default;
 
         #endregion
 
         #region PROPERTIES
 
-        
-
-        public IEnumerable<Tables.Custom.CSetting> Settings { get; private set; }
+        public CDBLogger DBLogger { get; set; } = new CDBLogger();
 
 
-
-        public string Driver { get; set; }
-
-        public string Host { get; set; }
-
-        public uint Port { get; set; }
-
-        public string Charset { get; set; }
-
-        public string Username { get; set; }
-
-        public string Password { get; set; }
-
+        public IEnumerable<Tables.Custom.CSetting> TSettings { get; private set; }
 
         #endregion
 
@@ -63,57 +36,30 @@ namespace LibMESone
         public CCUSTOM()
         {
 
-            log_buf = new Lib.Buffer<CLogMessage>(100, 5000);
-            log_buf.CyclicEvent += LogDataHandler;
-            log_buf.HalfEvent += LogDataHandler;
+            DBLogger.DB = DB;
 
-
-            CycleRate = period;
+            LoggerMaked += CCUSTOM_LoggerMaked;
 
         }
 
-        private void CSrvCustom_PropsChangedEvent(CChildProps props)
+        private void CCUSTOM_LoggerMaked(NLog.Logger logger)
         {
             try
             {
 
-                if (Logger != null && Logger != NLog.LogManager.GetLogger(logger_name))
-                {
-
-                    var configuration = NLog.LogManager.Configuration;
-                    configuration.RemoveTarget(logger_name);
-                    configuration.RemoveRuleByName(logger_name + "*");
-                    NLog.LogManager.Configuration = configuration;
-                    Logger = null;
-
-                }
-
-                if (Logger == null)
+                if (logger != null)
                 {
                     var configuration = NLog.LogManager.Configuration;
-                    var target = new NLog.Targets.MethodCallTarget(Logger.Name, (logEvent, parms) =>
+                    var target = new NLog.Targets.MethodCallTarget(logger.Name, (logEvent, parms) =>
                     {
-                        log_buf.Enqueue(new CLogMessage() { Timestamp = logEvent.TimeStamp, Message = $"{logEvent.Level} {logEvent.Message} {logEvent.Exception}" });
+                        DBLogger.Message(logEvent.TimeStamp, $"{logEvent.Level} {logEvent.Message} {logEvent.Exception}");
                     });
 
 
-                    configuration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Fatal, target, Logger.Name + "*");
+                    configuration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Fatal, target, logger.Name + "*");
                     NLog.LogManager.Configuration = configuration;
 
                 }
-
-                if (Database == null)
-                    Database = new Lib.CDatabase(Props.Id, Logger);
-
-                CSrvCustomProps set = Props as CSrvCustomProps;
-
-                Database.LoadSettings(set.Driver,
-                                      set.Host,
-                                      set.Port,
-                                      set.Charset,
-                                      set.Database,
-                                      set.Username,
-                                      set.Password);
 
             }
             catch (Exception ex)
@@ -122,12 +68,9 @@ namespace LibMESone
             }
         }
 
-
-
         #endregion
 
         #region DESTRUCTOR
-
 
         public override void Dispose(bool disposing)
         {
@@ -136,16 +79,10 @@ namespace LibMESone
             {
                 if (disposing)
                 {
-
-
-                    LogDataHandler();
-
                     var configuration = NLog.LogManager.Configuration;
-                    configuration.RemoveRuleByName(Logger.Name);
+                    configuration.RemoveTarget(Logger.Name);
+                    configuration.RemoveRuleByName(Logger.Name + "*");
                     NLog.LogManager.Configuration = configuration;
-
-                    Database = null;
-
                 }
             }
 
@@ -153,49 +90,48 @@ namespace LibMESone
 
         }
 
-
         #endregion
 
         #region PUBLICS
-
-
 
         public override void Timer_Handler(object sender, ElapsedEventArgs e)
         {
             try
             {
+                if (DBprops != null)
+                {
+                    DB.LoadSettings(DBprops);
+                }
 
-                if (Database != null)
+                if (DB != null)
                 {
 
                     //--------read----------------
 
-                    Settings = null;
+                    TSettings = null;
 
-                    switch (Database.CheckExistTable(Tables.Custom.CSetting.TableName))
+                    switch (DB.CheckExistTable(Tables.Custom.CSetting.TableName))
                     {
 
-                        case null:
-                        case false:
-                            return;
+                        case true:
+                            switch (DB.CompareTableSchema<Tables.Custom.CSetting>(Tables.Custom.CSetting.TableName))
+                            {
+                                case true:
+                                    TSettings = DB.Read<Tables.Custom.CSetting>(Tables.Custom.CSetting.TableName);
+                                    break;
+                            }
+                            break;
                     }
 
-                    switch (Database.CompareTableSchema<Tables.Custom.CSetting>(Tables.Custom.CSetting.TableName))
-                    {
-                        case null:
-                        case false:
-                            return;
-                    }
 
-                    Settings = Database.Read<Tables.Custom.CSetting>(Tables.Custom.CSetting.TableName);
 
 
                     //------------log cleaner-----------
 
                     uint depth_log_days = depth_log_days_default;
-                    if (Settings != null)
+                    if (TSettings != null)
                     {
-                        Tables.Custom.CSetting setting = Settings.FirstOrDefault(x => x.Key.Equals(depth_log_day_name, StringComparison.OrdinalIgnoreCase));
+                        Tables.Custom.CSetting setting = TSettings.FirstOrDefault(x => x.Key.Equals(depth_log_day_name, StringComparison.OrdinalIgnoreCase));
                         if (setting != null)
                         {
                             if (!uint.TryParse(setting.Value, out depth_log_days))
@@ -210,7 +146,7 @@ namespace LibMESone
                     }
 
 
-                    IEnumerable<string> tables = Database.GetListTables(Tables.Custom.CLogMessage.TablePrefix + "%");
+                    IEnumerable<string> tables = DB.GetListTables(Tables.Custom.CLogMessage.TablePrefix + "%");
                     DateTime ts = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 
                     if (tables != null)
@@ -219,7 +155,7 @@ namespace LibMESone
                         {
                             if (ts.Subtract(CLogMessage.GetTimeStamp(table)).TotalDays > depth_log_days)
                             {
-                                if (Database.RemoveTable(table))
+                                if (DB.RemoveTable(table))
                                     Logger.Info($"Removed log table [{table}]");
                             }
                         }
@@ -238,63 +174,6 @@ namespace LibMESone
 
         #endregion
 
-        #region PRIVATES
-
-        private async void LogDataHandler()
-        {
-            await Task.Run(() =>
-            {
-
-                try
-                {
-
-                    CLogMessage data = null;
-
-                    if (Database != null)
-                    {
-                        while (log_buf.Count > 0)
-                        {
-
-                            if (data == null)
-                            {
-                                data = log_buf.Dequeue();
-
-
-                                if (log_ts == default || log_ts != data.Timestamp)
-                                {
-
-                                    switch (Database.CheckExistTable(CLogMessage.GetTableName(data.Timestamp)))
-                                    {
-                                        case false:
-                                            if (Database.CreateTable<CLogMessage>(CLogMessage.GetTableName(data.Timestamp)))
-                                            {
-                                                log_ts = data.Timestamp;
-                                            }
-                                            break;
-                                    }
-
-                                }
-
-                                if (Database.Insert(CLogMessage.GetTableName(data.Timestamp), data))
-                                {
-                                    data = null;
-                                }
-                                else
-                                {
-                                    Thread.Sleep(1000);
-                                }
-                            }
-                        }
-                    }
-                }
-                finally
-                {
-
-                }
-            });
-        }
-
-        #endregion
-
+        
     }
 }

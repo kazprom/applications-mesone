@@ -2,17 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>LibOPCDBgate</RootNamespace>
-    <Platforms>AnyCPU;x86;x64</Platforms>
-    <Configurations>Debug;Release;Public</Configurations>
+    <AssemblyName>LibPlcDBgate</AssemblyName>
+    <RootNamespace>LibPlcDBgate</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DB gate Lib\2_LibDBgate.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 
 </Project>

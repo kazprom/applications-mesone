@@ -6,6 +6,7 @@
     <RootNamespace>Lib</RootNamespace>
     <Configurations>Debug;Release;Public</Configurations>
     <UserSecretsId>9020be05-a7c1-445d-ba5f-9a4b5359e5ed</UserSecretsId>
+    <AssemblyName>Lib</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
