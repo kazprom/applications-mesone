@@ -1,4 +1,5 @@
 ﻿using LibMESone;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,11 +10,25 @@ namespace LibPlcDBgate
     public class CHistorian : CSrvDB
     {
 
-        private Lib.CBuffer<Tables.CHisValue> buffer { get; set; } = new Lib.CBuffer<Tables.CHisValue>(1000);
+        private const string title = "HISTORIAN";
 
+        private CHistoryCleaner cleaner;
+        private Lib.CBuffer<Tables.CHisValue> buffer = new Lib.CBuffer<Tables.CHisValue>(1000);
+
+        public override Logger Logger
+        {
+            set
+            {
+                base.Logger = LogManager.GetLogger($"{value.Name}.{title}");
+                cleaner.Logger = Logger;
+            }
+        }
 
         public CHistorian()
         {
+
+            cleaner = new CHistoryCleaner(this);
+
             buffer.FullEvent += Buffer_FullEvent;
 
             CycleRate = 10000;

@@ -1,4 +1,5 @@
-﻿using LibMESone;
+﻿using Lib;
+using LibMESone;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -52,6 +53,43 @@ namespace LibPlcDBgate
 
         #region PROPERTIES
 
+        public override CParent Parent
+        {
+            get => base.Parent;
+            set
+            {
+
+
+                try
+                {
+
+                    if (!Equals(base.Parent, value))
+                    {
+
+                        base.Parent = value;
+                        Lib.CParent parent = this.Parent;
+                        while (parent != null)
+                        {
+                            if (parent is CCUSTOM)
+                            {
+                                CCUSTOM custom = parent as CCUSTOM;
+                                Historian = custom.Historian;
+                                custom.RTviewer.Subscribe(this);
+                            }
+
+                            parent = parent.Parent;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex);
+                }
+
+            }
+        }
+
+
         public CHistorian Historian { get; set; }
 
         private EDataType data_type;
@@ -62,7 +100,7 @@ namespace LibPlcDBgate
             {
                 try
                 {
-                    data_type = Enum.Parse(typeof(EDataType), Convert.ToString(value));
+                    data_type = Enum.Parse(typeof(EDataType), Convert.ToString(value), true);
                 }
                 catch (Exception ex)
                 {
@@ -115,7 +153,7 @@ namespace LibPlcDBgate
             {
                 try
                 {
-                    value = ObjToDataType(value, data_type);
+                    this.value = ObjToDataType(value, data_type);
 
                     if (history_enabled == true)
                     {
@@ -132,32 +170,7 @@ namespace LibPlcDBgate
 
         public EQuality Quality { get; set; }
 
-
         #endregion
-
-        public CTag()
-        {
-            try
-            {
-                Lib.CParent parent = this.Parent;
-                while (parent != null || !(parent is CCUSTOM))
-                {
-                    if (parent is CCUSTOM)
-                    {
-                        CCUSTOM custom = parent as CCUSTOM;
-                        Historian = custom.Historian;
-                        custom.RTviewer.Subscribe(this);
-                    }
-                    else
-                        parent = parent.Parent;
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex);
-            }
-
-        }
 
 
         private static object ObjToDataType(object obj, EDataType type)
@@ -248,7 +261,7 @@ namespace LibPlcDBgate
                 }
                 else if (obj == null)
                 {
-                    result = null;
+                    return null;
                 }
                 else
                 {

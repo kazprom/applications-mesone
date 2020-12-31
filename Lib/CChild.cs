@@ -17,7 +17,7 @@ namespace Lib
         #endregion
 
         private Logger logger = LogManager.GetCurrentClassLogger();
-        public Logger Logger
+        public virtual Logger Logger
         {
             get { return logger; }
             set
@@ -30,7 +30,7 @@ namespace Lib
             }
         }
 
-        public CParent Parent { get; set; }
+        public virtual CParent Parent { get; set; }
 
         private ulong? id;
         public virtual ulong Id

@@ -1,0 +1,3 @@
+C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\obj\x86\Debug\OPC DB gate client.csprojAssemblyReference.cache
+C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\obj\x86\Debug\App.exe.config
+C:\Users\i.korol\Desktop\DEV\applications-mesone\OPC DB gate client\obj\x86\Debug\OPC DB gate client.csproj.CoreCompileInputs.cache

@@ -1,6 +1,8 @@
 ﻿using LibMESone;
+using NLog;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Timers;
 
@@ -9,7 +11,18 @@ namespace LibPlcDBgate
     public class CRTviewer : CSrvDB
     {
 
-        private List<Tables.CRtValue> TRTvalues { get; set; }
+        private const string title = "RTviewer";
+
+        private List<CTag> tags = new List<CTag>();
+        private List<Tables.CRtValue> TRTvalues = new List<Tables.CRtValue>();
+
+        public override Logger Logger
+        {
+            set
+            {
+                base.Logger = LogManager.GetLogger($"{value.Name}.{title}");
+            }
+        }
 
         public CRTviewer()
         {
@@ -21,9 +34,9 @@ namespace LibPlcDBgate
         {
             try
             {
-                lock (Children)
+                lock (tags)
                 {
-                    foreach (CTag tag in Children.Values)
+                    foreach (CTag tag in tags)
                     {
                         if (tag.RT_enabled)
                             TRTvalues.Add(new Tables.CRtValue()
@@ -31,18 +44,26 @@ namespace LibPlcDBgate
                                 Tags_id = tag.Id,
                                 Timestamp = tag.Timestamp,
                                 Quality = (byte)tag.Quality,
-                                Value_str = tag.Value.ToString(),
+                                Value_str = tag.Value != null ? tag.Value.ToString() : null,
                                 Value_raw = CTag.ObjToBin(tag.Value)
                             });
                     }
 
-                    if(DB != null)
-                    {
-                        
-
-
-                    }
                 }
+
+                if (DB != null)
+                {
+
+                    foreach (var item in TRTvalues)
+                    {
+                        DB.Update<Tables.CRtValue>(Tables.CRtValue.TableName, item);
+                    }
+
+                    DB.WhereNotInDelete(Tables.CRtValue.TableName, nameof(Tables.CRtValue.Tags_id), TRTvalues.Select(x => x.Tags_id).ToArray());
+
+                }
+
+                TRTvalues.Clear();
             }
             catch (Exception ex)
             {
@@ -59,7 +80,7 @@ namespace LibPlcDBgate
             {
                 lock (Children)
                 {
-                    Children.Add(tag.Id, tag);
+                    tags.Add(tag);
                 }
             }
             catch (Exception ex)
@@ -74,7 +95,7 @@ namespace LibPlcDBgate
             {
                 lock (Children)
                 {
-                    Children.Remove(tag.Id);
+                    tags.Remove(tag);
                 }
             }
             catch (Exception ex)

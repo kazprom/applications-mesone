@@ -21,20 +21,20 @@ namespace S7_DB_gate
                     var data = from tags in (IEnumerable<dynamic>)value
                                select new
                                {
-                                   Parent = this,
 
+                                   Parent = this,
                                    tags.Id,
                                    tags.Name,
 
                                    tags.Data_type,
                                    tags.History_enabled,
-                                   tags.RT_values_enabled,
+                                   RT_enabled = tags.RT_values_enabled,
 
-                                   tags.PLC_data_type,
-                                   tags.Data_block_no,
-                                   tags.Data_block_offset,
-                                   tags.Bit_offset,
-                                   tags.Request_type
+                                   tags.S7_Data_Type,
+                                   tags.DB,
+                                   tags.StartByteAdr,
+                                   tags.BitAdr,
+                                   tags.S7_Var_Type
                                };
 
 
@@ -68,7 +68,7 @@ namespace S7_DB_gate
 
                     foreach (CTag tag in Children.Values)
                     {
-                        if (tag.RT_enabled || tag.History_enabled)
+                        if (tag != null && (tag.RT_enabled || tag.History_enabled))
                         {
 
                             tag.Timestamp = DateTime.Now;
@@ -128,95 +128,6 @@ namespace S7_DB_gate
             base.Timer_Handler(sender, e);
         }
 
-
-        /*
-        #region PUBLICS
-
-        public override void LoadTags(dynamic tags)
-        {
-            try
-            {
-                IEnumerable<Structs.Tag> _tags = tags;
-
-                lock (Tags)
-                {
-
-                    IEnumerable<ulong> fresh_ids = _tags.Select(x => x.Id);
-                    IEnumerable<ulong> existing_ids = Tags.Keys;
-
-                    IEnumerable<ulong> waste = existing_ids.Except(fresh_ids);
-                    IEnumerable<ulong> modify = fresh_ids.Intersect(existing_ids);
-                    IEnumerable<ulong> missing = fresh_ids.Except(existing_ids);
-
-                    foreach (ulong tag_id in waste)
-                    {
-                        Tags[tag_id].Dispose();
-                        Tags.Remove(tag_id);
-                    }
-
-                    foreach (ulong tag_id in modify)
-                    {
-                        CTag tag = (CTag)Tags[tag_id];
-                        tag.LoadSettings(_tags.First(x => x.Id == tag_id));
-                    }
-
-                    foreach (ulong tag_id in missing)
-                    {
-
-                        CTag tag = new CTag(this, tag_id);
-                        tag.LoadSettings(_tags.First(x => x.Id == tag_id));
-                        Tags.Add(tag_id, tag);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex, $"{Title}. Load tags");
-            }
-        }
-
-        #endregion
-
-        #region PRIVATES
-
-        public override void Handler(object state)
-        {
-            
-
-        }
-
-
-        #endregion
-        */
-
-        /*
-        public override void LoadSetting(ISetting setting)
-        {
-            base.LoadSetting(setting);
-
-            try
-            {
-                CUD<CTag>(Settings.Tags);
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex);
-            }
-
-        }
-
-        */
-
-        /*
-        public override void Timer_Handler(object sender, ElapsedEventArgs e)
-        {
-
-   
-
-
-            base.Timer_Handler(sender, e);
-        }
-        */
-
     }
+
 }

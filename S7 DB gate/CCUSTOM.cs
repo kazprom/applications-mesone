@@ -10,6 +10,7 @@ namespace S7_DB_gate
 {
     public class CCUSTOM : LibPlcDBgate.CCUSTOM
     {
+
         #region PROPERTIES
 
         public IEnumerable<Tables.CClient> TClients { get; set; }
@@ -17,7 +18,6 @@ namespace S7_DB_gate
         public IEnumerable<Tables.CTag> TTags { get; set; }
 
         #endregion
-
 
         #region PUBLICS
 

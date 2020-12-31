@@ -18,10 +18,10 @@ namespace S7_DB_gate
             {
                 try
                 {
-                    if (!Equals(data_type, value))
+                    if (data_type == null || data_type.ToString().ToLower() != Convert.ToString(value).ToLower())
                     {
-                        data_type = Enum.Parse(typeof(S7.Net.DataType), Convert.ToString(value));
-                        Logger.Info(value);
+                        data_type = Enum.Parse(typeof(S7.Net.DataType), Convert.ToString(value), true);
+                        Logger.Info(data_type);
                     }
                 }
                 catch (Exception ex)
@@ -39,7 +39,11 @@ namespace S7_DB_gate
             {
                 try
                 {
-                    db = int.Parse(Convert.ToString(value));
+                    if (db != value)
+                    {
+                        db = int.Parse(Convert.ToString(value));
+                        Logger.Info(db);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -47,7 +51,6 @@ namespace S7_DB_gate
                 }
             }
         }
-
 
         private int? start_byte_adr;
         public dynamic StartByteAdr
@@ -57,7 +60,11 @@ namespace S7_DB_gate
             {
                 try
                 {
-                    start_byte_adr = int.Parse(Convert.ToString(value));
+                    if (start_byte_adr != value)
+                    {
+                        start_byte_adr = int.Parse(Convert.ToString(value));
+                        Logger.Info(start_byte_adr);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -74,7 +81,11 @@ namespace S7_DB_gate
             {
                 try
                 {
-                    s7_var_type = Enum.Parse(typeof(S7.Net.VarType), Convert.ToString(value));
+                    if (s7_var_type == null || s7_var_type.ToString().ToLower() != Convert.ToString(value).ToLower())
+                    {
+                        s7_var_type = Enum.Parse(typeof(S7.Net.VarType), Convert.ToString(value), true);
+                        Logger.Info(s7_var_type);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -91,7 +102,12 @@ namespace S7_DB_gate
             {
                 try
                 {
-                    bit_adr = byte.Parse(Convert.ToString(value));
+                    if (bit_adr != value)
+                    {
+                        bit_adr = byte.Parse(Convert.ToString(value));
+                        Logger.Info(bit_adr);
+                    }
+
                 }
                 catch (Exception ex)
                 {
@@ -100,105 +116,6 @@ namespace S7_DB_gate
             }
         }
 
-
-
-        #endregion
-
-
-        #region PUBLICS
-
-        /*
-
-    public override void LoadSettings(dynamic tag)
-    {
-        if (tag != null)
-        {
-
-            bool changed = false;
-            string title = "";
-
-            try
-            {
-                Structs.Tag _tag = tag;
-
-                title += $" Name [{_tag.Name}]";
-                if (Name != _tag.Name)
-                {
-                    Name = _tag.Name;
-                    changed = true;
-                }
-
-                title += $" PLC data type [{_tag.PLC_data_type}]";
-                S7.Net.DataType res_dt = (S7.Net.DataType)Enum.Parse(typeof(S7.Net.DataType), _tag.PLC_data_type, true);
-                if (DataType != res_dt)
-                {
-                    DataType = res_dt;
-                    changed = true;
-                }
-
-
-                title += $" Data block no. [{_tag.Data_block_no}]";
-                if (DB != _tag.Data_block_no)
-                {
-                    DB = _tag.Data_block_no;
-                    changed = true;
-                }
-
-                title += $" Data block offset [{_tag.Data_block_offset}]";
-                if (StartByteAdr != _tag.Data_block_offset)
-                {
-                    StartByteAdr = _tag.Data_block_offset;
-                    changed = true;
-                }
-
-                title += $" Request type [{_tag.Request_type}]";
-                S7.Net.VarType res_vt = (S7.Net.VarType)Enum.Parse(typeof(S7.Net.VarType), _tag.Request_type, true);
-                if (VarType != res_vt)
-                {
-                    VarType = res_vt;
-                    changed = true;
-                }
-
-                title += $" Bit offset [{_tag.Bit_offset}]";
-                if (BitAdr != _tag.Bit_offset)
-                {
-                    BitAdr = _tag.Bit_offset;
-                    changed = true;
-                }
-
-                title += $" Data type [{_tag.Data_type}]";
-                LibDBgate.Tag.EDataType res_sdt = (LibDBgate.Tag.EDataType)Enum.Parse(typeof(LibDBgate.Tag.EDataType), _tag.Data_type, true);
-                if (TagType != res_sdt)
-                {
-                    TagType = res_sdt;
-                    changed = true;
-                }
-
-                if (RT_enabled != _tag.RT_values_enabled)
-                {
-                    RT_enabled = _tag.RT_values_enabled;
-                    changed = true;
-                }
-
-                if (History_enabled != _tag.History_enabled)
-                {
-                    History_enabled = _tag.History_enabled;
-                    changed = true;
-                }
-
-                if (changed)
-                    logger.Info($"{Title}. Changed");
-
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex, $"{title}. Load settings");
-            }
-
-        }
-    }
-
-        */
         #endregion
 
     }
