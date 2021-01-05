@@ -22,7 +22,7 @@ namespace Lib
             get { return logger; }
             set
             {
-                if(!Equals(logger, value))
+                if (!Equals(logger, value))
                 {
                     logger = value;
                     LoggerMaked?.Invoke(logger);
@@ -35,7 +35,7 @@ namespace Lib
         private ulong? id;
         public virtual ulong Id
         {
-            get { return (ulong)id; }
+            get { return id != null ? (ulong)id : default; }
             set
             {
                 if (!Equals(id, value))

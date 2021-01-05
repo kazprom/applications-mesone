@@ -46,9 +46,39 @@ namespace LibPlcDBgate
             try
             {
 
-                while (buffer.Count > 0)
+                Dictionary<DateTime, List<Tables.CHisValue>> history = new Dictionary<DateTime, List<Tables.CHisValue>>();
+
+                lock (buffer)
                 {
-                    buffer.Dequeue();
+                    while (buffer.Count > 0)
+                    {
+                        Tables.CHisValue item = buffer.Dequeue();
+
+                        if (!history.ContainsKey(item.Timestamp))
+                            history.Add(item.Timestamp, new List<Tables.CHisValue>());
+
+                        history[item.Timestamp].Add(item);
+
+                    }
+                }
+
+                if (DB != null)
+                {
+
+                    foreach (var table in history)
+                    {
+                        string table_name = Tables.CHisValue.GetTableName(table.Key);
+
+                        if (DB.CheckExistTable(table_name) == false)
+                            DB.CreateTable<Tables.CHisValue>(table_name);
+
+    
+                    foreach (var row in table.Value)
+                        {
+                            DB.Insert<Tables.CHisValue>(table_name, row);
+                        }
+                    }
+
                 }
 
             }
@@ -56,7 +86,6 @@ namespace LibPlcDBgate
             {
                 Logger.Error(ex);
             }
-
 
             base.Timer_Handler(sender, e);
         }

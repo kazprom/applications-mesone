@@ -143,7 +143,7 @@ namespace LibPlcDBgate
             }
         }
 
-        public DateTime Timestamp { get; set; }
+        public DateTime? Timestamp { get; set; }
 
         private object value;
         public object Value
@@ -155,9 +155,9 @@ namespace LibPlcDBgate
                 {
                     this.value = ObjToDataType(value, data_type);
 
-                    if (history_enabled == true)
+                    if (history_enabled == true && Timestamp != null)
                     {
-                        if (Historian != null) Historian.Put(Id, Timestamp, ObjToBin(Value), (byte)Quality);
+                        if (Historian != null) Historian.Put(Id, (DateTime)Timestamp, ObjToBin(Value), (byte)Quality);
                     }
 
                 }

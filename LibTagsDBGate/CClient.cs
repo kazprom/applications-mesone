@@ -1,4 +1,5 @@
 ﻿using LibMESone;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -9,6 +10,19 @@ namespace LibPlcDBgate
 {
     public class CClient : LibDBgate.CSUB
     {
+
+        public override ulong Id
+        {
+            get => base.Id;
+            set
+            {
+                if (!Equals(base.Id, value))
+                {
+                    base.Id = value;
+                    Diagnostic = new Tables.CDiagnostic() { Clients_id = Id };
+                }
+            }
+        }
 
         protected IPAddress ip;
         public dynamic Ip
@@ -47,10 +61,12 @@ namespace LibPlcDBgate
         public virtual dynamic Tags { get; set; }
 
 
-        public CClient()
+        public CClient() : base()
         {
             CycleRate = 10000;
         }
+
+
 
 
     }

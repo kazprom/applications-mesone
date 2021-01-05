@@ -38,11 +38,11 @@ namespace LibPlcDBgate
                 {
                     foreach (CTag tag in tags)
                     {
-                        if (tag.RT_enabled)
+                        if (tag != null && tag.RT_enabled && tag.Timestamp != null)
                             TRTvalues.Add(new Tables.CRtValue()
                             {
                                 Tags_id = tag.Id,
-                                Timestamp = tag.Timestamp,
+                                Timestamp = (DateTime)tag.Timestamp,
                                 Quality = (byte)tag.Quality,
                                 Value_str = tag.Value != null ? tag.Value.ToString() : null,
                                 Value_raw = CTag.ObjToBin(tag.Value)

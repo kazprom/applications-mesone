@@ -14,7 +14,7 @@ namespace LibPlcDBgate.Tables
         [Field(TYPE = Field.EDoctrine.DateTime, SIZE = 3, NN = true)]
         public DateTime Timestamp { get; set; }
 
-        [Field(TYPE = Field.EDoctrine.Binary, NN = true)]
+        [Field(TYPE = Field.EDoctrine.Binary, SIZE = 8)]
         public byte[] Value { get; set; }
 
         [Field(TYPE = Field.EDoctrine.UnsignedSmallInteger, NN = true)]

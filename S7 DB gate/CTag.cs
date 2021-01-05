@@ -21,7 +21,7 @@ namespace S7_DB_gate
                     if (data_type == null || data_type.ToString().ToLower() != Convert.ToString(value).ToLower())
                     {
                         data_type = Enum.Parse(typeof(S7.Net.DataType), Convert.ToString(value), true);
-                        Logger.Info(data_type);
+                        Logger.Info($"S7 data type = {data_type}");
                     }
                 }
                 catch (Exception ex)
@@ -42,7 +42,7 @@ namespace S7_DB_gate
                     if (db != value)
                     {
                         db = int.Parse(Convert.ToString(value));
-                        Logger.Info(db);
+                        Logger.Info($"Data block no = {db}");
                     }
                 }
                 catch (Exception ex)
@@ -63,7 +63,7 @@ namespace S7_DB_gate
                     if (start_byte_adr != value)
                     {
                         start_byte_adr = int.Parse(Convert.ToString(value));
-                        Logger.Info(start_byte_adr);
+                        Logger.Info($"Start byte address = {start_byte_adr}");
                     }
                 }
                 catch (Exception ex)
@@ -84,7 +84,7 @@ namespace S7_DB_gate
                     if (s7_var_type == null || s7_var_type.ToString().ToLower() != Convert.ToString(value).ToLower())
                     {
                         s7_var_type = Enum.Parse(typeof(S7.Net.VarType), Convert.ToString(value), true);
-                        Logger.Info(s7_var_type);
+                        Logger.Info($"S7 var type = {s7_var_type}");
                     }
                 }
                 catch (Exception ex)
@@ -105,7 +105,7 @@ namespace S7_DB_gate
                     if (bit_adr != value)
                     {
                         bit_adr = byte.Parse(Convert.ToString(value));
-                        Logger.Info(bit_adr);
+                        Logger.Info($"Bit address = {bit_adr}");
                     }
 
                 }

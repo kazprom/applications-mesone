@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,12 +12,7 @@ namespace LibMESone
     public class CCUSTOM : CSrvDB
     {
 
-        #region CONSTANTS
 
-        private const string depth_log_day_name = "DEPTH_LOG_DAY";
-        private const uint depth_log_days_default = 3;
-
-        #endregion
 
         #region VARIABLES
 
@@ -50,17 +46,22 @@ namespace LibMESone
                 if (logger != null)
                 {
                     var configuration = NLog.LogManager.Configuration;
-                    var target = new NLog.Targets.MethodCallTarget(logger.Name, (logEvent, parms) =>
+
+                    string name = logger.Name + "_msg_interceptor";
+
+                    if (configuration.FindTargetByName(name) == null)
                     {
-                        DBLogger.Message(logEvent.TimeStamp, $"{logEvent.Level} {logEvent.Message} {logEvent.Exception}");
-                    });
 
+                        var target = new NLog.Targets.MethodCallTarget(name, (logEvent, parms) =>
+                        {
+                            DBLogger.Message(logEvent.TimeStamp, $"[{logEvent.LoggerName}] <{logEvent.Level}> {logEvent.Message} {logEvent.Exception}");
+                        });
 
-                    configuration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Fatal, target, logger.Name + "*");
-                    NLog.LogManager.Configuration = configuration;
+                        configuration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Fatal, target, logger.Name + "*");
+                        NLog.LogManager.Configuration = configuration;
 
+                    }
                 }
-
             }
             catch (Exception ex)
             {
@@ -126,40 +127,7 @@ namespace LibMESone
 
 
 
-                    //------------log cleaner-----------
 
-                    uint depth_log_days = depth_log_days_default;
-                    if (TSettings != null)
-                    {
-                        Tables.Custom.CSetting setting = TSettings.FirstOrDefault(x => x.Key.Equals(depth_log_day_name, StringComparison.OrdinalIgnoreCase));
-                        if (setting != null)
-                        {
-                            if (!uint.TryParse(setting.Value, out depth_log_days))
-                            {
-                                Logger.Warn($"Setting [{depth_log_day_name}] can't parse. Default value is {depth_log_days_default}");
-                            }
-                        }
-                        else
-                        {
-                            Logger.Warn($"Setting [{depth_log_day_name}] not found. Default value is {depth_log_days_default}");
-                        }
-                    }
-
-
-                    IEnumerable<string> tables = DB.GetListTables(Tables.Custom.CLogMessage.TablePrefix + "%");
-                    DateTime ts = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-
-                    if (tables != null)
-                    {
-                        foreach (string table in tables)
-                        {
-                            if (ts.Subtract(CLogMessage.GetTimeStamp(table)).TotalDays > depth_log_days)
-                            {
-                                if (DB.RemoveTable(table))
-                                    Logger.Info($"Removed log table [{table}]");
-                            }
-                        }
-                    }
                 }
             }
             catch (Exception ex)
@@ -174,6 +142,6 @@ namespace LibMESone
 
         #endregion
 
-        
+
     }
 }

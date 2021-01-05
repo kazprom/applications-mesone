@@ -1,7 +1,7 @@
 ﻿
 namespace LibPlcDBgate
 {
-    public class CCUSTOM : LibMESone.CCUSTOM
+    public class CCUSTOM : LibDBgate.CCUSTOM
     {
 
         public CHistorian Historian { get; set; } = new CHistorian();

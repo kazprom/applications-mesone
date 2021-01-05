@@ -120,7 +120,7 @@ namespace Lib
                 case EDoctrine.BigInteger:
                     result = "BIGINT"; break;
                 case EDoctrine.Binary:
-                    break;
+                    result = "BINARY()"; break;
                 case EDoctrine.Boolean:
                     result = "TINYINT(1)"; break;
                 case EDoctrine.Char:

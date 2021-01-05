@@ -1,60 +1,77 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Timers;
 
 namespace LibMESone
 {
-    public class CDBLogCleaner : CSrvDB
+    public class CDBLogCleaner : CSrvCyc
     {
-        private CDBLogger db_logger;
-        private DateTime log_ts = default;
 
-        public CDBLogCleaner(CDBLogger cDBLogger)
+        #region CONSTANTS
+
+        private const string depth_log_day_name = "DEPTH_LOG_DAY";
+        private const uint depth_log_days_default = 3;
+
+        #endregion
+
+
+        private CDBLogger db_logger;
+
+        public CDBLogCleaner(CDBLogger db_logger)
         {
-            db_logger = cDBLogger;
-            CycleRate = 30000;
+            this.db_logger = db_logger;
+            CycleRate = 60000;
         }
 
         public override void Timer_Handler(object sender, ElapsedEventArgs e)
         {
 
-
             try
             {
 
-                Tables.Custom.CLogMessage data = null;
-
-                if (DB != null)
+                if (db_logger != null && db_logger.DB != null)
                 {
-                    while (db_logger.Buffer.Count > 0)
+
+                    uint depth_log_days = depth_log_days_default;
+
+                    CCUSTOM srv_inst = db_logger.Parent as CCUSTOM;
+
+                    if (srv_inst != null && srv_inst.TSettings != null)
                     {
-
-                        data = db_logger.Buffer.Dequeue();
-
-
-                        if (log_ts == default || log_ts != data.Timestamp)
+                        Tables.Custom.CSetting setting = srv_inst.TSettings.FirstOrDefault(x => x.Key.Equals(depth_log_day_name, StringComparison.OrdinalIgnoreCase));
+                        if (setting != null)
                         {
-
-                            switch (DB.CheckExistTable(Tables.Custom.CLogMessage.GetTableName(data.Timestamp)))
+                            if (!uint.TryParse(setting.Value, out depth_log_days))
                             {
-                                case false:
-                                    if (DB.CreateTable<Tables.Custom.CLogMessage>(Tables.Custom.CLogMessage.GetTableName(data.Timestamp)))
-                                    {
-                                        log_ts = data.Timestamp;
-                                    }
-                                    break;
+                                Logger.Warn($"Setting [{depth_log_day_name}] can't parse. Default value is {depth_log_days_default}");
                             }
-
                         }
+                        else
+                        {
+                            Logger.Warn($"Setting [{depth_log_day_name}] not found. Default value is {depth_log_days_default}");
+                        }
+                    }
 
-                        DB.Insert(Tables.Custom.CLogMessage.GetTableName(data.Timestamp), data);
+                    DateTime ts = new DateTime(DateTime.Now.Ticks - DateTime.Now.Ticks % TimeSpan.TicksPerDay, DateTime.Now.Kind);
+                    IEnumerable<string> tables = db_logger.DB.GetListTables(Tables.Custom.CLogMessage.TablePrefix + "%");
+
+                    if (tables != null)
+                    {
+                        foreach (var table in tables)
+                        {
+                            if (ts.Subtract(Tables.Custom.CLogMessage.GetTimeStamp(table)).TotalHours > depth_log_days)
+                                if (db_logger.DB.RemoveTable(table))
+                                    Logger.Info($"Removed log table [{table}]");
+                        }
                     }
                 }
-            }
-            finally
-            {
 
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
             }
 
             base.Timer_Handler(sender, e);
