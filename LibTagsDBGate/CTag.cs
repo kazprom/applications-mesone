@@ -276,8 +276,28 @@ namespace LibPlcDBgate
 
             return result;
         }
-
-
+        public static byte SizeOfDataType(EDataType type)
+        {
+            switch (type)
+            {
+                case EDataType.Boolean:
+                case EDataType.Byte:
+                case EDataType.Char:
+                    return 1;
+                case EDataType.Int16:
+                case EDataType.UInt16:
+                    return 2;
+                case EDataType.Int32:
+                case EDataType.UInt32:
+                    return 3;
+                case EDataType.Double:
+                case EDataType.Int64:
+                case EDataType.UInt64:
+                    return 4;
+                default:
+                    return 0;
+            }
+        }
 
 
 
