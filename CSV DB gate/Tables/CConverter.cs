@@ -16,7 +16,7 @@ namespace CSV_DB_gate.Tables
         [Field(TYPE = Field.EDoctrine.Boolean,  NN = true)]
         public bool File_delete { get; set; }
 
-        [Field(TYPE = Field.EDoctrine.SmallInt, NN = true)]
+        [Field(TYPE = Field.EDoctrine.UnsignedSmallInteger, NN = true)]
         public uint File_depth_his { get; set; }
 
         [Field(TYPE = Field.EDoctrine.Boolean, NN = true)]
@@ -25,10 +25,10 @@ namespace CSV_DB_gate.Tables
         [Field(TYPE = Field.EDoctrine.DateTime, NN = true)]
         public DateTime Start_timestamp { get; set; }
 
-        [Field(TYPE = Field.EDoctrine.Integer, NN = true)]
+        [Field(TYPE = Field.EDoctrine.UnsignedInteger, NN = true)]
         public uint Frequency_sec { get; set; }
 
-        [Field(TYPE = Field.EDoctrine.Integer, NN = true)]
+        [Field(TYPE = Field.EDoctrine.UnsignedInteger, NN = true)]
         public uint Timeout_sec { get; set; }
 
         [Field(TYPE = Field.EDoctrine.Boolean, NN = true)]

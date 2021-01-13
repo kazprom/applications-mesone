@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSV_DB_gate.Structs
+namespace CSV_DB_gate
 {
     public class CField
     {

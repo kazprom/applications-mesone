@@ -22,6 +22,7 @@ namespace LibMESone
         public CDBLogCleaner(CDBLogger db_logger)
         {
             this.db_logger = db_logger;
+
             CycleRate = 60000;
         }
 
@@ -71,7 +72,7 @@ namespace LibMESone
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                db_logger.Logger.Error(ex);
             }
 
             base.Timer_Handler(sender, e);

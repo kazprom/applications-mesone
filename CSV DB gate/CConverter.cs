@@ -24,42 +24,78 @@ namespace CSV_DB_gate
 
         #region PROPERTIES
 
-        public Structs.CSetConverter Settings { get; set; }
+        public string Base_path { get; set; }
+
+        public string File_path { get; set; }
+
+        public bool File_delete { get; set; }
+
+        public string His_path { get; set; }
+
+        public uint File_depth_his { get; set; }
+
+        public bool Table_clear { get; set; }
+
+        public DateTime Start_timestamp { get; set; }
+
+        public uint Frequency_sec { get; set; }
+
+        public uint Timeout_sec { get; set; }
+
+        private IEnumerable<CField> fields;
+        public dynamic Fields
+        {
+            set
+            {
+                try
+                {
+
+                    fields = from flds in (IEnumerable<dynamic>)value
+                             select new CField()
+                             {
+
+                                 NameSource = flds.NameSource,
+                                 NameDestination = flds.NameDestination,
+                                 DataType = flds.DataType,
+                                 Unique = flds.Unique
+
+                             };
+
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex);
+                }
+            }
+        }
+
+        public bool Has_header_record { get; set; }
+
+        public string Delimiter { get; set; }
+
+        public char Quote { get; set; }
+
+        public bool Quotes_ignore { get; set; }
+
+        public bool Detect_column_count_changes { get; set; }
+
+        public bool Replaceable { get; set; }
+
 
         #endregion
 
 
-
-        public override void LoadSetting(ISetting setting)
+        public CConverter()
         {
-            try
-            {
-                Settings = setting as Structs.CSetConverter;
-
-                if (Settings != null)
-                {
-                    Logger = NLog.LogManager.GetLogger($"{Parent.Logger.Name} Task [{Settings.Id}] <{Settings.Name}>");
-                    CycleRate = 200;
-                }
-                else
-                {
-                    Logger = NLog.LogManager.GetCurrentClassLogger();
-                    CycleRate = 0;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                if (Logger != null) Logger.Error(ex);
-            }
-
+            CycleRate = 200;
         }
+
 
         public override void Timer_Handler(object sender, ElapsedEventArgs e)
         {
             try
             {
-                var time = DateTime.Now.Subtract(Settings.Start_timestamp).TotalSeconds % Settings.Frequency_sec;
+                var time = DateTime.Now.Subtract(Start_timestamp).TotalSeconds % Frequency_sec;
 
                 if (time < 0 || time > 1)
                 {
@@ -69,11 +105,11 @@ namespace CSV_DB_gate
                 {
                     Thread.Sleep(1000);
 
-                    string file_path = Settings.Base_path + Path.DirectorySeparatorChar + Settings.File_path;
+                    string file_path = Base_path + Path.DirectorySeparatorChar + File_path;
 
                     if (!File.Exists(file_path))
                     {
-                        Logger.Warn($"File {Settings.File_path} is absent");
+                        Logger.Warn($"File {File_path} is absent");
                     }
                     else
                     {
@@ -87,14 +123,14 @@ namespace CSV_DB_gate
                         WriteTable(target);
 
 
-                        string path_dest = $"{Settings.His_path}" +
+                        string path_dest = $"{His_path}" +
                                       $"{Path.DirectorySeparatorChar}" +
                                       $"{Name}";
 
                         string file_name = Path.GetFileName(file_path);
 
                         //Save history files
-                        if (Settings.File_depth_his > 0)
+                        if (File_depth_his > 0)
                         {
                             try
                             {
@@ -116,13 +152,13 @@ namespace CSV_DB_gate
                         string[] filePaths = Directory.GetFiles(path_dest, $"*{file_name}");
                         Array.Sort(filePaths, StringComparer.InvariantCulture);
                         Array.Reverse(filePaths);
-                        for (uint i = Settings.File_depth_his; i < filePaths.Length; i++)
+                        for (uint i = File_depth_his; i < filePaths.Length; i++)
                         {
                             File.Delete(filePaths[i]);
                         }
 
                         //Delete original file
-                        if (Settings.File_delete)
+                        if (File_delete)
                         {
                             try
                             {
@@ -160,11 +196,11 @@ namespace CSV_DB_gate
 
                     Logger.Info($"Read {file_path}");
 
-                    csv.Configuration.HasHeaderRecord = Settings.Has_header_record;
-                    csv.Configuration.Delimiter = Settings.Delimiter;
-                    csv.Configuration.Quote = Settings.Quote;
-                    csv.Configuration.IgnoreQuotes = Settings.Quotes_ignore;
-                    csv.Configuration.DetectColumnCountChanges = Settings.Detect_column_count_changes;
+                    csv.Configuration.HasHeaderRecord = Has_header_record;
+                    csv.Configuration.Delimiter = Delimiter;
+                    csv.Configuration.Quote = Quote;
+                    csv.Configuration.IgnoreQuotes = Quotes_ignore;
+                    csv.Configuration.DetectColumnCountChanges = Detect_column_count_changes;
 
                     csv.Read();
                     csv.ReadHeader();
@@ -223,21 +259,19 @@ namespace CSV_DB_gate
             DataTable result = null;
             try
             {
-                if (source != null)
+                if (source != null && fields != null)
                 {
 
                     using (result = new DataTable())
                     {
-                        result.Columns.AddRange(Settings.
-                                                Fields.
+                        result.Columns.AddRange(fields.
                                                 GroupBy(x => x.NameDestination).
                                                 Select(x => x.First()).
                                                 Where(x => x.DataType != null).
                                                 Select(x => new DataColumn(x.NameDestination)).
                                                 ToArray());
 
-                        string[] source_columns = Settings.
-                                                  Fields.
+                        string[] source_columns = fields.
                                                   GroupBy(x => x.NameSource).
                                                   Select(x => x.First()).
                                                   Where(x => x.DataType != null).
@@ -254,8 +288,7 @@ namespace CSV_DB_gate
                                 var c = row.Table.Columns[col];
                                 if (c != null)
                                 {
-                                    string target_column = Settings.
-                                                           Fields.
+                                    string target_column = fields.
                                                            Where(x => x.NameSource.Equals(col) && x.DataType != null).
                                                            Select(x => x.NameDestination).
                                                            FirstOrDefault();
@@ -285,14 +318,14 @@ namespace CSV_DB_gate
         {
             try
             {
-                if (data != null)
+                if (data != null && fields != null)
                 {
 
-                    CSrv parent = Parent as CSrv;
+                    CSrvDB parent = Parent as CSrvDB;
 
-                    string table_name = $"{Tables.CTargetTable.TablePrefix}{Settings.Name}";
+                    string table_name = $"{Tables.CTargetTable.TablePrefix}{Name}";
 
-                    Dictionary<string, Lib.Field> table_struct = Settings.Fields.
+                    Dictionary<string, Lib.Field> table_struct = fields.
                                                                     GroupBy(x => x.NameDestination).Select(x => x.First()).
                                                                     Where(x => x.DataType != null).
                                                                     ToDictionary(
@@ -313,26 +346,26 @@ namespace CSV_DB_gate
                         table_struct.Remove(COL_NAME_UPDATED_AT);
 
 
-                    table_struct.Add(COL_NAME_ID, new Lib.Field() { TYPE = Lib.Field.EDoctrine.BigInt, PK = true, AI = true, NN = true });
+                    table_struct.Add(COL_NAME_ID, new Lib.Field() { TYPE = Lib.Field.EDoctrine.UnsignedBigInteger, PK = true, AI = true, NN = true });
                     table_struct.Add(COL_NAME_CREATED_AT, new Lib.Field() { TYPE = Lib.Field.EDoctrine.DateTime });
                     table_struct.Add(COL_NAME_UPDATED_AT, new Lib.Field() { TYPE = Lib.Field.EDoctrine.DateTime });
 
 
-                    switch (parent.Database.CheckExistTable(table_name))
+                    switch (parent.DB.CheckExistTable(table_name))
                     {
                         case true:
 
-                            switch (parent.Database.CompareTableSchema(table_name, table_struct))
+                            switch (parent.DB.CompareTableSchema(table_name, table_struct))
                             {
                                 case false:
-                                    parent.Database.RemoveTable(table_name);
-                                    parent.Database.CreateTable(table_name, table_struct);
+                                    parent.DB.RemoveTable(table_name);
+                                    parent.DB.CreateTable(table_name, table_struct);
                                     break;
 
                                 case true:
-                                    if (Settings.Table_clear)
+                                    if (Table_clear)
                                     {
-                                        parent.Database.ClearTable(table_name);
+                                        parent.DB.ClearTable(table_name);
                                     }
                                     break;
                             }
@@ -340,7 +373,7 @@ namespace CSV_DB_gate
                             break;
 
                         case false:
-                            parent.Database.CreateTable(table_name, table_struct);
+                            parent.DB.CreateTable(table_name, table_struct);
                             break;
                     }
 
@@ -357,11 +390,11 @@ namespace CSV_DB_gate
                         Dictionary<string, object> values = new_row.Where(x => table_struct.ContainsKey(x.Key) && !table_struct[x.Key].UQ).ToDictionary(x => x.Key, x => x.Value);
 
                         values.Add(COL_NAME_UPDATED_AT, DateTime.Now);
-                        if (!Settings.Replaceable || !parent.Database.Update(table_name, constraints, values, false))
+                        if (!Replaceable || !parent.DB.Update(table_name, constraints, values, false))
                         {
                             values.Remove(COL_NAME_UPDATED_AT);
                             new_row.Add(COL_NAME_CREATED_AT, DateTime.Now);
-                            parent.Database.Insert(table_name, new_row);
+                            parent.DB.Insert(table_name, new_row);
                         }
                     }
 

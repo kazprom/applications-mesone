@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Timers;
 
 namespace CSV_DB_gate
 {
-    public class CSrv : LibMESone.CCUSTOM
+    class CCUSTOM : LibDBgate.CCUSTOM
     {
+
 
         #region CONSTANTS
 
@@ -25,14 +25,13 @@ namespace CSV_DB_gate
 
         #endregion
 
-        #region PUBLICS
 
         public override void Timer_Handler(object sender, ElapsedEventArgs e)
         {
 
-
             try
             {
+
                 if (DB != null && TSettings != null)
                 {
 
@@ -40,47 +39,42 @@ namespace CSV_DB_gate
                     if (base_path == null)
                     {
                         Logger.Warn($"Can't find parameter {KEY_BASE_PATH}");
-                        return;
                     }
 
                     string his_path = TSettings.Where(x => x.Key.Equals(KEY_HIS_PATH, StringComparison.OrdinalIgnoreCase)).Select(x => x.Value).FirstOrDefault();
                     if (his_path == null)
                     {
                         Logger.Warn($"Can't find parameter {KEY_HIS_PATH}");
-                        return;
                     }
 
                     switch (DB.CheckTable<Tables.CConverter>(Tables.CConverter.TableName))
                     {
-                        case null:
-                        case false:
-                            return;
+                        case true:
+                            TConverters = DB.WhereRead<Tables.CConverter>(Tables.CConverter.TableName, new { Enabled = true });
+                            break;
                     }
 
-                    TConverters = DB.WhereRead<Tables.CConverter>(Tables.CConverter.TableName, new { Enabled = true });
 
                     switch (DB.CheckTable<Tables.CField>(Tables.CField.TableName))
                     {
-                        case null:
-                        case false:
-                            return;
+                        case true:
+                            TFields = DB.WhereRead<Tables.CField>(Tables.CField.TableName, new { Enabled = true });
+                            break;
                     }
 
-                    TFields = DB.WhereRead<Tables.CField>(Tables.CField.TableName, new { Enabled = true });
-
-                    IEnumerable<Structs.CSetConverter> settings = default;
 
                     if (TConverters != null && TFields != null)
                     {
-                        settings = from convs in TConverters
+                        var data = from convs in TConverters
                                    where convs.Enabled == true
-                                   select new Structs.CSetConverter()
+                                   select new
                                    {
-                                       Id = convs.Id,
-                                       Name = convs.Name,
+                                       Parent = this,
+                                       convs.Id,
+                                       convs.Name,
                                        Base_path = base_path,
-                                       File_path = convs.File_path,
-                                       File_delete = convs.File_delete,
+                                       convs.File_path,
+                                       convs.File_delete,
                                        His_path = his_path,
                                        File_depth_his = convs.File_depth_his,
                                        Table_clear = convs.Table_clear,
@@ -96,19 +90,30 @@ namespace CSV_DB_gate
 
                                        Fields = from fields in TFields
                                                 where fields.Enabled == true && fields.Converters_id == convs.Id
-                                                select new Structs.CField()
+                                                select new
                                                 {
                                                     NameSource = fields.Name_src,
                                                     NameDestination = fields.Name_dst,
                                                     DataType = Lib.Field.TypeParce(fields.Data_type),
-                                                    Unique = fields.Unique
+                                                    fields.Unique
                                                 }
                                    };
+
+
+                        Dictionary<ulong, Dictionary<string, object>> children_props = data.ToDictionary(o => o.Id,
+                                                                                                             o => o.
+                                                                                                                  GetType().
+                                                                                                                  GetProperties().ToDictionary(z => z.Name,
+                                                                                                                                               z => z.GetValue(o)));
+
+                        CUD<CConverter>(children_props);
+
                     }
 
-                    CUD<CConverter>(settings);
 
                 }
+
+
             }
             catch (Exception ex)
             {
@@ -116,11 +121,8 @@ namespace CSV_DB_gate
             }
 
             base.Timer_Handler(sender, e);
-
-
         }
 
-        #endregion
 
     }
 }

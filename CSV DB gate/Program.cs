@@ -1,9 +1,5 @@
 ﻿using LibMESone;
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -33,7 +29,7 @@ namespace CSV_DB_gate
                 Lib.Common common = new Lib.Common();
 
                 CConfigFile config_file = new CConfigFile();
-                CCORE<CSrv> core = new CCORE<CSrv>();
+                CCORE<CCUSTOM> core = new CCORE<CCUSTOM>();
 
                 config_file.ReadCompleted += (CConfigFile sender) => { core.LoadSettingFromConfigFile(sender); };
 

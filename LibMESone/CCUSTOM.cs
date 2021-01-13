@@ -45,6 +45,9 @@ namespace LibMESone
 
                 if (logger != null)
                 {
+
+                    DBLogger.Logger = logger;
+
                     var configuration = NLog.LogManager.Configuration;
 
                     string name = logger.Name + "_msg_interceptor";

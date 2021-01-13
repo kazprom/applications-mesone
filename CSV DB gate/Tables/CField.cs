@@ -10,7 +10,7 @@ namespace CSV_DB_gate.Tables
 
         static public string TableName = "fields";
 
-        [Field(TYPE = Field.EDoctrine.BigInt, NN = true)]
+        [Field(TYPE = Field.EDoctrine.UnsignedBigInteger, NN = true)]
         public ulong Converters_id { get; set; }
 
         [Field(TYPE = Field.EDoctrine.String, SIZE = 255, NN = true)]
