@@ -4,8 +4,16 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>KingPigeonS272_DB_gate</RootNamespace>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	<Deterministic>false</Deterministic>       <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Deterministic>false</Deterministic>
     <Platforms>AnyCPU;x86;x64</Platforms>
     <Configurations>Debug;Release;Public</Configurations>
+    <AssemblyName>App</AssemblyName>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LibTagsDBGate\3_LibPlcDBgate.csproj" />
+  </ItemGroup>
 
 </Project>

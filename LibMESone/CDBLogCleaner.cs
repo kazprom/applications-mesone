@@ -62,7 +62,7 @@ namespace LibMESone
                     {
                         foreach (var table in tables)
                         {
-                            if (ts.Subtract(Tables.Custom.CLogMessage.GetTimeStamp(table)).TotalHours > depth_log_days)
+                            if (ts.Subtract(Tables.Custom.CLogMessage.GetTimeStamp(table)).TotalDays > depth_log_days)
                                 if (db_logger.DB.RemoveTable(table))
                                     Logger.Info($"Removed log table [{table}]");
                         }
