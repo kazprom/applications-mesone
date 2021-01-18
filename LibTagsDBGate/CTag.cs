@@ -143,7 +143,8 @@ namespace LibPlcDBgate
             }
         }
 
-        public DateTime? Timestamp { get; set; }
+        private DateTime? timestamp;
+        public DateTime? Timestamp { get { return (timestamp); } }
 
         private object value;
         public object Value
@@ -153,12 +154,22 @@ namespace LibPlcDBgate
             {
                 try
                 {
-                    this.value = ObjToDataType(value, data_type);
 
-                    if (history_enabled == true && Timestamp != null)
+                    var val = ObjToDataType(value, data_type);
+
+                    if (!Equals(this.value, val) || (timestamp == null) || (DateTime.Now.Subtract((DateTime)timestamp).TotalMinutes >= 1))
                     {
-                        if (Historian != null) Historian.Put(Id, (DateTime)Timestamp, ObjToBin(Value), (byte)Quality);
+                        this.value = val;
+                        timestamp = DateTime.Now;
+                        Updated = true;
+
+                        if (history_enabled == true && Timestamp != null)
+                        {
+                            if (Historian != null) Historian.Put(Id, (DateTime)Timestamp, ObjToBin(Value), (byte)Quality);
+                        }
+
                     }
+
 
                 }
                 catch (Exception ex)
@@ -169,6 +180,8 @@ namespace LibPlcDBgate
         }
 
         public EQuality Quality { get; set; }
+
+        public bool Updated { get; set; }
 
         #endregion
 

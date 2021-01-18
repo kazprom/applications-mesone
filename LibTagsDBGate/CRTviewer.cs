@@ -34,11 +34,14 @@ namespace LibPlcDBgate
         {
             try
             {
+
+                ulong[] ids;
+
                 lock (tags)
                 {
                     foreach (CTag tag in tags)
                     {
-                        if (tag != null && tag.RT_enabled && tag.Timestamp != null)
+                        if (tag != null && tag.RT_enabled && tag.Timestamp != null && tag.Updated)
                             TRTvalues.Add(new Tables.CRtValue()
                             {
                                 Tags_id = tag.Id,
@@ -47,8 +50,10 @@ namespace LibPlcDBgate
                                 Value_str = tag.Value != null ? tag.Value.ToString() : null,
                                 Value_raw = CTag.ObjToBin(tag.Value)
                             });
+                        tag.Updated = false;
                     }
 
+                    ids = tags.Select(x => x.Id).ToArray();
                 }
 
                 if (DB != null)
@@ -59,7 +64,9 @@ namespace LibPlcDBgate
                         DB.Update<Tables.CRtValue>(Tables.CRtValue.TableName, item);
                     }
 
-                    DB.WhereNotInDelete(Tables.CRtValue.TableName, nameof(Tables.CRtValue.Tags_id), TRTvalues.Select(x => x.Tags_id).ToArray());
+                    
+                    //DB.WhereNotInDelete(Tables.CRtValue.TableName, nameof(Tables.CRtValue.Tags_id), TRTvalues.Select(x => x.Tags_id).ToArray());
+                    DB.WhereNotInDelete(Tables.CRtValue.TableName, nameof(Tables.CRtValue.Tags_id), ids);
 
                 }
 

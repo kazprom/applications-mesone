@@ -66,7 +66,7 @@ namespace ModBUS_DB_gate
                         if (tag != null && (tag.RT_enabled || tag.History_enabled))
                         {
 
-                            tag.Timestamp = DateTime.Now;
+                            //tag.Timestamp = DateTime.Now;
                             CClient parent = (CClient)Parent;
 
                             byte l = LibPlcDBgate.CTag.SizeOfDataType(tag.Data_type);
