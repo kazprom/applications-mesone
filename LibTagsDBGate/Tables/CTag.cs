@@ -13,8 +13,8 @@ namespace LibPlcDBgate.Tables
         [Field(TYPE = Field.EDoctrine.UnsignedBigInteger, NN = true)]
         public ulong Clients_id { get; set; }
 
-        [Field(TYPE = Field.EDoctrine.UnsignedSmallInteger, NN = true)]
-        public ushort Rate { get; set; }
+        [Field(TYPE = Field.EDoctrine.UnsignedMediumInteger, NN = true)]
+        public uint Rate { get; set; }
 
         [Field(TYPE = Field.EDoctrine.String, SIZE = 15, NN = true)]
         public string Data_type { get; set; }

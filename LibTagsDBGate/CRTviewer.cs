@@ -41,7 +41,7 @@ namespace LibPlcDBgate
                 {
                     foreach (CTag tag in tags)
                     {
-                        if (tag != null && tag.RT_enabled && tag.Timestamp != null && tag.Updated)
+                        if (tag != null && tag.RT_enabled != null && tag.RT_enabled && tag.Timestamp != null && tag.Updated)
                             TRTvalues.Add(new Tables.CRtValue()
                             {
                                 Tags_id = tag.Id,

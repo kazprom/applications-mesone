@@ -51,6 +51,8 @@ namespace Lib
                         Logger = LogManager.GetLogger($"{Id}");
                     }
 
+                    Logger.Info($"Id = {id}");
+
                     LoggerMaked?.Invoke(Logger);
                 }
 

@@ -19,10 +19,12 @@ namespace KingPigeonS272_DB_gate
 {
     class Program
     {
+
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         static void Main(string[] args)
         {
+
             try
             {
                 Lib.Common common = new Lib.Common();

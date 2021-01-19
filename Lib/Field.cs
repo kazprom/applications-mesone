@@ -226,7 +226,7 @@ namespace Lib
                 case EDoctrine.UnsignedInteger:
                     result = "INT UNSIGNED"; break;
                 case EDoctrine.UnsignedMediumInteger:
-                    break;
+                    result = "MEDIUMINT UNSIGNED"; break;
                 case EDoctrine.UnsignedSmallInteger:
                     result = "SMALLINT UNSIGNED"; break;
                 case EDoctrine.UnsignedTinyInteger:

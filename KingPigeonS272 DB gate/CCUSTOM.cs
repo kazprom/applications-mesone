@@ -27,7 +27,6 @@ namespace KingPigeonS272_DB_gate
             try
             {
 
-
                 if (DB != null)
                 {
                     switch (DB.CheckTable<Tables.CSockets>(Tables.CSockets.TableName))
@@ -75,6 +74,8 @@ namespace KingPigeonS272_DB_gate
                                               {
                                                   clients.Id,
                                                   clients.Name,
+                                                  clients.Imei,
+                                                  clients.Timeout_m,
 
                                                   Tags = from tags in TTags
                                                          where tags.Clients_id == clients.Id && tags.Enabled == true
@@ -82,6 +83,9 @@ namespace KingPigeonS272_DB_gate
                                                          {
                                                              tags.Id,
                                                              tags.Name,
+
+                                                             tags.Channel,
+
                                                              tags.Rate,
 
                                                              tags.Data_type,

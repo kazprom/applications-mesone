@@ -15,8 +15,8 @@ namespace KingPigeonS272_DB_gate.Tables
         public ulong Sockets_id { get; set; }
 
 
-        [Field(TYPE = Field.EDoctrine.Binary, SIZE = 16, NN = true)]
-        public byte[] Guid { get; set; }
+        [Field(TYPE = Field.EDoctrine.String, SIZE = 17, NN = true)]
+        public string Imei { get; set; }
 
 
         [Field(TYPE = Field.EDoctrine.UnsignedSmallInteger, NN = true)]

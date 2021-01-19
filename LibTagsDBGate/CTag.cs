@@ -100,7 +100,13 @@ namespace LibPlcDBgate
             {
                 try
                 {
-                    data_type = Enum.Parse(typeof(EDataType), Convert.ToString(value), true);
+                    var _data_type = Enum.Parse(typeof(EDataType), Convert.ToString(value), true);
+
+                    if(!Equals(data_type, _data_type))
+                    {
+                        data_type = _data_type;
+                        Logger.Info($"Data type = {data_type}");
+                    }
                 }
                 catch (Exception ex)
                 {
