@@ -170,31 +170,57 @@ namespace KingPigeonS272_DB_gate
                             NetworkStream stream = client.GetStream();
 
                             int i;
-                            //String data = null;
 
                             while ((i = stream.Read(buf, 0, buf.Length)) != 0)
                             {
-                                //data = System.Text.Encoding.ASCII.GetString(buf, 0, i);
-                                Logger.Info($"receive package: {BitConverter.ToString(buf, 0, i)}");
+                                List<byte> data = new List<byte>();
+                                data.AddRange(buf.Take(i));
+
+                                //Logger.Debug(BitConverter.ToString(data.ToArray()));
+
+                                if (RecognizePackage(ref data))
+                                {
+                                    string imei = ParseIMEI(ref data);
+                                    Logger.Info($"Received package IMEI[{imei}] len={i}");
+
+                                    CClient client_instance = Children.Values.First(x => ((CClient)x).Imei == imei) as CClient;
+
+                                    if(client_instance != null)
+                                    {
+                                        client_instance.LoadData(data.ToArray());
+                                    }
+                                    else
+                                    {
+                                        Logger.Warn($"Client with IMEI[{imei}] doesn't registred");
+                                    }
+
+                                }
                             }
 
-
-
                             client.Close();
+
 
                         }
                         catch (Exception ex)
                         {
                             Logger.Error(ex);
                         }
+                        finally
+                        {
+                            server.Stop();
+                            Logger.Info("Connection closed");
+                        }
 
                     }
 
                 }
 
-
-
-
+            }
+            catch(SocketException s_ex)
+            {
+                Logger.Warn(s_ex);
+                server.Stop();
+                server = null;
             }
             catch (Exception ex)
             {
@@ -205,6 +231,68 @@ namespace KingPigeonS272_DB_gate
             base.Timer_Handler(sender, e);
 
         }
+
+        private string ParseIMEI(ref List<byte> data)
+        {
+            try
+            {
+                const byte len = 15;
+
+                if (data != null && data.Count >= len)
+                {
+                    byte[] imei = data.GetRange(0, len).ToArray();
+                    data.RemoveRange(0, len);
+
+                    //Logger.Debug($"after imei [{BitConverter.ToString(data.ToArray())}]");
+
+                    return Encoding.ASCII.GetString(imei);
+                }
+                else
+                {
+                    Logger.Warn("Can't find IMEI in data");
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+            }
+
+            return null;
+
+        }
+
+        private bool RecognizePackage(ref List<byte> data)
+        {
+            try
+            {
+                const byte symbol = 0xA5;
+
+                if (data != null &&
+                    data.Count > 2 &&
+                    data.First() == symbol &&
+                    data.Last() == symbol &&
+                    data[1] == data.Count - 6)
+                {
+                    data.RemoveRange(0, 8);
+                    data.RemoveAt(data.Count - 1);
+
+                    //Logger.Debug($"after cut [{BitConverter.ToString(data.ToArray())}]");
+
+                    return true;
+                }
+                else
+                {
+                    Logger.Warn($"Bad package [{BitConverter.ToString(data.ToArray())}]");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+            }
+            return false;
+        }
+
 
 
         private class WTcpListener : TcpListener
