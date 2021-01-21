@@ -69,7 +69,7 @@ namespace Lib
 
         private string AppInfo()
         {
-            return $"{AppName()} (v{AppVersion()}) GUID [{AppGUID()}]";
+            return $"{AppName()} {AppMode()} (v{AppVersion()}) GUID [{AppGUID()}]";
         }
 
         private void PrintAppInfo()
@@ -124,6 +124,13 @@ namespace Lib
             return guidAttr.Value;
         }
 
+        public static string AppMode()
+        {
+#if DEBUG
+            return "DEBUG";
+#endif
+            return null;
+        }
 
     }
 }

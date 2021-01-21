@@ -135,13 +135,20 @@ namespace KingPigeonS272_DB_gate
                 if (server == null)
                 {
                     if (ip != null && port != null)
+                    {
                         server = new WTcpListener(ip, (int)port);
+                        server.Start();
+                        Logger.Info($"Open {ip}:{port}");
+                    }
                 }
                 else
                 {
-                    if (((IPEndPoint)server.LocalEndpoint).Address != ip || ((IPEndPoint)server.LocalEndpoint).Port != port)
+
+                    if (!Equals(((IPEndPoint)server.LocalEndpoint).Address, ip) || !Equals(((IPEndPoint)server.LocalEndpoint).Port, (int)port))
                     {
-                        if (server.Server.Connected)
+                        Logger.Debug($"{((IPEndPoint)server.LocalEndpoint).Address} {ip} {((IPEndPoint)server.LocalEndpoint).Port} {port}");
+
+                        if (server.Active)
                             server.Stop();
 
                         server = null;
@@ -150,73 +157,23 @@ namespace KingPigeonS272_DB_gate
 
                 if (server != null)
                 {
-                    if (!server.Active)
+
+                    try
                     {
-                        server.Start();
-                        Logger.Info("Open");
-                    }
+                        //Logger.Info("Waiting for a connection");
 
-                    if (server.Active)
-                    {
-
-                        try
-                        {
-                            Logger.Info("Waiting for a connection");
-
-                            TcpClient client = server.AcceptTcpClient();
-
-                            Logger.Info($"Connected to {((IPEndPoint)client.Client.RemoteEndPoint).Address}:{((IPEndPoint)client.Client.RemoteEndPoint).Port}");
-
-                            NetworkStream stream = client.GetStream();
-
-                            int i;
-
-                            while ((i = stream.Read(buf, 0, buf.Length)) != 0)
-                            {
-                                List<byte> data = new List<byte>();
-                                data.AddRange(buf.Take(i));
-
-                                //Logger.Debug(BitConverter.ToString(data.ToArray()));
-
-                                if (RecognizePackage(ref data))
-                                {
-                                    string imei = ParseIMEI(ref data);
-                                    Logger.Info($"Received package IMEI[{imei}] len={i}");
-
-                                    CClient client_instance = Children.Values.First(x => ((CClient)x).Imei == imei) as CClient;
-
-                                    if(client_instance != null)
-                                    {
-                                        client_instance.LoadData(data.ToArray());
-                                    }
-                                    else
-                                    {
-                                        Logger.Warn($"Client with IMEI[{imei}] doesn't registred");
-                                    }
-
-                                }
-                            }
-
-                            client.Close();
-
-
-                        }
-                        catch (Exception ex)
-                        {
-                            Logger.Error(ex);
-                        }
-                        finally
-                        {
-                            server.Stop();
-                            Logger.Info("Connection closed");
-                        }
+                        TcpClient client = server.AcceptTcpClient();
+                        ThreadPool.QueueUserWorkItem(ClientHandler, client);
 
                     }
-
+                    catch (Exception ex)
+                    {
+                        Logger.Error(ex);
+                    }
                 }
 
             }
-            catch(SocketException s_ex)
+            catch (SocketException s_ex)
             {
                 Logger.Warn(s_ex);
                 server.Stop();
@@ -232,6 +189,51 @@ namespace KingPigeonS272_DB_gate
 
         }
 
+        private void ClientHandler(object obj)
+        {
+
+            TcpClient client = obj as TcpClient;
+
+            IPAddress ip = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
+            int port = ((IPEndPoint)client.Client.RemoteEndPoint).Port;
+
+            Logger.Info($"Connected {ip}:{port}");
+
+            NetworkStream stream = client.GetStream();
+
+            int i;
+
+            while ((i = stream.Read(buf, 0, buf.Length)) != 0)
+            {
+                List<byte> data = new List<byte>();
+                data.AddRange(buf.Take(i));
+
+                if (RecognizePackage(ref data))
+                {
+                    string imei = ParseIMEI(ref data);
+                    Logger.Info($"Received package IMEI[{imei}] len={i}");
+
+                    lock (Children)
+                    {
+                        CClient client_instance = Children.Values.First(x => ((CClient)x).Imei == imei) as CClient;
+
+                        if (client_instance != null)
+                        {
+                            client_instance.LoadData(data.ToArray());
+                        }
+                        else
+                        {
+                            Logger.Warn($"Client with IMEI[{imei}] doesn't registred");
+                        }
+                    }
+                }
+            }
+
+            Logger.Info($"Disconnected {ip}:{port}");
+            client.Close();
+        }
+
+
         private string ParseIMEI(ref List<byte> data)
         {
             try
@@ -243,13 +245,11 @@ namespace KingPigeonS272_DB_gate
                     byte[] imei = data.GetRange(0, len).ToArray();
                     data.RemoveRange(0, len);
 
-                    //Logger.Debug($"after imei [{BitConverter.ToString(data.ToArray())}]");
-
                     return Encoding.ASCII.GetString(imei);
                 }
                 else
                 {
-                    Logger.Warn("Can't find IMEI in data");
+                    Logger.Warn("Can't find IMEI in pakage");
                 }
             }
             catch (Exception ex)
@@ -270,13 +270,12 @@ namespace KingPigeonS272_DB_gate
                 if (data != null &&
                     data.Count > 2 &&
                     data.First() == symbol &&
-                    data.Last() == symbol &&
-                    data[1] == data.Count - 6)
+                    data[1] >= data.Count - 6 &&
+                    data[data[1] + 5] == symbol)
                 {
-                    data.RemoveRange(0, 8);
-                    data.RemoveAt(data.Count - 1);
 
-                    //Logger.Debug($"after cut [{BitConverter.ToString(data.ToArray())}]");
+                    data.RemoveRange(data[1] + 4, data.Count - (data[1] + 4));
+                    data.RemoveRange(0, 8);
 
                     return true;
                 }

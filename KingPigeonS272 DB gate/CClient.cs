@@ -246,7 +246,7 @@ namespace KingPigeonS272_DB_gate
                             break;
                     }
 
-                    Logger.Debug($"{prefix}{channel} val = {result}");
+                    //Logger.Debug($"{prefix}{channel} val = {result}");
 
                     data.RemoveRange(0, 4);
 
