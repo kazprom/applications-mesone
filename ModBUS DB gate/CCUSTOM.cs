@@ -57,6 +57,8 @@ namespace ModBUS_DB_gate
                                        clients.Port,
                                        clients.Protocol,
                                        clients.Address,
+                                       clients.Sb,
+                                       clients.Sw,
 
                                        Tags = from tags in TTags
                                               where tags.Clients_id == clients.Id && tags.Enabled == true

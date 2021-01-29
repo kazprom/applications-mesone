@@ -68,6 +68,11 @@ namespace ModBUS_DB_gate
         }
 
 
+        public bool Sb { get; set; }
+
+        public bool Sw { get; set; }
+
+
         public override dynamic Tags
         {
             set

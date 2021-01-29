@@ -98,6 +98,28 @@ namespace ModBUS_DB_gate
                                 }
 
 
+                                if (parent.Sb)
+                                {
+                                    for (int i = 0; i < byte_arr.Length; i += 2)
+                                    {
+                                        byte b = byte_arr[i];
+                                        byte_arr[i] = byte_arr[i + 1];
+                                        byte_arr[i + 1] = b;
+                                    }
+                                }
+
+                                if (parent.Sw)
+                                {
+                                    for (int i = 0; i < byte_arr.Length; i += 4)
+                                    {
+                                        byte[] w = { 0, 0 };
+                                        Buffer.BlockCopy(byte_arr, i, w, 0, 2);
+                                        Buffer.BlockCopy(byte_arr, i + 2, byte_arr, i, 2);
+                                        Buffer.BlockCopy(w, 0, byte_arr, i + 2, 2);
+                                    }
+
+                                }
+
                                 object result = null;
 
                                 switch (tag.Data_type)
@@ -131,6 +153,9 @@ namespace ModBUS_DB_gate
                                         break;
                                     case LibPlcDBgate.CTag.EDataType.UInt64:
                                         result = BitConverter.ToUInt64(byte_arr);
+                                        break;
+                                    case LibPlcDBgate.CTag.EDataType.Single:
+                                        result = BitConverter.ToSingle(byte_arr);
                                         break;
                                 }
 

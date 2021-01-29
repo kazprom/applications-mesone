@@ -46,7 +46,8 @@ namespace LibPlcDBgate
             Int64 = 7,
             UInt16 = 8,
             UInt32 = 9,
-            UInt64 = 10
+            UInt64 = 10,
+            Single = 11
         }
 
         #endregion
@@ -102,7 +103,7 @@ namespace LibPlcDBgate
                 {
                     var _data_type = Enum.Parse(typeof(EDataType), Convert.ToString(value), true);
 
-                    if(!Equals(data_type, _data_type))
+                    if (!Equals(data_type, _data_type))
                     {
                         data_type = _data_type;
                         Logger.Info($"Data type = {data_type}");
@@ -221,6 +222,8 @@ namespace LibPlcDBgate
                         return Convert.ToUInt32(obj);
                     case EDataType.UInt64:
                         return Convert.ToUInt64(obj);
+                    case EDataType.Single:
+                        return Convert.ToSingle(obj);
                 }
 
                 return null;
@@ -278,6 +281,10 @@ namespace LibPlcDBgate
                 {
                     System.Buffer.BlockCopy(BitConverter.GetBytes((UInt64)obj), 0, result, 0, sizeof(UInt64));
                 }
+                else if (obj is Single)
+                {
+                    System.Buffer.BlockCopy(BitConverter.GetBytes((Single)obj), 0, result, 0, sizeof(Single));
+                }
                 else if (obj == null)
                 {
                     return null;
@@ -295,6 +302,7 @@ namespace LibPlcDBgate
 
             return result;
         }
+
         public static byte SizeOfDataType(EDataType type)
         {
             switch (type)
@@ -302,9 +310,10 @@ namespace LibPlcDBgate
                 case EDataType.Boolean:
                 case EDataType.Byte:
                 case EDataType.Char:
-                    return 1;
                 case EDataType.Int16:
                 case EDataType.UInt16:
+                    return 1;
+                case EDataType.Single:
                     return 2;
                 case EDataType.Int32:
                 case EDataType.UInt32:
@@ -317,39 +326,5 @@ namespace LibPlcDBgate
                     return 0;
             }
         }
-
-
-
-
-
-        private static Type DataTypeToType(EDataType type)
-        {
-            switch (type)
-            {
-                case EDataType.Boolean:
-                    return typeof(bool);
-                case EDataType.Byte:
-                    return typeof(byte);
-                case EDataType.Char:
-                    return typeof(char);
-                case EDataType.Double:
-                    return typeof(double);
-                case EDataType.Int16:
-                    return typeof(Int16);
-                case EDataType.Int32:
-                    return typeof(Int32);
-                case EDataType.Int64:
-                    return typeof(Int64);
-                case EDataType.UInt16:
-                    return typeof(UInt16);
-                case EDataType.UInt32:
-                    return typeof(UInt32);
-                case EDataType.UInt64:
-                    return typeof(UInt64);
-                default:
-                    throw new Exception("Don't know data type");
-            }
-        }
-
     }
 }

@@ -15,5 +15,12 @@ namespace ModBUS_DB_gate.Tables
         public ushort Address { get; set; }
 
 
+        [Field(TYPE = Field.EDoctrine.Boolean, NN = true)]
+        public bool Sb { get; set; }
+
+        [Field(TYPE = Field.EDoctrine.Boolean, NN = true)]
+        public bool Sw { get; set; }
+
+
     }
 }
